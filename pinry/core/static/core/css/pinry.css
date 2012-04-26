@@ -1,6 +1,5 @@
 body {
-    top: 70px;
-    position: absolute;
+    margin-top: 70px;
     background: #eee;
 }
 
@@ -30,26 +29,57 @@ body {
         text-decoration: underline;
     }
 
-.pin {
-    background: #fff;
-    width: 200px;
-    float: left;
-    border: 1px solid #ccc;
-    padding: 20px;
+#pins {
+    top: 70px;
+    position: absolute;
+    background: #eee;
 }
 
-    .pin img {
+    .pin {
+        background: #fff;
         width: 200px;
-        padding: 0;
-        margin: 0;
+        float: left;
+        border: 1px solid #ccc;
+        padding: 20px;
     }
 
-    .pin p {
+        .pin img {
+            width: 200px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pin p {
+            margin-bottom: 0;
+            padding-top: 15px
+        }
+
+            .pin strong {
+                color: #777;
+                font-weight: normal;
+            }
+
+#form {
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 15px;
+}
+
+    #form h1 {
+        font-family: 'Monoton';
+        text-align: center;
+        font-weight: normal;
+        margin-bottom: 15px;
+    }
+
+    form {
         margin-bottom: 0;
-        padding-top: 15px
     }
 
-        .pin strong {
-            color: #777;
-            font-weight: normal;
+        textarea {
+            height: 70px;
+        }
+
+        .form-actions {
+            margin-bottom: 0;
         }

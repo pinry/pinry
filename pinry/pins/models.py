@@ -10,12 +10,11 @@ import urllib2
 
 class Pin(models.Model):
     url = models.TextField()
-    title = models.CharField(max_length=70)
+    description = models.TextField(blank=True, null=True)
     image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200,1000),))
-    tags = models.ManyToManyField('Tag')
 
     def __unicode__(self):
-        return self.title
+        return self.url
 
     def save(self):
         if not self.image:
@@ -23,18 +22,4 @@ class Pin(models.Model):
             temp_img.write(urllib2.urlopen(self.url).read())
             temp_img.flush()
             self.image.save(self.url.split('/')[-1], File(temp_img))
-        if not self.title:
-            self.title = self.url.split('/')[-1]
         super(Pin, self).save()
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=70)
-    slug = models.SlugField()
-
-    def __unicode__(self):
-        return self.name
-
-    def save(self):
-        self.slug = slugify(self.name)
-        super(Tag, self).save()
