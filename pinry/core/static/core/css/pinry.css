@@ -1,0 +1,55 @@
+body {
+    top: 70px;
+    position: absolute;
+    background: #eee;
+}
+
+.navbar-inner {
+    background-image: none;
+    background: white;
+    border-bottom: 1px solid #999;
+    height: 48px;
+}
+
+    .navbar .brand {
+        margin-left: 0;
+        color: #333;
+        font-family: 'Monoton';
+        font-size: 30px;
+    }
+
+    .navbar .nav > li > a {
+        color: #333;
+        text-shadow: none;
+        border-left: 1px solid #ccc;
+        padding: 14px 20px 15px;
+    }
+
+    .navbar .nav > li > a:hover {
+        color: #333;
+        text-decoration: underline;
+    }
+
+.pin {
+    background: #fff;
+    width: 200px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+    .pin img {
+        width: 200px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pin p {
+        margin-bottom: 0;
+        padding-top: 15px
+    }
+
+        .pin strong {
+            color: #777;
+            font-weight: normal;
+        }

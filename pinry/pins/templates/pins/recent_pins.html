@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Recent Pins{% endblock %}
+
+{% block yield %}
+    <div id="pins">
+        <div class="pin">
+            <form action="/login/" method="post" class="form-vertical">
+                <div class="control-group">
+                    <label for="id_username">Username:</label>
+                    <div class="controls">
+                        <input id="id_username" type="text" name="username" style="width: 190px">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="id_password">Password:</label>
+                    <div class="controls">
+                        <input id="id_password" type="password" name="password" style="width: 190px">
+                    </div>
+                </div>
+                <div class="form-actions" style="margin-bottom: -15px">
+                    <button type="submit" class="btn btn-success">Login</button>
+                    <a href="/register/" class="btn btn-primary">Register</a>
+                </div>
+            </form>
+        </div>
+        {% for pin in pins %}
+            <div class="pin">
+                {% if pin.image %}
+                    <a class="fancybox" rel="pins" href="{{ pin.image.url }}">
+                        <img src="{{ pin.image.url_200x1000 }}" alt="{{ pin.title }}">
+                    </a>
+                {% endif %}
+                {% if pin.tags %}
+                    <p>
+                        <strong>Tags:</strong>
+                        {% for tag in pin.tags.all %}
+                            {% if not forloop.last %}
+                                {{ tag }},
+                            {% else %}
+                                {{ tag }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

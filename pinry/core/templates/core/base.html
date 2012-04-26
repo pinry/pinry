@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pinry - {% block title %}{% endblock %}</title>
+
+        {% if debug %}
+            <link rel="stylesheet" href="/static/vendor/bootstrap/2.0.3/css/bootstrap.css">
+            <link rel="stylesheet" href="/static/vendor/fancybox/2.0.6/jquery.fancybox.css">
+        {% else %}
+            <link rel="stylesheet" href="/static/vendor/bootstrap/2.0.3/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/static/vendor/fancybox/2.0.6/jquery.fancybox.css">
+        {% endif %}
+
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Monoton">
+
+        <link rel="stylesheet" href="/static/core/css/pinry.css">
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <a href="{% url core:home %}" class="brand">Pinry</a>
+
+                <ul class="nav pull-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url pins:new-pin %}">New Pin</a></li>
+                        <li><a href="{% url core:logout %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url core:login %}">Login</a></li>
+                        <li><a href="{% url core:register %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        {% block yield %}{% endblock %}
+
+        {% if debug %}
+            <script src="/static/vendor/jquery/1.7.2/jquery.js"></script>
+            <script src="/static/vendor/bootstrap/2.0.3/js/bootstrap.js"></script>
+            <script src="/static/vendor/wookmark/0.5/jquery.wookmark.js"></script>
+            <script src="/static/vendor/fancybox/2.0.6/jquery.fancybox.js"></script>
+        {% else %}
+            <script src="/static/vendor/jquery/1.7.2/jquery.min.js"></script>
+            <script src="/static/vendor/bootstrap/2.0.3/js/bootstrap.min.js"></script>
+            <script src="/static/vendor/wookmark/0.5/jquery.wookmark.min.js"></script>
+            <script src="/static/vendor/fancybox/2.0.6/jquery.fancybox.pack.js"></script>
+        {% endif %}
+
+        <script src="/static/core/js/pinry.js"></script>
+    </body>
+</html>

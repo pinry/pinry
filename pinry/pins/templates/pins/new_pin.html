@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}New Pin{% endblock %}
+
+{% block yield %}
+    <div class="container">
+        <div class="row">
+            <div class="span6 offset3">
+                <form action="{% url pins:new-pin %}" method="post">
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

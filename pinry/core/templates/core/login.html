@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block yield %}
+    <div class="container">
+        <div class="row">
+            <div class="span6 offset3">
+                <form action="{% url core:login %}" method="post"> {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
