@@ -1,6 +1,6 @@
 # Pinry
 
-Pinry is a self-hostable [Pintrest][0] "clone" that has a strong resemblance to
+Pinry is a self-hostable [Pinterest][0] "clone" that has a strong resemblance to
 [Wookmark][1]. (Because I use their jQuery library and like their design.)
 
 ## Why?
@@ -8,7 +8,7 @@ Pinry is a self-hostable [Pintrest][0] "clone" that has a strong resemblance to
 Because I don't like sharing. I would use these services to store a lot of
 images and data that isn't necessarily personal but that I don't actually want
 to share or deal with the possibility of having it taken down by a DMCA notice.
-My use of Pintrest/Wookmark boils down to having personal board for things I
+My use of Pinterest/Wookmark boils down to having personal board for things I
 want to remember or keep for inspiration.
 
 ## Plans
