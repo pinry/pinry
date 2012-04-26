@@ -3,6 +3,8 @@
 Pinry is a self-hostable [Pinterest][0] "clone" that has a strong resemblance to
 [Wookmark][1]. (Because I use their jQuery library and like their design.)
 
+![Pinry Screenshot](https://github.com/overshard/pinry/raw/master/screenshot.png)
+
 ## Why?
 
 Because I don't like sharing. I would use these services to store a lot of
