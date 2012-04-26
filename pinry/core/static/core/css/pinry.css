@@ -1,6 +1,6 @@
 body {
     margin-top: 70px;
-    background: #eee;
+    background: url("/static/core/img/background.png");
 }
 
 .navbar-inner {
