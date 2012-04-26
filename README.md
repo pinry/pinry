@@ -30,7 +30,7 @@ Have virtualenv and pip installed. You may also need to have the build
 dependencies for PIL installed. (If you are on Ubuntu you can do this by typing
 "sudo build-dep python-imaging".)
 
-    $ git clone git@github.com:overshard/pinry.git
+    $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
     $ virtualenv .
     $ bin/pip install -r requirements.txt
