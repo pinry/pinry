@@ -15,7 +15,7 @@ want to remember or keep for inspiration.
 
 ## Plans
 
-Some features that I want to impelement, if you know how to implement them then
+Some features that I want to implement, if you know how to implement them then
 please do them for me! I'm very pull-request friendly and will not yell at you
 for bad code, I'll simply work with you to improve it.
 
