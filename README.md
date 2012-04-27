@@ -28,7 +28,7 @@ for bad code, I'll simply work with you to improve it.
 
 Have virtualenv and pip installed. You may also need to have the build
 dependencies for PIL installed. (If you are on Ubuntu you can do this by typing
-"sudo build-dep python-imaging".)
+"sudo apt-get build-dep python-imaging".)
 
     $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
