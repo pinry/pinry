@@ -53,4 +53,5 @@ INSTALLED_APPS = (
     'pinry.vendor',
     'pinry.core',
     'pinry.pins',
+    'pinry.api',
 )

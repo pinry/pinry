@@ -7,10 +7,7 @@ from .forms import PinForm
 
 
 def recent_pins(request):
-    context = {
-        'pins': Pin.objects.order_by('-id')[:50],
-    }
-    return TemplateResponse(request, 'pins/recent_pins.html', context)
+    return TemplateResponse(request, 'pins/recent_pins.html', None)
 
 
 def new_pin(request):

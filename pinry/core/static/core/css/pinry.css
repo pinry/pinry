@@ -29,6 +29,11 @@ body {
         text-decoration: underline;
     }
 
+#loader {
+    margin-top: 70px;
+    text-align: center;
+}
+
 #pins {
     top: 70px;
     position: absolute;
@@ -41,6 +46,7 @@ body {
         float: left;
         border: 1px solid #ccc;
         padding: 20px;
+        display: none;
     }
 
         .pin img {

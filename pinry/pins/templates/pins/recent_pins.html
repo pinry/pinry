@@ -3,18 +3,12 @@
 {% block title %}Recent Pins{% endblock %}
 
 {% block yield %}
-    <div id="pins">
-        {% for pin in pins %}
-            <div class="pin">
-                {% if pin.image %}
-                    <a class="fancybox" rel="pins" href="{{ pin.image.url }}">
-                        <img src="{{ pin.image.url_200x1000 }}" alt="{{ pin.description }}">
-                    </a>
-                {% endif %}
-                {% if pin.description %}
-                    <p><strong>Description:</strong> {{ pin.description }}</p>
-                {% endif %}
+    <div id="pins"></div>
+    <div id="loader" class="container">
+        <div class="row">
+            <div class="span2 offset5">
+                <img src="/static/core/img/loader.gif" alt="Loader">
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
