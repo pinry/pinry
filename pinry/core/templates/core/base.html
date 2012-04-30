@@ -1,3 +1,5 @@
+{% load new_pin %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +24,7 @@
 
                 <ul class="nav pull-right">
                     {% if user.is_authenticated %}
-                        <li><a href="{% url pins:new-pin %}">New Pin</a></li>
+                        <li><a href="#new-pin" data-toggle="modal">New Pin</a></li>
                         <li><a href="{% url core:logout %}">Logout</a></li>
                     {% else %}
                         <li><a href="{% url core:login %}">Login</a></li>
@@ -33,6 +35,8 @@
         </div>
 
         {% block yield %}{% endblock %}
+
+        {% new_pin %}
 
         {% if debug %}
             <script src="/static/vendor/jquery/1.7.2/jquery.js"></script>

@@ -1,0 +1,19 @@
+{% load bootstrap_field %}
+
+<div class="modal fade" id="new-pin">
+    <div class="modal-header">
+        <h3>New Pin</h3>
+    </div>
+    <form action="{% url pins:new-pin %}" method="post" class="form-horizontal">
+        <div class="modal-body">
+            {% csrf_token %}
+            {% for field in form %}
+                {% bootstrap_field field %}
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Post</button>
+            <a href="#new-pin" data-toggle="modal" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
