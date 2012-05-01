@@ -1,6 +1,7 @@
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 from .models import Pin
 from .forms import PinForm
@@ -15,7 +16,10 @@ def new_pin(request):
         form = PinForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'New pin successfully added.')
             return HttpResponseRedirect(reverse('pins:recent-pins'))
+        else:
+            messages.error(request, 'Pin did not pass validation!')
     else:
         form = PinForm()
     context = {

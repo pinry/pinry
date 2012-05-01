@@ -29,6 +29,30 @@ body {
         text-decoration: underline;
     }
 
+.messages {
+    list-style-type: none;
+    top: 50px;
+    right: 10px;
+    position: absolute;
+    z-index: 200;
+}
+
+    .messages li {
+        margin: 10px 0;
+        padding: 18px 28px;
+        border: 1px solid #ccc;
+        font-size: 16px
+    }
+
+    .messages li:hover {
+        -webkit-transform: scale(1.1);
+           -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+             -o-transform: scale(1.1);
+                transform: scale(1.1);
+        cursor: pointer;
+    }
+
 #loader {
     margin-top: 70px;
     text-align: center;
@@ -38,6 +62,7 @@ body {
     top: 70px;
     position: absolute;
     background: #eee;
+    z-index: 100;
 }
 
     .pin {

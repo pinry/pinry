@@ -1,4 +1,5 @@
 import os
+from django.contrib.messages import constants as messages
 
 
 SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
@@ -42,6 +43,12 @@ ROOT_URLCONF = 'pinry.urls'
 WSGI_APPLICATION = 'pinry.wsgi.application'
 LOGIN_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1']
+MESSAGE_TAGS = {
+    messages.WARNING: 'alert',
+    messages.ERROR: 'alert alert-error',
+    messages.SUCCESS: 'alert alert-success',
+    messages.INFO: 'alert alert-info',
+}
 
 INSTALLED_APPS = (
     'django.contrib.auth',

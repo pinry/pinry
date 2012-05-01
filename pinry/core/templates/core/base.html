@@ -34,6 +34,14 @@
             </div>
         </div>
 
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         {% block yield %}{% endblock %}
 
         {% new_pin %}
@@ -53,5 +61,6 @@
         {% endif %}
 
         <script src="/static/core/js/pinry.js"></script>
+        <script src="/static/core/js/messages.js"></script>
     </body>
 </html>
