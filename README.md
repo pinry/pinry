@@ -1,7 +1,6 @@
 # Pinry
 
-Pinry is a self-hostable [Pinterest][0] "clone" that has a strong resemblance to
-[Wookmark][1]. (Because I use their jQuery library and like their design.)
+Pinry is a self-hostable [Pinterest][0] and [Wookmark][1] clone.
 
 ![Pinry Screenshot](https://github.com/overshard/pinry/raw/master/screenshot.png)
 
