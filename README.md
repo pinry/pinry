@@ -44,7 +44,7 @@ production environment and create a "pinry/settings/production.py" file.
 ## Jenkins Build Status
 
 For build information on the latest commit head over to
-[Pinry on my Jenkins server][0].
+[Pinry on my Jenkins server][3].
 
 
 [0]: http://pinterest.com/
