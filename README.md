@@ -41,6 +41,13 @@ Following this will get you a development server up and running. If you want a
 production server [Google around][2] for more information on running Django in a
 production environment and create a "pinry/settings/production.py" file.
 
+## Jenkins Build Status
+
+For build information on the latest commit head over to
+[Pinry on my Jenkins server][0].
+
+
 [0]: http://pinterest.com/
 [1]: http://www.wookmark.com/
 [2]: https://www.google.com/search?q=deploy+django+production
+[3]: http://jenkins.bythewood.me/job/pinry/
