@@ -1,7 +1,7 @@
 # ![Pinry](https://github.com/overshard/pinry/raw/master/logo.png)
 
-Pinry is a private, self-hosted, [Pinterest][0] or [Wookmark][1] clone build on
-top of Django and other open web technologies.
+Pinry is a private, self-hosted, [Pinterest][0] inspired by [Wookmark][1] and
+built on top of Django.
 
 ![Pinry Screenshot](https://github.com/overshard/pinry/raw/master/screenshot.png)
 
