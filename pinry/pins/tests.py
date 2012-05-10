@@ -53,7 +53,7 @@ class NewPinTest(TestCase):
 
         # Already Pinned
         response = self.client.post(self.url, {
-            'url': 'https://github.com/overshard/pinry/raw/master/screenshot.png',
+            'url': 'http://github.com/overshard/pinry/raw/master/screenshot.png',
         })
         response = self.client.post(self.url, {
             'url': 'https://github.com/overshard/pinry/raw/master/screenshot.png',
