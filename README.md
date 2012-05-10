@@ -15,18 +15,6 @@ pin something at all with websites now blocking tools like this. I rather
 bypass all these risks and just host it myself.
 
 
-## Plans
-
-Some features that I want to implement, if you know how to implement them then
-please do them for me! I'm very pull-request friendly and will not yell at you
-for bad code, I'll work with you to improve it.
-
- + Add non-image URL support, take "screenshot" of page as a thumbnail.
- + Create a bookmarklet for quick saving.
- + Manual and automatic tagging via description, image alt tags and whatever else I can scrape.
- + Statistics page with graphs for image views, what times of day have the most posts, etc.
-
-
 ## Getting Started
 
 Pinry has three different customizable configurations:
@@ -84,13 +72,48 @@ You'll get useful information on if all my tests are passing, my test coverage,
 and if I'm conforming with pylint and pep8 standards.
 
 
-## As Seen On...
+## Roadmap
+
+ + Non-image URL pinning
+ + Bookmarklet
+ + Tagging, groups, multiple and/or user boards
+ + Statistics/analytics with pretty graphs
+
+
+## As Seen On
 
  + [USA Today](http://www.usatoday.com/tech/products/story/2012-04-27/pinterest-pinry-private-pinning/54584308/1)
  + [Hacker News](http://news.ycombinator.com/item?id=3895618)
  + [The Next Web](http://thenextweb.com/apps/2012/04/27/pinry-is-a-self-hosted-version-of-pinterest-that-gives-you-full-control-of-your-pins/)
  + [Python Weekly](http://us2.campaign-archive2.com/?u=e2e180baf855ac797ef407fc7&id=1f8c766c90&e=292d864a00)
  + [Pycoder's Weekly](http://us4.campaign-archive1.com/?u=9735795484d2e4c204da82a29&id=4f9b37c501)
+
+
+## License (Simplified BSD License)
+
+Copyright (c) Isaac Bythewood  
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 [0]: http://pinterest.com/
