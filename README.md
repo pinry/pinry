@@ -89,7 +89,7 @@ and if I'm conforming with pylint and pep8 standards.
  + [Pycoder's Weekly](http://us4.campaign-archive1.com/?u=9735795484d2e4c204da82a29&id=4f9b37c501)
 
 
-## License (Simplified BSD License)
+## License (Simplified BSD)
 
 Copyright (c) Isaac Bythewood  
 All rights reserved.
