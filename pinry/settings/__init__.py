@@ -49,12 +49,6 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
     messages.INFO: 'alert alert-info',
 }
-PROJECT_APPS = (
-    'pinry.vendor',
-    'pinry.core',
-    'pinry.pins',
-    'pinry.api',
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -62,7 +56,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_jenkins',
     'south',
     'pinry.vendor',
     'pinry.core',

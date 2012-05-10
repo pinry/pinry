@@ -32,7 +32,7 @@ dependencies for PIL installed. (If you are on Ubuntu you can do this by typing
     $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
     $ virtualenv .
-    $ bin/pip install -r requirements.txt
+    $ bin/pip install -r requirements/development.txt
     $ bin/python manage.py syncdb
     $ bin/python manage.py migrate
     $ bin/python manage.py runserver
