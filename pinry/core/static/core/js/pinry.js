@@ -61,7 +61,7 @@ $(window).ready(function () {
           image = data[i];
           html += '<div class="pin">';
               html += '<a class="fancybox" rel="pins" href="'+image.image+'">';
-                  html += '<img src="'+image.thumbnail+'" width="200" height="'+Math.round(image.height/image.width*200)+'">';
+                  html += '<img src="'+image.thumbnail+'" width="200" >';
               html += '</a>';
               html += '<p>'+image.description+'</p>';
           html += '</div>';
