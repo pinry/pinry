@@ -6,10 +6,7 @@ from django.core.urlresolvers import reverse
 class RecentPinsTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse('api:pins-recent', args=[0])
-
-    def test_url(self):
-        self.assertEqual(self.url, '/api/pins/recent/0/')
+        self.url = '/api/pin/?format=json'
 
     def test_status_code(self):
         response = self.client.get(self.url)

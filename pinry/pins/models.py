@@ -23,3 +23,6 @@ class Pin(models.Model):
             temp_img.flush()
             self.image.save(self.url.split('/')[-1], File(temp_img))
         super(Pin, self).save()
+
+    class Meta:
+        ordering = ['-id']

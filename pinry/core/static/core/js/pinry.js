@@ -2,8 +2,8 @@
  * Based on Wookmark's endless scroll.
  */
 $(window).ready(function () {
-    var apiURL = '/api/pins/recent/'
-    var page = 1;
+    var apiURL = '/api/pin/?format=json&offset='
+    var page = 0;
     var handler = null;
     var isLoading = false;
     
@@ -40,7 +40,7 @@ $(window).ready(function () {
         $('#loader').show();
         
         $.ajax({
-            url: apiURL+page,
+            url: apiURL+(page*20),
             success: onLoadData
         });
     };
@@ -49,6 +49,7 @@ $(window).ready(function () {
      * Receives data from the API, creates HTML for images and updates the layout
      */
     function onLoadData(data) {
+        data = data.objects;
         isLoading = false;
         $('#loader').hide();
         
@@ -59,7 +60,7 @@ $(window).ready(function () {
         for(; i<length; i++) {
           image = data[i];
           html += '<div class="pin">';
-              html += '<a class="fancybox" rel="pins" href="'+image.original+'">';
+              html += '<a class="fancybox" rel="pins" href="'+image.image+'">';
                   html += '<img src="'+image.thumbnail+'" width="200" height="'+Math.round(image.height/image.width*200)+'">';
               html += '</a>';
               html += '<p>'+image.description+'</p>';
