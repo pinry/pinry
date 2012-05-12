@@ -3,7 +3,11 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 
-class RecentPinsTest(TestCase): # pylint: disable-msg=R0904
+# pylint: disable-msg=E1103
+# pylint: disable-msg=R0904
+
+
+class RecentPinsTest(TestCase): 
     def setUp(self):
         self.client = Client()
         self.url = reverse('pins:recent-pins')
@@ -13,10 +17,10 @@ class RecentPinsTest(TestCase): # pylint: disable-msg=R0904
 
     def test_status_code(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
+        self.assertEqual(response.status_code, 200)
 
 
-class NewPinTest(TestCase): # pylint: disable-msg=R0904
+class NewPinTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse('pins:new-pin')
@@ -26,29 +30,29 @@ class NewPinTest(TestCase): # pylint: disable-msg=R0904
 
     def test_status_code(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
+        self.assertEqual(response.status_code, 200)
 
     def test_new_pin(self):
         response = self.client.post(self.url, {
             'url': 'https://github.com/overshard/pinry/raw/master/'
                    'screenshot.png',
         })
-        self.assertEqual(response.status_code, 302) # pylint: disable-msg=E1103
-    
-    def test_new_pin_fail(self):
-        # Invalid protocol
-        response = self.client.post(self.url, {
-            'url': 'ftp://github.com/overshard/pinry/raw/master/screenshot.png',
-        })
-        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
+        self.assertEqual(response.status_code, 302)
 
-        # Invalid file type.
+    def test_new_pin_invalid_protocol(self):
+        response = self.client.post(self.url, {
+            'url': 'ftp://github.com/overshard/pinry/raw/master/'
+                   'screenshot.png',
+        })
+        self.assertEqual(response.status_code, 200)
+
+    def test_new_pin_invalid_file_type(self):
         response = self.client.post(self.url, {
             'url': 'https://raw.github.com/overshard/pinry/master/README.md',
         })
-        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
+        self.assertEqual(response.status_code, 200)
 
-        # Already Pinned
+    def test_new_pin_already_pinned(self):
         response = self.client.post(self.url, {
             'url': 'http://github.com/overshard/pinry/raw/master/'
                    'screenshot.png',
@@ -57,4 +61,4 @@ class NewPinTest(TestCase): # pylint: disable-msg=R0904
             'url': 'https://github.com/overshard/pinry/raw/master/'
                    'screenshot.png',
         })
-        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
+        self.assertEqual(response.status_code, 200)
