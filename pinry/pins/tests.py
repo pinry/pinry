@@ -2,10 +2,8 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 
-from .forms import PinForm
 
-
-class RecentPinsTest(TestCase):
+class RecentPinsTest(TestCase): # pylint: disable-msg=R0904
     def setUp(self):
         self.client = Client()
         self.url = reverse('pins:recent-pins')
@@ -15,10 +13,10 @@ class RecentPinsTest(TestCase):
 
     def test_status_code(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
 
 
-class NewPinTest(TestCase):
+class NewPinTest(TestCase): # pylint: disable-msg=R0904
     def setUp(self):
         self.client = Client()
         self.url = reverse('pins:new-pin')
@@ -28,34 +26,35 @@ class NewPinTest(TestCase):
 
     def test_status_code(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
 
     def test_new_pin(self):
         response = self.client.post(self.url, {
-            'url': 'https://github.com/overshard/pinry/raw/master/screenshot.png',
+            'url': 'https://github.com/overshard/pinry/raw/master/'
+                   'screenshot.png',
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 302) # pylint: disable-msg=E1103
     
     def test_new_pin_fail(self):
         # Invalid protocol
         response = self.client.post(self.url, {
             'url': 'ftp://github.com/overshard/pinry/raw/master/screenshot.png',
         })
-        self.assertEqual(response.status_code, 200)
-        #self.assertFormError(response, PinForm(), 'url',
-        #    'Currently only support HTTP and HTTPS protocols, please be sure you include this in the URL.')
+        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
 
         # Invalid file type.
         response = self.client.post(self.url, {
             'url': 'https://raw.github.com/overshard/pinry/master/README.md',
         })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
 
         # Already Pinned
         response = self.client.post(self.url, {
-            'url': 'http://github.com/overshard/pinry/raw/master/screenshot.png',
+            'url': 'http://github.com/overshard/pinry/raw/master/'
+                   'screenshot.png',
         })
         response = self.client.post(self.url, {
-            'url': 'https://github.com/overshard/pinry/raw/master/screenshot.png',
+            'url': 'https://github.com/overshard/pinry/raw/master/'
+                   'screenshot.png',
         })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200) # pylint: disable-msg=E1103
