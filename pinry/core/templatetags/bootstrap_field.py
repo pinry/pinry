@@ -1,11 +1,10 @@
-from django import template
-from django.template import loader, Context
+from django.template import loader, Context, Library
 
 
-register = template.Library()
+register = Library()
 
 
 @register.simple_tag
 def bootstrap_field(field):
-    t = loader.get_template('core/templatetags/bootstrap_field.html')
-    return t.render(Context({'field': field}))
+    template = loader.get_template('core/templatetags/bootstrap_field.html')
+    return template.render(Context({'field': field}))

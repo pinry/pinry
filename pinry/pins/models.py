@@ -1,5 +1,4 @@
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
@@ -11,7 +10,7 @@ import urllib2
 class Pin(models.Model):
     url = models.TextField()
     description = models.TextField(blank=True, null=True)
-    image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200,1000), ))
+    image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200, 1000),))
 
     def __unicode__(self):
         return self.url
