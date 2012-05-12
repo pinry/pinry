@@ -1,5 +1,5 @@
 from django.template.response import TemplateResponse
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -10,12 +10,14 @@ from django.contrib import messages
 def home(request):
     return HttpResponseRedirect(reverse('pins:recent-pins'))
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Thank you for registering, you can now login.')
+            messages.success(request, 'Thank you for registering, you can now '
+                                      'login.')
             return HttpResponseRedirect(reverse('core:login'))
     else:
         form = UserCreationForm()

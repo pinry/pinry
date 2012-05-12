@@ -4,7 +4,7 @@ from tastypie import fields
 from pinry.pins.models import Pin
 
 
-class PinResource(ModelResource):
+class PinResource(ModelResource):  # pylint: disable-msg=R0904
     thumbnail = fields.CharField(readonly=True)
 
     class Meta:
@@ -13,4 +13,5 @@ class PinResource(ModelResource):
         include_resource_uri = False
 
     def dehydrate_thumbnail(self, bundle):
-        return Pin.objects.only('image').get(pk=bundle.data['id']).image.url_200x1000
+        pin = Pin.objects.only('image').get(pk=bundle.data['id'])
+        return pin.image.url_200x1000

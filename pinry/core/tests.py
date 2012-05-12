@@ -3,6 +3,9 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 
+# pylint: disable-msg=E1103
+
+
 class HomeTest(unittest.TestCase):
     def setUp(self):
         self.client = Client()

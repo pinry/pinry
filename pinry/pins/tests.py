@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 # pylint: disable-msg=R0904
 
 
-class RecentPinsTest(TestCase): 
+class RecentPinsTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse('pins:recent-pins')

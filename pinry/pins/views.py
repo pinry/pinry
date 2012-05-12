@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
-from .models import Pin
 from .forms import PinForm
 
 
