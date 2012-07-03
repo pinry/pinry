@@ -1,0 +1,6 @@
+Django==1.4
+South==0.7.4
+PIL==1.1.7
+django-tastypie==0.9.11
+git+git://github.com/vannoppen/django-thumbs.git@v1.0.0#egg=django-thumbs
+

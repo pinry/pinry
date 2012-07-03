@@ -1,11 +1,8 @@
-Django==1.4
-South==0.7.4
-PIL==1.1.7
-django-tastypie==0.9.11
-git+git://github.com/vannoppen/django-thumbs.git@v1.0.0#egg=django-thumbs
+-r include.txt
 
 django-jenkins==0.12.1
 coverage==3.5.2
 pylint==0.25.1
 pep8==1.0.1
 pyflakes==0.5.0
+
