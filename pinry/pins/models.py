@@ -8,7 +8,7 @@ import urllib2
 
 
 class Pin(models.Model):
-    url = models.TextField()
+    url = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200, 1000),))
 
