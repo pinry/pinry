@@ -11,6 +11,7 @@ class Pin(models.Model):
     url = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200, 1000),))
+    published = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.url
