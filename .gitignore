@@ -3,6 +3,7 @@
 /lib/
 /include/
 /local
+/Scripts/
 
 # pip
 /pip-log.txt
