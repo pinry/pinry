@@ -15,6 +15,9 @@ class PinResource(ModelResource):  # pylint: disable-msg=R0904
         queryset = Pin.objects.all()
         resource_name = 'pin'
         include_resource_uri = False
+        filtering = {
+            'published': ['gt'],
+        }
 
     def dehydrate_thumbnail(self, bundle):
         pin = Pin.objects.only('image').get(pk=bundle.data['id'])
