@@ -5,7 +5,17 @@ from .models import Pin
 
 class PinForm(forms.ModelForm):
     url = forms.CharField(label='URL', required=False)
-    image = forms.ImageField(label='Upload', required=False)
+    image = forms.ImageField(label='or Upload', required=False)
+
+
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.fields.keyOrder = (
+            'url',
+            'image',
+            'description',
+        )
+
 
     def check_if_image(self, data):
         # Test file type
