@@ -61,3 +61,4 @@ class PinForm(forms.ModelForm):
 
     class Meta:
         model = Pin
+        exclude = ['submitter']

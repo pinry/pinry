@@ -90,6 +90,24 @@ body {
                 font-weight: normal;
             }
 
+.pin-options {
+    display: none;
+    position: absolute;
+    padding: 5px 7px 4px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: 0 1px 3px #ccc;
+       -moz-box-shadow: 0 1px 3px #ccc;
+            box-shadow: 0 1px 3px #ccc;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+    
+    .pin:hover .pin-options {
+        display: block;
+    }
+
 #form {
     border: 1px solid #ccc;
     background-color: white;

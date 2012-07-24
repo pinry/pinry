@@ -44,7 +44,7 @@
 
         {% block yield %}{% endblock %}
 
-        {% new_pin %}
+        {% new_pin request %}
 
         {% if debug %}
             <script src="/static/vendor/jquery/1.7.2/jquery.js"></script>

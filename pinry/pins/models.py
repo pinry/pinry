@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from django.contrib.auth.models import User
 
 from thumbs import ImageWithThumbsField
 
@@ -8,6 +9,7 @@ import urllib2
 
 
 class Pin(models.Model):
+    submitter = models.ForeignKey(User)
     url = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     image = ImageWithThumbsField(upload_to='pins/pin', sizes=((200, 1000),))
@@ -23,7 +25,7 @@ class Pin(models.Model):
             temp_img.flush()
             # pylint: disable-msg=E1101
             self.image.save(self.url.split('/')[-1], File(temp_img))
-        super(Pin, self).save()
+        super(Pin, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['-id']

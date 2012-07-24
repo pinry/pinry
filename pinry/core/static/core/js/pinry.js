@@ -60,6 +60,11 @@ $(window).ready(function () {
         for(; i<length; i++) {
           image = data[i];
           html += '<div class="pin">';
+              html += '<div class="pin-options">';
+                  html += '<a href="/pins/delete-pin/'+image.id+'">';
+                      html += '<i class="icon-trash"></i>';
+                  html += '</a>';
+              html += '</div>';
               html += '<a class="fancybox" rel="pins" href="'+image.image+'">';
                   html += '<img src="'+image.thumbnail+'" width="200" >';
               html += '</a>';
