@@ -2,6 +2,9 @@ import os
 from django.contrib.messages import constants as messages
 
 
+SITE_NAME = 'Pinry'
+
+
 SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
 
 
@@ -39,6 +42,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+    "pinry.core.context_processors.template_settings",
 )
 
 ROOT_URLCONF = 'pinry.urls'
