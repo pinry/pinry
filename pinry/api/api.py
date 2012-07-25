@@ -9,8 +9,6 @@ from pinry.pins.models import Pin
 
 
 class PinResource(ModelResource):  # pylint: disable-msg=R0904
-    thumbnail = fields.CharField(readonly=True)
-
     class Meta:
         queryset = Pin.objects.all()
         resource_name = 'pin'
@@ -18,10 +16,6 @@ class PinResource(ModelResource):  # pylint: disable-msg=R0904
         filtering = {
             'published': ['gt'],
         }
-
-    def dehydrate_thumbnail(self, bundle):
-        pin = Pin.objects.only('thumbnail').get(pk=bundle.data['id'])
-        return pin.thumbnail.url
 
 
 class UserResource(ModelResource):

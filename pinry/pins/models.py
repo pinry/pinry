@@ -27,13 +27,12 @@ class Pin(models.Model):
             temp_img.write(urllib2.urlopen(self.url).read())
             temp_img.flush()
             self.image.save(self.url.split('/')[-1], File(temp_img))
-        else:
-            super(Pin, self).save()
 
         if not self.thumbnail:
             if not self.image:
                 image = Image.open(temp_img.name)
             else:
+                super(Pin, self).save()
                 image = Image.open(self.image.path)
             size = image.size
             prop = 200 / image.size[0]
