@@ -6,6 +6,7 @@ body {
 .navbar-inner {
     background-image: none;
     background: white;
+    filter: none;
     border-bottom: 1px solid #999;
     height: 48px;
 }
@@ -91,7 +92,9 @@ body {
             }
 
 .pin-options {
+    margin: 5px;
     display: none;
+    right: 20px;
     position: absolute;
     padding: 5px 7px 4px;
     background-color: #eee;
