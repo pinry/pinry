@@ -24,6 +24,9 @@ Pinry has three different customizable configurations:
 Have virtualenv and pip installed. You may also need to have the build
 dependencies for PIL installed.
 
+Note: On Ubuntu you can get the build deps by running
+`sudo apt-get build-dep python-imaging`.
+
     $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
     $ virtualenv .
@@ -31,13 +34,6 @@ dependencies for PIL installed.
     $ bin/python manage.py syncdb
     $ bin/python manage.py migrate
     $ bin/python manage.py runserver
-
-Note: If you are on Ubuntu 12.04 there is a bug in PIL that causes it to not
-build in JPG and PNG support. You'll need to follow all the steps above except
-before `virtualenv .` run `sudo apt-get install python-imaging` and instead of
-`virtualenv .` run `virtualenv --system-site-packages .`. On older versions of
-Ubuntu and older Linux distributions you'll need to install PIL dependencies.
-On Ubuntu this can be done with `sudo apt-get build-dep python-imaging`.
 
 
 ### Jenkins
