@@ -1,6 +1,6 @@
 # ![Pinry](https://github.com/overshard/pinry/raw/master/logo.png)
 
-[![Build Status](https://secure.travis-ci.org/overshard/pinry.png)](http://travis-ci.org/overshard/pinry)
+[![Build Status](https://secure.travis-ci.org/overshard/pinry.png?branch=master)](http://travis-ci.org/overshard/pinry)
 
 Pinry is a private, self-hosted, [Pinterest][0] inspired by [Wookmark][1] and
 built on top of Django. Pinry is currently in Alpha/Development, some upgrades
