@@ -20,7 +20,7 @@ bypass all these risks and just host it myself.
 
 ## Getting Started
 
-Pinry has three different customizable configurations:
+Pinry has two different customizable configurations:
 
 ### Development
 
