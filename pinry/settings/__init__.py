@@ -2,11 +2,17 @@ import os
 from django.contrib.messages import constants as messages
 
 
+SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
+
+
+# Changes the naming on the front-end of the website.
 SITE_NAME = 'Pinry'
+
+# Set to False to disable people from creating new accounts.
 ALLOW_NEW_REGISTRATIONS = True
 
-
-SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
+# Set to False to force users to login before seeing any pins. 
+PUBLIC = True
 
 
 TIME_ZONE = 'America/New_York'
@@ -34,6 +40,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'pinry.core.middleware.Public',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",

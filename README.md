@@ -48,6 +48,19 @@ hundreds of different ways to deploy a Django project and everyone has their own
 preference.
 
 
+### Quick Settings
+
+There are a few settings provided specific to Pinry that allow you to get some
+of the most requested functionality easily.
+
+ + **SITE_NAME**: For quickly changing the name Pinry to something you prefer.
+ + **ALLOW_NEW_REGISTRATIONS**: Set to False to prevent people from registering.
+ + **PUBLIC**: Set to False to require people to register before viewing pins.
+   (Note: Setting PUBLIC to False does still allow registrations. Make sure
+          both PUBLIC and the previous setting are set to False to prevent
+          all public access.)
+
+
 ## Roadmap
 
  + Non-image URL pinning

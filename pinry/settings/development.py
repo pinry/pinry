@@ -13,4 +13,4 @@ DATABASES = {
     }
 }
 
-SECRET_KEY = ''
+SECRET_KEY = 'fake-key'

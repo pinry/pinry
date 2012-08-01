@@ -12,10 +12,14 @@ def home(request):
     return HttpResponseRedirect(reverse('pins:recent-pins'))
 
 
+def private(request):
+    return TemplateResponse(request, 'core/private.html', None)
+
+
 def register(request):
     if not settings.ALLOW_NEW_REGISTRATIONS:
-        messages.error(request, "The admin of this service is currently not "
-                                "allowing new users to register.")
+        messages.error(request, "The admin of this service is not "
+                                "allowing new registrations.")
         return HttpResponseRedirect(reverse('pins:recent-pins'))
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

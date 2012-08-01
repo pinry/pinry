@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% load bootstrap_field %}
+
+
+{% block title %}Private{% endblock %}
+
+{% block yield %}
+    <div class="container">
+        <div class="row">
+            <div id="form" class="span6 offset3">
+                <h1>Private</h1>
+                <p>This website is set to private. You need to login before you
+                    can view any content.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
