@@ -1,21 +1,11 @@
-# virtualenv
 /bin/
 /lib/
 /include/
 /local
-/Scripts/
-
-# pip
 /pip-log.txt
 /build/
-
-# django
 /development.db
 /media/
 /static/
-
-# python
 *.pyc
 
-# jenkins
-/reports/

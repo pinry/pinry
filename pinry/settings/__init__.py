@@ -3,6 +3,7 @@ from django.contrib.messages import constants as messages
 
 
 SITE_NAME = 'Pinry'
+ALLOW_NEW_REGISTRATIONS = True
 
 
 SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
@@ -46,7 +47,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 ROOT_URLCONF = 'pinry.urls'
-WSGI_APPLICATION = 'pinry.wsgi.application'
 LOGIN_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1']
 MESSAGE_TAGS = {
