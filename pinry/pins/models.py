@@ -35,9 +35,10 @@ class Pin(models.Model):
                 super(Pin, self).save()
                 image = Image.open(self.image.path)
             size = image.size
-            prop = 200 / image.size[0]
-            size = (prop*image.size[0], prop*image.size[1])
-            image.resize(size, Image.ANTIALIAS)
+            prop = 200.0 / float(image.size[0])
+            size = (int(prop*float(image.size[0])), int(prop*float(image.size[1])))
+            image.thumbnail(size, Image.ANTIALIAS)
+            print image.size
             temp_thumb = NamedTemporaryFile()
             image.save(temp_thumb.name, 'JPEG')
 
