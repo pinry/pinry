@@ -2,8 +2,9 @@
 /lib/
 /include/
 /local
-/pip-log.txt
+/src/
 /build/
+/pip-log.txt
 /development.db
 /media/
 /static/
