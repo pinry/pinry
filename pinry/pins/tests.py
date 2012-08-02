@@ -3,10 +3,6 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 
 
-# pylint: disable-msg=E1103
-# pylint: disable-msg=R0904
-
-
 class RecentPinsTest(TestCase):
     def setUp(self):
         self.client = Client()

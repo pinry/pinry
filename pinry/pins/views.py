@@ -7,6 +7,8 @@ from .forms import PinForm
 from .models import Pin
 
 
+
+
 def recent_pins(request):
     return TemplateResponse(request, 'pins/recent_pins.html', None)
 
