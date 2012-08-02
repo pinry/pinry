@@ -4,7 +4,7 @@ from django.core.files.temp import NamedTemporaryFile
 from django.contrib.auth.models import User
 
 import urllib2
-import hashlib
+import os
 from PIL import Image
 
 
@@ -22,11 +22,15 @@ class Pin(models.Model):
 
 
     def save(self, *args, **kwargs):
+        hash_name = os.urandom(32).encode('hex')
+
         if not self.image:
             temp_img = NamedTemporaryFile()
             temp_img.write(urllib2.urlopen(self.url).read())
             temp_img.flush()
-            self.image.save(self.url.split('/')[-1], File(temp_img))
+            image = Image.open(temp_img.name)
+            image.save(temp_img.name, 'JPEG')
+            self.image.save(''.join([hash_name, '.jpg']), File(temp_img))
 
         if not self.thumbnail:
             if not self.image:
@@ -38,16 +42,9 @@ class Pin(models.Model):
             prop = 200.0 / float(image.size[0])
             size = (int(prop*float(image.size[0])), int(prop*float(image.size[1])))
             image.thumbnail(size, Image.ANTIALIAS)
-            print image.size
             temp_thumb = NamedTemporaryFile()
             image.save(temp_thumb.name, 'JPEG')
-
-            if self.url:
-                name = self.url.split('/')[-1]
-            else:
-                name = self.image.name
-
-            self.thumbnail.save(name, File(temp_thumb))
+            self.thumbnail.save(''.join([hash_name, '.jpg']), File(temp_thumb))
 
         super(Pin, self).save(*args, **kwargs)
 
