@@ -27,6 +27,7 @@ class PinResource(ModelResource):  # pylint: disable-msg=R0904
 
         if 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
+
         return orm_filters
 
     def dehydrate_tags(self, bundle):

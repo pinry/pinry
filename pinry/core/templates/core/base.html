@@ -18,7 +18,9 @@
     <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <a href="{% url core:home %}" class="brand">{{ site_name }}</a>
+                <a href="{% url core:home %}" class="brand pull-left">{{ site_name }}</a>
+
+                <div class="tags pull-left"></div>
 
                 <ul class="nav pull-right">
                     {% if user.is_authenticated %}

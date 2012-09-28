@@ -59,6 +59,15 @@ body {
     text-align: center;
 }
 
+
+.tags {
+    padding: 13px 0;
+}
+
+    .tag {
+        cursor: pointer;
+    }
+
 #pins {
     top: 70px;
     position: absolute;
