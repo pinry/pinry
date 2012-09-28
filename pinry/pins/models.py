@@ -3,6 +3,7 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.contrib.auth.models import User
 
+from taggit.managers import TaggableManager
 import urllib2
 import os
 from PIL import Image
@@ -15,6 +16,7 @@ class Pin(models.Model):
     image = models.ImageField(upload_to='pins/pin/originals/')
     thumbnail = models.ImageField(upload_to='pins/pin/thumbnails/')
     published = models.DateTimeField(auto_now_add=True)
+    tags = TaggableManager()
 
 
     def __unicode__(self):

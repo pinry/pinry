@@ -20,6 +20,7 @@ def new_pin(request):
             pin = form.save(commit=False)
             pin.submitter = request.user
             pin.save()
+            form.save_m2m()
             messages.success(request, 'New pin successfully added.')
             return HttpResponseRedirect(reverse('pins:recent-pins'))
         else:

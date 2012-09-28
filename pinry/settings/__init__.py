@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'compressor',
+    'taggit',
     'pinry.vendor',
     'pinry.core',
     'pinry.pins',

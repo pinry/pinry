@@ -5,4 +5,5 @@ django-tastypie==0.9.11
 django_compressor==1.2
 cssmin==0.1.4
 jsmin==2.0.2
+-e git://github.com/hcarvalhoalves/django-taggit.git@e0f9642d7b94c8e6c0feb520d96bb6ae4d78a4d0#egg=django-taggit
 

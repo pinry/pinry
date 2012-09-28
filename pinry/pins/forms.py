@@ -1,11 +1,14 @@
 from django import forms
 
+from taggit.forms import TagField
+
 from .models import Pin
 
 
 class PinForm(forms.ModelForm):
     url = forms.CharField(label='URL', required=False)
     image = forms.ImageField(label='or Upload', required=False)
+    tags = TagField()
 
 
     def __init__(self, *args, **kwargs):
@@ -14,6 +17,7 @@ class PinForm(forms.ModelForm):
             'url',
             'image',
             'description',
+            'tags',
         )
 
 

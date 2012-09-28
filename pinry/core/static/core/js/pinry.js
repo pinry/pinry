@@ -68,7 +68,14 @@ $(window).ready(function () {
               html += '<a class="fancybox" rel="pins" href="'+image.image+'">';
                   html += '<img src="'+image.thumbnail+'" width="200" >';
               html += '</a>';
-              html += '<p>'+image.description+'</p>';
+              if (image.description) html += '<p>'+image.description+'</p>';
+              if (image.tags) {
+                  html += '<p>';
+                  for (tag in image.tags) {
+                      html += image.tags[tag] + ', ';
+                  }
+                  html += '</p>';
+              }
           html += '</div>';
         }
         
