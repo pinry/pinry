@@ -50,7 +50,7 @@ function loadData(tag) {
         else $('.tags').html('');
     }
 
-    var loadURL = apiURL+(page*20);
+    var loadURL = apiURL+(page*30);
     if (globalTag !== null) loadURL += "&tag=" + tag;
     
     $.ajax({
