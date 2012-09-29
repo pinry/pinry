@@ -40,7 +40,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'pinry.core.middleware.Public',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (

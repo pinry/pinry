@@ -33,7 +33,7 @@ class NewPinTest(TestCase):
             'url': 'https://github.com/overshard/pinry/raw/master/'
                    'screenshot.png',
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_new_pin_invalid_protocol(self):
         response = self.client.post(self.url, {

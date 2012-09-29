@@ -12,7 +12,6 @@
                 <h1>New Pin</h1>
                 {{ form.non_field_errors }}
                 <form enctype="multipart/form-data" action="{% url pins:new-pin %}" method="post" class="form-horizontal">
-                    {% csrf_token %}
                     {% for field in form %}
                         {% bootstrap_field field %}
                     {% endfor %}
