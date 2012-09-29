@@ -63,7 +63,7 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
     messages.INFO: 'alert alert-info',
 }
-API_LIMIT_PER_PAGE = 20
+API_LIMIT_PER_PAGE = 30
 
 INSTALLED_APPS = (
     'django.contrib.auth',
