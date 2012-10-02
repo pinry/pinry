@@ -11,6 +11,7 @@
             <div id="form" class="span6 offset3">
                 <h1>Register</h1>
                 <form action="{% url core:register %}" method="post" class="form-horizontal">
+                    {% csrf_token %}
                     {% for field in form %}
                         {% bootstrap_field field %}
                     {% endfor %}
