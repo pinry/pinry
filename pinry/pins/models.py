@@ -31,6 +31,8 @@ class Pin(models.Model):
             temp_img.write(urllib2.urlopen(self.url).read())
             temp_img.flush()
             image = Image.open(temp_img.name)
+            if image.mode != "RGB":
+                image = image.convert("RGB")
             image.save(temp_img.name, 'JPEG')
             self.image.save(''.join([hash_name, '.jpg']), File(temp_img))
 
@@ -45,6 +47,8 @@ class Pin(models.Model):
             size = (int(prop*float(image.size[0])), int(prop*float(image.size[1])))
             image.thumbnail(size, Image.ANTIALIAS)
             temp_thumb = NamedTemporaryFile()
+            if image.mode != "RGB":
+                image = image.convert("RGB")
             image.save(temp_thumb.name, 'JPEG')
             self.thumbnail.save(''.join([hash_name, '.jpg']), File(temp_thumb))
 
