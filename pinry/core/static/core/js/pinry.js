@@ -41,13 +41,22 @@ function loadData(tag) {
 
     if (tag !== undefined) {
         globalTag = tag;
+        window.history.pushState(tag, 'Pinry - Tag - '+tag, '/pins/tag/'+tag+'/');
+    } else if (url(2) == 'tag') {
+        tag = url(3);
+        globalTag = tag;
+        window.history.pushState(tag, 'Pinry - Tag - '+tag, '/pins/tag/'+tag+'/');
     }
 
-    if (tag !== undefined && page != 0) {
+    if (tag !== undefined) {
         $('#pins').html('');
         page = 0;
-        if (tag != null) $('.tags').html('<span class="label tag" onclick="loadData(null)">' + tag + ' x</span>');
-        else $('.tags').html('');
+        if (tag != null)
+            $('.tags').html('<span class="label tag" onclick="loadData(null)">' + tag + ' x</span>');
+        else {
+            $('.tags').html('');
+            window.history.pushState(tag, 'Pinry - Recent Pins', '/pins/');
+        }
     }
 
     var loadURL = apiURL+(page*30);
