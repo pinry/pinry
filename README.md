@@ -22,6 +22,7 @@ bypass all these risks and just host it myself.
 
 Pinry has two different customizable configurations:
 
+
 ### Development
 
 Have virtualenv and pip installed. You may also need to have the build
@@ -33,7 +34,7 @@ Note: On Ubuntu you can get the build deps by running
     $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
     $ virtualenv .
-    $ bin/pip install -r requirements/development.txt
+    $ bin/pip install -r development.txt
     $ bin/python manage.py syncdb
     $ bin/python manage.py migrate
     $ bin/python manage.py runserver
