@@ -34,7 +34,7 @@ Note: On Ubuntu you can get the build deps by running
     $ git clone git://github.com/overshard/pinry.git
     $ cd pinry
     $ virtualenv .
-    $ bin/pip install -r development.txt
+    $ bin/pip install -r requirements.txt
     $ bin/python manage.py syncdb
     $ bin/python manage.py migrate
     $ bin/python manage.py runserver
