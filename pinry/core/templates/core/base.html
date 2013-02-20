@@ -1,5 +1,6 @@
 {% load new_pin %}
 {% load compress %}
+{% load verbatim %}
 
 <!DOCTYPE html>
 <html>
@@ -46,13 +47,35 @@
 
         {% new_pin request %}
 
+        {% verbatim %}
+        <script id="pins-template" type="text/x-handlebars-template">
+            {{#each pins}}
+            <div class="pin">
+                <img src="{{thumbnail}}">
+                {{#if description}}
+                    <p>{{description}}</p>
+                {{/if}}
+                {{#if tags}}
+                    <p>
+                        {{#each tags}}
+                            <span class="label">{{this}}</span>
+                        {{/each}}
+                    </p>
+                {{/if}}
+            </div>
+            {{/each}}
+        </script>
+        {% endverbatim %}
+
         {% compress js %}
             <script src="/static/vendor/jquery/1.7.2/jquery.js"></script>
             <script src="/static/vendor/bootstrap/2.0.3/js/bootstrap.js"></script>
-            <script src="/static/vendor/wookmark/0.5/jquery.wookmark.js"></script>
-            <script src="/static/vendor/fancybox/2.0.6/jquery.fancybox.js"></script>
-            <script src="/static/vendor/imagesloaded/2.0.1/jquery.imagesloaded.js"></script>
-            <script src="/static/vendor/js-url/1.7.2/js-url.js"></script>
+            <script src="/static/vendor/handlebars/handlebars.js"></script>
+
+            <script>
+                var username = "{{ user.username }}";
+                var isSuperuser = {{ user.is_superuser|lower }};
+            </script>
 
             <script src="/static/core/js/pinry.js"></script>
             <script src="/static/core/js/messages.js"></script>

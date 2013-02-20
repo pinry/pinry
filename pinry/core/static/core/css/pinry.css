@@ -70,18 +70,14 @@ body {
 
 #pins {
     top: 70px;
-    position: absolute;
-    background: #eee;
-    z-index: 100;
 }
 
     .pin {
         background: #fff;
         width: 200px;
-        float: left;
         border: 1px solid #ccc;
         padding: 20px;
-        display: none;
+        position: absolute;
     }
 
         .pin img {

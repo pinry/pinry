@@ -1,7 +1,7 @@
 Django==1.4.4
 South==0.7.4
 Pillow==1.7.7
-django-tastypie==0.9.11
+django-tastypie==0.9.12
 django_compressor==1.2
 cssmin==0.1.4
 jsmin==2.0.2
