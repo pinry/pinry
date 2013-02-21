@@ -11,7 +11,7 @@ $(window).load(function() {
         var blocks = blockContainer.children('.pin');
 
         // Size of blocks/pins and the spacing between them
-        var blockMargin = 20;
+        var blockMargin = 15;
         var blockWidth = 240;
 
         // How many items we can fit in a row and our array for the row heights
@@ -67,6 +67,10 @@ $(window).load(function() {
 
         // Fetch our pins from the api using our current offset
         $.get('/api/v1/pin/?format=json&offset='+String(offset), function(pins) {
+            // Set which items are editable by the current user
+            for (var i=0; i < pins.objects.length; i++) 
+                pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser);
+
             // Use the fetched pins as our context for our pins template
             var template = Handlebars.compile($('#pins-template').html());
             var html = template({pins: pins.objects});

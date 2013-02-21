@@ -11,7 +11,7 @@ class UserResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
-        excludes = ['email', 'password', 'is_superuser', 'first_name',
+        excludes = ['password', 'is_superuser', 'first_name',
             'last_name', 'is_active', 'is_staff', 'last_login', 'date_joined']
         include_resource_uri = False
 

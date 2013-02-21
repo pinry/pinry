@@ -66,15 +66,6 @@ body {
     text-align: center;
 }
 
-
-.tags {
-    padding: 13px 0;
-}
-
-    .tag {
-        cursor: pointer;
-    }
-
 #pins {
     top: 70px;
 }
@@ -83,14 +74,43 @@ body {
         background: #fff;
         width: 200px;
         box-shadow: 0 1px 3px #bbb;
-        padding: 20px;
+        -moz-box-shadow: 0 1px 3px #bbb;
+        -webkit-box-shadow: 0 1px 3px #bbb;
+        padding: 15px;
         position: absolute;
     }
+
+        .pin .editable {
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            position: absolute;
+            right: 23px;
+            top: 23px;
+            display: none;
+        }
+
+        .pin:hover .editable {
+            display: block;
+        }
+
+            .pin .editable .borderable {
+                padding: 7px 8px 5px;
+                border-radius: 4px;
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+                background: rgba(0, 0, 0, 0.8);
+                cursor: pointer;
+            }
 
         .pin img {
             width: 200px;
             padding: 0;
             margin: 0;
+            cursor: -webkit-zoom-in;
+            cursor: -moz-zoom-in;
         }
 
         .pin p {
@@ -101,6 +121,36 @@ body {
             .pin strong {
                 color: #777;
                 font-weight: normal;
+            }
+
+        .pin-footer {
+            background-color: #eee;
+            font-weight: bold;
+            margin: 0 -15px -15px -15px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #777;
+            font-size: 12px;
+            cursor: default;
+        }
+
+            .pin-footer .dim {
+                font-weight: normal;
+                color: #999;
+            }
+
+            .pin-footer .avatar {
+                width: 30px;
+                height: 30px;
+                background-color: #555;
+                border-radius: 4px;
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+            }
+
+            .pin-footer .text {
+                width: 155px;
+                margin-top: -3px;
             }
 
 .pin-options {

@@ -51,8 +51,7 @@
 
         {% compress js inline %}
         <script>
-            var username = "{{ user.username }}";
-            var isSuperuser = {{ user.is_superuser|lower }};
+            var currentUser = "{{ user.username }}";
         </script>
         {% endcompress %}
 

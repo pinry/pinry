@@ -3,9 +3,10 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.conf import settings
+
+from .forms import UserCreationForm
 
 
 def home(request):
