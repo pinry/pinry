@@ -4,7 +4,7 @@
     <div class="modal-header">
         <h3>New Pin</h3>
     </div>
-    <form enctype="multipart/form-data" action="{% url pins:new-pin %}" method="post" class="form-horizontal">
+    <form enctype="multipart/form-data" action="{% url 'pins:new-pin' %}" method="post" class="form-horizontal">
         <div class="modal-body">
             {% for field in form %}
                 {% bootstrap_field field %}

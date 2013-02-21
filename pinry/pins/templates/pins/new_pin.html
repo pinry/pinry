@@ -11,13 +11,13 @@
             <div class="span6 offset3" id="form">
                 <h1>New Pin</h1>
                 {{ form.non_field_errors }}
-                <form enctype="multipart/form-data" action="{% url pins:new-pin %}" method="post" class="form-horizontal">
+                <form enctype="multipart/form-data" action="{% url 'pins:new-pin' %}" method="post" class="form-horizontal">
                     {% for field in form %}
                         {% bootstrap_field field %}
                     {% endfor %}
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Post</button>
-                        <a href="{% url core:home %}" class="btn">Cancel</a>
+                        <a href="{% url 'core:home' %}" class="btn">Cancel</a>
                     </div>
                 </form>
             </div>
