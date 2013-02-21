@@ -1,4 +1,4 @@
--e http://github.com/django/django/tarball/stable/1.5.x#egg=Django
+http://github.com/django/django/tarball/stable/1.5.x#egg=Django
 South
 Pillow
 django-tastypie
