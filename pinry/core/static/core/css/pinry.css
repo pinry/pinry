@@ -1,33 +1,40 @@
 body {
     margin-top: 70px;
-    background: url("/static/core/img/background.png");
+    background: #eee;
 }
 
 .navbar-inner {
     background-image: none;
-    background: white;
+    background: #222;
     filter: none;
-    border-bottom: 1px solid #999;
     height: 48px;
 }
 
     .navbar .brand {
         margin-left: 0;
-        color: #333;
+        color: #fff;
         font-family: 'Monoton';
         font-size: 30px;
     }
 
     .navbar .nav > li > a {
         color: #333;
+        background: #ddd;
         text-shadow: none;
-        border-left: 1px solid #ccc;
-        padding: 14px 20px 15px;
+        padding: 3px 13px;
+        margin: 12px 7px;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+
+    .navbar .nav > li:last-child > a {
+        margin-right: 14px;
     }
 
     .navbar .nav > li > a:hover {
-        color: #333;
-        text-decoration: underline;
+        color: #ddd;
+        background: #275173;
     }
 
 .messages {
@@ -75,7 +82,7 @@ body {
     .pin {
         background: #fff;
         width: 200px;
-        border: 1px solid #ccc;
+        box-shadow: 0 1px 3px #bbb;
         padding: 20px;
         position: absolute;
     }

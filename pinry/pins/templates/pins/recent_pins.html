@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load verbatim %}
 
 {% block title %}Recent Pins{% endblock %}
 
@@ -6,9 +7,34 @@
     <div id="pins"></div>
     <div class="container spinner">
         <div class="row">
-            <div class="span2 offset5">
+            <div class="span12" align="center">
                 <img src="/static/core/img/loader.gif" alt="Loader">
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block templates %}
+    {% verbatim %}
+        <script id="pins-template" type="text/x-handlebars-template">
+            {{#each pins}}
+            <div class="pin">
+                {{#if editable}}
+                    <i class="icon-white icon-pencil"></i>
+                {{/if}}
+                <img src="{{thumbnail}}" />
+                {{#if description}}
+                    <p>{{description}}</p>
+                {{/if}}
+                {{#if tags}}
+                    <p>
+                        {{#each tags}}
+                            <span class="label">{{this}}</span>
+                        {{/each}}
+                    </p>
+                {{/if}}
+            </div>
+            {{/each}}
+        </script>
+    {% endverbatim %}
 {% endblock %}

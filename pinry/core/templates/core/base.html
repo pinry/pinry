@@ -1,12 +1,13 @@
+{% spaceless %}
 {% load new_pin %}
 {% load compress %}
-{% load verbatim %}
 
 <!DOCTYPE html>
 <html>
     <head>
         <title>{{ site_name }} - {% block title %}{% endblock %}</title>
 
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monoton">
         {% compress css %}
             <link rel="stylesheet" href="/static/vendor/bootstrap/2.0.3/css/bootstrap.css">
             <link rel="stylesheet" href="/static/vendor/fancybox/2.0.6/jquery.fancybox.css">
@@ -14,7 +15,6 @@
             <link rel="stylesheet" href="/static/core/css/pinry.css">
         {% endcompress %}
 
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Monoton">
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -47,38 +47,23 @@
 
         {% new_pin request %}
 
-        {% verbatim %}
-        <script id="pins-template" type="text/x-handlebars-template">
-            {{#each pins}}
-            <div class="pin">
-                <img src="{{thumbnail}}">
-                {{#if description}}
-                    <p>{{description}}</p>
-                {{/if}}
-                {{#if tags}}
-                    <p>
-                        {{#each tags}}
-                            <span class="label">{{this}}</span>
-                        {{/each}}
-                    </p>
-                {{/if}}
-            </div>
-            {{/each}}
+        {% block templates %}{% endblock %}
+
+        {% compress js inline %}
+        <script>
+            var username = "{{ user.username }}";
+            var isSuperuser = {{ user.is_superuser|lower }};
         </script>
-        {% endverbatim %}
+        {% endcompress %}
 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         {% compress js %}
-            <script src="/static/vendor/jquery/1.7.2/jquery.js"></script>
             <script src="/static/vendor/bootstrap/2.0.3/js/bootstrap.js"></script>
-            <script src="/static/vendor/handlebars/handlebars.js"></script>
-
-            <script>
-                var username = "{{ user.username }}";
-                var isSuperuser = {{ user.is_superuser|lower }};
-            </script>
+            <script src="/static/vendor/handlebars/1.0.0/handlebars.js"></script>
 
             <script src="/static/core/js/pinry.js"></script>
             <script src="/static/core/js/messages.js"></script>
         {% endcompress %}
     </body>
 </html>
+{% endspaceless %}

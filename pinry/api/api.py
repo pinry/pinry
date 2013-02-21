@@ -1,5 +1,6 @@
 from tastypie.resources import ModelResource
 from tastypie import fields
+from tastypie.authorization import DjangoAuthorization
 
 from django.contrib.auth.models import User
 
@@ -15,7 +16,7 @@ class UserResource(ModelResource):
         include_resource_uri = False
 
 
-class PinResource(ModelResource):  # pylint: disable-msg=R0904
+class PinResource(ModelResource):
     tags = fields.ListField()
     submitter = fields.ForeignKey(UserResource, 'submitter', full=True)
 
@@ -27,6 +28,7 @@ class PinResource(ModelResource):  # pylint: disable-msg=R0904
             'published': ['gt'],
             'submitter': ['exact']
         }
+        authorization = DjangoAuthorization()
 
     def build_filters(self, filters=None):
         if filters is None:
