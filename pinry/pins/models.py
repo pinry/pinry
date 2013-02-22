@@ -1,12 +1,13 @@
 from django.db import models
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
-from django.contrib.auth.models import User
 
 from taggit.managers import TaggableManager
 import urllib2
 import os
 from PIL import Image
+
+from pinry.core.models import User
 
 
 class Pin(models.Model):
