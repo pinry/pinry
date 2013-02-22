@@ -2,12 +2,17 @@ from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
 
-from django.contrib.auth.models import User
+from pinry.core.models import User
 
 from pinry.pins.models import Pin
 
 
 class UserResource(ModelResource):
+    gravatar = fields.CharField()
+
+    def dehydrate_gravatar(self, bundle):
+        return bundle.obj.gravatar
+
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
