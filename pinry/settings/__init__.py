@@ -79,3 +79,5 @@ INSTALLED_APPS = (
     'pinry.pins',
     'pinry.api',
 )
+
+AUTHENTICATION_BACKENDS = ('pinry.core.auth.backends.CombinedAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
