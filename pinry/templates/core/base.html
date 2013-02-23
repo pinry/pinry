@@ -1,25 +1,21 @@
 {% spaceless %}
-{% load new_pin %}
-{% load compress %}
+{% load compress new_pin %}
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ site_name }} - {% block title %}{% endblock %}</title>
+        <title>{{ SITE_NAME }} - {% block title %}{% endblock %}</title>
 
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monoton">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css">
         {% compress css %}
-            <link rel="stylesheet" href="/static/vendor/bootstrap/2.0.3/css/bootstrap.css">
-            <link rel="stylesheet" href="/static/vendor/fancybox/2.0.6/jquery.fancybox.css">
-
-            <link rel="stylesheet" href="/static/core/css/pinry.css">
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/pinry.css">
         {% endcompress %}
-
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <a href="{% url 'core:home' %}" class="brand pull-left">{{ site_name }}</a>
+                <a href="{% url 'core:home' %}" class="brand pull-left">{{ SITE_NAME }}</a>
 
                 <div class="tags pull-left"></div>
 
@@ -50,18 +46,18 @@
         {% block templates %}{% endblock %}
 
         {% compress js inline %}
-        <script>
-            var currentUser = "{{ user.username }}";
-        </script>
+            <script>
+                var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
+                    currentUser = "{{ user.username }}";
+            </script>
         {% endcompress %}
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
         {% compress js %}
-            <script src="/static/vendor/bootstrap/2.0.3/js/bootstrap.js"></script>
-            <script src="/static/vendor/handlebars/1.0.0/handlebars.js"></script>
-
-            <script src="/static/core/js/pinry.js"></script>
-            <script src="/static/core/js/messages.js"></script>
+            <script src="{{ STATIC_URL }}js/pinry.js"></script>
+            <script src="{{ STATIC_URL }}js/messages.js"></script>
         {% endcompress %}
     </body>
 </html>

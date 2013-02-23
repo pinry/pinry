@@ -87,7 +87,7 @@ $(window).load(function() {
             });
 
             // Up our offset, it's currently defined as 30 in our settings
-            offset += 30;
+            offset += apiLimitPerPage;
         });
     }
 

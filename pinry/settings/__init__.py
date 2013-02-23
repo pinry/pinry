@@ -21,10 +21,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media/')
+
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
+TEMPLATE_DIRS = [os.path.join(SITE_ROOT, 'pinry/templates')]
+STATICFILES_DIRS = [os.path.join(SITE_ROOT, 'pinry/static')]
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -43,15 +47,20 @@ MIDDLEWARE_CLASSES = (
     'pinry.core.middleware.Public',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    "django.contrib.messages.context_processors.messages",
-    "pinry.core.context_processors.template_settings",
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'pinry.core.context_processors.template_settings',
 )
+AUTHENTICATION_BACKENDS = (
+    'pinry.core.auth.backends.CombinedAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 COMPRESS_CSS_FILTERS = ['compressor.filters.cssmin.CSSMinFilter']
 ROOT_URLCONF = 'pinry.urls'
@@ -65,6 +74,7 @@ MESSAGE_TAGS = {
 }
 API_LIMIT_PER_PAGE = 30
 
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,10 +84,7 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     'taggit',
-    'pinry.vendor',
     'pinry.core',
     'pinry.pins',
     'pinry.api',
 )
-
-AUTHENTICATION_BACKENDS = ('pinry.core.auth.backends.CombinedAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
