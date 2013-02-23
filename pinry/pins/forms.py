@@ -11,9 +11,6 @@ class PinForm(forms.Form):
     description = forms.CharField(label='Description', required=False, widget=forms.Textarea)
     tags = TagField()
 
-    def __init__(self, *args, **kwargs):
-        super(forms.Form, self).__init__(*args, **kwargs)
-
     def check_if_image(self, data):
         # Test file type
         image_file_types = ['png', 'gif', 'jpeg', 'jpg']
