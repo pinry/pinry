@@ -22,8 +22,16 @@ class UserResource(ModelResource):
 
 
 class PinResource(ModelResource):
+    images = fields.DictField()
     tags = fields.ListField()
     submitter = fields.ForeignKey(UserResource, 'submitter', full=True)
+
+    def dehydrate_images(self, bundle):
+        images = {}
+        for type in ['standard', 'thumbnail', 'original']:
+            image_obj = getattr(bundle.obj, type, None)
+            images[type] = {'url': image_obj.image.url, 'width': image_obj.width, 'height': image_obj.height}
+        return images
 
     class Meta:
         queryset = Pin.objects.all()
@@ -33,6 +41,7 @@ class PinResource(ModelResource):
             'published': ['gt'],
             'submitter': ['exact']
         }
+        fields = ['submitter', 'tags', 'published', 'description', 'url']
         authorization = DjangoAuthorization()
 
     def build_filters(self, filters=None):

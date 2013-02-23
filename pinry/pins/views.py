@@ -7,8 +7,6 @@ from .forms import PinForm
 from .models import Pin
 
 
-
-
 def recent_pins(request):
     return TemplateResponse(request, 'pins/recent_pins.html', None)
 
@@ -17,10 +15,9 @@ def new_pin(request):
     if request.method == 'POST':
         form = PinForm(request.POST, request.FILES)
         if form.is_valid():
-            pin = form.save(commit=False)
-            pin.submitter = request.user
-            pin.save()
-            form.save_m2m()
+            pin = Pin.objects.create(url=form.cleaned_data['url'], submitter=request.user,
+                                     description=form.cleaned_data['description'])
+            pin.tags.add(*form.cleaned_data['tags'])
             messages.success(request, 'New pin successfully added.')
             return HttpResponseRedirect(reverse('pins:recent-pins'))
         else:
@@ -44,6 +41,5 @@ def delete_pin(request, pin_id):
                                     'delete this pin.')
     except Pin.DoesNotExist:
         messages.error(request, 'Pin with the given id does not exist.')
-        
 
     return HttpResponseRedirect(reverse('pins:recent-pins'))

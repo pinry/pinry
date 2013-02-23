@@ -5,21 +5,14 @@ from taggit.forms import TagField
 from .models import Pin
 
 
-class PinForm(forms.ModelForm):
+class PinForm(forms.Form):
     url = forms.CharField(label='URL', required=False)
     image = forms.ImageField(label='or Upload', required=False)
+    description = forms.CharField(label='Description', required=False, widget=forms.Textarea)
     tags = TagField()
 
-
     def __init__(self, *args, **kwargs):
-        super(forms.ModelForm, self).__init__(*args, **kwargs)
-        self.fields.keyOrder = (
-            'url',
-            'image',
-            'description',
-            'tags',
-        )
-
+        super(forms.Form, self).__init__(*args, **kwargs)
 
     def check_if_image(self, data):
         # Test file type
@@ -62,7 +55,3 @@ class PinForm(forms.ModelForm):
             raise forms.ValidationError("Need either a URL or Upload.")
 
         return cleaned_data
-
-    class Meta:
-        model = Pin
-        exclude = ['submitter', 'thumbnail']

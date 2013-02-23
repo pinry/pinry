@@ -47,8 +47,8 @@
                         </div>
                     </div>
                 {{/if}}
-                <a href="{{image}}" class="lightbox" data-username="{{submitter.username}}" data-tags="{{tags}}" data-gravatar="{{submitter.gravatar}}">
-                    <img src="{{thumbnail}}" />
+                <a href="{{images.standard.url}}" class="lightbox" data-username="{{submitter.username}}" data-tags="{{tags}}" data-gravatar="{{submitter.gravatar}}">
+                    <img src="{{images.thumbnail.url}}" />
                 </a>
                 {{#if description}}
                     <p>{{description}}</p>
