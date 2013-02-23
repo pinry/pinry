@@ -1,15 +1,13 @@
 import hashlib
-import os
-import urllib2
 
-from cStringIO import StringIO
 from django.db import models
-from django.conf import settings
-from django.core.files.uploadedfile import InMemoryUploadedFile
+
 from taggit.managers import TaggableManager
 
-from pinry.core.models import User
-from . import utils
+from ..core.models import User
+from .managers import OriginalImageManager
+from .managers import StandardImageManager
+from .managers import ThumbnailManager
 
 
 def hashed_upload_to(prefix, instance, filename):
@@ -37,43 +35,6 @@ def thumbnail_upload_to(instance, filename):
 
 def standard_upload_to(instance, filename):
     return hashed_upload_to('image/standard/by-md5', instance, filename)
-
-
-class OriginalImageManager(models.Manager):
-    def create_for_url(self, url):
-        buf = StringIO()
-        buf.write(urllib2.urlopen(url).read())
-        fname = url.split('/')[-1]
-        temporary_file = InMemoryUploadedFile(buf, "image", fname,
-                                              content_type=None, size=buf.tell(), charset=None)
-        temporary_file.name = fname
-        return OriginalImage.objects.create(image=temporary_file)
-
-
-class BaseImageManager(models.Manager):
-    def get_or_create_for_id_class(self, original_id, cls, image_size):
-        original = OriginalImage.objects.get(pk=original_id)
-        buf = StringIO()
-        img = utils.scale_and_crop(original.image, image_size)
-        img.save(buf, img.format, **img.info)
-        original_dir, original_file = os.path.split(original.image.name)
-        file_obj = InMemoryUploadedFile(buf, "image", original_file, None, buf.tell(), None)
-        image = cls.objects.create(original=original, image=file_obj)
-
-        return image
-
-    def get_or_create_for_id(self, original_id):
-        raise NotImplementedError()
-
-
-class StandardImageManager(BaseImageManager):
-    def get_or_create_for_id(self, original_id):
-        return self.get_or_create_for_id_class(original_id, StandardImage, settings.IMAGE_SIZES['standard'])
-
-
-class ThumbnailManager(BaseImageManager):
-    def get_or_create_for_id(self, original_id):
-        return self.get_or_create_for_id_class(original_id, Thumbnail, settings.IMAGE_SIZES['thumbnail'])
 
 
 class Image(models.Model):
@@ -120,8 +81,8 @@ class Pin(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.original = OriginalImage.objects.create_for_url(self.url)
-            self.standard = StandardImage.objects.get_or_create_for_id(self.original.pk)
-            self.thumbnail = Thumbnail.objects.get_or_create_for_id(self.original.pk)
+            self.standard = StandardImage.objects.get_or_create_for(self.original)
+            self.thumbnail = Thumbnail.objects.get_or_create_for(self.original)
         super(Pin, self).save(*args, **kwargs)
 
     class Meta:
