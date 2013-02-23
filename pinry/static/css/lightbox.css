@@ -4,9 +4,32 @@
     left: 0;
     right: 0;
     position: absolute;
+    z-index: 9001;
 }
 
     .lightbox-wrapper {
+        border: 1px solid #bbb;
         position: absolute;
         left: 50%;
     }
+
+        .lightbox-data {
+            background: white;
+        }
+
+            .lightbox-data .avatar img {
+                width: 40px;
+                height: 40px;
+                padding: 5px;
+            }
+
+            .lightbox-data .text {
+                margin-top: 3px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .lightbox-data .text .dim {
+                color: #999;
+                font-size: 14px;
+            }
