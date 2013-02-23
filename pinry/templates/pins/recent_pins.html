@@ -15,6 +15,14 @@
 
 {% block templates %}
     {% verbatim %}
+        <script id="lightbox-template" type="text/x-handlebars-template">
+            <div class="lightbox-background">
+                <div class="lightbox-wrapper">
+                    <img src="{{image}}" />
+                </div>
+            </div>
+        </script>
+
         <script id="pins-template" type="text/x-handlebars-template">
             {{#each pins}}
             <div class="pin">

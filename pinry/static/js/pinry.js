@@ -45,6 +45,7 @@ $(window).load(function() {
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
+        lightbox(blocks);
         $('.spinner').css('display', 'none');
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
     }
@@ -63,7 +64,6 @@ $(window).load(function() {
             // Set which items are editable by the current user
             for (var i=0; i < pins.objects.length; i++) 
                 pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser);
-                console.log(pins.objects);
 
             // Use the fetched pins as our context for our pins template
             var template = Handlebars.compile($('#pins-template').html());
