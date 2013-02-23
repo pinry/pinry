@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css">
         {% compress css %}
             <link rel="stylesheet" href="{{ STATIC_URL }}css/pinry.css">
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/messages.css">
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/lightbox.css">
         {% endcompress %}
     </head>
     <body>
@@ -58,6 +60,7 @@
         {% compress js %}
             <script src="{{ STATIC_URL }}js/pinry.js"></script>
             <script src="{{ STATIC_URL }}js/messages.js"></script>
+            <script src="{{ STATIC_URL }}js/lightbox.js"></script>
         {% endcompress %}
     </body>
 </html>

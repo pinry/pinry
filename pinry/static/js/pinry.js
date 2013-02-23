@@ -6,21 +6,14 @@ $(window).load(function() {
      * changes.
      */
     function tileLayout() {
-        // Defines our containers
-        var blockContainer = $('#pins');
-        var blocks = blockContainer.children('.pin');
-
-        // Size of blocks/pins and the spacing between them
-        var blockMargin = 15;
-        var blockWidth = 240;
-
-        // How many items we can fit in a row and our array for the row heights
-        var rowSize = Math.floor(blockContainer.width()/(blockWidth+blockMargin));
-        var colHeights = [];
-
-        // These are used for horizontal positioning
-        var rowMargins = [];
-        var marginLeft = 0;
+        var blockContainer = $('#pins'),
+            blocks = blockContainer.children('.pin'),
+            blockMargin = 15,
+            blockWidth = 240,
+            rowSize = Math.floor(blockContainer.width()/(blockWidth+blockMargin)),
+            colHeights = [],
+            rowMargins = [],
+            marginLeft = 0;
 
         // Fill our colHeights array with 0 for each row we have
         for (var i=0; i < rowSize; i++) colHeights[i] = 0;
@@ -49,7 +42,7 @@ $(window).load(function() {
                 'display': 'block'
             });
 
-            colHeights[sCol] += block.height()+(blockMargin*3);
+            colHeights[sCol] += block.height()+(blockMargin);
         }
 
         $('.spinner').css('display', 'none');

@@ -3,18 +3,23 @@ body {
     background: #eee;
 }
 
-.navbar-inner {
+.navbar-fixed-top .navbar-inner {
     background-image: none;
-    background: #222;
+    background: white;
     filter: none;
     height: 48px;
+    box-shadow: 0 1px 0 #bbb;
+    -moz-box-shadow: 0 1px 0 #bbb;
+    -webkit-box-shadow: 0 1px 0 #bbb;
+    border-bottom: 1px solid #bbb;
 }
 
     .navbar .brand {
-        margin-left: 0;
-        color: #fff;
+        margin-left: -7px;
         font-family: 'Monoton';
+        color: #275173;
         font-size: 30px;
+        margin-top: 5px;
     }
 
     .navbar .nav > li > a {
@@ -37,33 +42,9 @@ body {
         background: #275173;
     }
 
-.messages {
-    list-style-type: none;
-    top: 50px;
-    right: 10px;
-    position: absolute;
-    z-index: 200;
-}
-
-    .messages li {
-        margin: 10px 0;
-        padding: 18px 28px;
-        border: 1px solid #ccc;
-        font-size: 16px
-    }
-
-    .messages li:hover {
-        -webkit-transform: scale(1.1);
-           -moz-transform: scale(1.1);
-            -ms-transform: scale(1.1);
-             -o-transform: scale(1.1);
-                transform: scale(1.1);
-        cursor: pointer;
-    }
-
 #loader {
-    margin-top: 70px;
     text-align: center;
+    padding: 50px;
 }
 
 #pins {
@@ -72,12 +53,15 @@ body {
 
     .pin {
         background: #fff;
-        width: 200px;
-        box-shadow: 0 1px 3px #bbb;
-        -moz-box-shadow: 0 1px 3px #bbb;
-        -webkit-box-shadow: 0 1px 3px #bbb;
-        padding: 15px;
+        width: 240px;
+        box-shadow: 0 1px 0 #bbb;
+        -moz-box-shadow: 0 1px 0 #bbb;
+        -webkit-box-shadow: 0 1px 0 #bbb;
+        border: 1px solid #bbb;
         position: absolute;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
     }
 
         .pin .editable {
@@ -106,16 +90,23 @@ body {
             }
 
         .pin img {
-            width: 200px;
+            width: 240px;
             padding: 0;
             margin: 0;
             cursor: -webkit-zoom-in;
             cursor: -moz-zoom-in;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-topright: 3px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
         }
 
         .pin p {
             margin-bottom: 0;
-            padding-top: 15px
+            padding-top: 15px;
+            padding-bottom: 15px;
         }
 
             .pin strong {
@@ -124,11 +115,8 @@ body {
             }
 
         .pin-footer {
-            background-color: #eee;
             font-weight: bold;
-            margin: 0 -15px -15px -15px;
-            padding: 15px;
-            margin-top: 15px;
+            padding: 10px;
             color: #777;
             font-size: 12px;
             cursor: default;
@@ -143,15 +131,24 @@ body {
                 width: 30px;
                 height: 30px;
                 background-color: #555;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
             }
 
+                .pin-footer .avatar img {
+                    border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                }
+
             .pin-footer .text {
-                width: 155px;
-                margin-top: -3px;
+                width: 180px;
+                margin-top: -1px;
+                line-height: 16px;
             }
 
 .pin-options {
-    margin: 5px;
     display: none;
     right: 20px;
     position: absolute;
