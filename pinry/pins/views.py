@@ -9,7 +9,7 @@ from .forms import PinForm
 from .models import Pin
 
 
-reverse_lazy = lambda name=None, *args : lazy(reverse, str)(name, args=args)
+reverse_lazy = lambda name=None, *args: lazy(reverse, str)(name, args=args)
 
 
 class RecentPins(TemplateView):
