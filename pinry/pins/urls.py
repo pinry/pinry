@@ -1,9 +1,12 @@
 from django.conf.urls import patterns, url
 
+from .views import RecentPins
+from .views import NewPin
+
 
 urlpatterns = patterns('pinry.pins.views',
-    url(r'^$', 'recent_pins', name='recent-pins'),
-    url(r'^tag/.+/$', 'recent_pins', name='tag'),
-    url(r'^new-pin/$', 'new_pin', name='new-pin'),
+    url(r'^$', RecentPins.as_view(), name='recent-pins'),
+    url(r'^tag/.+/$', RecentPins.as_view(), name='tag'),
+    url(r'^new-pin/$', NewPin.as_view(), name='new-pin'),
     url(r'^delete-pin/(?P<pin_id>\d+)/$', 'delete_pin', name='delete-pin'),
 )

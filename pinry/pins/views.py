@@ -1,33 +1,34 @@
-from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.utils.functional import lazy
+from django.views.generic.base import TemplateView
+from django.views.generic import CreateView
 
 from .forms import PinForm
 from .models import Pin
 
 
-def recent_pins(request):
-    return TemplateResponse(request, 'pins/recent_pins.html', None)
+reverse_lazy = lambda name=None, *args : lazy(reverse, str)(name, args=args)
 
 
-def new_pin(request):
-    if request.method == 'POST':
-        form = PinForm(request.POST, request.FILES)
-        if form.is_valid():
-            pin = Pin.objects.create(url=form.cleaned_data['url'], submitter=request.user,
-                                     description=form.cleaned_data['description'])
-            pin.tags.add(*form.cleaned_data['tags'])
-            messages.success(request, 'New pin successfully added.')
-            return HttpResponseRedirect(reverse('pins:recent-pins'))
-        else:
-            messages.error(request, 'Pin did not pass validation!')
-    else:
-        form = PinForm()
-    context = {
-        'form': form,
-    }
-    return TemplateResponse(request, 'pins/new_pin.html', context)
+class RecentPins(TemplateView):
+    template_name = 'pins/recent_pins.html'
+
+
+class NewPin(CreateView):
+    model = Pin
+    form_class = PinForm
+    success_url = reverse_lazy('pins:recent-pins')
+
+    def form_valid(self, form):
+        form.instance.submitter = self.request.user
+        messages.success(self.request, 'New pin successfully added.')
+        return super(NewPin, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Pin did not pass validation!')
+        return super(NewPin, self).form_invalid(form)
 
 
 def delete_pin(request, pin_id):

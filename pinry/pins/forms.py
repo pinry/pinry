@@ -1,15 +1,15 @@
 from django import forms
 
-from taggit.forms import TagField
-
 from .models import Pin
 
 
-class PinForm(forms.Form):
-    url = forms.CharField(label='URL', required=False)
+class PinForm(forms.ModelForm):
+    url = forms.CharField(label='url', required=False)
     image = forms.ImageField(label='or Upload', required=False)
-    description = forms.CharField(label='Description', required=False, widget=forms.Textarea)
-    tags = TagField()
+
+    class Meta:
+        model = Pin
+        fields = ['url', 'description', 'tags']
 
     def check_if_image(self, data):
         # Test file type
