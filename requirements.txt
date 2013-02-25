@@ -5,4 +5,5 @@ django-tastypie
 django_compressor
 cssmin
 jsmin
--e git://github.com/hcarvalhoalves/django-taggit.git@e0f9642d7b94c8e6c0feb520d96bb6ae4d78a4d0#egg=django-taggit
+django-images
+http://github.com/hcarvalhoalves/django-taggit/tarball/master#egg=django-taggit

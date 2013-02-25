@@ -1,3 +1,7 @@
+from django.conf import settings
+
+
+from django_images.models import Thumbnail
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
@@ -27,10 +31,15 @@ class PinResource(ModelResource):
     submitter = fields.ForeignKey(UserResource, 'submitter', full=True)
 
     def dehydrate_images(self, bundle):
-        images = {}
-        for type in ['standard', 'thumbnail', 'original']:
-            image_obj = getattr(bundle.obj, type, None)
-            images[type] = {'url': image_obj.image.url, 'width': image_obj.width, 'height': image_obj.height}
+        original = bundle.obj.image
+        images = {'original': {
+            'url': original.get_absolute_url(), 'width': original.width, 'height': original.height}
+        }
+        for image in ['standard', 'thumbnail']:
+            obj = Thumbnail.objects.get_or_create_at_size(original.pk, image)
+            images[image] = {
+                'url': obj.get_absolute_url(), 'width': obj.width, 'height': obj.height
+            }
         return images
 
     class Meta:

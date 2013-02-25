@@ -86,12 +86,13 @@ INSTALLED_APPS = (
     'south',
     'compressor',
     'taggit',
+    'django_images',
     'pinry.core',
     'pinry.pins',
     'pinry.api',
 )
 
-AUTHENTICATION_BACKENDS = ('pinry.core.auth.backends.CombinedAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
-
-Dimensions = namedtuple("Dimensions", ['width', 'height'])
-IMAGE_SIZES = {'thumbnail': Dimensions(width=240, height=0), 'standard': Dimensions(width=600, height=0)}
+IMAGE_SIZES = {
+    'thumbnail': {'size': [240, 0]},
+    'standard': {'size': [600, 0]},
+}
