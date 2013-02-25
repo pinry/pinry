@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Permission
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -25,7 +26,9 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            permissions = Permission.objects.filter(codename__in=['add_pin', 'add_image'])
+            user = form.save()
+            user.user_permissions = permissions
             messages.success(request, 'Thank you for registering, you can now '
                                       'login.')
             return HttpResponseRedirect(reverse('core:login'))
