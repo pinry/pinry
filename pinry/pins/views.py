@@ -1,11 +1,15 @@
+import json
+
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.functional import lazy
 from django.views.generic import (
     TemplateView, CreateView)
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
 
 from django_images.models import Image
 
@@ -44,18 +48,48 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
-class UploadImage(LoginRequiredMixin, CreateView):
+class JSONResponseMixin(object):
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        response_kwargs['content_type'] = 'application/json'
+        return HttpResponse(
+            self.convert_context_to_json(context),
+            **response_kwargs
+        )
+
+    def convert_context_to_json(self, context):
+        """Convert the context dictionary into a JSON object"""
+        return json.dumps(context)
+
+
+class UploadImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
     template_name = 'pins/pin_form.html'
     model = Image
     form_class = ImageForm
 
     def form_valid(self, form):
-        messages.success(self.request, 'New pin successfully added.')
-        return super(UploadImage, self).form_valid(form)
+        message = 'New pin successfully added.'
+        if self.request.is_ajax():
+            self.object = form.save()
+            context = {'image_id': self.object.pk}
+            return JSONResponseMixin.render_to_response(self, context)
+        else:
+            messages.success(self.request, message)
+            return super(UploadImage, self).form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, 'Pin did not pass validation!')
-        return super(UploadImage, self).form_invalid(form)
+        message = 'Pin did not pass validation!'
+        if self.request.is_ajax():
+            context = {'error': message}
+            return JSONResponseMixin.render_to_response(self, context)
+        else:
+            messages.error(self.request, message)
+            return super(UploadImage, self).form_invalid(form)
 
 
 class RecentPins(TemplateView):
