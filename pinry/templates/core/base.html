@@ -23,6 +23,7 @@
 
                 <ul class="nav pull-right">
                     {% if user.is_authenticated %}
+                        <li><a href="#" class="bookmarklet-link">Bookmarklet</a></li>
                         <li><a href="#new-pin" data-toggle="modal">New Pin</a></li>
                         <li><a href="{% url 'core:logout' %}">Logout</a></li>
                     {% else %}

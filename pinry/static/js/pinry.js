@@ -1,6 +1,13 @@
 $(window).load(function() {
 
     /**
+     * Setup our bookmarklet href
+     */
+    var bookmarkletUrl = 'http://'+document.location.hostname+'/static/js/bookmarklet.js';
+    var bookmarklet = "javascript:void((function(d){var s=d.createElement('script');s.src='"+bookmarkletUrl+"?'+Math.random()*9001;d.body.appendChild(s)})(document));";
+    $('.bookmarklet-link').attr('href', bookmarklet);
+
+    /**
      * tileLayout will simply tile/retile the block/pin container when run. This
      * was put into a function in order to adjust frequently on screen size 
      * changes.
