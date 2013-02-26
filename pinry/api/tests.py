@@ -82,6 +82,7 @@ class PinResourceTest(ResourceTestCase):
         self.assertHttpCreated(response)
         # A number of Image objects should stay the same as we are using an existing image
         self.assertEqual(Image.objects.count(), 2)
+        self.assertEqual(Pin.objects.count(), 3)
         self.assertEquals(Tag.objects.count(), 4)
 
     def test_get_list_json(self):
