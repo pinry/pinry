@@ -37,7 +37,14 @@ $(document).ready(function() {
             'cursor': 'pointer'
         });
         wrapper.click(function() {
-            alert('Added');
+            $.ajax({
+                type: "post",
+                url: "http://nebula.bythewood.me/api/v1/pin/",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    url: imageUrl
+                })
+            });
             $('.pinry-images').remove();
         });
         return wrapper;

@@ -67,10 +67,10 @@ $(window).load(function() {
         $('.spinner').css('display', 'block');
 
         // Fetch our pins from the api using our current offset
-        $.get('/api/v1/pin/?format=json&offset='+String(offset), function(pins) {
+        $.get('/api/v1/pin/?format=json&ordering=-id&offset='+String(offset), function(pins) {
             // Set which items are editable by the current user
             for (var i=0; i < pins.objects.length; i++) 
-                pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser);
+                pins.objects[i].editable = (pins.objects[i].submitter.id == currentUser);
 
             // Use the fetched pins as our context for our pins template
             var template = Handlebars.compile($('#pins-template').html());

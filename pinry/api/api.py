@@ -84,3 +84,4 @@ class PinResource(ModelResource):
         resource_name = 'pin'
         include_resource_uri = False
         authorization = DjangoAuthorization()
+        ordering = '-published'
