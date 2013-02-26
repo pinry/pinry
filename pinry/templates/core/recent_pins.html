@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Recent Pins{% endblock %}
+
+{% block yield %}
+    <div id="pins"></div>
+    <div class="container spinner">
+        <div class="row">
+            <div class="span12" align="center">
+                <img src="{{ STATIC_URL }}img/loader.gif" alt="Loader">
+            </div>
+        </div>
+    </div>
+{% endblock %}

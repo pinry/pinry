@@ -15,7 +15,7 @@ def home(request):
 
 
 def private(request):
-    return TemplateResponse(request, 'core/private.html', None)
+    return TemplateResponse(request, 'user/private.html', None)
 
 
 def register(request):
@@ -35,7 +35,7 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return TemplateResponse(request, 'core/register.html', {'form': form})
+    return TemplateResponse(request, 'user/register.html', {'form': form})
 
 
 @login_required

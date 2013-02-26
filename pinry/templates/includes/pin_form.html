@@ -1,0 +1,38 @@
+{% verbatim %}
+    <script id="pin-form-template" type="text/x-handlebars-template">
+        <div class="modal" id="pin-form">
+            <div class="modal-header">
+                <h3>New Pin</h3>
+            </div>
+            <div class="modal-body">
+                <div class="span3" id="pin-form-image-preview">
+                    Image Preview
+                </div>
+                <div class="span3">
+                    <div class="control-group">
+                        <label class="control-label" for="pin-form-image-url">Image URL</label>
+                        <div class="controls">
+                            <input type="text" name="pin-form-image-url" id="pin-form-image-url"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pin-form-description">Description</label>
+                        <div class="controls">
+                            <textarea name="pin-form-description" id="pin-form-description"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pin-form-tags">Tags</label>
+                        <div class="controls">
+                            <input type="text" name="pin-form-tags" id="pin-form-tags"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="pin-form-submit">Post</button>
+                <button class="btn" id="pin-form-close">Cancel</a>
+            </div>
+        </div>
+    </script>
+{% endverbatim %}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+
+        <!--  ___                     ___           ___                 
+             /  /\      ___          /__/\         /  /\          ___   
+            /  /::\    /  /\         \  \:\       /  /::\        /__/|  
+           /  /:/\:\  /  /:/          \  \:\     /  /:/\:\      |  |:|  
+          /  /:/~/:/ /__/::\      _____\__\:\   /  /:/~/:/      |  |:|  
+         /__/:/ /:/  \__\/\:\__  /__/::::::::\ /__/:/ /:/___  __|__|:|  
+         \  \:\/:/      \  \:\/\ \  \:\~~\~~\/ \  \:\/:::::/ /__/::::\  
+          \  \::/        \__\::/  \  \:\  ~~~   \  \::/~~~~     ~\~~\:\ 
+           \  \:\        /__/:/    \  \:\        \  \:\           \  \:\
+            \  \:\       \__\/      \  \:\        \  \:\           \__\/
+             \__\/                   \__\/         \__\/             -->
+
+        <title>{{ SITE_NAME }} - {% block title %}{% endblock %}</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monoton"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/messages.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/lightbox.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/pinry.css"/>
+        {% block extra_css %}{% endblock %}
+        <!-- End CSS -->
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <a href="{% url 'core:home' %}" class="brand pull-left">{{ SITE_NAME }}</a>
+                <ul class="nav pull-right">
+                {% if user.is_authenticated %}
+                    <li><a class="bookmarklet-link">Bookmarklet</a></li>
+                    <li><a id="call-pin-form">New Pin</a></li>
+                    <li><a href="{% url 'core:logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'core:login' %}">Login</a></li>
+                    <li><a href="{% url 'core:register' %}">Register</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+        <!-- End Navigation -->
+
+        <!-- Content -->
+        {% block yield %}{% endblock %}
+        <!-- End Content -->
+
+        <!-- Messages -->
+        {% include "includes/messages.html" %}
+        <!-- End Messages -->
+
+        <!-- Templates -->
+        {% include "includes/lightbox.html" %}
+        {% include "includes/pins.html" %}
+        {% include "includes/pin_form.html" %}
+        {% block extra_templates %}{% endblock %}
+        <!-- End Templates -->
+
+        <!-- JavaScript -->
+        <script>
+            var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
+                currentUser = "{{ user.id }}";
+        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
+        <script src="{{ STATIC_URL }}js/messages.js"></script>
+        <script src="{{ STATIC_URL }}js/lightbox.js"></script>
+        <script src="{{ STATIC_URL }}js/pinry.js"></script>
+        <script src="{{ STATIC_URL }}js/pin-form.js"></script>
+        {% block extra_js %}{% endblock %}
+        <!-- End JavaScript -->
+    </body>
+</html>

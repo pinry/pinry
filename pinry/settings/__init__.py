@@ -35,7 +35,6 @@ STATICFILES_DIRS = [os.path.join(SITE_ROOT, 'pinry/static')]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -64,7 +63,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-COMPRESS_CSS_FILTERS = ['compressor.filters.cssmin.CSSMinFilter']
 ROOT_URLCONF = 'pinry.urls'
 LOGIN_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1']
@@ -84,7 +82,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'compressor',
     'taggit',
     'django_images',
     'pinry.core',

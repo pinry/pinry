@@ -2,21 +2,15 @@ import json
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.functional import lazy
-from django.views.generic import (
-    TemplateView, CreateView)
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
+from django.views.generic import CreateView
 
 from django_images.models import Image
 
 from .forms import ImageForm
-
-
-reverse_lazy = lambda name=None, *args: lazy(reverse, str)(name, args=args)
 
 
 class LoginRequiredMixin(object):
@@ -68,7 +62,7 @@ class JSONResponseMixin(object):
 
 
 class UploadImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
-    template_name = 'pins/pin_form.html'
+    template_name = 'core/pin_form.html'
     model = Image
     form_class = ImageForm
 
@@ -90,7 +84,3 @@ class UploadImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
         else:
             messages.error(self.request, message)
             return super(UploadImage, self).form_invalid(form)
-
-
-class RecentPins(TemplateView):
-    template_name = 'pins/recent_pins.html'

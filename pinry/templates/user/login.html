@@ -1,7 +1,4 @@
-{% extends 'core/base.html' %}
-
-{% load bootstrap_field %}
-
+{% extends "base.html" %}
 
 {% block title %}Login{% endblock %}
 
@@ -9,15 +6,14 @@
     <div class="container">
         <div class="row">
             <div id="form" class="span6 offset3">
-                <h1>Register</h1>
-                <form action="{% url 'core:register' %}" method="post" class="form-horizontal">
+                <h1>Login</h1>
+                <form action="{% url "core:login" %}" method="post" class="form-horizontal">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% bootstrap_field field %}
+                        {% include "includes/field.html" %}
                     {% endfor %}
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <a href="{% url 'core:home' %}" class="btn">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>

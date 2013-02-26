@@ -1,5 +1,6 @@
-from cStringIO import StringIO
 import urllib2
+from cStringIO import StringIO
+
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 

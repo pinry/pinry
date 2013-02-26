@@ -1,0 +1,35 @@
+{% verbatim %}
+    <script id="pins-template" type="text/x-handlebars-template">
+        {{#each pins}}
+        <div class="pin">
+            {{#if editable}}
+                <div class="editable">
+                    <div class="borderable">
+                        <i class="icon-white icon-pencil"></i>
+                    </div>
+                </div>
+            {{/if}}
+            <a href="{{image.standard.image}}" class="lightbox" data-username="{{submitter.username}}" data-tags="{{tags}}" data-gravatar="{{submitter.gravatar}}">
+                <img src="{{image.thumbnail.image}}" />
+            </a>
+            {{#if description}}
+                <p>{{description}}</p>
+            {{/if}}
+            <div class="pin-footer clearfix">
+                <div class="avatar pull-left">
+                    <img src="http://gravatar.com/avatar/{{submitter.gravatar}}.jpg">
+                </div>
+                <div class="text pull-right">
+                    <span class="dim">pinned by</span> {{submitter.username}}
+                    {{#if tags}}
+                        <span class="dim">in</span>
+                    {{#each tags}}
+                        <span class="tag">{{this}}</span>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+{% endverbatim %}
