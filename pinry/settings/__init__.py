@@ -1,6 +1,5 @@
 import os
 
-from collections import namedtuple
 from django.contrib.messages import constants as messages
 
 
@@ -64,6 +63,7 @@ AUTHENTICATION_BACKENDS = (
 
 
 ROOT_URLCONF = 'pinry.urls'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1']
 MESSAGE_TAGS = {
