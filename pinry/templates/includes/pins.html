@@ -9,7 +9,14 @@
                     </div>
                 </div>
             {{/if}}
-            <a href="{{image.standard.image}}" class="lightbox" data-username="{{submitter.username}}" data-tags="{{tags}}" data-gravatar="{{submitter.gravatar}}">
+            <a href="{{image.standard.image}}"
+               class="lightbox"
+               data-username="{{submitter.username}}"
+               data-tags="{{tags}}"
+               data-gravatar="{{submitter.gravatar}}"
+               data-description="{{description}}"
+               data-width="{{image.standard.width}}"
+               data-height="{{image.standard.height}}">
                 <img src="{{image.thumbnail.image}}" />
             </a>
             {{#if description}}

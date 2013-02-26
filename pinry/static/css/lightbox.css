@@ -12,21 +12,32 @@
         position: absolute;
         left: 50%;
         border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
     }
 
         .lightbox-data {
             background: white;
         }
 
+            .lightbox-data .description {
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+                font-family: "Georgia", "Times", "Times New Roman", Serif;
+                font-size: 16px;
+            }
+
             .lightbox-data .avatar img {
                 width: 40px;
                 height: 40px;
-                padding: 5px;
+                margin: 5px;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
             }
 
             .lightbox-data .text {
                 margin-top: 3px;
-                font-size: 18px;
                 font-weight: bold;
             }
 

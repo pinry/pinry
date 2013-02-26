@@ -1,4 +1,6 @@
 $(window).load(function() {
+    var scrollLevel = 0;
+
     window.lightbox = function(pins) {
         var links = pins.find('.lightbox');
 
@@ -7,16 +9,18 @@ $(window).load(function() {
             var html = template(boxData);
             $('body').append(html);
 
+            scrollLevel = $(window).scrollTop();
+            $('#pins').css({
+                'margin-top': String(-scrollLevel)+'px',
+                'position': 'fixed'
+            });
+
             $('.lightbox-wrapper img').load(function() {
                 $('.lightbox-background').css('height', String($(document).height())+'px');
-                $(this).css({
-                    'max-width': String($(window).width()-200)+'px',
-                    'max-height': String($(window).height()-300)+'px',
-                });
-                var width = $(this).width();
                 $('.lightbox-wrapper').css({
-                    'margin-top': String($(window).scrollTop()+100)+'px',
-                    'margin-left': '-'+String(width/2)+'px'
+                    'width': boxData.width,
+                    'margin-top': String(100)+'px',
+                    'margin-left': '-'+String(boxData.width/2)+'px'
                 });
             });
 
@@ -31,10 +35,18 @@ $(window).load(function() {
                     image: $(this).attr('href'),
                     gravatar: $(this).data('gravatar'),
                     username: $(this).data('username'),
-                    tags: $(this).data('tags').split(',')
+                    description: $(this).data('description'),
+                    tags: $(this).data('tags').split(','),
+                    width: $(this).data('width'),
+                    height: $(this).data('height')
                 });
                 box.click(function() {
                     box.remove()
+                    $('#pins').css({
+                        'position': 'static',
+                        'margin-top': 0
+                    });
+                    $(window).scrollTop(scrollLevel);
                 });
                 e.preventDefault();
             });
