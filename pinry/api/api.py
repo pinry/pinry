@@ -80,8 +80,8 @@ class PinResource(ModelResource):
 
     class Meta:
         fields = ['id', 'url', 'description']
+        ordering = ['id']
         queryset = Pin.objects.all()
         resource_name = 'pin'
         include_resource_uri = False
         authorization = DjangoAuthorization()
-        ordering = '-published'

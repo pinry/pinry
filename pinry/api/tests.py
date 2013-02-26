@@ -85,6 +85,12 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Pin.objects.count(), 3)
         self.assertEquals(Tag.objects.count(), 4)
 
+    def test_get_list_json_ordered(self):
+        pin = Pin.objects.latest('id')
+        response = self.api_client.get('/api/v1/pin/', format='json', data={'order_by': '-id'})
+        self.assertValidJSONResponse(response)
+        self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.id)
+
     def test_get_list_json(self):
         user = User.objects.get(pk=1)
         image = Image.objects.get(pk=1)
