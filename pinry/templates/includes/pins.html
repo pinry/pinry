@@ -1,7 +1,7 @@
 {% verbatim %}
     <script id="pins-template" type="text/x-handlebars-template">
         {{#each pins}}
-        <div class="pin">
+        <div class="pin" data-id="{{id}}">
             {{#if editable}}
                 <div class="editable">
                     <div class="borderable">

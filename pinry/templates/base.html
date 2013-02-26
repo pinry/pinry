@@ -34,8 +34,8 @@
                 <a href="{% url 'core:home' %}" class="brand pull-left">{{ SITE_NAME }}</a>
                 <ul class="nav pull-right">
                 {% if user.is_authenticated %}
-                    <li><a class="bookmarklet-link">Bookmarklet</a></li>
-                    <li><a id="call-pin-form">New Pin</a></li>
+                    <li><a href="#" class="bookmarklet-link">Bookmarklet</a></li>
+                    <li><a href="#" id="call-pin-form">New Pin</a></li>
                     <li><a href="{% url 'core:logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'core:login' %}">Login</a></li>
@@ -64,7 +64,11 @@
         <!-- JavaScript -->
         <script>
             var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
-                currentUser = "{{ user.id }}";
+                currentUser = {
+                    id: "{{ user.id }}",
+                    username: "{{ user.username }}",
+                    gravatar: "{{ user.gravatar }}"
+                };
         </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>

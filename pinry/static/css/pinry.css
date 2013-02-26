@@ -105,8 +105,10 @@ body {
 
         .pin p {
             margin-bottom: 0;
-            padding-top: 15px;
-            padding-bottom: 15px;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            font-family: "Georgia", "Times", "Times New Roman", Serif;
+            font-size: 12px;
         }
 
             .pin strong {
