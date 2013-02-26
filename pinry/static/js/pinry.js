@@ -67,7 +67,9 @@ $(window).load(function() {
         $('.spinner').css('display', 'block');
 
         // Fetch our pins from the api using our current offset
-        $.get('/api/v1/pin/?format=json&ordering=-id&offset='+String(offset), function(pins) {
+        var apiUrl = '/api/v1/pin/?format=json&ordering=-id&offset='+String(offset);
+        if (tagFilter) apiUrl = apiUrl + '&tag=' + tagFilter;
+        $.get(apiUrl, function(pins) {
             // Set which items are editable by the current user
             for (var i=0; i < pins.objects.length; i++) 
                 pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser.username);

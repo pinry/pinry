@@ -6,6 +6,8 @@ from .views import UploadImage
 
 urlpatterns = patterns('pinry.pins.views',
     url(r'^upload-pin/$', UploadImage.as_view(), name='new-pin'),
-    url(r'^$', TemplateView.as_view(template_name='core/recent_pins.html'),
+    url(r'^$', TemplateView.as_view(template_name='core/pins.html'),
         name='recent-pins'),
+    url(r'^tag/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
+        name='tag-pins'),
 )
