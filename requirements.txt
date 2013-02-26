@@ -2,5 +2,6 @@ http://github.com/django/django/tarball/stable/1.5.x#egg=Django
 Pillow
 South
 django-tastypie
+django-braces
 django-images
 http://github.com/hcarvalhoalves/django-taggit/tarball/master#egg=django-taggit
