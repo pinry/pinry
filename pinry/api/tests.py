@@ -79,6 +79,7 @@ class PinResourceTest(ResourceTestCase):
             'tags': ['random', 'tags'],
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertEqual(self.deserialize(response)['id'], 3)
         self.assertHttpCreated(response)
         # A number of Image objects should stay the same as we are using an existing image
         self.assertEqual(Image.objects.count(), 2)

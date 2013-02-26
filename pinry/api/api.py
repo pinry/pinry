@@ -84,4 +84,5 @@ class PinResource(ModelResource):
         queryset = Pin.objects.all()
         resource_name = 'pin'
         include_resource_uri = False
+        always_return_data = True
         authorization = DjangoAuthorization()
