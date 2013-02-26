@@ -51,6 +51,17 @@ $(window).load(function() {
         $('#pin-form-tags').bind('propertychange keyup input paste', function() {
             createPreview();
         });
+
+        function getURLParameter(name) {
+            return decodeURI(
+                (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+            );
+        }
+        if (getURLParameter('pin-image-url') != 'null') {
+            $('#pin-form-image-url').val(getURLParameter('pin-image-url'));
+            createPreview();
+        }
+
         $('#pin-form-submit').click(function(e) {
             var tags = cleanTags();
             $.ajax({
@@ -84,6 +95,8 @@ $(window).load(function() {
             $('#pin-form').remove();
         });
     }
+
+    if ($('#display-pin-form').length >= 1) createPinForm();
 
     $('#call-pin-form').click(function() {
         createPinForm();

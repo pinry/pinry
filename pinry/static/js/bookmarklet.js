@@ -6,6 +6,21 @@ if (!jQuery) {
 }
 
 $(document).ready(function() { 
+    var scriptUri;
+
+    function curScriptUrl(callback) {
+        var scripts = document.getElementsByTagName("script");
+        var scriptURI = scripts[scripts.length-1].src;  
+
+        if(scriptURI != "") {
+            callback(scriptURI);
+        } else if($ != undefined) {
+            $(document).ajaxSuccess(function(e, xhr, s) {
+                callback(s.url);
+            }); 
+        }
+    }
+
     function createPage() {
         var documentHeight = $(document).height();
 
@@ -37,14 +52,13 @@ $(document).ready(function() {
             'cursor': 'pointer'
         });
         wrapper.click(function() {
-            $.ajax({
-                type: "post",
-                url: "http://nebula.bythewood.me/api/v1/pin/",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    url: imageUrl
-                })
+            var apiUrl = 'http://';
+            curScriptUrl(function(x) {
+                scriptUri = x;
+                apiUrl = apiUrl +scriptUri.split('/')[2];
             });
+            apiUrl = apiUrl + '/pins/pin-form/?pin-image-url='+imageUrl;
+            window.open(apiUrl, '1361920530821', 'width=579,height=475,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
             $('.pinry-images').remove();
         });
         return wrapper;

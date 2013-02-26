@@ -86,7 +86,6 @@ INSTALLED_APPS = (
     'django_images',
     'pinry.core',
     'pinry.pins',
-    'pinry.api',
 )
 
 IMAGE_SIZES = {
