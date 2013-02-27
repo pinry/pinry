@@ -25,6 +25,18 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/pinry.css"/>
         {% block extra_css %}{% endblock %}
         <!-- End CSS -->
+
+        <!-- Start JavaScript Variables -->
+        <script>
+        var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
+            currentUser = {
+                id: "{{ user.id }}",
+                username: "{{ user.username }}",
+                gravatar: "{{ user.gravatar }}"
+            },
+            tagFilter = "{{ request.resolver_match.kwargs.tag }}";
+        </script>
+        <!-- End JavaScript Variables -->
     </head>
 
     <body>
@@ -34,7 +46,7 @@
                 <a href="{% url 'core:home' %}" class="brand pull-left">{{ SITE_NAME }}</a>
                 <ul class="nav pull-right">
                 {% if user.is_authenticated %}
-                    <li><a href="#" class="bookmarklet-link">Bookmarklet</a></li>
+                    <li>{% include "includes/bookmarklet_link.html" %}</li>
                     <li><a href="#" id="call-pin-form">New Pin</a></li>
                     <li><a href="{% url 'core:logout' %}">Logout</a></li>
                 {% else %}
@@ -62,18 +74,10 @@
         <!-- End Templates -->
 
         <!-- JavaScript -->
-        <script>
-            var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
-                currentUser = {
-                    id: "{{ user.id }}",
-                    username: "{{ user.username }}",
-                    gravatar: "{{ user.gravatar }}"
-                },
-                tagFilter = "{{ request.resolver_match.kwargs.tag }}";
-        </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
+        <script src="{{ STATIC_URL }}js/helpers.js"></script>
         <script src="{{ STATIC_URL }}js/messages.js"></script>
         <script src="{{ STATIC_URL }}js/lightbox.js"></script>
         <script src="{{ STATIC_URL }}js/pinry.js"></script>

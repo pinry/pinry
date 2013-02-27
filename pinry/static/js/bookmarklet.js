@@ -1,75 +1,97 @@
-if (!jQuery) {
-    var head = document.getElementsByTagName('head')[0];
+/**
+ * Bookmarklet for Pinry
+ * Descrip: This is trying to be as standalone a script as possible hence
+ *          why it has built in helpers and such when the rest of the
+ *          scripts make use of helpers.js. In the future i want to remove
+ *          all dependencies on jQuery.
+ * Authors: Pinry Contributors
+ * Updated: Feb 26th, 2013
+ * Require: None (dynamically loads jQuery if needed)
+ */
+
+
+// Start jQuery Check
+if (!window.jQuery) {
+    var body = document.getElementsByTagName('body')[0];
     var script = document.createElement('script');
     script.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js';
     head.appendChild(script);
 }
+// End jQuery Check
+
 
 $(document).ready(function() { 
-    var scriptUri;
-
-    function curScriptUrl(callback) {
-        var scripts = document.getElementsByTagName("script");
-        var scriptURI = scripts[scripts.length-1].src;  
-
-        if(scriptURI != "") {
-            callback(scriptURI);
-        } else if($ != undefined) {
-            $(document).ajaxSuccess(function(e, xhr, s) {
-                callback(s.url);
-            }); 
-        }
+    // Start Helper Functions
+    function getFormUrl() {
+        var hostUrl = $('#pinry-bookmarklet').attr('src').split('/')[2];
+        var formUrl = '/pins/pin-form/?pin-image-url=';
+        return 'http://'+hostUrl+formUrl;
     }
 
-    function createPage() {
-        var documentHeight = $(document).height();
+    function normalizeImageUrl(imageUrl) {
+        var protocol = imageUrl.split(':')[0];
+        if (protocol != 'http' && protocol != 'https') {
+            if (imageUrl[1] != '/')
+                imageUrl = 'http://'+window.location.host+imageUrl;
+        }
+        return imageUrl;
+    }
+    // End Helper Functions
 
-        $('body').append('<div class="pinry-images"></div>');
-        $('.pinry-images').css({
+
+    // Start View Functions
+    function pageView() {
+        var pinryImages = document.createElement('div');
+        pinryImages.id = 'pinry-images';
+        $(pinryImages).css({
             'position': 'absolute',
             'z-index': '9001',
-            'background': 'rgba(255, 255, 255, 0.7)',
+            'background': 'rgba(0, 0, 0, 0.7)',
             'top': '0',
             'left': '0',
             'right': '0',
-            'height': documentHeight
+            'height': $(document).height()
         });
+        return $('body').append(pinryImages);
     }
 
-    function template(imageUrl) {
-        var wrapper = document.createElement('div');
-        wrapper.class = 'pinry-image-wrapper';
-        image = document.createElement('img');
-        image.src = imageUrl;
-        image = $(image).css({
-            'max-width': '200px',
-        });
-        wrapper = $(wrapper);
-        wrapper.append(image);
-        wrapper.css({
+    function imageView(imageUrl) {
+        // Requires that pageView has been created already
+        imageUrl = normalizeImageUrl(imageUrl);
+        var image = document.createElement('div');
+        $(image).css({
+            'background-image': 'url('+imageUrl+')',
+            'background-position': 'center center',
+            'background-repeat': 'no-repeat',
             'display': 'inline-block',
-            'padding': '15px',
+            'width': '200px',
+            'height': '200px',
+            'margin': '15px',
             'cursor': 'pointer'
         });
-        wrapper.click(function() {
-            var apiUrl = 'http://';
-            curScriptUrl(function(x) {
-                scriptUri = x;
-                apiUrl = apiUrl +scriptUri.split('/')[2];
-            });
-            apiUrl = apiUrl + '/pins/pin-form/?pin-image-url='+imageUrl;
-            window.open(apiUrl, '1361920530821', 'width=579,height=475,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
-            $('.pinry-images').remove();
+        $(image).click(function() {
+            var popUrl = getFormUrl()+imageUrl;
+            window.open(popUrl, '', 'width=600,height=500,toolbar=0,menubar=0');
+            $('#pinry-images').remove();
         });
-        return wrapper;
+        return $('#pinry-images').append(image);
     }
+    // End View Functions
 
-    createPage();
 
-    var images = $('body').find('img');
-    for (var i=0; i < images.length; i++) {
-        var image = images.eq(i);
-        var imageHtml = template(image.attr('src'));
-        $('.pinry-images').append(imageHtml);
+    // Start Active Functions
+    function addAllImagesToPageView() {
+        var images = $('body').find('img');
+        images.each(function() {
+            imageView($(this).attr('src'));
+        });
+        return images;
     }
+    // End Active Functions
+
+
+    // Start Init
+    pageView(); // Build page before we insert images
+    addAllImagesToPageView(); // Add all images on page to our new pageView
+    // End Init
 });

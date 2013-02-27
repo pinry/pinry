@@ -3,6 +3,10 @@ body {
     background: #eee;
 }
 
+#bookmarklet {
+    cursor: move;
+}
+
 .navbar-fixed-top .navbar-inner {
     background-image: none;
     background: white;
