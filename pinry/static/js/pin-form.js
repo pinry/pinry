@@ -9,7 +9,6 @@
 
 
 $(window).load(function() {
-    var currentPin;
     // Start Helper Functions
     function getFormData() {
         return {
@@ -68,6 +67,8 @@ $(window).load(function() {
         }
         $('#pin-form-submit').click(function(e) {
             e.preventDefault();
+            $(this).off('click');
+            $(this).addClass('disabled');
             var data = {
                     submitter: '/api/v1/user/'+currentUser.id+'/',
                     url: $('#pin-form-image-url').val(),
@@ -75,9 +76,10 @@ $(window).load(function() {
                     tags: cleanTags($('#pin-form-tags').val())
                 },
                 promise = postPinData(data);
-            promise.success(function() {
+            promise.success(function(pin) {
                 if (pinFromUrl) return window.close();
-                $('#pins').prepend(currentPin);
+                pin = renderTemplate('#pins-template', {pins: [pin]});
+                $('#pins').prepend(pin);
                 dismissModal(modal);
             });
 
