@@ -5,6 +5,7 @@
     right: 0;
     position: absolute;
     z-index: 9001;
+    display: none;
 }
 
     .lightbox-wrapper {
@@ -14,6 +15,15 @@
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
+        background: #eee;
+        background-image: url("../img/loader.gif");
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin-bottom: 100px;
+    }
+
+    .lightbox-wrapper img {
+        display: none;
     }
 
         .lightbox-data {
@@ -28,6 +38,7 @@
             }
 
             .lightbox-data .avatar img {
+                display: block;
                 width: 40px;
                 height: 40px;
                 margin: 5px;

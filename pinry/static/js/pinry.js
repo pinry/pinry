@@ -44,7 +44,6 @@ $(window).load(function() {
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
-        lightbox(blocks);
         $('.spinner').css('display', 'none');
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
     }
@@ -77,6 +76,7 @@ $(window).load(function() {
             $('#pins').ajaxStop(function() {
                 $('img').load(function() {
                     tileLayout();
+                    lightbox();
                 });
             });
 
@@ -93,6 +93,7 @@ $(window).load(function() {
     // If our window gets resized keep the tiles looking clean and in our window
     $(window).resize(function() {
         tileLayout();
+        lightbox();
     })
 
     // If we scroll to the bottom of the document load more pins

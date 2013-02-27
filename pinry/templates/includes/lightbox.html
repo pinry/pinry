@@ -2,7 +2,9 @@
     <script id="lightbox-template" type="text/x-handlebars-template">
         <div class="lightbox-background">
             <div class="lightbox-wrapper">
-                <img src="{{image}}" />
+                <div class="lightbox-image-wrapper">
+                    <img class="lightbox-image" src="{{image}}" />
+                </div>
                 <div class="lightbox-data clearfix">
                 {{#if description}}
                     <div class="description">
