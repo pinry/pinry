@@ -3,6 +3,10 @@ body {
     background: #eee;
 }
 
+a {
+    cursor: pointer;
+}
+
 #bookmarklet {
     cursor: move;
 }

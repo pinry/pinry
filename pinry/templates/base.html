@@ -47,7 +47,7 @@
                 <ul class="nav pull-right">
                 {% if user.is_authenticated %}
                     <li>{% include "includes/bookmarklet_link.html" %}</li>
-                    <li><a href="#" id="call-pin-form">New Pin</a></li>
+                    <li><a onclick="pinForm()">New Pin</a></li>
                     <li><a href="{% url 'core:logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'core:login' %}">Login</a></li>

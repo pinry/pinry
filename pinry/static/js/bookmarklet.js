@@ -71,7 +71,7 @@ $(document).ready(function() {
         });
         $(image).click(function() {
             var popUrl = getFormUrl()+imageUrl;
-            window.open(popUrl, '', 'width=600,height=500,toolbar=0,menubar=0');
+            window.open(popUrl, '', 'width=590,height=439,toolbar=0,menubar=0');
             $('#pinry-images').remove();
         });
         return $('#pinry-images').append(image);

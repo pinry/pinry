@@ -18,11 +18,29 @@ function cleanTags(tags) {
         tags = tags.split(',');
         for (var i in tags) tags[i] = tags[i].trim();
     }
-    return tags
+    return tags;
 }
 
 
 function getPinData(pinId) {
     var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
     return $.get(apiUrl);
+}
+
+function postPinData(data) {
+    return $.ajax({
+        type: "post",
+        url: "/api/v1/pin/",
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+    });
+}
+
+
+function getUrlParameter(name) {
+    var decode = decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+    if (decode == 'null') return null;
+    else return decode;
 }
