@@ -22,6 +22,12 @@ function cleanTags(tags) {
 }
 
 
+function getImageData(imageId) {
+    var apiUrl = '/api/v1/image/'+imageId+'/?format=json';
+    return $.get(apiUrl);
+}
+
+
 function getPinData(pinId) {
     var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
     return $.get(apiUrl);

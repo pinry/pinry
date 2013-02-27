@@ -9,6 +9,8 @@
 
 
 $(window).load(function() {
+    var uploadedImage = false;
+
     // Start Helper Functions
     function getFormData() {
         return {
@@ -31,8 +33,8 @@ $(window).load(function() {
         preview.html(html);
         preview.find('.pin').width(200);
         preview.find('.pin .text').width(140);
-        if (preview.height() > 305)
-            $('#pin-form .modal-body').height(preview.height());
+        if (preview.find('.pin').height() > 305)
+            $('#pin-form .modal-body').height(preview.find('.pin').height());
     }
 
     function dismissModal(modal) {
@@ -52,12 +54,40 @@ $(window).load(function() {
             $('#pin-form-tags')],
             pinFromUrl = getUrlParameter('pin-image-url');
         modal.modal('show');
+        // Auto update preview on field changes
         for (var i in formFields) {
             formFields[i].bind('propertychange keyup input paste', function() {
-                createPinPreviewFromForm()
+                createPinPreviewFromForm();
+                if (!uploadedImage)
+                    $('#pin-form-image-upload').parent().parent().css('display', 'none');
             });
         }
+        // Drag and Drop Upload
+        $('#pin-form-image-upload').fineUploader({
+            request: {
+                endpoint: '/pins/upload-pin/',
+                paramsInBody: true,
+                multiple: false,
+                validation: {
+                    allowedExtensions: ['jpeg', 'jpg', 'png', 'gif']
+                },
+                text: {
+                    uploadButton: 'Click or Drop'
+                }
+            }
+        }).on('complete', function(e, id, name, data) {
+            $('#pin-form-image-url').parent().parent().css('display', 'none');
+            $('.qq-upload-button').css('display', 'none');
+            var promise = getImageData(data.success.id);
+            uploadedImage = data.success.id;
+            promise.success(function(image) {
+                $('#pin-form-image-url').val(image.thumbnail.image);
+                createPinPreviewFromForm();
+            });
+        });
+        // If bookmarklet submit
         if (pinFromUrl) {
+            $('#pin-form-image-upload').css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
             $('.navbar').css('display', 'none');
             modal.css({
@@ -65,24 +95,26 @@ $(window).load(function() {
                 'margin-left': -281
             });
         }
+        // Submit pin on post click
         $('#pin-form-submit').click(function(e) {
             e.preventDefault();
             $(this).off('click');
             $(this).addClass('disabled');
             var data = {
-                    submitter: '/api/v1/user/'+currentUser.id+'/',
-                    url: $('#pin-form-image-url').val(),
-                    description: $('#pin-form-description').val(),
-                    tags: cleanTags($('#pin-form-tags').val())
-                },
-                promise = postPinData(data);
+                submitter: '/api/v1/user/'+currentUser.id+'/',
+                description: $('#pin-form-description').val(),
+                tags: cleanTags($('#pin-form-tags').val())
+            };
+            if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
+            else data.url = $('#pin-form-image-url').val();
+            var promise = postPinData(data);
             promise.success(function(pin) {
                 if (pinFromUrl) return window.close();
                 pin = renderTemplate('#pins-template', {pins: [pin]});
                 $('#pins').prepend(pin);
                 dismissModal(modal);
+                uploadedImage = false;
             });
-
         });
         $('#pin-form-close').click(function() {
             if (pinFromUrl) return window.close();

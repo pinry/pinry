@@ -19,7 +19,12 @@ class CreateImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
     form_class = ImageForm
 
     def form_valid(self, form):
-        return self.render_json_response({'image_id': self.object.pk})
+        image = form.save()
+        return self.render_json_response({
+            'success': {
+                'id': image.id
+            }
+        })
 
     def form_invalid(self, form):
-        return self.render_json_response({'error': 'Error message goes here!'})
+        return self.render_json_response({'error': form.errors})
