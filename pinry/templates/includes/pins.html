@@ -9,14 +9,7 @@
                     </div>
                 </div>
             {{/if}}
-            <a href="{{image.standard.image}}"
-               class="lightbox"
-               data-username="{{submitter.username}}"
-               data-tags="{{tags}}"
-               data-gravatar="{{submitter.gravatar}}"
-               data-description="{{description}}"
-               data-width="{{image.standard.width}}"
-               data-height="{{image.standard.height}}">
+            <a href="{{image.standard.image}}" class="lightbox" data-id="{{id}}">
                 <img src="{{image.thumbnail.image}}" />
             </a>
             {{#if description}}
@@ -24,7 +17,7 @@
             {{/if}}
             <div class="pin-footer clearfix">
                 <div class="avatar pull-left">
-                    <img src="http://gravatar.com/avatar/{{submitter.gravatar}}.jpg">
+                    <img src="http://gravatar.com/avatar/{{submitter.gravatar}}">
                 </div>
                 <div class="text pull-right">
                     <span class="dim">pinned by</span> {{submitter.username}}

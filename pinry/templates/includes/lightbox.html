@@ -3,7 +3,7 @@
         <div class="lightbox-background">
             <div class="lightbox-wrapper">
                 <div class="lightbox-image-wrapper">
-                    <img class="lightbox-image" src="{{image}}" />
+                    <img class="lightbox-image" src="{{image.standard.image}}" />
                 </div>
                 <div class="lightbox-data clearfix">
                 {{#if description}}
@@ -12,10 +12,10 @@
                     </div>
                 {{/if}}
                     <div class="avatar pull-left">
-                        <img src="http://gravatar.com/avatar/{{gravatar}}.jpg">
+                        <img src="http://gravatar.com/avatar/{{submitter.gravatar}}.jpg">
                     </div>
                     <div class="text pull-left">
-                        <span class="dim">pinned by</span> {{username}}
+                        <span class="dim">pinned by</span> {{submitter.username}}
                         {{#if tags}}
                             <br /><span class="dim">in</span>
                         {{#each tags}}

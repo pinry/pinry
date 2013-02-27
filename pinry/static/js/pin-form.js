@@ -1,13 +1,6 @@
 $(window).load(function() {
     var currentPin;
 
-    function cleanTags() {
-        var tags = $('#pin-form-tags').val()
-        tags = tags.split(',')
-        for (var tag in tags) tags[tag] = tags[tag].trim();
-        return tags
-    }
-
     function createPin() {
         var template = Handlebars.compile($('#pins-template').html());
         var html = template({
@@ -22,7 +15,7 @@ $(window).load(function() {
                     }
                 },
                 description: $('#pin-form-description').val(),
-                tags: cleanTags()
+                tags: cleanTags($('#pin-form-tags').val())
             }]
         });
         currentPin = html;
@@ -63,7 +56,7 @@ $(window).load(function() {
         }
 
         $('#pin-form-submit').click(function(e) {
-            var tags = cleanTags();
+            var tags = cleanTags($('#pin-form-tags').val());
             $.ajax({
                 type: "post",
                 url: "/api/v1/pin/",

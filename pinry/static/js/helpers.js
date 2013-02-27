@@ -20,3 +20,9 @@ function cleanTags(tags) {
     }
     return tags
 }
+
+
+function getPinData(pinId) {
+    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    return $.get(apiUrl);
+}

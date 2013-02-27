@@ -30,13 +30,6 @@ $(window).load(function() {
             $(window).scrollTop($('body').data('scroll-level'));
         }
     }
-
-    function getLightboxData(link) {
-        var data = link.data();
-        data.tags = cleanTags(data.tags);
-        data.image = link.attr('href');
-        return data;
-    }
     // End Helper Functions
 
 
@@ -46,15 +39,15 @@ $(window).load(function() {
         $('body').append(renderTemplate('#lightbox-template', context));
         var box = $('.lightbox-background');
         box.css('height', $(document).height());
-        $('.lightbox-image-wrapper').css('height', context.height);
+        $('.lightbox-image-wrapper').css('height', context.image.standard.height);
         box.fadeIn(200);
         $('.lightbox-image').load(function() {
             $(this).fadeIn(200);
         });
         $('.lightbox-wrapper').css({
-            'width': context.width,
+            'width': context.image.standard.width,
             'margin-top': 70,
-            'margin-left': -context.width/2
+            'margin-left': -context.image.standard.width/2
         });
 
         box.click(function() {
@@ -74,8 +67,11 @@ $(window).load(function() {
         return links.each(function() {
             $(this).off('click');
             $(this).click(function(e) {
-                createBox(getLightboxData($(this)));
                 e.preventDefault();
+                var promise = getPinData($(this).data('id'));
+                promise.success(function(pin) {
+                    createBox(pin);
+                });
             });
         });
     }
