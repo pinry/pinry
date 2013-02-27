@@ -53,7 +53,7 @@ $(window).load(function() {
         });
         $('.lightbox-wrapper').css({
             'width': context.width,
-            'margin-top': 100,
+            'margin-top': 70,
             'margin-left': -context.width/2
         });
 
