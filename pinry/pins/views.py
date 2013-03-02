@@ -1,10 +1,5 @@
-import json
-
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import HttpResponse
-from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
 
 from braces.views import LoginRequiredMixin, JSONResponseMixin
@@ -17,6 +12,11 @@ class CreateImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
     template_name = None  # JavaScript-only view
     model = Image
     form_class = ImageForm
+
+    def get(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseRedirect(reverse('pins:recent-pins'))
+        super(CreateImage, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         image = form.save()
