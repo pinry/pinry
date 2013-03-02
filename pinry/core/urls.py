@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from tastypie.api import Api
 
 from .api import ImageResource, ThumbnailResource, PinResource, UserResource
+from .views import CreateUser
 
 
 v1_api = Api(api_name='v1')
@@ -25,5 +26,5 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login',
         {'template_name': 'user/login.html'}, name='login'),
     url(r'^logout/$', 'pinry.core.views.logout_user', name='logout'),
-    url(r'^register/$', 'pinry.core.views.register', name='register'),
+    url(r'^register/$', CreateUser.as_view(), name='register'),
 )
