@@ -3,5 +3,6 @@ Pillow
 South
 django-tastypie
 django-braces
-django-images
+mock
+http://github.com/mirumee/django-images/tarball/master#egg=django-images
 http://github.com/hcarvalhoalves/django-taggit/tarball/master#egg=django-taggit

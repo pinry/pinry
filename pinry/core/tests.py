@@ -1,7 +1,8 @@
-# pylint: disable-msg=R0904
-# pylint: disable-msg=E1103
+import mock
 
+from django.conf import settings
 from django.test.client import Client
+
 from django_images.models import Thumbnail
 
 from taggit.models import Tag
@@ -16,6 +17,17 @@ def filter_generator_for(size):
     return wrapped_func
 
 
+def mock_urlopen(url):
+    return open('screenshot.png')
+
+
+def mock_storage_path(self, name):
+    if name == 'screenshot.png':
+        return settings.SITE_ROOT + 'screenshot.png'
+    return name
+
+
+@mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class ImageResourceTest(ResourceTestCase):
     fixtures = ['test_resources.json']
     pass
@@ -46,6 +58,7 @@ class ImageResourceTest(ResourceTestCase):
         })
 
 
+@mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class PinResourceTest(ResourceTestCase):
     fixtures = ['test_resources.json']
 
@@ -53,15 +66,16 @@ class PinResourceTest(ResourceTestCase):
         super(PinResourceTest, self).setUp()
 
         self.pin_1 = Pin.objects.get(pk=1)
-        self.image_url = 'http://technicallyphilly.com/wp-content/uploads/2013/02/url1.jpeg'
+        self.image_url = ''
 
         self.user = User.objects.get(pk=1)
         self.api_client.client.login(username=self.user.username, password='password')
 
+    @mock.patch('urllib2.urlopen', mock_urlopen)
     def test_post_create_url(self):
         post_data = {
             'submitter': '/api/v1/user/1/',
-            'url': self.image_url,
+            'url': 'http://testserver/mocked/screenshot.png',
             'description': 'That\'s an Apple!'
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
