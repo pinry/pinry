@@ -37,12 +37,14 @@ class ImageResourceTest(ResourceTestCase):
         self.client = Client()
 
     def test_list_detail(self):
+        self.maxDiff = None
         image = Image.objects.get(pk=1)
         thumbnail = filter_generator_for('thumbnail')(image)
         standard = filter_generator_for('standard')(image)
+        square = filter_generator_for('square')(image)
         response = self.api_client.get('/api/v1/image/', format='json')
         self.assertDictEqual(self.deserialize(response)['objects'][0], {
-            u'image': image.image.url,
+            u'image': unicode(image.image.url),
             u'height': image.height,
             u'width': image.width,
             u'standard': {
@@ -54,7 +56,12 @@ class ImageResourceTest(ResourceTestCase):
                 u'image': unicode(thumbnail.image.url),
                 u'width': thumbnail.width,
                 u'height': thumbnail.height,
-            }
+            },
+            u'square': {
+                u'image': unicode(square.image.url),
+                u'width': square.width,
+                u'height': square.height,
+            },
         })
 
 
@@ -100,6 +107,29 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Pin.objects.count(), 3)
         self.assertEquals(Tag.objects.count(), 4)
 
+    def test_put_details_unauthenticated(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        response = self.api_client.put(uri, format='json', data={})
+        self.assertHttpUnauthorized(response)
+
+    def test_put_details_unauthorized(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        User.objects.create_user('test', 'test@example.com', 'test')
+        self.api_client.client.login(username='test', password='test')
+        response = self.api_client.put(uri, format='json', data={})
+        self.assertHttpUnauthorized(response)
+
+    # def test_put_details(self):
+    #     uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+    #     original = self.deserialize(self.api_client.get(uri, format='json'))
+    #     new = original.copy()
+    #     new['description'] = 'Updated description'
+    #
+    #     self.assertEqual(Pin.objects.count(), 2)
+    #     response = self.api_client.put(uri, format='json', data=new)
+    #     self.assertHttpAccepted(response)
+    #     self.assertEqual(Pin.objects.count(), 2)
+
     def test_get_list_json_ordered(self):
         pin = Pin.objects.latest('id')
         response = self.api_client.get('/api/v1/pin/', format='json', data={'order_by': '-id'})
@@ -111,6 +141,7 @@ class PinResourceTest(ResourceTestCase):
         image = Image.objects.get(pk=1)
         standard = filter_generator_for('standard')(image)
         thumbnail = filter_generator_for('thumbnail')(image)
+        square = filter_generator_for('square')(image)
         response = self.api_client.get('/api/v1/pin/', format='json')
         self.assertValidJSONResponse(response)
         self.assertDictEqual(self.deserialize(response)['objects'][0], {
@@ -132,7 +163,12 @@ class PinResourceTest(ResourceTestCase):
                     u'image': unicode(thumbnail.image.url),
                     u'width': thumbnail.width,
                     u'height': thumbnail.height,
-                }
+                },
+                u'square': {
+                    u'image': unicode(square.image.url),
+                    u'width': square.width,
+                    u'height': square.height,
+                    },
             },
             u'url': self.pin_1.url,
             u'description': self.pin_1.description,

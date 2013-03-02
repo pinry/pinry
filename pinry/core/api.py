@@ -41,6 +41,8 @@ class ImageResource(ModelResource):
                                  attribute=lambda bundle: filter_generator_for('standard')(bundle))
     thumbnail = fields.ToOneField(ThumbnailResource, full=True,
                                   attribute=lambda bundle: filter_generator_for('thumbnail')(bundle))
+    square = fields.ToOneField(ThumbnailResource, full=True,
+                               attribute=lambda bundle: filter_generator_for('square')(bundle))
 
     class Meta:
         fields = ['image', 'width', 'height']
