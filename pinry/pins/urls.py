@@ -7,7 +7,7 @@ from .views import CreateImage
 urlpatterns = patterns('pinry.pins.views',
     url(r'^pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
         name='pin-form'),
-    url(r'^upload-pin/$', CreateImage.as_view(), name='upload-pin'),
+    url(r'^create-image/$', CreateImage.as_view(), name='create-image'),
     url(r'^tag/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='tag-pins'),
     url(r'^$', TemplateView.as_view(template_name='core/pins.html'),

@@ -65,7 +65,7 @@ $(window).load(function() {
         // Drag and Drop Upload
         $('#pin-form-image-upload').fineUploader({
             request: {
-                endpoint: '/pins/upload-pin/',
+                endpoint: '/pins/create-image/',
                 paramsInBody: true,
                 multiple: false,
                 validation: {
