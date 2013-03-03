@@ -29,7 +29,8 @@ class Image(BaseImage):
 
 class Pin(models.Model):
     submitter = models.ForeignKey(User)
-    url = models.TextField(blank=True, null=True)
+    url = models.URLField(null=True)
+    origin = models.URLField(null=True)
     description = models.TextField(blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin')
     published = models.DateTimeField(auto_now_add=True)

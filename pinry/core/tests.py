@@ -104,6 +104,37 @@ class PinResourceTest(ResourceTestCase):
         pin = Pin.objects.get(url=url)
         self.assertEqual(pin.tags.count(), 0)
 
+    @mock.patch('urllib2.urlopen', mock_urlopen)
+    def test_post_create_url_with_empty_origin(self):
+        url = 'http://testserver/mocked/screenshot.png'
+        post_data = {
+            'submitter': '/api/v1/user/1/',
+            'url': url,
+            'description': 'That\'s an Apple!',
+            'origin': None
+        }
+        response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertHttpCreated(response)
+        self.assertEqual(Pin.objects.count(), 3)
+        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.get(url=url).origin, None)
+
+    @mock.patch('urllib2.urlopen', mock_urlopen)
+    def test_post_create_url_with_origin(self):
+        origin = 'http://testserver/mocked/'
+        url = origin + 'screenshot.png'
+        post_data = {
+            'submitter': '/api/v1/user/1/',
+            'url': url,
+            'description': 'That\'s an Apple!',
+            'origin': origin
+        }
+        response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertHttpCreated(response)
+        self.assertEqual(Pin.objects.count(), 3)
+        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.get(url=url).origin, origin)
+
     def test_post_create_obj(self):
         user = User.objects.get(pk=1)
         image = Image.objects.get(pk=1)
@@ -201,6 +232,7 @@ class PinResourceTest(ResourceTestCase):
                     },
             },
             u'url': self.pin_1.url,
+            u'origin': self.pin_1.origin,
             u'description': self.pin_1.description,
             u'tags': [u'creative-commons'],
         })

@@ -114,7 +114,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'description']
+        fields = ['id', 'url', 'origin', 'description']
         ordering = ['id']
         queryset = Pin.objects.all()
         resource_name = 'pin'
