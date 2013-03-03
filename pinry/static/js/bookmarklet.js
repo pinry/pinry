@@ -47,12 +47,31 @@ $(document).ready(function() {
             'position': 'absolute',
             'z-index': '9001',
             'background': 'rgba(0, 0, 0, 0.7)',
+            'padding-top': '70px',
             'top': '0',
             'left': '0',
             'right': '0',
-            'height': $(document).height()
+            'height': $(document).height(),
+            'text-align': 'center',
+            'width': '100%'
         });
-        return $('body').append(pinryImages);
+        var pinryBar = document.createElement('div');
+        pinryBar.id = 'pinry-bar';
+        $(pinryBar).css({
+            'background': 'black',
+            'padding': '15px',
+            'position': 'fixed',
+            'z-index': '9002',
+            'width': '100%',
+            'top': 0,
+            'border-bottom': '1px solid #555',
+            'color': 'white',
+            'text-align': 'center',
+            'font-size': '22px'
+        });
+        $('body').append(pinryImages);
+        $('#pinry-images').append(pinryBar);
+        $('#pinry-bar').html('Pinry Bookmarklet');
     }
 
     function imageView(imageUrl) {
@@ -67,7 +86,8 @@ $(document).ready(function() {
             'width': '200px',
             'height': '200px',
             'margin': '15px',
-            'cursor': 'pointer'
+            'cursor': 'pointer',
+            'border': '1px solid #555'
         });
         $(image).click(function() {
             var popUrl = getFormUrl()+imageUrl;
@@ -83,7 +103,8 @@ $(document).ready(function() {
     function addAllImagesToPageView() {
         var images = $('body').find('img');
         images.each(function() {
-            imageView($(this).attr('src'));
+            if ($(this).width() > 200 && $(this).height() > 200)
+                imageView($(this).attr('src'));
         });
         return images;
     }

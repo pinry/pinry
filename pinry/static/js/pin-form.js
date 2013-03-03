@@ -87,7 +87,7 @@ $(window).load(function() {
         });
         // If bookmarklet submit
         if (pinFromUrl) {
-            $('#pin-form-image-upload').css('display', 'none');
+            $('#pin-form-image-upload').parent().parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
             $('.navbar').css('display', 'none');
             modal.css({
