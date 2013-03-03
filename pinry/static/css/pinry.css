@@ -80,6 +80,42 @@ textarea {
 .form-actions {
     margin-bottom: 0;
 }
+
+.qq-upload-button {
+    background: #eee;
+    border: 3px dashed #888;
+    -webit-border-radius: 3px;
+      -moz-border-radius: 3px;
+           border-radius: 3px;
+    color: black;
+    width: 214px;
+}
+
+.qq-upload-drop-area {
+    background: #275173;
+    border: 3px dashed #aaa;
+    -webit-border-radius: 3px;
+      -moz-border-radius: 3px;
+           border-radius: 3px;
+    color: #ccc;
+}
+
+.qq-upload-success {
+    -webit-border-radius: 3px;
+      -moz-border-radius: 3px;
+           border-radius: 3px;
+}
+
+.qq-upload-list li {
+    background-color: #eee;
+    -webit-border-radius: 3px;
+      -moz-border-radius: 3px;
+           border-radius: 3px;
+}
+
+.qq-upload-spinner {
+    display: none;
+}
 /* End Forms */
 
 
