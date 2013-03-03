@@ -5,7 +5,7 @@
  *          scripts make use of helpers.js. In the future i want to remove
  *          all dependencies on jQuery.
  * Authors: Pinry Contributors
- * Updated: Feb 26th, 2013
+ * Updated: Mar 3rd, 2013
  * Require: None (dynamically loads jQuery if needed)
  */
 
@@ -15,7 +15,7 @@ if (!window.jQuery) {
     var body = document.getElementsByTagName('body')[0];
     var script = document.createElement('script');
     script.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-    head.appendChild(script);
+    body.appendChild(script);
 }
 // End jQuery Check
 
