@@ -57,7 +57,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'pinry.core.context_processors.template_settings',
 )
 AUTHENTICATION_BACKENDS = (
-    'pinry.core.auth.backends.CombinedAuthBackend',
+    'pinry.users.auth.backends.CombinedAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
