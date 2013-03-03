@@ -200,9 +200,14 @@ class PinResourceTest(ResourceTestCase):
         self.assertValidJSONResponse(response)
         self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.id)
 
-    def test_get_list_json_filtered(self):
+    def test_get_list_json_filtered_by_tags(self):
         tag = self.pin_1.tags.all()[0]
         response = self.api_client.get('/api/v1/pin/', format='json', data={'tag': tag})
+        self.assertValidJSONResponse(response)
+        self.assertEqual(self.deserialize(response)['objects'][0]['id'], self.pin_1.id)
+
+    def test_get_list_json_filtered_by_submitter(self):
+        response = self.api_client.get('/api/v1/pin/', format='json', data={'submitter__username': self.user.username})
         self.assertValidJSONResponse(response)
         self.assertEqual(self.deserialize(response)['objects'][0]['id'], self.pin_1.id)
 

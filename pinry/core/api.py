@@ -1,5 +1,6 @@
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
@@ -47,6 +48,9 @@ class UserResource(ModelResource):
 
     class Meta:
         list_allowed_methods = ['get']
+        filtering = {
+            'username': ALL
+        }
         queryset = User.objects.all()
         resource_name = 'user'
         fields = ['username']
@@ -114,6 +118,9 @@ class PinResource(ModelResource):
     class Meta:
         fields = ['id', 'url', 'origin', 'description']
         ordering = ['id']
+        filtering = {
+            'submitter': ALL_WITH_RELATIONS
+        }
         queryset = Pin.objects.all()
         resource_name = 'pin'
         include_resource_uri = False
