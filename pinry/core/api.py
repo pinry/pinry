@@ -108,8 +108,9 @@ class PinResource(ModelResource):
         return orm_filters
 
     def save_m2m(self, bundle):
-        tags = bundle.data.get('tags', [])
-        bundle.obj.tags.set(*tags)
+        tags = bundle.data.get('tags', None)
+        if tags:
+            bundle.obj.tags.set(*tags)
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:

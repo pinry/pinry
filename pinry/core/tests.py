@@ -88,6 +88,22 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Pin.objects.count(), 3)
         self.assertEqual(Image.objects.count(), 3)
 
+    @mock.patch('urllib2.urlopen', mock_urlopen)
+    def test_post_create_url_empty_tags(self):
+        url = 'http://testserver/mocked/screenshot.png'
+        post_data = {
+            'submitter': '/api/v1/user/1/',
+            'url': url,
+            'description': 'That\'s an Apple!',
+            'tags': []
+        }
+        response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertHttpCreated(response)
+        self.assertEqual(Pin.objects.count(), 3)
+        self.assertEqual(Image.objects.count(), 3)
+        pin = Pin.objects.get(url=url)
+        self.assertEqual(pin.tags.count(), 0)
+
     def test_post_create_obj(self):
         user = User.objects.get(pk=1)
         image = Image.objects.get(pk=1)
