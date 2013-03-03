@@ -93,6 +93,10 @@ $(window).load(function() {
                 });
             });
 
+            if (pins.meta.total_count == 0) {
+                $('.spinner').css('display', 'none');
+            }
+
             // Up our offset, it's currently defined as 30 in our settings
             offset += apiLimitPerPage;
         });
