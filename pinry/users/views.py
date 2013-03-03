@@ -19,7 +19,7 @@ class CreateUser(CreateView):
     template_name = 'user/register.html'
     model = User
     form_class = UserCreationForm
-    success_url = reverse_lazy('pins:recent-pins')
+    success_url = reverse_lazy('core:recent-pins')
 
     def get(self, request, *args, **kwargs):
         if not settings.ALLOW_NEW_REGISTRATIONS:
@@ -41,4 +41,4 @@ class CreateUser(CreateView):
 def logout_user(request):
     logout(request)
     messages.success(request, 'You have successfully logged out.')
-    return HttpResponseRedirect(reverse('core:home'))
+    return HttpResponseRedirect(reverse('core:recent-pins'))
