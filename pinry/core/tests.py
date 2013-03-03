@@ -4,11 +4,11 @@ from django.conf import settings
 from django.test.client import Client
 
 from django_images.models import Thumbnail
-
 from taggit.models import Tag
 from tastypie.test import ResourceTestCase
 
-from ..pins.models import User, Pin, Image
+from .models import Pin, Image
+from ..users.models import User
 
 
 def filter_generator_for(size):

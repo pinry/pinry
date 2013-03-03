@@ -85,7 +85,7 @@ INSTALLED_APPS = (
     'taggit',
     'django_images',
     'pinry.core',
-    'pinry.pins',
+    'pinry.users',
 )
 
 IMAGE_SIZES = {

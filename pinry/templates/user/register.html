@@ -7,7 +7,7 @@
         <div class="row">
             <div id="form" class="span6 offset3">
                 <h1>Register</h1>
-                <form action="{% url "core:register" %}" method="post" class="form-horizontal">
+                <form action="{% url "users:register" %}" method="post" class="form-horizontal">
                     {% csrf_token %}
                     {% for field in form %}
                         {% include "includes/field.html" %}

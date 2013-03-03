@@ -4,8 +4,8 @@ from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
 
-from pinry.core.models import User
-from pinry.pins.models import Image, Pin
+from .models import Pin, Image
+from ..users.models import User
 
 
 class PinryAuthorization(DjangoAuthorization):

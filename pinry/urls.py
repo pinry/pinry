@@ -4,6 +4,6 @@ from django.conf import settings
 
 
 urlpatterns = patterns('',
-    url(r'^pins/', include('pinry.pins.urls', namespace='pins')),
-    url(r'', include('pinry.core.urls', namespace='core')),
+                       url(r'', include('pinry.core.urls', namespace='core')),
+                       url(r'', include('pinry.users.urls', namespace='users')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

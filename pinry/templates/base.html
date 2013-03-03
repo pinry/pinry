@@ -44,15 +44,15 @@
         <!-- Navigation -->
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <a href="{% url 'core:home' %}" class="brand pull-left">{{ SITE_NAME }}</a>
+                <a href="{% url 'core:recent-pins' %}" class="brand pull-left">{{ SITE_NAME }}</a>
                 <ul class="nav pull-right">
                 {% if user.is_authenticated %}
                     <li>{% include "includes/bookmarklet_link.html" %}</li>
                     <li><a onclick="pinForm()">New Pin</a></li>
-                    <li><a href="{% url 'core:logout' %}">Logout</a></li>
+                    <li><a href="{% url 'users:logout' %}">Logout</a></li>
                 {% else %}
-                    <li><a href="{% url 'core:login' %}">Login</a></li>
-                    <li><a href="{% url 'core:register' %}">Register</a></li>
+                    <li><a href="{% url 'users:login' %}">Login</a></li>
+                    <li><a href="{% url 'users:register' %}">Register</a></li>
                 {% endif %}
                 </ul>
             </div>

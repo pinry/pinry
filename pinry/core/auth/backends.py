@@ -1,7 +1,7 @@
 from django.core.validators import email_re
 
-from pinry.core.models import User
-from pinry.pins.models import Pin
+from pinry.core.models import Pin
+from pinry.users.models import User
 
 
 class CombinedAuthBackend(object):
