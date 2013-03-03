@@ -14,9 +14,13 @@ function renderTemplate(templateId, context) {
 
 
 function cleanTags(tags) {
-    if (typeof tags === 'string') {
-        tags = tags.split(',');
-        for (var i in tags) tags[i] = tags[i].trim();
+    if (typeof tags === 'string' && tags.length > 0) {
+        tags = tags.split(/[\s,]+/);
+        for (var i in tags) {
+            tags[i] = tags[i].trim();
+        }
+    } else {
+        return null;
     }
     return tags;
 }

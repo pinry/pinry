@@ -201,3 +201,10 @@ a {
         .form-actions {
             margin-bottom: 0;
         }
+
+.spinner {
+    background: url('../img/loader.gif');
+    width: 31px;
+    height: 31px;
+    margin: auto;
+}
