@@ -35,7 +35,8 @@
                 username: "{{ user.username }}",
                 gravatar: "{{ user.gravatar }}"
             },
-            tagFilter = "{{ request.resolver_match.kwargs.tag }}";
+            tagFilter = "{{ request.resolver_match.kwargs.tag }}",
+            userFilter = "{{ request.resolver_match.kwargs.user }}";
         </script>
         <!-- End JavaScript Variables -->
     </head>

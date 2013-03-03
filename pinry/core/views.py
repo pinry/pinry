@@ -1,4 +1,3 @@
-from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView
@@ -7,10 +6,6 @@ from django_images.models import Image
 from braces.views import JSONResponseMixin, LoginRequiredMixin
 
 from .forms import ImageForm
-
-
-def private(request):
-    return TemplateResponse(request, 'user/private.html', None)
 
 
 class CreateImage(JSONResponseMixin, LoginRequiredMixin, CreateView):

@@ -12,4 +12,4 @@ class Public(object):
                 '/register/',
             ]
             if request.path not in acceptable_paths:
-                return HttpResponseRedirect(reverse('core:private'))
+                return HttpResponseRedirect(reverse('users:private'))
