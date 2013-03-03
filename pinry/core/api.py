@@ -100,10 +100,8 @@ class PinResource(ModelResource):
         return map(str, bundle.obj.tags.all())
 
     def build_filters(self, filters=None):
-        if filters is None:
-            filters = {}
         orm_filters = super(PinResource, self).build_filters(filters)
-        if 'tag' in filters:
+        if filters and 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
         return orm_filters
 
