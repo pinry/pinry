@@ -24,7 +24,7 @@ class CreateUser(CreateView):
     def get(self, request, *args, **kwargs):
         if not settings.ALLOW_NEW_REGISTRATIONS:
             messages.error(request, "The admin of this service is not allowing new registrations.")
-            return HttpResponseRedirect(reverse('pins:recent-pins'))
+            return HttpResponseRedirect(reverse('core:recent-pins'))
         return super(CreateUser, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
