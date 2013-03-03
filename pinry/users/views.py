@@ -16,7 +16,7 @@ reverse_lazy = lambda name=None, *args: lazy(reverse, str)(name, args=args)
 
 
 class CreateUser(CreateView):
-    template_name = 'user/register.html'
+    template_name = 'users/register.html'
     model = User
     form_class = UserCreationForm
     success_url = reverse_lazy('core:recent-pins')
