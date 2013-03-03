@@ -3,7 +3,7 @@
  * Descrip: This is for creation new pins on everything, the bookmarklet, on the
  *          site and even editing pins in some limited situations.
  * Authors: Pinry Contributors
- * Updated: Feb 27th, 2013
+ * Updated: March 3rd, 2013
  * Require: jQuery, Pinry JavaScript Helpers
  */
 
@@ -110,6 +110,7 @@ $(window).load(function() {
             var promise = postPinData(data);
             promise.success(function(pin) {
                 if (pinFromUrl) return window.close();
+                pin.editable = true;
                 pin = renderTemplate('#pins-template', {pins: [pin]});
                 $('#pins').prepend(pin);
                 dismissModal(modal);

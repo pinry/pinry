@@ -37,6 +37,14 @@ function getPinData(pinId) {
     return $.get(apiUrl);
 }
 
+
+function deletePinData(pinId) {
+    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    return $.ajax(apiUrl, {
+        type: 'DELETE'
+    });
+}
+
 function postPinData(data) {
     return $.ajax({
         type: "post",

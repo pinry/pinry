@@ -44,6 +44,19 @@ $(window).load(function() {
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
+            // Delete pin if trash icon clicked
+            $('.icon-trash').each(function() {
+                var thisPin = $(this);
+                $(this).click(function() {
+                    $(this).off('click');
+                    var promise = deletePinData($(this).data('id'));
+                    promise.success(function() {
+                        thisPin.parent().parent().parent().remove();
+                        tileLayout();
+                    });
+                });
+            });
+
         $('.spinner').css('display', 'none');
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
     }
