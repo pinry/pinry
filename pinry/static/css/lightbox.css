@@ -1,58 +1,58 @@
 .lightbox-background {
     background: rgba(0, 0, 0, 0.7);
-    top: 0;
+    display: none;
     left: 0;
     right: 0;
+    top: 0;
     position: absolute;
     z-index: 9001;
+}
+
+.lightbox-wrapper {
+    background: #eee;
+    background-image: url("../img/loader.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid #bbb;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    left: 50%;
+    margin-bottom: 100px;
+    position: absolute;
+}
+
+.lightbox-wrapper img {
     display: none;
 }
 
-    .lightbox-wrapper {
-        border: 1px solid #bbb;
-        position: absolute;
-        left: 50%;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        background: #eee;
-        background-image: url("../img/loader.gif");
-        background-repeat: no-repeat;
-        background-position: center center;
-        margin-bottom: 100px;
-    }
+.lightbox-data {
+    background: white;
+}
 
-    .lightbox-wrapper img {
-        display: none;
-    }
+.lightbox-data .description {
+    border-bottom: 1px solid #ddd;
+    font-family: "Georgia", "Times", "Times New Roman", Serif;
+    font-size: 16px;
+    padding: 8px;
+}
 
-        .lightbox-data {
-            background: white;
-        }
+.lightbox-data .avatar img {
+    display: block;
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
 
-            .lightbox-data .description {
-                padding: 8px;
-                border-bottom: 1px solid #ddd;
-                font-family: "Georgia", "Times", "Times New Roman", Serif;
-                font-size: 16px;
-            }
+.lightbox-data .text {
+    font-weight: bold;
+    margin-top: 3px;
+}
 
-            .lightbox-data .avatar img {
-                display: block;
-                width: 40px;
-                height: 40px;
-                margin: 5px;
-                border-radius: 3px;
-                -moz-border-radius: 3px;
-                -webkit-border-radius: 3px;
-            }
-
-            .lightbox-data .text {
-                margin-top: 3px;
-                font-weight: bold;
-            }
-
-            .lightbox-data .text .dim {
-                color: #999;
-                font-size: 14px;
-            }
+.lightbox-data .text .dim {
+    color: #999;
+    font-size: 14px;
+}

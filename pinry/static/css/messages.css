@@ -1,23 +1,23 @@
 .messages {
     list-style-type: none;
-    top: 50px;
-    right: 10px;
     position: absolute;
+    right: 10px;
+    top: 50px;
     z-index: 200;
 }
 
-    .messages li {
-        margin: 10px 0;
-        padding: 18px 28px;
-        border: 1px solid #ccc;
-        font-size: 16px
-    }
+.messages li {
+    border: 1px solid #ccc;
+    font-size: 16px
+    margin: 10px 0;
+    padding: 18px 28px;
+}
 
-    .messages li:hover {
-        -webkit-transform: scale(1.1);
-           -moz-transform: scale(1.1);
-            -ms-transform: scale(1.1);
-             -o-transform: scale(1.1);
-                transform: scale(1.1);
-        cursor: pointer;
-    }
+.messages li:hover {
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+       -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+         -o-transform: scale(1.1);
+            transform: scale(1.1);
+}

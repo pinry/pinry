@@ -1,3 +1,12 @@
+/**
+ * Pinry
+ * Descrip: Core of pinry, loads and tiles pins.
+ * Authors: Pinry Contributors
+ * Updated: Mar 3rd, 2013
+ * Require: jQuery, Pinry JavaScript Helpers
+ */
+
+
 $(window).load(function() {
     /**
      * tileLayout will simply tile/retile the block/pin container when run. This
@@ -16,46 +25,41 @@ $(window).load(function() {
 
         // Fill our colHeights array with 0 for each row we have
         for (var i=0; i < rowSize; i++) colHeights[i] = 0;
-
         // Fill out our rowMargins which will be static after this
         for (var i=0; i < rowSize; i++) {
             // Our first item has a special margin to keep things centered
             if (i == 0) rowMargins[0] = (blockContainer.width()-rowSize*(blockWidth+blockMargin))/2;
             else rowMargins[i] = rowMargins[i-1]+(blockWidth+blockMargin);
         }
-
         // Loop through every block
         for (var b=0; b < blocks.length; b++) {
             // Get the jQuery object of the current block
             block = blocks.eq(b);
-
             // Position our new pin in the shortest column
             var sCol = 0;
             for (var i=0; i < rowSize; i++) {
                 if (colHeights[sCol] > colHeights[i]) sCol = i;
             }
-
             block.css({
                 'margin-left': rowMargins[sCol],
-                'margin-top': colHeights[sCol],
-                'display': 'block'
+                'margin-top':  colHeights[sCol],
+                'display':     'block'
             });
-
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
-            // Delete pin if trash icon clicked
-            $('.icon-trash').each(function() {
-                var thisPin = $(this);
-                $(this).click(function() {
-                    $(this).off('click');
-                    var promise = deletePinData($(this).data('id'));
-                    promise.success(function() {
-                        thisPin.parent().parent().parent().remove();
-                        tileLayout();
-                    });
+        // Delete pin if trash icon clicked
+        $('.icon-trash').each(function() {
+            var thisPin = $(this);
+            $(this).click(function() {
+                $(this).off('click');
+                var promise = deletePinData($(this).data('id'));
+                promise.success(function() {
+                    thisPin.closest('.pin').remove();
+                    tileLayout();
                 });
             });
+        });
 
         $('.spinner').css('display', 'none');
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
@@ -95,6 +99,12 @@ $(window).load(function() {
 
             if (pins.meta.total_count == 0) {
                 $('.spinner').css('display', 'none');
+                if ($('.spinner').length != 0) {
+                    var theEnd = document.createElement('div');
+                    theEnd.id = 'the-end';
+                    $(theEnd).html('&mdash; End &mdash;');
+                    $('body').append(theEnd);
+                }
             }
 
             // Up our offset, it's currently defined as 30 in our settings
@@ -115,8 +125,8 @@ $(window).load(function() {
 
     // If we scroll to the bottom of the document load more pins
     $(window).scroll(function() {
-         if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            loadPins();
-         }
+        var windowPosition = $(window).scrollTop() + $(window).height();
+        var bottom = $(document).height() - 100;
+        if(windowPosition > bottom) loadPins();
      });
 });
