@@ -1,7 +1,6 @@
 import mock
 
 from django.conf import settings
-from django.test.client import Client
 
 from django_images.models import Thumbnail
 from taggit.models import Tag
@@ -30,11 +29,11 @@ def mock_storage_path(self, name):
 @mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class ImageResourceTest(ResourceTestCase):
     fixtures = ['test_resources.json']
-    pass
 
-    def setUp(self):
-        super(ImageResourceTest, self).setUp()
-        self.client = Client()
+    def test_post_create_unsupported(self):
+        """Make sure that new images can't be created using API"""
+        response = self.api_client.post('/api/v1/image/', format='json', data={})
+        self.assertHttpUnauthorized(response)
 
     def test_list_detail(self):
         image = Image.objects.get(pk=1)
