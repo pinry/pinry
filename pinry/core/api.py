@@ -1,10 +1,42 @@
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
+from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
 
 from pinry.core.models import User
 from pinry.pins.models import Image, Pin
+
+
+class PinryAuthorization(DjangoAuthorization):
+    """
+    Pinry-specific Authorization backend with object-level permission checking.
+    """
+    def update_detail(self, object_list, bundle):
+        klass = self.base_checks(bundle.request, bundle.obj.__class__)
+
+        if klass is False:
+            raise Unauthorized("You are not allowed to access that resource.")
+
+        permission = '%s.change_%s' % (klass._meta.app_label, klass._meta.module_name)
+
+        if not bundle.request.user.has_perm(permission, bundle.obj):
+            raise Unauthorized("You are not allowed to access that resource.")
+
+        return True
+
+    def delete_detail(self, object_list, bundle):
+        klass = self.base_checks(bundle.request, bundle.obj.__class__)
+
+        if klass is False:
+            raise Unauthorized("You are not allowed to access that resource.")
+
+        permission = '%s.delete_%s' % (klass._meta.app_label, klass._meta.module_name)
+
+        if not bundle.request.user.has_perm(permission, bundle.obj):
+            raise Unauthorized("You are not allowed to access that resource.")
+
+        return True
 
 
 class UserResource(ModelResource):
@@ -87,4 +119,4 @@ class PinResource(ModelResource):
         resource_name = 'pin'
         include_resource_uri = False
         always_return_data = True
-        authorization = DjangoAuthorization()
+        authorization = PinryAuthorization()

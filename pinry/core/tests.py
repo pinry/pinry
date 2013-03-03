@@ -37,7 +37,6 @@ class ImageResourceTest(ResourceTestCase):
         self.client = Client()
 
     def test_list_detail(self):
-        self.maxDiff = None
         image = Image.objects.get(pk=1)
         thumbnail = filter_generator_for('thumbnail')(image)
         standard = filter_generator_for('standard')(image)
@@ -107,28 +106,44 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Pin.objects.count(), 3)
         self.assertEquals(Tag.objects.count(), 4)
 
-    def test_put_details_unauthenticated(self):
+    def test_put_detail_unauthenticated(self):
+        self.api_client.client.logout()
         uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
         response = self.api_client.put(uri, format='json', data={})
         self.assertHttpUnauthorized(response)
 
-    def test_put_details_unauthorized(self):
+    def test_put_detail_unauthorized(self):
         uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
         User.objects.create_user('test', 'test@example.com', 'test')
         self.api_client.client.login(username='test', password='test')
         response = self.api_client.put(uri, format='json', data={})
         self.assertHttpUnauthorized(response)
 
-    # def test_put_details(self):
-    #     uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
-    #     original = self.deserialize(self.api_client.get(uri, format='json'))
-    #     new = original.copy()
-    #     new['description'] = 'Updated description'
-    #
-    #     self.assertEqual(Pin.objects.count(), 2)
-    #     response = self.api_client.put(uri, format='json', data=new)
-    #     self.assertHttpAccepted(response)
-    #     self.assertEqual(Pin.objects.count(), 2)
+    def test_put_detail(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        original = self.deserialize(self.api_client.get(uri, format='json'))
+        new = {'description': 'Updated description'}
+
+        response = self.api_client.put(uri, format='json', data=new)
+        self.assertHttpAccepted(response)
+        self.assertEqual(Pin.objects.count(), 2)
+        self.assertEqual(Pin.objects.get(pk=self.pin_1.pk).description, new['description'])
+
+    def test_delete_detail_unauthenticated(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        self.api_client.client.logout()
+        self.assertHttpUnauthorized(self.api_client.delete(uri))
+
+    def test_delete_detail_unauthorized(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        User.objects.create_user('test', 'test@example.com', 'test')
+        self.api_client.client.login(username='test', password='test')
+        self.assertHttpUnauthorized(self.api_client.delete(uri))
+
+    def test_delete_detail(self):
+        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        self.assertHttpAccepted(self.api_client.delete(uri))
+        self.assertEqual(Pin.objects.count(), 1)
 
     def test_get_list_json_ordered(self):
         pin = Pin.objects.latest('id')
