@@ -17,9 +17,9 @@ v1_api.register(UserResource())
 urlpatterns = patterns('',
     url(r'^api/', include(v1_api.urls, namespace='api')),
 
-    url(r'^pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
+    url(r'^pins/pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
         name='pin-form'),
-    url(r'^create-image/$', CreateImage.as_view(), name='create-image'),
+    url(r'^pins/create-image/$', CreateImage.as_view(), name='create-image'),
     url(r'^tag/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='tag-pins'),
     url(r'^private/$', 'pinry.core.views.private', name='private'),
