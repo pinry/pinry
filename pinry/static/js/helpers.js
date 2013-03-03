@@ -20,7 +20,7 @@ function cleanTags(tags) {
             tags[i] = tags[i].trim();
         }
     } else {
-        return null;
+        return [];
     }
     return tags;
 }
