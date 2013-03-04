@@ -6,6 +6,7 @@ from django_images.models import Thumbnail
 from taggit.models import Tag
 from tastypie.test import ResourceTestCase
 
+from .helpers import ImageFactory, PinFactory, UserFactory
 from ..models import Pin, Image
 from ...users.models import User
 
@@ -31,15 +32,13 @@ def mock_storage_path(self, name):
 
 @mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class ImageResourceTest(ResourceTestCase):
-    fixtures = ['test_resources.json']
-
     def test_post_create_unsupported(self):
         """Make sure that new images can't be created using API"""
         response = self.api_client.post('/api/v1/image/', format='json', data={})
         self.assertHttpUnauthorized(response)
 
     def test_list_detail(self):
-        image = Image.objects.get(pk=1)
+        image = ImageFactory()
         thumbnail = filter_generator_for('thumbnail')(image)
         standard = filter_generator_for('standard')(image)
         square = filter_generator_for('square')(image)
@@ -68,15 +67,9 @@ class ImageResourceTest(ResourceTestCase):
 
 @mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class PinResourceTest(ResourceTestCase):
-    fixtures = ['test_resources.json']
-
     def setUp(self):
         super(PinResourceTest, self).setUp()
-
-        self.pin_1 = Pin.objects.get(pk=1)
-        self.image_url = ''
-
-        self.user = User.objects.get(pk=1)
+        self.user = UserFactory(password='password')
         self.api_client.client.login(username=self.user.username, password='password')
 
     @mock.patch('urllib2.urlopen', mock_urlopen)
@@ -88,11 +81,11 @@ class PinResourceTest(ResourceTestCase):
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
         self.assertHttpCreated(response)
-        self.assertEqual(Pin.objects.count(), 3)
-        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Image.objects.count(), 1)
 
     @mock.patch('urllib2.urlopen', mock_urlopen)
-    def test_post_create_url_empty_tags(self):
+    def test_post_create_url_with_empty_tags(self):
         url = 'http://testserver/mocked/screenshot.png'
         post_data = {
             'submitter': '/api/v1/user/1/',
@@ -102,8 +95,8 @@ class PinResourceTest(ResourceTestCase):
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
         self.assertHttpCreated(response)
-        self.assertEqual(Pin.objects.count(), 3)
-        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Image.objects.count(), 1)
         pin = Pin.objects.get(url=url)
         self.assertEqual(pin.tags.count(), 0)
 
@@ -118,8 +111,8 @@ class PinResourceTest(ResourceTestCase):
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
         self.assertHttpCreated(response)
-        self.assertEqual(Pin.objects.count(), 3)
-        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Image.objects.count(), 1)
         self.assertEqual(Pin.objects.get(url=url).origin, None)
 
     @mock.patch('urllib2.urlopen', mock_urlopen)
@@ -134,96 +127,102 @@ class PinResourceTest(ResourceTestCase):
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
         self.assertHttpCreated(response)
-        self.assertEqual(Pin.objects.count(), 3)
-        self.assertEqual(Image.objects.count(), 3)
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Image.objects.count(), 1)
         self.assertEqual(Pin.objects.get(url=url).origin, origin)
 
     def test_post_create_obj(self):
-        user = User.objects.get(pk=1)
-        image = Image.objects.get(pk=1)
+        image = ImageFactory()
         post_data = {
-            'submitter': '/api/v1/user/{}/'.format(user.pk),
+            'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'image': '/api/v1/image/{}/'.format(image.pk),
             'description': 'That\'s something else (probably a CC logo)!',
             'tags': ['random', 'tags'],
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
-        self.assertEqual(self.deserialize(response)['id'], 3)
+        self.assertEqual(self.deserialize(response)['id'], 1)
         self.assertHttpCreated(response)
         # A number of Image objects should stay the same as we are using an existing image
-        self.assertEqual(Image.objects.count(), 2)
-        self.assertEqual(Pin.objects.count(), 3)
-        self.assertEquals(Tag.objects.count(), 4)
+        self.assertEqual(Image.objects.count(), 1)
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEquals(Tag.objects.count(), 2)
 
     def test_put_detail_unauthenticated(self):
         self.api_client.client.logout()
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        uri = '/api/v1/pin/{}/'.format(PinFactory().pk)
         response = self.api_client.put(uri, format='json', data={})
         self.assertHttpUnauthorized(response)
 
     def test_put_detail_unauthorized(self):
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
-        User.objects.create_user('test', 'test@example.com', 'test')
-        self.api_client.client.login(username='test', password='test')
+        uri = '/api/v1/pin/{}/'.format(PinFactory(submitter=self.user).pk)
+        user = UserFactory(password='password')
+        self.api_client.client.login(username=user.username, password='password')
         response = self.api_client.put(uri, format='json', data={})
         self.assertHttpUnauthorized(response)
 
     def test_put_detail(self):
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
-        original = self.deserialize(self.api_client.get(uri, format='json'))
+        pin = PinFactory(submitter=self.user)
+        uri = '/api/v1/pin/{}/'.format(pin.pk)
         new = {'description': 'Updated description'}
 
         response = self.api_client.put(uri, format='json', data=new)
         self.assertHttpAccepted(response)
-        self.assertEqual(Pin.objects.count(), 2)
-        self.assertEqual(Pin.objects.get(pk=self.pin_1.pk).description, new['description'])
+        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Pin.objects.get(pk=pin.pk).description, new['description'])
 
     def test_delete_detail_unauthenticated(self):
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        uri = '/api/v1/pin/{}/'.format(PinFactory(submitter=self.user).pk)
         self.api_client.client.logout()
         self.assertHttpUnauthorized(self.api_client.delete(uri))
 
     def test_delete_detail_unauthorized(self):
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        uri = '/api/v1/pin/{}/'.format(PinFactory(submitter=self.user).pk)
         User.objects.create_user('test', 'test@example.com', 'test')
         self.api_client.client.login(username='test', password='test')
         self.assertHttpUnauthorized(self.api_client.delete(uri))
 
     def test_delete_detail(self):
-        uri = '/api/v1/pin/{}/'.format(self.pin_1.pk)
+        uri = '/api/v1/pin/{}/'.format(PinFactory(submitter=self.user).pk)
         self.assertHttpAccepted(self.api_client.delete(uri))
-        self.assertEqual(Pin.objects.count(), 1)
+        self.assertEqual(Pin.objects.count(), 0)
 
     def test_get_list_json_ordered(self):
-        pin = Pin.objects.latest('id')
+        _, pin = PinFactory(), PinFactory()
         response = self.api_client.get('/api/v1/pin/', format='json', data={'order_by': '-id'})
         self.assertValidJSONResponse(response)
         self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.id)
 
     def test_get_list_json_filtered_by_tags(self):
-        tag = self.pin_1.tags.all()[0]
-        response = self.api_client.get('/api/v1/pin/', format='json', data={'tag': tag})
+        pin = PinFactory()
+        response = self.api_client.get('/api/v1/pin/', format='json', data={'tag': pin.tags.get(pk=1)})
         self.assertValidJSONResponse(response)
-        self.assertEqual(self.deserialize(response)['objects'][0]['id'], self.pin_1.id)
+        self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.pk)
 
     def test_get_list_json_filtered_by_submitter(self):
+        pin = PinFactory(submitter=self.user)
         response = self.api_client.get('/api/v1/pin/', format='json', data={'submitter__username': self.user.username})
         self.assertValidJSONResponse(response)
-        self.assertEqual(self.deserialize(response)['objects'][0]['id'], self.pin_1.id)
+        self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.pk)
 
     def test_get_list_json(self):
-        user = User.objects.get(pk=1)
-        image = Image.objects.get(pk=1)
+        image = ImageFactory()
+        pin = PinFactory(**{
+            'submitter': self.user,
+            'image': image,
+            'url': 'http://testserver/mocked/screenshot.png',
+            'description': u'Mocked Description',
+            'origin': None
+        })
         standard = filter_generator_for('standard')(image)
         thumbnail = filter_generator_for('thumbnail')(image)
         square = filter_generator_for('square')(image)
         response = self.api_client.get('/api/v1/pin/', format='json')
         self.assertValidJSONResponse(response)
         self.assertDictEqual(self.deserialize(response)['objects'][0], {
-            u'id': self.pin_1.id,
+            u'id': pin.id,
             u'submitter': {
-                u'username': user.username,
-                u'gravatar': user.gravatar
+                u'username': unicode(self.user.username),
+                u'gravatar': unicode(self.user.gravatar)
             },
             u'image': {
                 u'image': unicode(image.image.url),
@@ -245,8 +244,8 @@ class PinResourceTest(ResourceTestCase):
                     u'height': square.height,
                     },
             },
-            u'url': self.pin_1.url,
-            u'origin': self.pin_1.origin,
-            u'description': self.pin_1.description,
-            u'tags': [u'creative-commons'],
+            u'url': pin.url,
+            u'origin': pin.origin,
+            u'description': pin.description,
+            u'tags': [tag.name for tag in pin.tags.all()]
         })

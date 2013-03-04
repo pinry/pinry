@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.template import TemplateDoesNotExist
 from django.test import TestCase
 
+from .api import UserFactory
 from ...core.models import Image
 
 
@@ -10,11 +11,9 @@ __all__ = ['CreateImageTest']
 
 
 class CreateImageTest(TestCase):
-    fixtures = ['test_resources.json']
-
     def setUp(self):
-        self.client.login(username='jdoe', password='password')
-
+        self.user = UserFactory(password='password')
+        self.client.login(username=self.user.username, password='password')
 
     def test_get_browser(self):
         response = self.client.get(reverse('core:create-image'))
