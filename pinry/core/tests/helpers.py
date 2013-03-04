@@ -7,16 +7,11 @@ from django.test import TestCase
 import factory
 from taggit.models import Tag
 
-from ..models import Image, Pin
-from ...users.models import User
-
 
 TEST_IMAGE_PATH = settings.SITE_ROOT + 'screenshot.png'
 
 
 class UserFactory(factory.Factory):
-    FACTORY_FOR = User
-
     username = factory.Sequence(lambda n: 'user_{}'.format(n))
     email = factory.Sequence(lambda n: 'user_{}@example.com'.format(n))
 
@@ -29,21 +24,16 @@ class UserFactory(factory.Factory):
     def set_user_permissions(self, create, extracted, **kwargs):
         self.user_permissions = Permission.objects.filter(codename__in=['add_pin', 'add_image'])
 
-class TagFactory(factory.Factory):
-    FACTORY_FOR = Tag
 
+class TagFactory(factory.Factory):
     name = factory.Sequence(lambda n: 'tag_{}'.format(n))
 
 
 class ImageFactory(factory.Factory):
-    FACTORY_FOR = Image
-
     image = factory.LazyAttribute(lambda a: File(open(TEST_IMAGE_PATH)))
 
 
 class PinFactory(factory.Factory):
-    FACTORY_FOR = Pin
-
     submitter = factory.SubFactory(UserFactory)
     image = factory.SubFactory(ImageFactory)
 
