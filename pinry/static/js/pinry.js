@@ -43,8 +43,8 @@ $(window).load(function() {
             block.css({
                 'margin-left': rowMargins[sCol],
                 'margin-top':  colHeights[sCol],
-                'display':     'block'
             });
+            block.fadeIn(300);
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
@@ -91,19 +91,22 @@ $(window).load(function() {
             $('#pins').append(html);
 
             // We need to then wait for images to load in and then tile
+            tileLayout();
+            lightbox();
             $('#pins').ajaxStop(function() {
                 $('img').load(function() {
-                    tileLayout();
-                    lightbox();
+                    $(this).fadeIn(300);
                 });
             });
 
-            if (pins.meta.total_count == 0) {
+            if (pins.objects.length == 0 || pins.objects.length < 30) {
                 $('.spinner').css('display', 'none');
-                if ($('.spinner').length != 0) {
+                $(window).off('scroll');
+                if ($('#pins').length != 0) {
                     var theEnd = document.createElement('div');
                     theEnd.id = 'the-end';
                     $(theEnd).html('&mdash; End &mdash;');
+                    $(theEnd).css('padding', 50);
                     $('body').append(theEnd);
                 }
             }

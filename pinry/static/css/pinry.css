@@ -133,6 +133,7 @@ textarea {
     -webkit-box-shadow: 0 1px 0 #bbb;
        -moz-box-shadow: 0 1px 0 #bbb;
             box-shadow: 0 1px 0 #bbb;
+    display: none;
     position: absolute;
     width: 240px;
 }
@@ -143,7 +144,6 @@ textarea {
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
-    display: none;
     position: absolute;
     right: 7px;
     top: 7px;
@@ -163,6 +163,12 @@ textarea {
     display: inline-block;
 }
 
+.pin .image-wrapper {
+    background-image: url("../img/loader.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 .pin img {
     -webkit-border-top-left-radius: 3px;
         -moz-border-radius-topleft: 3px;
@@ -172,6 +178,7 @@ textarea {
             border-top-right-radius: 3px;
     cursor: -webkit-zoom-in;
     cursor:    -moz-zoom-in;
+    display: none;
     margin: 0;
     padding: 0;
     width: 240px;
@@ -226,8 +233,11 @@ textarea {
 
 .spinner {
     background: url('../img/loader.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
     height: 31px;
     margin: 0 auto;
+    padding: 50px;
     width: 31px;
 }
 

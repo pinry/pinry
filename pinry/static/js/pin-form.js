@@ -33,6 +33,8 @@ $(window).load(function() {
         preview.html(html);
         preview.find('.pin').width(200);
         preview.find('.pin .text').width(140);
+        preview.find('.pin').fadeIn(300);
+        preview.find('.image-wrapper img').fadeIn(300);
         if (preview.find('.pin').height() > 305)
             $('#pin-form .modal-body').height(preview.find('.pin').height());
     }
@@ -59,7 +61,7 @@ $(window).load(function() {
             formFields[i].bind('propertychange keyup input paste', function() {
                 createPinPreviewFromForm();
                 if (!uploadedImage)
-                    $('#pin-form-image-upload').parent().parent().css('display', 'none');
+                    $('#pin-form-image-upload').parent().parent().fadeOut(300);
             });
         }
         // Drag and Drop Upload
@@ -76,7 +78,7 @@ $(window).load(function() {
                 }
             }
         }).on('complete', function(e, id, name, data) {
-            $('#pin-form-image-url').parent().parent().css('display', 'none');
+            $('#pin-form-image-url').parent().parent().fadeOut(300);
             $('.qq-upload-button').css('display', 'none');
             var promise = getImageData(data.success.id);
             uploadedImage = data.success.id;

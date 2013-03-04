@@ -13,7 +13,9 @@
                 </div>
             {{/if}}
             <a href="{{image.standard.image}}" class="lightbox" data-id="{{id}}">
-                <img src="{{image.thumbnail.image}}" />
+                <div class="image-wrapper" style="width: {{image.thumbnail.width}}px; height: {{image.thumbnail.height}}px;">
+                    <img src="{{image.thumbnail.image}}" width="{{image.thumbnail.width}}" height="{{image.thumbnail.height}}"/>
+                </div>
             </a>
             {{#if description}}
                 <p>{{description}}</p>
