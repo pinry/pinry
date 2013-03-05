@@ -34,6 +34,7 @@ STATICFILES_DIRS = [os.path.join(SITE_ROOT, 'pinry/static')]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -83,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'taggit',
+    'compressor',
     'django_images',
     'pinry.core',
     'pinry.users',

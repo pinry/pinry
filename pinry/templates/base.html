@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,9 +23,11 @@
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monoton"/>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/fineuploader.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/messages.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/lightbox.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/pinry.css"/>
+        {% compress css %}
+        <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
+        {%  endcompress %}
         {% block extra_css %}{% endblock %}
         <!-- End CSS -->
 
@@ -80,11 +84,13 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/jquery.fineuploader.min.js"></script>
-        <script src="{{ STATIC_URL }}js/helpers.js"></script>
-        <script src="{{ STATIC_URL }}js/messages.js"></script>
-        <script src="{{ STATIC_URL }}js/lightbox.js"></script>
-        <script src="{{ STATIC_URL }}js/pinry.js"></script>
-        <script src="{{ STATIC_URL }}js/pin-form.js"></script>
+        {% compress js %}
+        <script src="{% static "js/helpers.js" %}"></script>
+        <script src="{% static "js/messages.js" %}"></script>
+        <script src="{% static "js/lightbox.js" %}"></script>
+        <script src="{% static "js/pinry.js" %}"></script>
+        <script src="{% static "js/pin-form.js" %}"></script>
+        {% endcompress %}
         {% block extra_js %}{% endblock %}
         <!-- End JavaScript -->
     </body>
