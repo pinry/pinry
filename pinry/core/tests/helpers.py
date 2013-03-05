@@ -7,6 +7,9 @@ from django.test import TestCase
 import factory
 from taggit.models import Tag
 
+from ..models import Pin, Image
+from ...users.models import User
+
 
 TEST_IMAGE_PATH = settings.SITE_ROOT + 'screenshot.png'
 
