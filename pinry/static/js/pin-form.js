@@ -86,6 +86,9 @@ $(window).load(function() {
                 $('#pin-form-image-url').val(image.thumbnail.image);
                 createPinPreviewFromForm();
             });
+            promise.error(function() {
+                message('Problem uploading image.', 'alert alert-error');
+            });
         });
         // If bookmarklet submit
         if (pinFromUrl) {
@@ -117,6 +120,9 @@ $(window).load(function() {
                 $('#pins').prepend(pin);
                 dismissModal(modal);
                 uploadedImage = false;
+            });
+            promise.error(function() {
+                message('Problem saving image.', 'alert alert-error');
             });
         });
         $('#pin-form-close').click(function() {

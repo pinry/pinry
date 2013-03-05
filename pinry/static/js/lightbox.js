@@ -75,6 +75,9 @@ $(window).load(function() {
                 promise.success(function(pin) {
                     createBox(pin);
                 });
+                promise.error(function() {
+                    message('Problem problem fetching pin data.', 'alert alert-error');
+                });
             });
         });
     }

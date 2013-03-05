@@ -1,7 +1,5 @@
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+{% verbatim %}
+    <script id="messages-template" type="text/x-handlebars-template">
+        <li class="{{ classes }}">{{ text }}</li>
+    </script>
+{% endverbatim %}

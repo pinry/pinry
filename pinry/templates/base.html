@@ -28,7 +28,9 @@
         <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
         <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
         {%  endcompress %}
+        {% compress css inline %}
         {% block extra_css %}{% endblock %}
+        {% endcompress %}
         <!-- End CSS -->
 
         <!-- Start JavaScript Variables -->
@@ -64,15 +66,16 @@
         </div>
         <!-- End Navigation -->
 
+        <!-- Messages -->
+        <ul id="messages"></ul>
+        <!-- End Messages -->
+
         <!-- Content -->
         {% block yield %}{% endblock %}
         <!-- End Content -->
 
-        <!-- Messages -->
-        {% include "includes/messages.html" %}
-        <!-- End Messages -->
-
         <!-- Templates -->
+        {% include "includes/messages.html" %}
         {% include "includes/lightbox.html" %}
         {% include "includes/pins.html" %}
         {% include "includes/pin_form.html" %}
@@ -91,7 +94,9 @@
         <script src="{% static "js/pinry.js" %}"></script>
         <script src="{% static "js/pin-form.js" %}"></script>
         {% endcompress %}
+        {% compress js inline %}
         {% block extra_js %}{% endblock %}
+        {% endcompress %}
         <!-- End JavaScript -->
     </body>
 </html>

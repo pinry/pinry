@@ -1,12 +1,17 @@
 $(document).ready(function() {
-    var delayTime  = 3000,
-        alerts     = $('.alert');
-
-    delayTime = delayTime + (alerts.length * 250);
-
-    alerts.each(function() {
-        $(this).delay(delayTime).fadeOut('slow');
-        delayTime -= 250;
-        console.log(delayTime);
-    });
+    window.message = function(text, classes) {
+        classes = typeof classes !== 'undefined' ? classes : 'alert';
+        messageHtml = renderTemplate('#messages-template', {
+            text: text,
+            classes: classes
+        });
+        $('#messages').append(messageHtml);
+        $('#messages li').each(function() {
+            $(this).delay(3000).fadeOut(300);
+            var messageDelayed = $(this);
+            setTimeout(function() {
+                messageDelayed.remove();
+            }, 3300);
+        });
+    }
 });

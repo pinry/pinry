@@ -58,6 +58,9 @@ $(window).load(function() {
                     thisPin.closest('.pin').remove();
                     tileLayout();
                 });
+                promise.error(function() {
+                    message('Problem deleting image.', 'alert alert-error');
+                });
             });
         });
 
