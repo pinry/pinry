@@ -1,7 +1,5 @@
 import mock
 
-from django.conf import settings
-
 from django_images.models import Thumbnail
 from taggit.models import Tag
 from tastypie.test import ResourceTestCase
@@ -24,13 +22,6 @@ def mock_urlopen(url):
     return open('logo.png')
 
 
-def mock_storage_path(self, name):
-    if name == 'logo.png':
-        return settings.SITE_ROOT + 'logo.png'
-    return name
-
-
-@mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class ImageResourceTest(ResourceTestCase):
     def test_post_create_unsupported(self):
         """Make sure that new images can't be created using API"""
@@ -65,7 +56,6 @@ class ImageResourceTest(ResourceTestCase):
         })
 
 
-@mock.patch('django.core.files.storage.FileSystemStorage.path', mock_storage_path)
 class PinResourceTest(ResourceTestCase):
     def setUp(self):
         super(PinResourceTest, self).setUp()
