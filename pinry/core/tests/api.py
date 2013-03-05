@@ -21,12 +21,12 @@ def filter_generator_for(size):
 
 
 def mock_urlopen(url):
-    return open('screenshot.png')
+    return open('logo.png')
 
 
 def mock_storage_path(self, name):
-    if name == 'screenshot.png':
-        return settings.SITE_ROOT + 'screenshot.png'
+    if name == 'logo.png':
+        return settings.SITE_ROOT + 'logo.png'
     return name
 
 
@@ -76,7 +76,7 @@ class PinResourceTest(ResourceTestCase):
     def test_post_create_url(self):
         post_data = {
             'submitter': '/api/v1/user/1/',
-            'url': 'http://testserver/mocked/screenshot.png',
+            'url': 'http://testserver/mocked/logo.png',
             'description': 'That\'s an Apple!'
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
@@ -86,7 +86,7 @@ class PinResourceTest(ResourceTestCase):
 
     @mock.patch('urllib2.urlopen', mock_urlopen)
     def test_post_create_url_with_empty_tags(self):
-        url = 'http://testserver/mocked/screenshot.png'
+        url = 'http://testserver/mocked/logo.png'
         post_data = {
             'submitter': '/api/v1/user/1/',
             'url': url,
@@ -102,7 +102,7 @@ class PinResourceTest(ResourceTestCase):
 
     @mock.patch('urllib2.urlopen', mock_urlopen)
     def test_post_create_url_with_empty_origin(self):
-        url = 'http://testserver/mocked/screenshot.png'
+        url = 'http://testserver/mocked/logo.png'
         post_data = {
             'submitter': '/api/v1/user/1/',
             'url': url,
@@ -118,7 +118,7 @@ class PinResourceTest(ResourceTestCase):
     @mock.patch('urllib2.urlopen', mock_urlopen)
     def test_post_create_url_with_origin(self):
         origin = 'http://testserver/mocked/'
-        url = origin + 'screenshot.png'
+        url = origin + 'logo.png'
         post_data = {
             'submitter': '/api/v1/user/1/',
             'url': url,
@@ -209,7 +209,7 @@ class PinResourceTest(ResourceTestCase):
         pin = PinFactory(**{
             'submitter': self.user,
             'image': image,
-            'url': 'http://testserver/mocked/screenshot.png',
+            'url': 'http://testserver/mocked/logo.png',
             'description': u'Mocked Description',
             'origin': None
         })
