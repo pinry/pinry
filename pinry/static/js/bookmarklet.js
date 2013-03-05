@@ -60,7 +60,7 @@ $(document).ready(function() {
         $(pinryBar).css({
             'background': 'black',
             'padding': '15px',
-            'position': 'fixed',
+            'position': 'absolute',
             'z-index': '9002',
             'width': '100%',
             'top': 0,
@@ -91,7 +91,7 @@ $(document).ready(function() {
         });
         $(image).click(function() {
             var popUrl = getFormUrl()+imageUrl;
-            window.open(popUrl, '', 'width=590,height=439,toolbar=0,menubar=0');
+            window.open(popUrl);
             $('#pinry-images').remove();
         });
         return $('#pinry-images').append(image);

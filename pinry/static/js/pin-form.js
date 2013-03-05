@@ -34,9 +34,17 @@ $(window).load(function() {
         preview.find('.pin').width(200);
         preview.find('.pin .text').width(140);
         preview.find('.pin').fadeIn(300);
+        if (getFormData().url == "")
+            preview.find('.image-wrapper').height(278);
         preview.find('.image-wrapper img').fadeIn(300);
-        if (preview.find('.pin').height() > 305)
-            $('#pin-form .modal-body').height(preview.find('.pin').height());
+        console.log(preview.find('.pin').height());
+        setTimeout(function() {
+            if (preview.find('.pin').height() > 305) {
+                $('#pin-form .modal-body').animate({
+                    'height': preview.find('.pin').height()
+                }, 300);
+            }
+        }, 300);
     }
 
     function dismissModal(modal) {
@@ -57,9 +65,13 @@ $(window).load(function() {
             pinFromUrl = getUrlParameter('pin-image-url');
         modal.modal('show');
         // Auto update preview on field changes
+        var timer;
         for (var i in formFields) {
             formFields[i].bind('propertychange keyup input paste', function() {
-                createPinPreviewFromForm();
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    createPinPreviewFromForm()
+                }, 700);
                 if (!uploadedImage)
                     $('#pin-form-image-upload').parent().parent().fadeOut(300);
             });

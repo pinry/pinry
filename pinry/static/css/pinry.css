@@ -116,6 +116,10 @@ textarea {
 .qq-upload-spinner {
     display: none;
 }
+
+.modal-body {
+    overflow: hidden;
+}
 /* End Forms */
 
 
