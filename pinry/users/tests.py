@@ -10,7 +10,7 @@ from .models import User
 
 
 def mock_urlopen(url):
-    return open('screenshot.png')
+    return open('logo.png')
 
 
 class CombinedAuthBackendTest(TestCase):

@@ -24,7 +24,7 @@ class CreateImageTest(TestCase):
             self.client.get(reverse('core:create-image'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
     def test_post(self):
-        with open(settings.SITE_ROOT + 'screenshot.png', mode='rb') as image:
+        with open(settings.SITE_ROOT + 'logo.png', mode='rb') as image:
             response = self.client.post(reverse('core:create-image'), {'qqfile': image})
         image = Image.objects.latest('pk')
         self.assertJSONEqual(response.content, {'success': {'id': image.pk}})
