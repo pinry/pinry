@@ -10,3 +10,5 @@
 /static/
 *.pyc
 /.idea/
+/dist/
+/*.egg-info/
