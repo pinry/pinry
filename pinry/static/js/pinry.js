@@ -64,6 +64,16 @@ $(window).load(function() {
             });
         });
 
+        // Show edit-buttons only on mouse over
+        $('.pin').each(function(){
+            var thisPin = $(this);
+            thisPin.find('.editable').hide();
+            thisPin.unbind('hover');
+            thisPin.hover(function() {
+                thisPin.find('.editable').toggle();
+            });
+        });
+
         $('.spinner').css('display', 'none');
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
     }
