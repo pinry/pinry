@@ -51,6 +51,7 @@ $(window).load(function() {
         // Delete pin if trash icon clicked
         $('.icon-trash').each(function() {
             var thisPin = $(this);
+            $(this).unbind('click');
             $(this).click(function() {
                 $(this).off('click');
                 var promise = deletePinData($(this).data('id'));
