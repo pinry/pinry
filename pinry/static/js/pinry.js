@@ -51,6 +51,7 @@ $(window).load(function() {
         // Delete pin if trash icon clicked
         $('.icon-trash').each(function() {
             var thisPin = $(this);
+            $(this).off('click');
             $(this).click(function() {
                 $(this).off('click');
                 var promise = deletePinData($(this).data('id'));
@@ -61,6 +62,16 @@ $(window).load(function() {
                 promise.error(function() {
                     message('Problem deleting image.', 'alert alert-error');
                 });
+            });
+        });
+
+        // Show edit-buttons only on mouse over
+        $('.pin').each(function(){
+            var thisPin = $(this);
+            thisPin.find('.editable').hide();
+            thisPin.off('hover');
+            thisPin.hover(function() {
+                thisPin.find('.editable').toggle();
             });
         });
 
