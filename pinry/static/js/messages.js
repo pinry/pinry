@@ -14,4 +14,10 @@ $(document).ready(function() {
             }, 3300);
         });
     }
+
+    if (errors) {
+        for (var i in errors) {
+            message(errors[i].text, errors[i].tags);
+        }
+    }
 });
