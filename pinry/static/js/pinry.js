@@ -13,7 +13,7 @@ $(window).load(function() {
      * was put into a function in order to adjust frequently on screen size 
      * changes.
      */
-    function tileLayout() {
+    window.tileLayout = function() {
         var blockContainer = $('#pins'),
             blocks = blockContainer.children('.pin'),
             blockMargin = 15,
@@ -47,6 +47,16 @@ $(window).load(function() {
             block.fadeIn(300);
             colHeights[sCol] += block.height()+(blockMargin);
         }
+
+        // Edit pin if pencil icon clicked
+        $('.icon-pencil').each(function() {
+            var thisPin = $(this);
+            $(this).off('click');
+            $(this).click(function() {
+                $(this).off('click');
+                pinForm($(this).data('id'));
+            });
+        });
 
         // Delete pin if trash icon clicked
         $('.icon-trash').each(function() {
