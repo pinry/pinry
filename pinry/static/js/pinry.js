@@ -71,7 +71,9 @@ $(window).load(function() {
             thisPin.find('.editable').hide();
             thisPin.off('hover');
             thisPin.hover(function() {
-                thisPin.find('.editable').toggle();
+                thisPin.find('.editable').stop(true, true).fadeIn(300);
+            }, function() {
+                thisPin.find('.editable').stop(true, false).fadeOut(300);
             });
         });
 
