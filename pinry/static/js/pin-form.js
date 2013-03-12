@@ -171,6 +171,7 @@ $(window).load(function() {
                     pin.editable = true;
                     pin = renderTemplate('#pins-template', {pins: [pin]});
                     $('#pins').prepend(pin);
+                    tileLayout();
                     dismissModal(modal);
                     uploadedImage = false;
                 });
