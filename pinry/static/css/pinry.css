@@ -215,7 +215,7 @@ textarea {
 }
 
 .pin-footer .avatar {
-    background: #555;
+    background: white;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
