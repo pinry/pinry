@@ -7,6 +7,14 @@ body {
 a {
     cursor: pointer;
 }
+
+#noscript {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+}
 /* End Globals */
 
 
