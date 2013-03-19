@@ -20,6 +20,7 @@ install_requires = [
     'django-tastypie',
     'django-braces',
     'django_compressor',
+    'requests',
     'django-images>=2013.1.99',
     'django-taggit>=0.9.3.99'
 ]

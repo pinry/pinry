@@ -1,4 +1,4 @@
-import urllib2
+import requests
 from cStringIO import StringIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -15,8 +15,10 @@ class ImageManager(models.Manager):
     def create_for_url(self, url):
         file_name = url.split("/")[-1]
         buf = StringIO()
-        buf.write(urllib2.urlopen(url).read())
-        obj = InMemoryUploadedFile(buf, 'image', file_name, None, buf.tell(), None)
+        response = requests.get(url)
+        buf.write(response.content)
+        obj = InMemoryUploadedFile(buf, 'image', file_name,
+                                   None, buf.tell(), None)
         return Image.objects.create(image=obj)
 
 
