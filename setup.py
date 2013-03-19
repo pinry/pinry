@@ -8,18 +8,18 @@ def read(fname):
 
 dependency_links = [
 # Not released version, PIL dependency replaced by pillow
-'http://github.com/mirumee/django-images/tarball/master#egg=django-images-2013.1.99',
+'http://github.com/kklimonda/django-images/tarball/master#egg=django-images-2013.1.99',
 # Original project has been dead for years, this branch adds Django 1.4 support
 'http://github.com/hcarvalhoalves/django-taggit/tarball/master#egg=django-taggit-0.9.3.99'
 ]
 
 install_requires = [
     'Django>=1.5',
-    'Pillow'
-    'South'
-    'django-tastypie'
-    'django-braces'
-    'django_compressor'
+    'Pillow',
+    'South',
+    'django-tastypie',
+    'django-braces',
+    'django_compressor',
     'django-images>=2013.1.99',
     'django-taggit>=0.9.3.99'
 ]

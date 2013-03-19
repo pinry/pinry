@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'pinry.users',
 )
 
+IMAGE_PATH = 'pinry.core.utils.upload_path'
 IMAGE_SIZES = {
     'thumbnail': {'size': [240, 0]},
     'standard': {'size': [600, 0]},
