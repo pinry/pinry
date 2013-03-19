@@ -17,7 +17,7 @@ install_requires = [
     'Django>=1.5',
     'Pillow',
     'South',
-    'django-tastypie',
+    'django-tastypie==0.9.12',
     'django-braces',
     'django_compressor',
     'requests',

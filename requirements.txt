@@ -1,7 +1,7 @@
 Django
 Pillow
 South
-django-tastypie
+django-tastypie==0.9.12
 django-braces
 mock
 factory-boy
