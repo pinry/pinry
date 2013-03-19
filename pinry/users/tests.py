@@ -9,8 +9,9 @@ from ..core.models import Image, Pin
 from .models import User
 
 
-def mock_urlopen(url):
-    return open('logo.png')
+def mock_requests_get(url):
+    response = mock.Mock(content=open('logo.png').read())
+    return response
 
 
 class CombinedAuthBackendTest(TestCase):
@@ -33,14 +34,14 @@ class CombinedAuthBackendTest(TestCase):
     def test_authenticate_unknown_user(self):
         self.assertIsNone(self.backend.authenticate(username='wrong-username', password='wrong-password'))
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_has_perm_on_pin(self):
         image = Image.objects.create_for_url('http://testserver/mocked/screenshot.png')
         user = User.objects.get(pk=1)
         pin = Pin.objects.create(submitter=user, image=image)
         self.assertTrue(self.backend.has_perm(user, 'add_pin', pin))
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_has_perm_on_pin_unauthorized(self):
         image = Image.objects.create_for_url('http://testserver/mocked/screenshot.png')
         user = User.objects.get(pk=1)

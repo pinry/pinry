@@ -18,8 +18,9 @@ def filter_generator_for(size):
     return wrapped_func
 
 
-def mock_urlopen(url):
-    return open('logo.png')
+def mock_requests_get(url):
+    response = mock.Mock(content=open('logo.png').read())
+    return response
 
 
 class ImageResourceTest(ResourceTestCase):
@@ -62,7 +63,7 @@ class PinResourceTest(ResourceTestCase):
         self.user = UserFactory(password='password')
         self.api_client.client.login(username=self.user.username, password='password')
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url(self):
         post_data = {
             'submitter': '/api/v1/user/1/',
@@ -74,7 +75,7 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Pin.objects.count(), 1)
         self.assertEqual(Image.objects.count(), 1)
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_tags(self):
         url = 'http://testserver/mocked/logo.png'
         post_data = {
@@ -90,7 +91,7 @@ class PinResourceTest(ResourceTestCase):
         pin = Pin.objects.get(url=url)
         self.assertEqual(pin.tags.count(), 0)
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_origin(self):
         url = 'http://testserver/mocked/logo.png'
         post_data = {
@@ -105,7 +106,7 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Image.objects.count(), 1)
         self.assertEqual(Pin.objects.get(url=url).origin, None)
 
-    @mock.patch('urllib2.urlopen', mock_urlopen)
+    @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_origin(self):
         origin = 'http://testserver/mocked/'
         url = origin + 'logo.png'
