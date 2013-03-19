@@ -9,6 +9,7 @@
 /media/
 /static/
 *.pyc
+*.swp
 /.idea/
 /dist/
 /*.egg-info/
