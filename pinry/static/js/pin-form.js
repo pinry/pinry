@@ -151,6 +151,7 @@ $(window).load(function() {
                     });
                     $('#pins').find('.pin[data-id="'+pin.id+'"]').replaceWith(renderedPin);
                     tileLayout();
+                    lightbox();
                     dismissModal(modal);
                     editedPin = null;
                 });
@@ -172,6 +173,7 @@ $(window).load(function() {
                     pin = renderTemplate('#pins-template', {pins: [pin]});
                     $('#pins').prepend(pin);
                     tileLayout();
+                    lightbox();
                     dismissModal(modal);
                     uploadedImage = false;
                 });
