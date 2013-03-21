@@ -4,9 +4,10 @@ This is the open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy to skim
 through format.
 
-
 For more information including docs, a tour, and even hosted instances please
 visit [getpinry.com](http://getpinry.com/)
+
+![Pinry Screenshot](http://getpinry.com/theme/images/index/header-background.jpg)
 
 
 ## Requirements
