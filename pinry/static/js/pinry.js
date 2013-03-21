@@ -136,10 +136,10 @@ $(window).load(function() {
                     $('body').append(theEnd);
                 }
             }
-
-            // Up our offset, it's currently defined as 30 in our settings
-            offset += apiLimitPerPage;
         });
+
+        // Up our offset, it's currently defined as 50 in our settings
+        offset += apiLimitPerPage;
     }
 
 
