@@ -48,6 +48,15 @@ For more information including docs, a tour, and even hosted instances please
 visit [getpinry.com](http://getpinry.com/)
 
 
+## Contributors
+
+For a list of all contributors see the CONTRIBUTORS file, however, the current
+core team of contributors are:
+
+ * Isaac Bythewood <http://isaacbythewood.com>
+ * Krzysztof Klimonda
+
+
 ## License (GNU AFFERO GENERAL PUBLIC LICENSE)
 
     Pinry, an open source image board.
