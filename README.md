@@ -41,7 +41,7 @@ To run Pinry's tests inside the Pinry repo run:
     bin/python manage.py test
 
 Current build status on our CI server:  
-![Codeship Status for pinry/pinry](https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master)
+[ ![Codeship Status for pinry/pinry](https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master)](https://www.codeship.io/projects/2005)
 
 
 For more information including docs, a tour, and even hosted instances please
