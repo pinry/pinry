@@ -1,15 +1,25 @@
+# Virtualenv/Common
 /bin/
-/lib/
-/include/
-/local
-/src/
 /build/
-/pip-log.txt
-/development.db
+/dist/
+/include/
+/lib/
+/local/
 /media/
+/src/
 /static/
+/*.egg-info/
+/pip-log.txt
+
+# Buildout
+/eggs/
+/develop-eggs/
+/.installed.cfg
+
+# Project
+/*.db
+
+# Misc
+/.idea/
 *.pyc
 *.swp
-/.idea/
-/dist/
-/*.egg-info/
