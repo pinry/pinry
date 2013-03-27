@@ -11,7 +11,7 @@ from ..models import Pin, Image
 from ...users.models import User
 
 
-TEST_IMAGE_PATH = settings.SITE_ROOT + 'logo.png'
+TEST_IMAGE_PATH = 'logo.png'
 
 
 class UserFactory(factory.Factory):
