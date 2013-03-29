@@ -15,6 +15,7 @@
 /eggs/
 /develop-eggs/
 /.installed.cfg
+/*.egg
 
 # Project
 /*.db
