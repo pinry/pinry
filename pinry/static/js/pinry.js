@@ -97,6 +97,9 @@ $(window).load(function() {
      * offset outside the function to keep a running tally of your location.
      */
     function loadPins() {
+        // Disable scroll
+        $(window).off('scroll');
+
         // Show our loading symbol
         $('.spinner').css('display', 'block');
 
@@ -125,9 +128,8 @@ $(window).load(function() {
                 });
             });
 
-            if (pins.objects.length == 0 || pins.objects.length < 30) {
+            if (pins.objects.length < apiLimitPerPage) {
                 $('.spinner').css('display', 'none');
-                $(window).off('scroll');
                 if ($('#pins').length != 0) {
                     var theEnd = document.createElement('div');
                     theEnd.id = 'the-end';
@@ -135,6 +137,12 @@ $(window).load(function() {
                     $(theEnd).css('padding', 50);
                     $('body').append(theEnd);
                 }
+            } else {
+                $(window).scroll(function() {
+                    var windowPosition = $(window).scrollTop() + $(window).height();
+                    var bottom = $(document).height() - 100;
+                    if(windowPosition > bottom) loadPins();
+                });
             }
         });
 
@@ -152,13 +160,4 @@ $(window).load(function() {
         tileLayout();
         lightbox();
     })
-
-    // If we scroll to the bottom of the document load more pins
-    $(window).ajaxStop(function() {
-        $(window).scroll(function() {
-            var windowPosition = $(window).scrollTop() + $(window).height();
-            var bottom = $(document).height() - 100;
-            if(windowPosition > bottom) loadPins();
-         });
-     });
 });
