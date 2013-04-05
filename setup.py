@@ -21,13 +21,13 @@ install_requires = [
     'django-braces',
     'django_compressor',
     'requests',
-    'django-images>=2013.1.99',
-    'django-taggit>=0.9.3.99'
+    'django-images',
+    'django-taggit'
 ]
 
 setup(
     name="pinry",
-    version="0.9.0",
+    version="1.0.0",
     author="Pinry contributors",
     author_email="devs@getpinry.com",
     description=("A tiling image board system for people who want to save, "
