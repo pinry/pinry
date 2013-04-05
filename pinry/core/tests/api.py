@@ -19,7 +19,7 @@ def filter_generator_for(size):
 
 
 def mock_requests_get(url):
-    response = mock.Mock(content=open('logo.png').read())
+    response = mock.Mock(content=open('logo.png', 'rb').read())
     return response
 
 

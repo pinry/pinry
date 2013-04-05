@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import Permission
-from django.core.files import File
+from django.core.files.images import ImageFile
 from django.db.models.query import QuerySet
 from django.test import TestCase
 
@@ -33,7 +33,7 @@ class TagFactory(factory.Factory):
 
 
 class ImageFactory(factory.Factory):
-    image = factory.LazyAttribute(lambda a: File(open(TEST_IMAGE_PATH)))
+    image = factory.LazyAttribute(lambda a: ImageFile(open(TEST_IMAGE_PATH, 'rb')))
 
 
 class PinFactory(factory.Factory):
