@@ -2,6 +2,7 @@ import mock
 
 from django_images.models import Thumbnail
 from taggit.models import Tag
+from tastypie.exceptions import Unauthorized
 from tastypie.test import ResourceTestCase
 
 from .helpers import ImageFactory, PinFactory, UserFactory
@@ -65,15 +66,25 @@ class PinResourceTest(ResourceTestCase):
 
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url(self):
+        url = 'http://testserver/mocked/logo.png'
         post_data = {
             'submitter': '/api/v1/user/1/',
-            'url': 'http://testserver/mocked/logo.png',
+            'url': url,
             'description': 'That\'s an Apple!'
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
         self.assertHttpCreated(response)
         self.assertEqual(Pin.objects.count(), 1)
         self.assertEqual(Image.objects.count(), 1)
+
+        # submitter is optional, current user will be used by default
+        post_data = {
+            'url': url,
+            'description': 'That\'s an Apple!',
+            'origin': None
+        }
+        response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertHttpCreated(response)
 
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_tags(self):
@@ -90,6 +101,20 @@ class PinResourceTest(ResourceTestCase):
         self.assertEqual(Image.objects.count(), 1)
         pin = Pin.objects.get(url=url)
         self.assertEqual(pin.tags.count(), 0)
+
+    @mock.patch('requests.get', mock_requests_get)
+    def test_post_create_url_unauthorized(self):
+        url = 'http://testserver/mocked/logo.png'
+        post_data = {
+            'submitter': '/api/v1/user/2/',
+            'url': url,
+            'description': 'That\'s an Apple!',
+            'tags': []
+        }
+        with self.assertRaises(Unauthorized):
+            response = self.api_client.post('/api/v1/pin/', data=post_data)
+        self.assertEqual(Pin.objects.count(), 0)
+        self.assertEqual(Image.objects.count(), 0)
 
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_origin(self):
