@@ -2,7 +2,7 @@
  * Pinry
  * Descrip: Core of pinry, loads and tiles pins.
  * Authors: Pinry Contributors
- * Updated: Mar 3rd, 2013
+ * Updated: Apr 5th, 2013
  * Require: jQuery, Pinry JavaScript Helpers
  */
 
@@ -154,9 +154,11 @@ $(window).load(function() {
     })
 
     // If we scroll to the bottom of the document load more pins
-    $(window).scroll(function() {
-        var windowPosition = $(window).scrollTop() + $(window).height();
-        var bottom = $(document).height() - 100;
-        if(windowPosition > bottom) loadPins();
+    $(window).ajaxStop(function() {
+        $(window).scroll(function() {
+            var windowPosition = $(window).scrollTop() + $(window).height();
+            var bottom = $(document).height() - 100;
+            if(windowPosition > bottom) loadPins();
+         });
      });
 });
