@@ -1,10 +1,11 @@
 import requests
 from cStringIO import StringIO
 
+from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db import models
+from django.db import models, transaction
 
-from django_images.models import Image as BaseImage
+from django_images.models import Image as BaseImage, Thumbnail
 from taggit.managers import TaggableManager
 
 from ..users.models import User
@@ -19,7 +20,13 @@ class ImageManager(models.Manager):
         buf.write(response.content)
         obj = InMemoryUploadedFile(buf, 'image', file_name,
                                    None, buf.tell(), None)
-        return Image.objects.create(image=obj)
+        # create the image and its thumbnails in one transaction, removing
+        # a chance of getting Database into a inconsistent state when we
+        # try to create thumbnails one by one later
+        image = self.create(image=obj)
+        for size in settings.IMAGE_SIZES.keys():
+            Thumbnail.objects.get_or_create_at_size(image.pk, size)
+        return image
 
 
 class Image(BaseImage):
