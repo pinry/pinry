@@ -59,7 +59,7 @@ class UserResource(ModelResource):
 
 def filter_generator_for(size):
     def wrapped_func(bundle, **kwargs):
-        return Thumbnail.objects.get_or_create_at_size(bundle.obj.pk, size, **kwargs)
+        return bundle.obj.get_by_size(size)
     return wrapped_func
 
 

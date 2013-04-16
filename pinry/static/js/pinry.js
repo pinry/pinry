@@ -91,6 +91,14 @@ $(window).load(function() {
         blockContainer.css('height', colHeights.sort().slice(-1)[0]);
     }
 
+    /**
+     * On scroll load more pins from the server
+     */
+    window.scrollHandler = function() {
+        var windowPosition = $(window).scrollTop() + $(window).height();
+        var bottom = $(document).height() - 100;
+        if(windowPosition > bottom) loadPins();
+    }
 
     /**
      * Load our pins using the pins template into our UI, be sure to define a
@@ -138,11 +146,7 @@ $(window).load(function() {
                     $('body').append(theEnd);
                 }
             } else {
-                $(window).scroll(function() {
-                    var windowPosition = $(window).scrollTop() + $(window).height();
-                    var bottom = $(document).height() - 100;
-                    if(windowPosition > bottom) loadPins();
-                });
+                $(window).scroll(scrollHandler);
             }
         });
 

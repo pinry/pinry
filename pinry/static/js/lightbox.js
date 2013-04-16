@@ -22,12 +22,22 @@ $(window).load(function() {
                 'margin-top': -$('body').data('scroll-level')
             });
             $(window).scrollTop(0);
+            /* disable the global pin-loading scroll handler so we don't
+               load pins when scrolling a selected image */
+            $(window).off('scroll');
         } else {
             $('#pins').css({
                 'position': 'static',
                 'margin-top': 0
             });
             $(window).scrollTop($('body').data('scroll-level'));
+            /* enable the pin-loading scroll handler unless we've already
+               loaded all pins from the server (in which case an element
+               with id 'the-end' exists */
+            var theEnd = document.getElementById('the-end');
+            if (!theEnd) {
+                $(window).scroll(scrollHandler);
+            }
         }
     }
     // End Helper Functions

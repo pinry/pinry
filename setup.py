@@ -27,7 +27,7 @@ install_requires = [
 
 setup(
     name="pinry",
-    version="1.0.0",
+    version="1.1.0",
     author="Pinry contributors",
     author_email="devs@getpinry.com",
     description=("A tiling image board system for people who want to save, "
@@ -38,7 +38,7 @@ setup(
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     long_description=read('README.md'),
     dependency_links=dependency_links,
-    tests_require=['mock', 'factory-boy'],
+    tests_require=['mock', 'factory-boy>=1.3,<2.0'],
     install_requires=install_requires,
     classifiers=[
         "Development Status :: 4 - Beta",
