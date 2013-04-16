@@ -27,7 +27,7 @@ install_requires = [
 
 setup(
     name="pinry",
-    version="1.0.0",
+    version="1.1.0",
     author="Pinry contributors",
     author_email="devs@getpinry.com",
     description=("A tiling image board system for people who want to save, "
