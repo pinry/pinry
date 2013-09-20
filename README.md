@@ -4,10 +4,14 @@ This is the open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy to skim
 through format.
 
-For more information including docs, a tour, and even hosted instances please
-visit [getpinry.com](http://getpinry.com/)
+For more information visit [getpinry.com](http://getpinry.com/).
 
 ![Pinry Screenshot](http://getpinry.com/theme/images/index/header-background.jpg)
+
+
+## Current Master Build Status
+
+![Codeship status for pinry/pinry](https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master)
 
 
 ## Requirements
@@ -41,37 +45,13 @@ To run Pinry's tests inside the Pinry repo run:
     bin/pip install -r requirements.txt
     bin/python manage.py test
 
-Current build status on our CI server:  
-[ ![Codeship Status for pinry/pinry](https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master)](https://www.codeship.io/projects/2005)
 
+## Production Deployment
 
-For more information including docs, a tour, and even hosted instances please
-visit [getpinry.com](http://getpinry.com/)
+Our supported and suggested way to deploy Pinry is using Docker. We provide
+support and instructions for that over at the
+[docker-pinry GitHub repository](https://github.com/pinry/docker-pinry).
 
+If you'd like a different setup then check out the hundreds of tutorials
+for production Django deployment found via Google.
 
-## Contributors
-
-For a list of all contributors see the CONTRIBUTORS file, however, the current
-core team of contributors are:
-
- * Isaac Bythewood <http://isaacbythewood.com>
- * Krzysztof Klimonda
-
-
-## License (GNU AFFERO GENERAL PUBLIC LICENSE)
-
-    Pinry, an open source image board.
-    Copyright (C) 2013 Pinry Contributors
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
