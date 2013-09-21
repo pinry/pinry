@@ -5,7 +5,13 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-        <link rel="alternate" type="application/rss+xml" href="/feeds/latest-pins/" />
+        {%  if request.resolver_match.kwargs.user %}
+            <link rel="alternate" type="application/rss+xml" href="/feeds/latest-pins/user/{{ request.resolver_match.kwargs.user }}/">
+        {% elif request.resolver_match.kwargs.tag %}
+            <link rel="alternate" type="application/rss+xml" href="/feeds/latest-pins/tag/{{ request.resolver_match.kwargs.tag }}/">
+        {% else %}
+            <link rel="alternate" type="application/rss+xml" href="/feeds/latest-pins/">
+        {% endif %}
 
         <!--  ___                     ___           ___                 
              /  /\      ___          /__/\         /  /\          ___   
