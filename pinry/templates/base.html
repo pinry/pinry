@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 {% load static from staticfiles %}
 {% load compress %}
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -32,12 +32,12 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/fineuploader.css"/>
         {% compress css %}
-        <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
-        <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
-        <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
+            <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
+            <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
+            <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
         {%  endcompress %}
         {% compress css inline %}
-        {% block extra_css %}{% endblock %}
+            {% block extra_css %}{% endblock %}
         {% endcompress %}
         <!-- End CSS -->
 
@@ -112,14 +112,14 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/jquery.fineuploader.min.js"></script>
         {% compress js %}
-        <script src="{% static "js/helpers.js" %}"></script>
-        <script src="{% static "js/messages.js" %}"></script>
-        <script src="{% static "js/lightbox.js" %}"></script>
-        <script src="{% static "js/pinry.js" %}"></script>
-        <script src="{% static "js/pin-form.js" %}"></script>
+            <script src="{% static "js/helpers.js" %}"></script>
+            <script src="{% static "js/messages.js" %}"></script>
+            <script src="{% static "js/lightbox.js" %}"></script>
+            <script src="{% static "js/pinry.js" %}"></script>
+            <script src="{% static "js/pin-form.js" %}"></script>
         {% endcompress %}
         {% compress js inline %}
-        {% block extra_js %}{% endblock %}
+            {% block extra_js %}{% endblock %}
         {% endcompress %}
         <!-- End JavaScript -->
     </body>

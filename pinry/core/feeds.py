@@ -28,12 +28,13 @@ class LatestPins(Feed):
 
     def get_object(self, request):
         """
-        Doing this as a fix for Django's not including the domain name in enclosure urls.
+        Doing this as a fix for Django's not including the domain name in
+        enclosure urls.
         """
         request_type = 'http'
         if request.is_secure(): request_type = 'https'
-        self.domain_name = ''.join([request_type, '://', get_current_site(request).domain])
-        return get_object_or_404(Pin)
+        self.domain_name = ''.join([request_type, '://',
+                                    get_current_site(request).domain])
 
     def items(self):
         return Pin.objects.order_by('-published')[:15]
@@ -49,10 +50,12 @@ class LatestPins(Feed):
 
     def item_description(self, item):
         tags = ', '.join(tag.name for tag in item.tags.all())
-        return ''.join(['Description: ', item.description or 'None', ' | Tags: ', tags or 'None'])
+        return ''.join(['Description: ', item.description or 'None',
+                        ' | Tags: ', tags or 'None'])
 
     def item_enclosure_url(self, item):
-        return self.domain_name + unicode(filter_generator_for('standard')(item.image).image.url)
+        slug = unicode(filter_generator_for('standard')(item.image).image.url)
+        return self.domain_name + slug
 
     def item_enclosure_length(self, item):
         return filter_generator_for('standard')(item.image).image.size
@@ -67,11 +70,13 @@ class LatestUserPins(Feed):
 
     def get_object(self, request, user):
         """
-        Doing this as a fix for Django's not including the domain name in enclosure urls.
+        Doing this as a fix for Django's not including the domain name in
+        enclosure urls.
         """
         request_type = 'http'
         if request.is_secure(): request_type = 'https'
-        self.domain_name = ''.join([request_type, '://', get_current_site(request).domain])
+        self.domain_name = ''.join([request_type, '://',
+                                    get_current_site(request).domain])
         return get_object_or_404(User, username=user)
 
     def title(self, obj):
@@ -94,10 +99,12 @@ class LatestUserPins(Feed):
 
     def item_description(self, item):
         tags = ', '.join(tag.name for tag in item.tags.all())
-        return ''.join(['Description: ', item.description or 'None', ' | Tags: ', tags or 'None'])
+        return ''.join(['Description: ', item.description or 'None',
+                        ' | Tags: ', tags or 'None'])
 
     def item_enclosure_url(self, item):
-        return self.domain_name + unicode(filter_generator_for('standard')(item.image).image.url)
+        slug = unicode(filter_generator_for('standard')(item.image).image.url)
+        return self.domain_name + slug
 
     def item_enclosure_length(self, item):
         return filter_generator_for('standard')(item.image).image.size
@@ -113,11 +120,13 @@ class LatestTagPins(Feed):
 
     def get_object(self, request, tag):
         """
-        Doing this as a fix for Django's not including the domain name in enclosure urls.
+        Doing this as a fix for Django's not including the domain name in
+        enclosure urls.
         """
         request_type = 'http'
         if request.is_secure(): request_type = 'https'
-        self.domain_name = ''.join([request_type, '://', get_current_site(request).domain])
+        self.domain_name = ''.join([request_type, '://',
+                                    get_current_site(request).domain])
         return get_object_or_404(Tag, name=tag)
 
     def title(self, obj):
@@ -140,10 +149,13 @@ class LatestTagPins(Feed):
 
     def item_description(self, item):
         tags = ', '.join(tag.name for tag in item.tags.all())
-        return ''.join(['Description: ', item.description or 'None', ' | Tags: ', tags or 'None'])
+        return ''.join(['Description: ', item.description or 'None',
+                        ' | Tags: ', tags or 'None'])
 
     def item_enclosure_url(self, item):
-        return self.domain_name + unicode(filter_generator_for('standard')(item.image).image.url)
+        slug = unicode(filter_generator_for('standard')(item.image).image.url)
+        return self.domain_name + slug
 
     def item_enclosure_length(self, item):
         return filter_generator_for('standard')(item.image).image.size
+
