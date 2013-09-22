@@ -2,16 +2,14 @@
 Django
 Pillow
 South
-
-# misc
-django-braces
-django_compressor
 requests
 django-taggit
-http://github.com/kklimonda/django-images/tarball/master#egg=django-images
+django-images
+django-braces
+django_compressor
 
 # api
-django-tastypie==0.9.12
+django-tastypie
 
 # testing
 mock
