@@ -31,10 +31,13 @@ class LatestPins(Feed):
         Doing this as a fix for Django's not including the domain name in
         enclosure urls.
         """
-        request_type = 'http'
-        if request.is_secure(): request_type = 'https'
-        self.domain_name = ''.join([request_type, '://',
-                                    get_current_site(request).domain])
+        try:
+            request_type = 'http'
+            if request.is_secure(): request_type = 'https'
+            self.domain_name = ''.join([request_type, '://',
+                                        get_current_site(request).domain])
+        except:
+            pass
 
     def items(self):
         return Pin.objects.order_by('-published')[:15]

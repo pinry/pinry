@@ -16,6 +16,8 @@ TEST_IMAGE_PATH = 'logo.png'
 
 
 class UserFactory(factory.Factory):
+    FACTORY_FOR = User
+
     username = factory.Sequence(lambda n: 'user_{}'.format(n))
     email = factory.Sequence(lambda n: 'user_{}@example.com'.format(n))
 
@@ -30,6 +32,8 @@ class UserFactory(factory.Factory):
 
 
 class TagFactory(factory.Factory):
+    FACTORY_FOR = Tag
+
     name = factory.Sequence(lambda n: 'tag_{}'.format(n))
 
 
@@ -45,6 +49,8 @@ class ImageFactory(factory.Factory):
 
 
 class PinFactory(factory.Factory):
+    FACTORY_FOR = Pin
+
     submitter = factory.SubFactory(UserFactory)
     image = factory.SubFactory(ImageFactory)
 

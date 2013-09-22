@@ -1,4 +1,4 @@
-# ![Pinry](http://getpinry.com/theme/images/logo-dark.png)
+# ![Pinry](https://raw.github.com/pinry/pinry/feeds/logo.png)
 
 The open-source core of Pinry, a tiling image board system for people who
 want to save, tag, and share images, videos and webpages in an easy to skim
@@ -53,3 +53,4 @@ for production Django deployment found via Google.
 ## Current Master Build Status
 
 [ ![Codeship Status for pinry/pinry](https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master)](https://www.codeship.io/projects/2005)
+
