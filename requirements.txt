@@ -7,9 +7,7 @@ django-taggit
 django-images
 django-braces
 django_compressor
-
-# api
-django-tastypie
+django-tastypie==0.9.12
 
 # testing
 mock
