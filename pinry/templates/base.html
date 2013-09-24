@@ -55,6 +55,7 @@
                 username: "{{ user.username }}",
                 gravatar: "{{ user.gravatar }}"
             },
+            pinFilter = "{{ request.resolver_match.kwargs.pin }}",
             tagFilter = "{{ request.resolver_match.kwargs.tag }}",
             userFilter = "{{ request.resolver_match.kwargs.user }}";
         </script>

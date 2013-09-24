@@ -190,7 +190,7 @@ textarea {
             border-top-right-radius: 3px;
     cursor: -webkit-zoom-in;
     cursor:    -moz-zoom-in;
-    display: none;
+    display: block;
     margin: 0;
     padding: 0;
     width: 240px;

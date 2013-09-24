@@ -77,6 +77,15 @@ $(window).load(function() {
     // Start Global Init Function
     window.lightbox = function() {
         var links = $('body').find('.lightbox');
+        if (pinFilter) {
+            var promise = getPinData(pinFilter);
+            promise.success(function(pin) {
+                createBox(pin);
+            });
+            promise.error(function() {
+                message('Problem problem fetching pin data.', 'alert alert-error');
+            });
+        }
         return links.each(function() {
             $(this).off('click');
             $(this).click(function(e) {
@@ -91,5 +100,6 @@ $(window).load(function() {
             });
         });
     }
+
     // End Global Init Function
 });

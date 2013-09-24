@@ -30,6 +30,8 @@ urlpatterns = patterns('',
         name='tag-pins'),
     url(r'^pins/user/(?P<user>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='user-pins'),
+    url(r'^(?P<pin>\d+)/$', TemplateView.as_view(template_name='core/pins.html'),
+        name='recent-pins'),
     url(r'^$', TemplateView.as_view(template_name='core/pins.html'),
         name='recent-pins'),
 )
