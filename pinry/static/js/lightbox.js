@@ -56,8 +56,8 @@ $(window).load(function() {
         });
         $('.lightbox-wrapper').css({
             'width': context.image.standard.width,
-            'margin-top': 70,
-            'margin-bottom': 70,
+            'margin-top': 80,
+            'margin-bottom': 80,
             'margin-left': -context.image.standard.width/2
         });
         if ($('.lightbox-wrapper').height()+140 > $(window).height())

@@ -49,7 +49,7 @@ $(window).load(function() {
         }
 
         // Edit pin if pencil icon clicked
-        $('.icon-pencil').each(function() {
+        $('.glyphicon-pencil').each(function() {
             var thisPin = $(this);
             $(this).off('click');
             $(this).click(function() {
@@ -59,7 +59,7 @@ $(window).load(function() {
         });
 
         // Delete pin if trash icon clicked
-        $('.icon-trash').each(function() {
+        $('.glyphicon-trash').each(function() {
             var thisPin = $(this);
             $(this).off('click');
             $(this).click(function() {

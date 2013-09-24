@@ -28,10 +28,10 @@
         <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monoton"/>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/fineuploader.css"/>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
         {% compress css %}
+            <link rel="stylesheet" href="{% static "vendor/bootstrap/3.0.0/css/bootstrap.css" %}"/>
+            <link rel="stylesheet" href="{% static "vendor/fineuploader/3.1.1/fineuploader.css" %}"/>
             <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
             <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
             <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
@@ -64,19 +64,31 @@
 
     <body>
         <!-- Navigation -->
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <a href="{% url 'core:recent-pins' %}" class="brand pull-left">{{ SITE_NAME }}</a>
-                <ul class="nav pull-right">
-                {% if user.is_authenticated %}
-                    <li>{% include "includes/bookmarklet_link.html" %}</li>
-                    <li><a onclick="pinForm()">New Pin</a></li>
-                    <li><a href="{% url 'users:logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'users:login' %}">Login</a></li>
-                    <li><a href="{% url 'users:register' %}">Register</a></li>
-                {% endif %}
-                </ul>
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="{% url 'core:recent-pins' %}" class="navbar-brand">
+                        <img src="{% static "img/logo-dark.png" %}" alt="Pinry"/>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            <li><a onclick="pinForm()">New Pin</a></li>
+                            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                            <li>{% include "includes/bookmarklet_link.html" %}</li>
+                        {% else %}
+                            <li><a href="{% url 'users:login' %}">Login</a></li>
+                            <li><a href="{% url 'users:register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- End Navigation -->
@@ -108,11 +120,11 @@
         <!-- End Templates -->
 
         <!-- JavaScript -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.1.1/jquery.fineuploader.min.js"></script>
         {% compress js %}
+            <script src="{% static "vendor/jquery/2.0.3/jquery-2.0.3.js" %}"></script>
+            <script src="{% static "vendor/fineuploader/3.1.1/jquery.fineuploader.js" %}"></script>
+            <script src="{% static "vendor/bootstrap/3.0.0/js/bootstrap.js" %}"></script>
+            <script src="{% static "vendor/handlebars/1.0.0/handlebars.js" %}"></script>
             <script src="{% static "js/helpers.js" %}"></script>
             <script src="{% static "js/messages.js" %}"></script>
             <script src="{% static "js/lightbox.js" %}"></script>
