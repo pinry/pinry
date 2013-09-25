@@ -9,12 +9,12 @@ format.
 Useful Links
 ------------
 
-* `Get Pinry`_: http://getpinry.com/
-* `About Pinry`_: http://getpinry.com/about/
-* `Pinry Demo`_: http://demo.getpinry.com/
-* `pinry/pinry`_: https://github.com/pinry/pinry
-* `pinry/docker-pinry`_: https://github.com/pinry/docker-pinry
-* `pinry/getpinry.com`_: https://github.com/pinry/getpinry.com
+* Get Pinry: http://getpinry.com/
+* About Pinry: http://getpinry.com/about/
+* Pinry Demo: http://demo.getpinry.com/
+* pinry/pinry: https://github.com/pinry/pinry
+* pinry/docker-pinry: https://github.com/pinry/docker-pinry
+* pinry/getpinry.com: https://github.com/pinry/getpinry.com
 
 
 
@@ -26,14 +26,4 @@ Documentation
 
    getting_started
    deployment
-
-
-.. Links
-
-.. _`Get Pinry`: http://getpinry.com/
-.. _`About Pinry`: http://getpinry.com/about/
-.. _`Pinry Demo`: http://demo.getpinry.com/
-.. _`pinry/pinry`: https://github.com/pinry/pinry
-.. _`pinry/docker-pinry`: https://github.com/pinry/docker-pinry
-.. _`pinry/getpinry.com`: https://github.com/pinry/getpinry.com
 

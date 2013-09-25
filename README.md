@@ -7,6 +7,9 @@ through format.
 For more information and a working demo board visit
 [getpinry.com](http://getpinry.com/).
 
+For the latest documentation check out
+[Read the Docs](http://pinry.readthedocs.org/).
+
 
 ## Requirements
 
