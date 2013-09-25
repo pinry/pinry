@@ -9,11 +9,10 @@
 }
 
 .lightbox-wrapper {
-    background: #eee;
+    background: rgba(0, 0, 0, 0.7);
     background-image: url("../img/loader.gif");
     background-position: center center;
     background-repeat: no-repeat;
-    border: 1px solid #bbb;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
@@ -24,14 +23,26 @@
 
 .lightbox-wrapper img {
     display: none;
+    -webkit-border-top-right-radius: 3px;
+     -webkit-border-top-left-radius: 3px;
+        -moz-border-radius-topright: 3px;
+         -moz-border-radius-topleft: 3px;
+            border-top-right-radius: 3px;
+             border-top-left-radius: 3px;
 }
 
 .lightbox-data {
-    background: white;
+    color: white;
+    -webkit-border-bottom-right-radius: 3px;
+     -webkit-border-bottom-left-radius: 3px;
+        -moz-border-radius-bottomright: 3px;
+         -moz-border-radius-bottomleft: 3px;
+            border-bottom-right-radius: 3px;
+             border-bottom-left-radius: 3px;
 }
 
 .lightbox-data .description {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #333;
     font-family: "Georgia", "Times", "Times New Roman", Serif;
     font-size: 16px;
     padding: 8px;
@@ -42,9 +53,9 @@
     height: 40px;
     width: 40px;
     margin: 5px;
-    -webkit-border-radius: 3px;
-       -moz-border-radius: 3px;
-            border-radius: 3px;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
 }
 
 .lightbox-data .text {
@@ -55,4 +66,8 @@
 .lightbox-data .text .dim {
     color: #999;
     font-size: 14px;
+}
+
+.lightbox-data .extra {
+    padding: 8px 6px;
 }

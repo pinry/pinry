@@ -5,16 +5,15 @@
 {% block yield %}
     <div class="container">
         <div class="row">
-            <div id="form" class="span6 offset3">
+            <div id="form" class="col-sm-4 col-sm-offset-4">
                 <h1>Login</h1>
+                <h3>We've missed you! Check out what's new.</h3>
                 <form action="{% url "users:login" %}" method="post" class="form-horizontal">
                     {% csrf_token %}
                     {% for field in form %}
                         {% include "includes/field.html" %}
                     {% endfor %}
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" id="submit">Login</button>
                 </form>
             </div>
         </div>

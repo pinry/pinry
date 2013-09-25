@@ -1,15 +1,12 @@
-<div class="control-group{% if field.errors %} error{% endif %}">
-    <label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-    <div class="controls">
-        {{ field }}
-        {% if field.errors %}
-            <span class="help-inline">
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        {{ error|escape }}
-                    {% endfor %}
-                {% endif %}
-            </span>
-        {% endif %}
-    </div>
+<div class="form-group{% if field.errors %} has-error{% endif %}">
+    <input type="{% if field.html_name == "password" %}password{% else %}text{% endif %}" id="id_{{ field.html_name }}" name="{{ field.html_name }}" class="form-control input-lg" placeholder="{{ field.label }}"/>
+    {% if field.errors %}
+        <span class="help-block">
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+        </span>
+    {% endif %}
 </div>

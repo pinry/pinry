@@ -1,7 +1,26 @@
 /* Start Globals */
 body {
-    background: #eee;
-    margin-top: 70px;
+    background: #F5F5EB;
+    margin-top: 80px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 4em;
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.3em;
 }
 
 a {
@@ -19,42 +38,39 @@ a {
 
 
 /* Start Navigation */
-.navbar-fixed-top .navbar-inner {
+.navbar {
     background: white;
-    background-image: none;
-    -webkit-box-shadow: 0 1px 0 #bbb;
-       -moz-box-shadow: 0 1px 0 #bbb;
-            box-shadow: 0 1px 0 #bbb;
-    border-bottom: 1px solid #bbb;
-    filter: none;
-    height: 48px;
+    border: none;
+    border-radius: 0;
 }
 
-.navbar .brand {
-    color: #275173;
+.navbar-brand img {
     font-family: 'Monoton', sans-serif;
-    font-size: 30px;
-    margin: 5px 0 0 -7px;
+    height: 30px;
 }
 
-.navbar .nav > li > a {
-    background: #ddd;
-    -webkit-border-radius: 2px;
-       -moz-border-radius: 2px;
-            border-radius: 2px;
-    color: #333;
-    margin: 12px 7px;
-    padding: 3px 13px;
-    text-shadow: none;
+.navbar-nav>li>a {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #111 !important;
+    padding: 10px 20px;
 }
 
-.navbar .nav > li:last-child > a {
-    margin-right: 14px;
+.navbar-nav>li>a.btn {
+    padding: 5px 10px;
+    margin: 5px 17px;
 }
 
-.navbar .nav > li > a:hover {
-    background: #275173;
-    color: #ddd;
+@media (min-width: 768px) {
+    .navbar-nav>li>a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .navbar-nav>li>a.btn {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 }
 
 #bookmarklet {
@@ -64,19 +80,6 @@ a {
 
 
 /* Start Forms */
-#form {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 15px;
-}
-
-#form h1 {
-    font-family: 'Monoton';
-    font-weight: normal;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
 form {
     margin-bottom: 0;
 }
@@ -85,8 +88,46 @@ textarea {
     height: 70px;
 }
 
-.form-actions {
-    margin-bottom: 0;
+#form h1 {
+    text-align: center;
+}
+
+#form h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#form .form-group {
+    margin-bottom: -1px;
+}
+
+#id_username {
+    -webkit-border-bottom-right-radius: 0;
+     -webkit-border-bottom-left-radius: 0;
+        -moz-border-radius-bottomright: 0;
+         -moz-border-radius-bottomleft: 0;
+            border-bottom-right-radius: 0;
+             border-bottom-left-radius: 0;
+}
+
+#id_email {
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+}
+
+#id_password {
+    margin-bottom: 15px;
+    -webkit-border-top-right-radius: 0;
+     -webkit-border-top-left-radius: 0;
+        -moz-border-radius-topright: 0;
+         -moz-border-radius-topleft: 0;
+            border-top-right-radius: 0;
+             border-top-left-radius: 0;
+}
+
+#submit {
+    width: 100%;
 }
 
 .qq-upload-button {
@@ -96,7 +137,7 @@ textarea {
       -moz-border-radius: 3px;
            border-radius: 3px;
     color: black;
-    width: 214px;
+    width: 238px;
 }
 
 .qq-upload-drop-area {
@@ -133,12 +174,11 @@ textarea {
 
 /* Start Pins */
 #pins {
-    top: 70px;
+    top: 80px;
 }
 
 .pin {
     background: #fff;
-    border: 1px solid #bbb;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
@@ -159,6 +199,7 @@ textarea {
     position: absolute;
     right: 7px;
     top: 7px;
+    color: white;
 }
 
 .pin:hover .editable {
@@ -190,7 +231,7 @@ textarea {
             border-top-right-radius: 3px;
     cursor: -webkit-zoom-in;
     cursor:    -moz-zoom-in;
-    display: none;
+    display: block;
     margin: 0;
     padding: 0;
     width: 240px;
@@ -227,14 +268,14 @@ textarea {
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
-    height: 30px;
-    width: 30px;
 }
 
 .pin-footer .avatar img {
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
+    height: 30px;
+    width: 30px;
 }
 
 .pin-footer .text {

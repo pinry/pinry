@@ -6,11 +6,8 @@ from django.contrib.messages import constants as messages
 SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
 
 
-# Changes the naming on the front-end of the website.
-SITE_NAME = 'Pinry'
-
 # Set to False to disable people from creating new accounts.
-ALLOW_NEW_REGISTRATIONS = True
+ALLOW_NEW_REGISTRATIONS = False
 
 # Set to False to force users to login before seeing any pins. 
 PUBLIC = True
@@ -68,8 +65,8 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1']
 MESSAGE_TAGS = {
-    messages.WARNING: 'alert',
-    messages.ERROR: 'alert alert-error',
+    messages.WARNING: 'alert alert-warning',
+    messages.ERROR: 'alert alert-danger',
     messages.SUCCESS: 'alert alert-success',
     messages.INFO: 'alert alert-info',
 }

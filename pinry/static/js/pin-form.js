@@ -32,16 +32,15 @@ $(window).load(function() {
             html = renderTemplate('#pins-template', context),
             preview = $('#pin-form-image-preview');
         preview.html(html);
-        preview.find('.pin').width(200);
-        preview.find('.pin .text').width(140);
+        preview.find('.pin').width(240);
         preview.find('.pin').fadeIn(300);
         if (getFormData().url == "")
-            preview.find('.image-wrapper').height(278);
+            preview.find('.image-wrapper').height(255);
         preview.find('.image-wrapper img').fadeIn(300);
         setTimeout(function() {
             if (preview.find('.pin').height() > 305) {
                 $('#pin-form .modal-body').animate({
-                    'height': preview.find('.pin').height()
+                    'height': preview.find('.pin').height()+25
                 }, 300);
             }
         }, 300);
@@ -69,8 +68,8 @@ $(window).load(function() {
             promise.success(function(data) {
                 editedPin = data;
                 $('#pin-form-image-url').val(editedPin.image.thumbnail.image);
-                $('#pin-form-image-url').parent().parent().hide();
-                $('#pin-form-image-upload').parent().parent().hide();
+                $('#pin-form-image-url').parent().hide();
+                $('#pin-form-image-upload').parent().hide();
                 $('#pin-form-description').val(editedPin.description);
                 $('#pin-form-tags').val(editedPin.tags);
                 createPinPreviewFromForm();
@@ -86,7 +85,7 @@ $(window).load(function() {
                     createPinPreviewFromForm()
                 }, 700);
                 if (!uploadedImage)
-                    $('#pin-form-image-upload').parent().parent().fadeOut(300);
+                    $('#pin-form-image-upload').parent().fadeOut(300);
             });
         }
         // Drag and Drop Upload
@@ -103,7 +102,7 @@ $(window).load(function() {
                 }
             }
         }).on('complete', function(e, id, name, data) {
-            $('#pin-form-image-url').parent().parent().fadeOut(300);
+            $('#pin-form-image-url').parent().fadeOut(300);
             $('.qq-upload-button').css('display', 'none');
             var promise = getImageData(data.success.id);
             uploadedImage = data.success.id;
@@ -117,7 +116,7 @@ $(window).load(function() {
         });
         // If bookmarklet submit
         if (pinFromUrl) {
-            $('#pin-form-image-upload').parent().parent().css('display', 'none');
+            $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
             $('.navbar').css('display', 'none');
             modal.css({

@@ -19,9 +19,13 @@
                         {{#if tags}}
                             <br /><span class="dim">in</span>
                         {{#each tags}}
-                            <span class="tag"><a href="/pins/tag/{{this}}/">{{this}}</a></span>
+                            <span class="tag"><a href="/pins/tag/{{this}}/" class="btn btn-xs btn-primary">{{this}}</a></span>
                         {{/each}}
                         {{/if}}
+                    </div>
+                    <div class="text extra pull-right">
+                        <a href="{{url}}" class="btn btn-sm btn-default btn-warning">Original URL</a>
+                        <a href="/{{id}}/" class="btn btn-sm btn-default btn-success">Pin URL</a>
                     </div>
                 </div>
             </div>
