@@ -28,9 +28,9 @@ If you are live dangerously and have cutting edge new Pinry features first you
 can use our master branch for your own instance. We recommend using our
 tags/versions though.
 
-To run Pinry's tests inside the Pinry repo run:
+To run Pinry's tests inside the Pinry repo run::
 
-    virtualenv .
-    bin/pip install -r requirements.txt
-    bin/python manage.py test
+  virtualenv .
+  bin/pip install -r requirements.txt
+  bin/python manage.py test
 
