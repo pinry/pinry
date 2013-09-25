@@ -1,0 +1,8 @@
+Contributors
+============
+
+The core contributors for Pinry have been/currently are:
+
+* Isaac Bythewood <http://isaacbythewood.com/>
+* Krzysztof Klimonda
+

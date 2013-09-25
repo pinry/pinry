@@ -29,7 +29,7 @@ setup(
     keywords="django tiling board tag share images pictures videos webpages",
     url="http://getpinry.com/",
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     dependency_links=dependency_links,
     tests_require=['mock', 'factory-boy>=1.3,<2.0'],
     install_requires=install_requires,
