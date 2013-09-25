@@ -30,7 +30,7 @@ tags/versions though.
 
 To run Pinry's tests inside the Pinry repo run:
 
-  virtualenv .
-  bin/pip install -r requirements.txt
-  bin/python manage.py test
+    virtualenv .
+    bin/pip install -r requirements.txt
+    bin/python manage.py test
 
