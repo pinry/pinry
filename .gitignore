@@ -17,6 +17,9 @@
 /.installed.cfg
 /*.egg
 
+# sphinx
+/docs/_build/
+
 # Project
 /*.db
 
