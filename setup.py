@@ -20,12 +20,12 @@ install_requires = [
 
 setup(
     name="Pinry",
-    version="1.3.1",
+    version="1.3.2",
     author="Pinry Contributors",
     author_email="devs@getpinry.com",
     description=("A tiling image board system for people who want to save, "
                  "tag, and share images, videos and webpages."),
-    license="AGPL-3+",
+    license="Simplified BSD",
     keywords="django tiling board tag share images pictures videos webpages",
     url="http://getpinry.com/",
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
