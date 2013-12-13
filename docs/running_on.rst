@@ -30,3 +30,11 @@ From here you have a full working install of Pinry! You can:
 * Edit the settings files: ``pinry/settings``
 * Customize the theme: ``pinry/templates`` + ``pinry/static``
 
+
+Database Notes
+--------------
+
+When setting up for the first time you'll need to run syncdb and migrations
+because we use South::
+
+  bin/python manage.py syncdb --migrate
