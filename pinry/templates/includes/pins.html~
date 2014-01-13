@@ -1,0 +1,48 @@
+{% verbatim %}
+    <script id="pins-template" type="text/x-handlebars-template">
+        {{#each pins}}
+        <div class="pin" data-id="{{id}}">
+            {{#if editable}}
+                <div class="editable">
+                    <div class="borderable">
+                        <span class="glyphicon glyphicon-trash" data-id="{{id}}"></span>
+                    </div>
+                    <div class="borderable">
+                        <span class="glyphicon glyphicon-pencil" data-id="{{id}}"></span>
+                    </div>
+                </div>
+            {{/if}}
+            <a href="{{image.standard.image}}" class="lightbox" data-id="{{id}}">
+                <div class="image-wrapper" style="width: {{image.thumbnail.width}}px; height: {{image.thumbnail.height}}px;">
+                    {{#if youtube}}
+                    <iframe width="240" height="" src="http://www.youtube.com/embed/{{youtube}}?autoplay=1&enablejsapi=1&version=3&playerapiid=ytplayer{{youtube}}" frameborder="0" allowfullscreen'></iframe>
+                    {{else}}{{#if vimeo}}
+                    vimeo
+                    {{else}}
+                    cool
+                    <img src="{{image.thumbnail.image}}" width="{{image.thumbnail.width}}" height="{{image.thumbnail.height}}"/>
+                    {{/if}}{{/if}}
+                </div>
+            </a>
+            {{#if description}}
+                <p>{{description}}</p>
+            {{/if}}
+            <div class="pin-footer clearfix">
+                <div class="avatar pull-left">
+                    <img src="http://gravatar.com/avatar/{{submitter.gravatar}}">
+                </div>
+                <div class="text pull-right">
+                    <span class="dim">pinned by</span>
+                    <a href="/pins/user/{{submitter.username}}/">{{submitter.username}}</a>
+                    {{#if tags}}
+                        <span class="dim">in</span>
+                    {{#each tags}}
+                        <span class="tag"><a href="/pins/tag/{{this}}/">{{this}}</a></span>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+{% endverbatim %}
