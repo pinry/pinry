@@ -25,6 +25,7 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
+                youtube: youtubeLinkParser($('#pin-form-image-url').val()),
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())

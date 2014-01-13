@@ -62,3 +62,22 @@ function getUrlParameter(name) {
     if (decode == 'null') return null;
     else return decode;
 }
+
+   /*Function youtubeLinkParser parses youtube link for Video ID*/
+function youtubeLinkParser(youtubeUrl) {
+    if (youtubeUrl.indexOf("youtube") != -1 ){
+    video_id = youtubeUrl.split("v=")[1];
+    ampersand_pos = video_id.indexOf("&");
+        if (ampersand_pos != -1) {
+            video_id = video_id.substring(0, ampersand_pos)
+        }
+    return video_id
+    }
+    else return null;
+}
+
+
+/*function youtubeit(youtubeid) {
+    var urld = '"http://www.youtube.com/embed/' + youtubeid + '?autoplay=1&enablejsapi=1&version=3&playerapiid=ytplayer"';
+    return urld;
+}*/
