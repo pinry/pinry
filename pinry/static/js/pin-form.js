@@ -164,8 +164,14 @@ $(window).load(function() {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
-                else data.url = $('#pin-form-image-url').val();
+                var url = $('#pin-form-image-url').val();
+                if (url.indexOf("youtube") != -1) {
+                data.youtube = youtubeLinkParser($('#pin-form-image-url').val())
+                } else if (uploadedImage) {
+                     data.image = '/api/v1/image/'+uploadedImage+'/';
+                } else {
+                    data.url = $('#pin-form-image-url').val();
+                };
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();
