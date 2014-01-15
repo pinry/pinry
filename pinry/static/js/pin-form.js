@@ -166,7 +166,9 @@ $(window).load(function() {
                 };
                 var url = $('#pin-form-image-url').val();
                 if (url.indexOf("youtube") != -1) {
-                data.youtube = youtubeLinkParser($('#pin-form-image-url').val())
+                    data.youtube = youtubeLinkParser($('#pin-form-image-url').val())
+                    data.url = $('#pin-form-image-url').val();
+                    // data.url = 'http://i1.ytimg.com/vi/' + data.youtube + '/hqdefault.jpg'
                 } else if (uploadedImage) {
                      data.image = '/api/v1/image/'+uploadedImage+'/';
                 } else {

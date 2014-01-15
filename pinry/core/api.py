@@ -87,16 +87,22 @@ class ImageResource(ModelResource):
         queryset = Image.objects.all()
         authorization = DjangoAuthorization()
 
-
 class PinResource(ModelResource):
     submitter = fields.ToOneField(UserResource, 'submitter', full=True)
     image = fields.ToOneField(ImageResource, 'image', full=True)
     tags = fields.ListField()
+
+
     def hydrate_image(self, bundle):
+        youtube = bundle.data.get('youtube', None)
         url = bundle.data.get('url', None)
-        if url:
-            image = Image.objects.create_for_url(url)
+        if youtube:
+            image = Image.objects.create_for_url('http://i1.ytimg.com/vi/' + youtube + '/hqdefault.jpg')
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
+        else:
+            if url:
+                image = Image.objects.create_for_url(url)
+                bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         return bundle
 
     def hydrate(self, bundle):
