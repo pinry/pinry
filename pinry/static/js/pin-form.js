@@ -25,6 +25,7 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
+                youtube: youtubeLinkParser($('#pin-form-image-url').val()),
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())
@@ -163,8 +164,16 @@ $(window).load(function() {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
-                else data.url = $('#pin-form-image-url').val();
+                var url = $('#pin-form-image-url').val();
+                if (url.indexOf("youtube") != -1) {
+                    data.youtube = youtubeLinkParser($('#pin-form-image-url').val())
+                    data.url = $('#pin-form-image-url').val();
+                    // data.url = 'http://i1.ytimg.com/vi/' + data.youtube + '/hqdefault.jpg'
+                } else if (uploadedImage) {
+                     data.image = '/api/v1/image/'+uploadedImage+'/';
+                } else {
+                    data.url = $('#pin-form-image-url').val();
+                };
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();
