@@ -94,8 +94,13 @@ class PinResource(ModelResource):
 
 
     def hydrate_image(self, bundle):
+        vimeo = bundle.data.get('vimeo', None)
         youtube = bundle.data.get('youtube', None)
         url = bundle.data.get('url', None)
+        if vimeo:
+            # to fix we need to figure out how to dealt with this image
+            image = Image.objects.create_for_url('http://getpinry.com/theme/images/logo-dark.png')
+            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         if youtube:
             image = Image.objects.create_for_url('http://i1.ytimg.com/vi/' + youtube + '/hqdefault.jpg')
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
@@ -135,7 +140,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description','youtube']
+        fields = ['id', 'url', 'origin', 'description','youtube', 'vimeo']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS

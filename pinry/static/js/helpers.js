@@ -66,18 +66,23 @@ function getUrlParameter(name) {
    /*Function youtubeLinkParser parses youtube link for Video ID*/
 function youtubeLinkParser(youtubeUrl) {
     if (youtubeUrl.indexOf("youtube") != -1 ){
-    video_id = youtubeUrl.split("v=")[1];
-    ampersand_pos = video_id.indexOf("&");
+    var video_id = youtubeUrl.split("v=")[1];
+    var ampersand_pos = video_id.indexOf("&");
         if (ampersand_pos != -1) {
             video_id = video_id.substring(0, ampersand_pos)
         }
-    return video_id
+    return video_id;
     }
     else return null;
 }
 
+function vimeoLinkParser(vimeoUrl) {
+    var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/
+    var match = /vimeo.*\/(\d+)/i.exec( vimeoUrl );
+    if (match) {
+        var parseUrl = regExp.exec( vimeoUrl );
+        return parseUrl[5];
+    } 
+    else return null;
+}
 
-/*function youtubeit(youtubeid) {
-    var urld = '"http://www.youtube.com/embed/' + youtubeid + '?autoplay=1&enablejsapi=1&version=3&playerapiid=ytplayer"';
-    return urld;
-}*/

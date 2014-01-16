@@ -25,6 +25,7 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
+                vimeo: vimeoLinkParser ($('#pin-form-image-url').val()),
                 youtube: youtubeLinkParser($('#pin-form-image-url').val()),
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
@@ -165,10 +166,13 @@ $(window).load(function() {
                     tags: cleanTags($('#pin-form-tags').val())
                 };
                 var url = $('#pin-form-image-url').val();
-                if (url.indexOf("youtube") != -1) {
-                    data.youtube = youtubeLinkParser($('#pin-form-image-url').val())
-                    data.url = $('#pin-form-image-url').val();
-                    // data.url = 'http://i1.ytimg.com/vi/' + data.youtube + '/hqdefault.jpg'
+                var match = /vimeo.*\/(\d+)/i.exec( url );
+                if (match) {
+                    data.vimeo = vimeoLinkParser(url);
+                    data.url = url;
+                } else if (url.indexOf("youtube") != -1) {
+                    data.youtube = youtubeLinkParser(url);
+                    data.url = url;
                 } else if (uploadedImage) {
                      data.image = '/api/v1/image/'+uploadedImage+'/';
                 } else {
