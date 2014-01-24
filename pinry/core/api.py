@@ -4,6 +4,9 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
+import urllib2
+import urllib
+import json
 
 from .models import Pin, Image
 from ..users.models import User
@@ -87,15 +90,23 @@ class ImageResource(ModelResource):
         queryset = Image.objects.all()
         authorization = DjangoAuthorization()
 
-
 class PinResource(ModelResource):
     submitter = fields.ToOneField(UserResource, 'submitter', full=True)
     image = fields.ToOneField(ImageResource, 'image', full=True)
     tags = fields.ListField()
 
     def hydrate_image(self, bundle):
+        vimeo = bundle.data.get('vimeo', None)
+        youtube = bundle.data.get('youtube', None)
         url = bundle.data.get('url', None)
-        if url:
+        vimeoImage = bundle.data.get('vimeoImage', None)
+        if vimeo:
+            image = Image.objects.create_for_url(vimeoImage)
+            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
+        elif youtube:
+            image = Image.objects.create_for_url('http://i1.ytimg.com/vi/' + youtube + '/hqdefault.jpg')
+            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
+        elif url:
             image = Image.objects.create_for_url(url)
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         return bundle
@@ -130,7 +141,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description']
+        fields = ['id', 'url', 'origin', 'description','youtube', 'vimeo', 'vImage']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS
