@@ -7,6 +7,7 @@
  * Require: jQuery, Pinry JavaScript Helpers
  */
 
+var vimeoThumbnail;
 
 $(window).load(function() {
     var uploadedImage = false;
@@ -46,6 +47,10 @@ $(window).load(function() {
                 }, 300);
             }
         }, 300);
+        if (context.pins['0']['vimeo'] != null) {
+            console.log('a');
+            vimeoThumbnail = getVimeo(context.pins['0']['vimeo']);
+        }
     }
 
     function dismissModal(modal) {
@@ -166,10 +171,11 @@ $(window).load(function() {
                     tags: cleanTags($('#pin-form-tags').val())
                 };
                 var url = $('#pin-form-image-url').val();
-                var match = /vimeo.*\/(\d+)/i.exec( url );
+                var match = /\/\/vimeo.*\/(\d+)/i.exec( url );
                 if (match) {
                     data.vimeo = vimeoLinkParser(url);
                     data.url = url;
+                    data.vimeoImage =  vimeoThumbnail;
                 } else if (url.indexOf("youtube") != -1) {
                     data.youtube = youtubeLinkParser(url);
                     data.url = url;

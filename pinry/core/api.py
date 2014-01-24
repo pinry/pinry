@@ -4,6 +4,9 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
+import urllib2
+import urllib
+import json
 
 from .models import Pin, Image
 from ..users.models import User
@@ -92,22 +95,20 @@ class PinResource(ModelResource):
     image = fields.ToOneField(ImageResource, 'image', full=True)
     tags = fields.ListField()
 
-
     def hydrate_image(self, bundle):
         vimeo = bundle.data.get('vimeo', None)
         youtube = bundle.data.get('youtube', None)
         url = bundle.data.get('url', None)
+        vimeoImage = bundle.data.get('vimeoImage', None)
         if vimeo:
-            # to fix we need to figure out how to dealt with this image
-            image = Image.objects.create_for_url('http://getpinry.com/theme/images/logo-dark.png')
+            image = Image.objects.create_for_url(vimeoImage)
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
-        if youtube:
+        elif youtube:
             image = Image.objects.create_for_url('http://i1.ytimg.com/vi/' + youtube + '/hqdefault.jpg')
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
-        else:
-            if url:
-                image = Image.objects.create_for_url(url)
-                bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
+        elif url:
+            image = Image.objects.create_for_url(url)
+            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         return bundle
 
     def hydrate(self, bundle):
@@ -140,7 +141,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description','youtube', 'vimeo']
+        fields = ['id', 'url', 'origin', 'description','youtube', 'vimeo', 'vImage']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS
