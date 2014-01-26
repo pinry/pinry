@@ -61,14 +61,16 @@ function getUrlParameter(name) {
     else return decode;
 }
 
-/*Function youtubeLinkParser parses youtube link for Video ID*/
+/*Function youtubeLinkParser parses youtube link for Video ID
+based on http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url 
+answer #2 comment by  Chris Nolet*/
 function youtubeLinkParser(youtubeUrl) {
     var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
     var match = youtubeUrl.match(regExp);
     if (match&&match[1].length==11){
         return match[1];
     }
-    else return null;
+    else return;
 }
 
 function vimeoLinkParser(vimeoUrl) {
@@ -78,10 +80,36 @@ function vimeoLinkParser(vimeoUrl) {
         var parseUrl = regExp.exec( vimeoUrl );
         return parseUrl[5];
     } 
-    else return null;
+    else return;
 }
 
-function getVimeo(vimeo) { 
-    var promise = $.getJSON("http://vimeo.com/api/oembed.json?url=http://vimeo.com/"+vimeo);
-    return promise.responseJSON.thumbnail_url;
+function getVimeoThumbnail(vimeo) { 
+    var thumbnail;
+    $.ajax({
+        url: "http://vimeo.com/api/oembed.json?url=http://vimeo.com/" + vimeo,
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+            thumbnail = data.thumbnail_url;
+        }
+    });
+    return thumbnail;
 }
+
+
+// (function() {
+//   var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+//   $.getJSON( flickerAPI, {
+//     tags: "mount rainier",
+//     tagmode: "any",
+//     format: "json"
+//   })
+//     .done(function( data ) {
+//       $.each( data.items, function( i, item ) {
+//         $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+//         if ( i === 3 ) {
+//           return false;
+//         }
+//       });
+//     });
+// })();
