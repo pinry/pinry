@@ -4,9 +4,6 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
-import urllib2
-import urllib
-import json
 
 from .models import Pin, Image
 from ..users.models import User
@@ -90,6 +87,7 @@ class ImageResource(ModelResource):
         queryset = Image.objects.all()
         authorization = DjangoAuthorization()
 
+
 class PinResource(ModelResource):
     submitter = fields.ToOneField(UserResource, 'submitter', full=True)
     image = fields.ToOneField(ImageResource, 'image', full=True)
@@ -141,7 +139,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description','youtube', 'vimeo', 'vImage']
+        fields = ['id', 'url', 'origin', 'description', 'youtube', 'vimeo', 'vImage']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS

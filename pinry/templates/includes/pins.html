@@ -13,13 +13,17 @@
                 </div>
             {{/if}}
             <a href="{{image.standard.image}}" class="lightbox" data-id="{{id}}">
-                <div class="image-wrapper" style="width: {{image.thumbnail.width}}px; height: {{image.thumbnail.height}}px;">
-                    {{#if vimeo}}  
-                    <iframe src="//player.vimeo.com/video/{{vimeo}}" width="240" height="" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+                    {{#if vimeo}} 
+                    <div class="image-wrapper" style="height: 180px;">
+                    <iframe src="//player.vimeo.com/video/{{vimeo}}" width="240" height="" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    view in lightbox 
                     {{else}}
                     {{#if youtube}}
+                    <div class="image-wrapper" style="height: 180px;">
                     <iframe width="240" height="" src="http://www.youtube.com/embed/{{youtube}}?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+                    view in lightbox
                     {{else}}
+                    <div class="image-wrapper" style="width: {{image.thumbnail.width}}px; height: {{image.thumbnail.height}}px;">
                     <img src="{{image.thumbnail.image}}" width="{{image.thumbnail.width}}" height="{{image.thumbnail.height}}"/>
                     {{/if}}{{/if}}
                     
