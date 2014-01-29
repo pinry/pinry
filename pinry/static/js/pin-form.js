@@ -25,6 +25,8 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
+                vimeo: vimeoLinkParser ($('#pin-form-image-url').val()),
+                youtube: youtubeLinkParser($('#pin-form-image-url').val()),
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())
@@ -34,6 +36,7 @@ $(window).load(function() {
         preview.html(html);
         preview.find('.pin').width(240);
         preview.find('.pin').fadeIn(300);
+        preview.find('.lightbox-view').remove();
         if (getFormData().url == "")
             preview.find('.image-wrapper').height(255);
         preview.find('.image-wrapper img').fadeIn(300);
@@ -163,8 +166,23 @@ $(window).load(function() {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
-                else data.url = $('#pin-form-image-url').val();
+                var url = $('#pin-form-image-url').val();
+                var vmatch = /\/\/vimeo.*\/(\d+)/i.exec( url );
+                var ymatch = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/.exec( url );
+                if (vmatch) {
+                    var vim = vimeoLinkParser(url);
+                    data.vimeo = vim;
+                    data.url = url;
+                    data.vimeoImage =  getVimeoThumbnail(vim);
+
+                } else if (ymatch) {
+                    data.youtube = youtubeLinkParser(url);
+                    data.url = url;
+                } else if (uploadedImage) {
+                     data.image = '/api/v1/image/'+uploadedImage+'/';
+                } else {
+                    data.url = $('#pin-form-image-url').val();
+                };
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();

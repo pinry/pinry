@@ -9,7 +9,7 @@ SITE_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '../../')
 # Set to False to disable people from creating new accounts.
 ALLOW_NEW_REGISTRATIONS = False
 
-# Set to False to force users to login before seeing any pins. 
+# Set to False to force users to login before seeing any pins.
 PUBLIC = True
 
 

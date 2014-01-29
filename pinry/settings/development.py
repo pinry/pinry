@@ -13,4 +13,12 @@ DATABASES = {
     }
 }
 
+INSTALLED_APPS += (
+    'django.contrib.admin',
+)
+
+MIDDLEWARE_CLASSES += (
+     'django.contrib.auth.middleware.AuthenticationMiddleware',
+)
+
 SECRET_KEY = 'fake-key'

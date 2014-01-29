@@ -25,6 +25,7 @@ function cleanTags(tags) {
     return tags;
 }
 
+
 function getImageData(imageId) {
     var apiUrl = '/api/v1/image/'+imageId+'/?format=json';
     return $.get(apiUrl);
@@ -53,6 +54,7 @@ function postPinData(data) {
     });
 }
 
+
 function getUrlParameter(name) {
     var decode = decodeURI(
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
@@ -61,37 +63,15 @@ function getUrlParameter(name) {
     else return decode;
 }
 
-/*Function youtubeLinkParser parses youtube link for Video ID
-based on http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url 
-answer #2 comment by  Chris Nolet*/
+   /*Function youtubeLinkParser parses youtube link for Video ID*/
 function youtubeLinkParser(youtubeUrl) {
-    var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-    var match = youtubeUrl.match(regExp);
-    if (match&&match[1].length==11){
-        return match[1];
+    if (youtubeUrl.indexOf("youtube") != -1 ){
+    video_id = youtubeUrl.split("v=")[1];
+    ampersand_pos = video_id.indexOf("&");
+    if (ampersand_pos != -1) {
+        video_id = video_id.substring(0, ampersand_pos)
+        return video_id
     }
-    else return;
-}
-
-function vimeoLinkParser(vimeoUrl) {
-    var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/
-    var match = /\/\/vimeo.*\/(\d+)/i.exec( vimeoUrl );
-    if (match) {
-        var parseUrl = regExp.exec( vimeoUrl );
-        return parseUrl[5];
-    } 
-    else return;
-}
-
-function getVimeoThumbnail(vimeo) { 
-    var thumbnail;
-    $.ajax({
-        url: "http://vimeo.com/api/oembed.json?url=http://vimeo.com/" + vimeo,
-        async: false,
-        dataType: 'json',
-        success: function(data) {
-            thumbnail = data.thumbnail_url;
-        }
-    });
-    return thumbnail;
+    }
+    else return null;
 }
