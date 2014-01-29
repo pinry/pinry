@@ -36,6 +36,7 @@ $(window).load(function() {
         preview.html(html);
         preview.find('.pin').width(240);
         preview.find('.pin').fadeIn(300);
+        preview.find('.lightbox-view').remove();
         if (getFormData().url == "")
             preview.find('.image-wrapper').height(255);
         preview.find('.image-wrapper img').fadeIn(300);

@@ -75,9 +75,3 @@ function youtubeLinkParser(youtubeUrl) {
     }
     else return null;
 }
-
-
-/*function youtubeit(youtubeid) {
-    var urld = '"http://www.youtube.com/embed/' + youtubeid + '?autoplay=1&enablejsapi=1&version=3&playerapiid=ytplayer"';
-    return urld;
-}*/
