@@ -68,7 +68,9 @@ class PinFactory(factory.Factory):
 
 class PinFactoryTest(TestCase):
     def test_default_tags(self):
-        self.assertTrue(PinFactory().tags.get(pk=1).name.startswith('tag_'))
+        tags = PinFactory.create().tags.all()
+        self.assertTrue(all([tag.name.startswith('tag_') for tag in tags]))
+        self.assertEqual(tags.count(), 1)
 
     def test_custom_tag(self):
         custom = 'custom_tag'

@@ -68,7 +68,7 @@ class PinResourceTest(ResourceTestCase):
     def test_post_create_url(self):
         url = 'http://testserver/mocked/logo.png'
         post_data = {
-            'submitter': '/api/v1/user/1/',
+            'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
             'description': 'That\'s an Apple!'
         }
@@ -90,7 +90,7 @@ class PinResourceTest(ResourceTestCase):
     def test_post_create_url_with_empty_tags(self):
         url = 'http://testserver/mocked/logo.png'
         post_data = {
-            'submitter': '/api/v1/user/1/',
+            'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
             'description': 'That\'s an Apple!',
             'tags': []
@@ -120,7 +120,7 @@ class PinResourceTest(ResourceTestCase):
     def test_post_create_url_with_empty_origin(self):
         url = 'http://testserver/mocked/logo.png'
         post_data = {
-            'submitter': '/api/v1/user/1/',
+            'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
             'description': 'That\'s an Apple!',
             'origin': None
@@ -136,7 +136,7 @@ class PinResourceTest(ResourceTestCase):
         origin = 'http://testserver/mocked/'
         url = origin + 'logo.png'
         post_data = {
-            'submitter': '/api/v1/user/1/',
+            'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
             'description': 'That\'s an Apple!',
             'origin': origin
@@ -156,7 +156,10 @@ class PinResourceTest(ResourceTestCase):
             'tags': ['random', 'tags'],
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
-        self.assertEqual(self.deserialize(response)['id'], 1)
+        self.assertEqual(
+            self.deserialize(response)['description'],
+            'That\'s something else (probably a CC logo)!'
+        )
         self.assertHttpCreated(response)
         # A number of Image objects should stay the same as we are using an existing image
         self.assertEqual(Image.objects.count(), 1)
@@ -210,7 +213,7 @@ class PinResourceTest(ResourceTestCase):
 
     def test_get_list_json_filtered_by_tags(self):
         pin = PinFactory()
-        response = self.api_client.get('/api/v1/pin/', format='json', data={'tag': pin.tags.get(pk=1)})
+        response = self.api_client.get('/api/v1/pin/', format='json', data={'tag': pin.tags.all()[0]})
         self.assertValidJSONResponse(response)
         self.assertEqual(self.deserialize(response)['objects'][0]['id'], pin.pk)
 
