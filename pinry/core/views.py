@@ -22,7 +22,7 @@ class CreateImage(JSONResponseMixin, LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         image = form.save()
-        for size in settings.IMAGE_SIZES.keys():
+        for size in settings.IMAGE_SIZES:
             Thumbnail.objects.get_or_create_at_size(image.pk, size)
         return self.render_json_response({
             'success': {
