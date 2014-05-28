@@ -30,15 +30,6 @@ function main() {
         var formUrl = '/pins/pin-form/?pin-image-url=';
         return 'http://'+hostUrl+formUrl;
     }
-
-    function normalizeImageUrl(imageUrl) {
-        var protocol = imageUrl.split(':')[0];
-        if (protocol != 'http' && protocol != 'https') {
-            if (imageUrl[1] != '/')
-                imageUrl = 'http://'+window.location.host+imageUrl;
-        }
-        return imageUrl;
-    }
     // End Helper Functions
 
 
@@ -80,7 +71,6 @@ function main() {
 
     function imageView(imageUrl) {
         // Requires that pageView has been created already
-        imageUrl = normalizeImageUrl(imageUrl);
         var image = document.createElement('div');
         $(image).css({
             'background-image': 'url('+imageUrl+')',
@@ -108,7 +98,7 @@ function main() {
         var images = $('body').find('img');
         images.each(function() {
             if ($(this).width() > 200 && $(this).height() > 200)
-                imageView($(this).attr('src'));
+                imageView(this.src);
         });
         return images;
     }
