@@ -84,7 +84,7 @@ function main() {
             'border': '1px solid #555'
         });
         $(image).click(function() {
-            var popUrl = getFormUrl()+imageUrl;
+            var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
             window.open(popUrl);
             $('#pinry-images').remove();
         });
