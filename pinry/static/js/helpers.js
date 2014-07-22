@@ -56,9 +56,5 @@ function postPinData(data) {
 
 
 function getUrlParameter(name) {
-    var decode = decodeURI(
-        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-    );
-    if (decode == 'null') return null;
-    else return decode;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
