@@ -3,10 +3,10 @@
         <div class="lightbox-background">
             <div class="lightbox-wrapper">
                 <div class="lightbox-image-wrapper">
-                 {{#if vimeo}}  
+                 {{#if service}}  
                     <iframe src="//"+ {{ video_id }} width="480" height="385" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
                     {{else}}
-                    {{#if youtube}}
+                    {{#if service}}
                     <iframe width="480" height="385" src= "//www.youtube.com/embed/{{ video_id }}?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
                     {{else}}
                     <img class="lightbox-image" src="{{image.standard.image}}" />

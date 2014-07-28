@@ -8,8 +8,6 @@
 * Updated: Mar 4th, 2013
 * Require: None (dynamically loads jQuery if needed)
 */
-
-
 // Start jQuery Check
 if (!window.jQuery) {
     var body = document.getElementsByTagName('body')[0];
@@ -27,7 +25,9 @@ if (!window.jQuery) {
             var formUrl = '/pins/pin-form/?pin-image-url=';
             return 'http://'+hostUrl+formUrl;
         }
-    
+        function getFormUrlVideo(videoId, videoService) {
+            return '&video-id='+videoId+'&video-service='+videoService
+        }
         function normalizeImageUrl(imageUrl) {
             var protocol = imageUrl.split(':')[0];
             if (protocol != 'http' && protocol != 'https') {
@@ -97,32 +97,51 @@ if (!window.jQuery) {
             });
             return $('#pinry-images').append(image);
         }
+        function videoView(imageUrl, videoId, videoService) {
+            // Requires that pageView has been created already
+            imageUrl = normalizeImageUrl(imageUrl);
+            var image = document.createElement('div');
+            $(image).css({
+                'background-image': 'url('+imageUrl+')',
+                'background-position': 'center center',
+                'background-repeat': 'no-repeat',
+                'display': 'inline-block',
+                'width': '200px',
+                'height': '200px',
+                'margin': '15px',
+                'cursor': 'pointer',
+                'border': '1px solid #555'
+            });
+            $(image).click(function() {
+                var popUrl = getFormUrl()+imageUrl+getFormUrlVideo(videoId,videoService);
+                window.open(popUrl);
+                $('#pinry-images').remove();
+            });
+            return $('#pinry-images').append(image);
+        }
         // End View Functions
+
     
     
         // Start Active Functions
         function addAllImagesToPageView() {
             var loc =location.href.split('/')[2];
             if (loc.indexOf('vimeo') != -1){
-                var images = $("li[id^='clip']");
-                
-                $.each(images, function() {
-                    var video_id = $(this).attr('id').slice(-8);
+                var videos = $('body').find('.player')
+                videos.each(function() {
+                    var video_id = $(this).attr('data-fallback-url').split('/')[4];
                     $.getJSON("http://vimeo.com/api/v2/video/"+ video_id +".json", function(json){
-                    imageView(json[0].thumbnail_medium);
-            debugger;
-                    
+                    videoView(json[0].thumbnail_medium, video_id, "vimeo");
                     });
                 });
-            } else {
-
+            }
             var images = $('body').find('img');
             images.each(function() {
                 if ($(this).width() > 119 && $(this).height() > 79)
                     imageView($(this).attr('src'));
                 });
-            }  
-            return images;
+            
+            
         }
         // End Active Functions
     

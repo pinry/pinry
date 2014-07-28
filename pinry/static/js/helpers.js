@@ -105,3 +105,5 @@ function getVimeoThumbnail(vimeo) {
 function getQuizletID(quizlet_url) {
     return quizlet_url.split('/')[4];
 }
+
+

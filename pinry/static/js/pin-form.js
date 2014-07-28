@@ -18,16 +18,15 @@ $(window).load(function() {
             submitter: currentUser,
             url: $('#pin-form-image-url').val(),
             description: $('#pin-form-description').val(),
-            tags: cleanTags($('#pin-form-tags').val())
+            tags: cleanTags($('#pin-form-tags').val()),
+            video_id:($('#pin-form-video_id')).val(),
+            service:($('#pin-form-service')).val()
         }
     }
 
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
-                // vimeo: vimeoLinkParser ($('#pin-form-image-url').val()),
-                // youtube: youtubeLinkParser($('#pin-form-image-url').val()),
-                // quizlet: getQuizletId($('#pin-form-image-url').val())
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())
@@ -64,8 +63,10 @@ $(window).load(function() {
         $('body').append(renderTemplate('#pin-form-template', ''));
         var modal = $('#pin-form'),
             formFields = [$('#pin-form-image-url'), $('#pin-form-description'),
-            $('#pin-form-tags')],
+            $('#pin-form-tags'), $('#pin-form-video_id'),$('#pin-form-service')],
             pinFromUrl = getUrlParameter('pin-image-url');
+            videoId = getUrlParameter('video-id');
+            videoService = getUrlParameter('video-service');
         // If editable grab existing data
         if (editPinId) {
             var promise = getPinData(editPinId);
@@ -76,6 +77,8 @@ $(window).load(function() {
                 $('#pin-form-image-upload').parent().hide();
                 $('#pin-form-description').val(editedPin.description);
                 $('#pin-form-tags').val(editedPin.tags);
+                $('#pin-form-video_id').val(editedPin.video_id);
+                $('#pin-form-service').val(editedPin.service);
                 createPinPreviewFromForm();
             });
         }
@@ -122,6 +125,10 @@ $(window).load(function() {
         if (pinFromUrl) {
             $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
+            if (videoService) {
+                $('#pin-form-video_id').val(videoId);
+                $('#pin-form-service').val(videoService);
+            }
             $('.navbar').css('display', 'none');
             modal.css({
                 'margin-top': -35,
@@ -137,7 +144,9 @@ $(window).load(function() {
                 var apiUrl = '/api/v1/pin/'+editedPin.id+'/?format=json';
                 var data = {
                     description: $('#pin-form-description').val(),
-                    tags: cleanTags($('#pin-form-tags').val())
+                    tags: cleanTags($('#pin-form-tags').val()),
+                    video_id: $('#pin-form-video_id').val(),
+                    service: $('#pin-form-service').val()
                 }
                 var promise = $.ajax({
                     type: "put",
@@ -165,29 +174,13 @@ $(window).load(function() {
                 var data = {
                     submitter: '/api/v1/user/'+currentUser.id+'/',
                     description: $('#pin-form-description').val(),
-                    tags: cleanTags($('#pin-form-tags').val())
+                    tags: cleanTags($('#pin-form-tags').val()),
+                    video_id: $('#pin-form-video_id').val(),
+                    service: $('#pin-form-service').val()
                 };
                 var url = $('#pin-form-image-url').val();
-                var vmatch = /\/\/vimeo.*\/(\d+)/i.exec( url );
-                var ymatch = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/.exec( url );
-                var yimage_match = /.*(\/\/i1.ytimg.com\/vi\/)([^#\&\?]*).*/.exec( url );
-                var quizlet_match = /.*quizlet.com\/([^#\&\?]*)\/.*/.exec( url );
-                if (yimage_match) {
-                    data.video_id = yimage_match[2].split('/')[0];
-                    data.service = 'youtube';
-                    data.url = "http:" + url;
-                } else if (vmatch) {
-                    var vim = vimeoLinkParser(url);
-                    data.service = 'vimeo'
-                    data.url = url;
-                    data.vimeoImage =  getVimeoThumbnail(vim);
-
-                } else if (ymatch) {
-                    data.video_id = youtubeLinkParser(url);
-                    data.service = 'youtube'
-                    data.url = url;
-                    
-                } else if (uploadedImage) {
+               
+                if (uploadedImage) {
                      data.image = '/api/v1/image/'+uploadedImage+'/';
                 } else {
                     data.url = $('#pin-form-image-url').val();
