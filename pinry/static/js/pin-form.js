@@ -25,8 +25,9 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
-                vimeo: vimeoLinkParser ($('#pin-form-image-url').val()),
-                youtube: youtubeLinkParser($('#pin-form-image-url').val()),
+                // vimeo: vimeoLinkParser ($('#pin-form-image-url').val()),
+                // youtube: youtubeLinkParser($('#pin-form-image-url').val()),
+                // quizlet: getQuizletId($('#pin-form-image-url').val())
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())
@@ -169,15 +170,23 @@ $(window).load(function() {
                 var url = $('#pin-form-image-url').val();
                 var vmatch = /\/\/vimeo.*\/(\d+)/i.exec( url );
                 var ymatch = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/.exec( url );
-                if (vmatch) {
+                var yimage_match = /.*(\/\/i1.ytimg.com\/vi\/)([^#\&\?]*).*/.exec( url );
+                var quizlet_match = /.*quizlet.com\/([^#\&\?]*)\/.*/.exec( url );
+                if (yimage_match) {
+                    data.video_id = yimage_match[2].split('/')[0];
+                    data.service = 'youtube';
+                    data.url = "http:" + url;
+                } else if (vmatch) {
                     var vim = vimeoLinkParser(url);
-                    data.vimeo = vim;
+                    data.service = 'vimeo'
                     data.url = url;
                     data.vimeoImage =  getVimeoThumbnail(vim);
 
                 } else if (ymatch) {
-                    data.youtube = youtubeLinkParser(url);
+                    data.video_id = youtubeLinkParser(url);
+                    data.service = 'youtube'
                     data.url = url;
+                    
                 } else if (uploadedImage) {
                      data.image = '/api/v1/image/'+uploadedImage+'/';
                 } else {

@@ -46,6 +46,11 @@ $(window).load(function() {
     // Start View Functions
     function createBox(context) {
         freezeScroll();
+        if (context.service === "youtube"){
+            context.youtube = 1;
+        } else if (context.service === 'vimeo'){
+            context.vimeo = 1;
+        }
         $('body').append(renderTemplate('#lightbox-template', context));
         var box = $('.lightbox-background');
         box.css('height', $(document).height());

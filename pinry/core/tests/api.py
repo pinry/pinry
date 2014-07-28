@@ -180,7 +180,6 @@ class PinResourceTest(ResourceTestCase):
         pin = PinFactory(submitter=self.user)
         uri = '/api/v1/pin/{}/'.format(pin.pk)
         new = {'description': 'Updated description'}
-
         response = self.api_client.put(uri, format='json', data=new)
         self.assertHttpAccepted(response)
         self.assertEqual(Pin.objects.count(), 1)

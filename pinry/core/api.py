@@ -94,17 +94,8 @@ class PinResource(ModelResource):
     tags = fields.ListField()
 
     def hydrate_image(self, bundle):
-        vimeo = bundle.data.get('vimeo', None)
-        youtube = bundle.data.get('youtube', None)
         url = bundle.data.get('url', None)
-        vimeoImage = bundle.data.get('vimeoImage', None)
-        if vimeo:
-            image = Image.objects.create_for_url(vimeoImage)
-            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
-        elif youtube:
-            image = Image.objects.create_for_url('http://i1.ytimg.com/vi/' + youtube + '/hqdefault.jpg')
-            bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
-        elif url:
+        if url:
             image = Image.objects.create_for_url(url)
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         return bundle
@@ -139,7 +130,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description', 'youtube', 'vimeo', 'vImage']
+        fields = ['id', 'url', 'origin', 'description', 'video_id', 'service']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS

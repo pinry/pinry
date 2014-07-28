@@ -61,6 +61,13 @@ function getUrlParameter(name) {
     else return decode;
 }
 
+function youtubeImageParser(yimage_match) {
+    var match = yimage_match.split('/')[0];
+    if (match&&match[1].length==11){
+        return match[1];
+    }
+    else return;
+}
 /*Function youtubeLinkParser parses youtube link for Video ID
 based on http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url 
 answer #2 comment by  Chris Nolet*/
@@ -72,7 +79,6 @@ function youtubeLinkParser(youtubeUrl) {
     }
     else return;
 }
-
 function vimeoLinkParser(vimeoUrl) {
     var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/
     var match = /\/\/vimeo.*\/(\d+)/i.exec( vimeoUrl );
@@ -94,4 +100,8 @@ function getVimeoThumbnail(vimeo) {
         }
     });
     return thumbnail;
+}
+
+function getQuizletID(quizlet_url) {
+    return quizlet_url.split('/')[4];
 }
