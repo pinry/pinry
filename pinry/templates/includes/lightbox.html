@@ -4,13 +4,10 @@
             <div class="lightbox-wrapper">
                 <div class="lightbox-image-wrapper">
                  {{#if service}}  
-                    <iframe src="//"+ {{ video_id }} width="480" height="385" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-                    {{else}}
-                    {{#if service}}
-                    <iframe width="480" height="385" src= "//www.youtube.com/embed/{{ video_id }}?enablejsapi=1&version=3" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="//player.vimeo.com/video/{{ video_id }}" width="480" height="385" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
                     {{else}}
                     <img class="lightbox-image" src="{{image.standard.image}}" />
-                {{/if}}{{/if}}
+                {{/if}}
                 </div>
                 <div class="lightbox-data clearfix">
                 {{#if description}}
