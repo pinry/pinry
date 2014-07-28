@@ -140,8 +140,6 @@ if (!window.jQuery) {
                 if ($(this).width() > 119 && $(this).height() > 79)
                     imageView($(this).attr('src'));
                 });
-            
-            
         }
         // End Active Functions
     

@@ -41,7 +41,6 @@ class Pin(models.Model):
     url = models.URLField(null=True)
     origin = models.URLField(null=True)
     description = models.TextField(blank=True, null=True)
-    quizlet_id = models.CharField(max_length=11, blank=True, null=True)
     video_id = models.CharField(max_length=30, blank=True, null=True)
     service = models.CharField(max_length=35, blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin')
