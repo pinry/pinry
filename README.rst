@@ -53,6 +53,14 @@ If you'd like a different setup then check out the hundreds of tutorials
 for production Django deployment found via Google.
 
 
+Extra
+-----
+
+Other software related to Pinry:
+
+* `Pinry Chrome extension`_ (sources in `chrome-pinry GitHub repository`_)
+
+
 Current Master Build Status
 ---------------------------
 
@@ -67,4 +75,5 @@ Current Master Build Status
 .. _getpinry.com: http://getpinry.com/
 .. _Read the Docs: http://pinry.readthedocs.org/
 .. _docker-pinry GitHub repository: https://github.com/pinry/docker-pinry
-
+.. _chrome-pinry GitHub repository: https://github.com/lapo-luchini/chrome-pinry
+.. _Pinry Chrome extension: https://chrome.google.com/webstore/detail/pinry-chrome/jmhdcnmfkglikfjafdmdikoonedgijpa
