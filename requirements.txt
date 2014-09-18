@@ -1,5 +1,5 @@
 # core
-Django==1.5.5
+Django<1.6
 Pillow
 South
 requests
