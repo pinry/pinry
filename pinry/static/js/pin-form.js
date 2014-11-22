@@ -48,9 +48,9 @@ $(window).load(function() {
 
     function dismissModal(modal) {
         modal.modal('hide');
-        setTimeout(function() {
+        modal.on('hidden.bs.modal', function() {
             modal.remove();
-        }, 200);
+        });
     }
     // End Helper Functions
 
