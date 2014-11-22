@@ -243,6 +243,8 @@ textarea {
     font-size: 12px;
     margin-bottom: 0;
     padding: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pin strong {
