@@ -24,6 +24,10 @@ if (!window.jQuery) {
 function main() {
     var $ = jQuery;
 
+    function closePinry() {
+        $('#pinry-images').add('#pinry-bookmarklet').remove();
+    }
+
     // Start Helper Functions
     function getFormUrl() {
         var hostUrl = $('#pinry-bookmarklet').attr('src').split('/')[2];
@@ -65,7 +69,11 @@ function main() {
         });
         $('body').append(pinryImages);
         $('#pinry-images').append(pinryBar);
-        $('#pinry-bar').html('Pinry Bookmarklet');
+        $('#pinry-bar').html('Pinry Bookmarklet').click(closePinry);
+        $(document).keyup(function (e) {
+            if (e.keyCode == 27) // ESC key
+                closePinry();
+        });
         $(window).scrollTop(0);
     }
 
@@ -86,7 +94,7 @@ function main() {
         $(image).click(function() {
             var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
             window.open(popUrl);
-            $('#pinry-images').remove();
+            closePinry();
         });
         return $('#pinry-images').append(image);
     }
