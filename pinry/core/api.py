@@ -60,10 +60,13 @@ class UserResource(ModelResource):
 
 def filter_generator_for(size):
     def wrapped_func(bundle, **kwargs):
-        for thumbnail in bundle.obj._prefetched_objects_cache['thumbnail']:
-            if thumbnail.size == size:
-                return thumbnail
-        raise ObjectDoesNotExist()
+        if hasattr(bundle.obj, '_prefetched_objects_cache') and 'thumbnail' in bundle.obj._prefetched_objects_cache:
+            for thumbnail in bundle.obj._prefetched_objects_cache['thumbnail']:
+                if thumbnail.size == size:
+                    return thumbnail
+            raise ObjectDoesNotExist()
+        else:
+            return bundle.obj.get_by_size(size)
     return wrapped_func
 
 
