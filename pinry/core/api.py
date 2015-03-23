@@ -135,7 +135,8 @@ class PinResource(ModelResource):
         filtering = {
             'submitter': ALL_WITH_RELATIONS
         }
-        queryset = Pin.objects.all()
+        queryset = Pin.objects.all().select_related('submitter'). \
+            prefetch_related('image', 'tags')
         resource_name = 'pin'
         include_resource_uri = False
         always_return_data = True
