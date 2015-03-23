@@ -63,7 +63,7 @@ def filter_generator_for(size):
         for thumbnail in bundle.obj._prefetched_objects_cache['thumbnail']:
             if thumbnail.size == size:
                 return thumbnail
-        raise DoesNotExist()
+        raise ObjectDoesNotExist()
     return wrapped_func
 
 
