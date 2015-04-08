@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
@@ -59,7 +60,13 @@ class UserResource(ModelResource):
 
 def filter_generator_for(size):
     def wrapped_func(bundle, **kwargs):
-        return bundle.obj.get_by_size(size)
+        if hasattr(bundle.obj, '_prefetched_objects_cache') and 'thumbnail' in bundle.obj._prefetched_objects_cache:
+            for thumbnail in bundle.obj._prefetched_objects_cache['thumbnail']:
+                if thumbnail.size == size:
+                    return thumbnail
+            raise ObjectDoesNotExist()
+        else:
+            return bundle.obj.get_by_size(size)
     return wrapped_func
 
 
@@ -135,7 +142,8 @@ class PinResource(ModelResource):
         filtering = {
             'submitter': ALL_WITH_RELATIONS
         }
-        queryset = Pin.objects.all()
+        queryset = Pin.objects.all().select_related('submitter', 'image'). \
+            prefetch_related('image__thumbnail_set', 'tags')
         resource_name = 'pin'
         include_resource_uri = False
         always_return_data = True
