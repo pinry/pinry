@@ -117,8 +117,12 @@ $(window).load(function() {
         if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
         $.get(apiUrl, function(pins) {
             // Set which items are editable by the current user
-            for (var i=0; i < pins.objects.length; i++) 
+            for (var i=0; i < pins.objects.length; i++) {
                 pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser.username);
+                pins.objects[i].tags.sort(function (a, b) {
+                    return a.toLowerCase().localeCompare(b.toLowerCase());
+                });
+            }
 
             // Use the fetched pins as our context for our pins template
             var template = Handlebars.compile($('#pins-template').html());
@@ -138,7 +142,7 @@ $(window).load(function() {
 
             if (pins.objects.length < apiLimitPerPage) {
                 $('.spinner').css('display', 'none');
-                if ($('#pins').length != 0) {
+                if ($('#pins').length !== 0) {
                     var theEnd = document.createElement('div');
                     theEnd.id = 'the-end';
                     $(theEnd).html('&mdash; End &mdash;');
