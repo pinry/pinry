@@ -16,6 +16,7 @@ $(window).load(function() {
     function getFormData() {
         return {
             submitter: currentUser,
+            origin: $('#pin-form-origin-url').val(),
             url: $('#pin-form-image-url').val(),
             description: $('#pin-form-description').val(),
             tags: cleanTags($('#pin-form-tags').val())
@@ -25,6 +26,7 @@ $(window).load(function() {
     function createPinPreviewFromForm() {
         var context = {pins: [{
                 submitter: currentUser,
+				origin: $('#pin-form-origin-url').val(),
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
                 tags: cleanTags($('#pin-form-tags').val())
@@ -67,6 +69,7 @@ $(window).load(function() {
             var promise = getPinData(editPinId);
             promise.success(function(data) {
                 editedPin = data;
+                $('#pin-form-origin-url').val(editedPin.origin),
                 $('#pin-form-image-url').val(editedPin.image.thumbnail.image);
                 $('#pin-form-image-url').parent().hide();
                 $('#pin-form-image-upload').parent().hide();
@@ -132,6 +135,7 @@ $(window).load(function() {
             if (editedPin) {
                 var apiUrl = '/api/v1/pin/'+editedPin.id+'/?format=json';
                 var data = {
+					origin: $('#pin-form-origin-url').val(),
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 }
@@ -160,6 +164,7 @@ $(window).load(function() {
             } else {
                 var data = {
                     submitter: '/api/v1/user/'+currentUser.id+'/',
+                    origin: $('#pin-form-origin-url').val(),
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
