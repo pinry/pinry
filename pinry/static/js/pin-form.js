@@ -124,7 +124,7 @@ $(window).load(function() {
                     editedPin = null;
                 });
                 promise.error(function() {
-                    message('Problem updating image.', 'alert alert-error');
+                    message('Problem updating image.', 'alert alert-danger');
                 });
             } else {
                 var data = {
@@ -144,7 +144,7 @@ $(window).load(function() {
                     dismissModal(modal);
                 });
                 promise.error(function() {
-                    message('Problem saving image.', 'alert alert-error');
+                    message('Problem saving image.', 'alert alert-danger');
                 });
             }
         });

@@ -70,7 +70,7 @@ $(window).load(function() {
                     tileLayout();
                 });
                 promise.error(function() {
-                    message('Problem deleting image.', 'alert alert-error');
+                    message('Problem deleting image.', 'alert alert-danger');
                 });
             });
         });

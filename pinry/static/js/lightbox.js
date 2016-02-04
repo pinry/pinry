@@ -83,7 +83,7 @@ $(window).load(function() {
                 createBox(pin);
             });
             promise.error(function() {
-                message('Problem problem fetching pin data.', 'alert alert-error');
+                message('Problem problem fetching pin data.', 'alert alert-danger');
             });
         }
         return links.each(function() {
@@ -95,7 +95,7 @@ $(window).load(function() {
                     createBox(pin);
                 });
                 promise.error(function() {
-                    message('Problem problem fetching pin data.', 'alert alert-error');
+                    message('Problem problem fetching pin data.', 'alert alert-danger');
                 });
             });
         });
