@@ -79,24 +79,27 @@ function main() {
 
     function imageView(imageUrl) {
         // Requires that pageView has been created already
-        var image = document.createElement('div');
-        $(image).css({
+        var image = $('<div/>');
+        image.css({
             'background-image': 'url('+imageUrl+')',
             'background-position': 'center center',
             'background-repeat': 'no-repeat',
+            'background-size': 'cover',
             'display': 'inline-block',
+            'color': 'blue',
+            'text-shadow': 'yellow 0px 0px 2px, yellow 0px 0px 3px, yellow 0px 0px 4px',
             'width': '200px',
             'height': '200px',
             'margin': '15px',
             'cursor': 'pointer',
             'border': '1px solid #555'
         });
-        $(image).click(function() {
+        image.click(function() {
             var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
             window.open(popUrl);
             closePinry();
         });
-        return $('#pinry-images').append(image);
+        return image.appendTo('#pinry-images');
     }
     // End View Functions
 
@@ -105,8 +108,11 @@ function main() {
     function addAllImagesToPageView() {
         var images = $('body').find('img');
         images.each(function() {
-            if ($(this).width() > 200 && $(this).height() > 200)
-                imageView(this.src);
+            var t = $(this),
+                w = this.naturalWidth  || t.width(),
+                h = this.naturalHeight || t.height();
+            if (w > 200 && h > 200)
+                imageView(this.src).text(w + '\u00D7' + h);
         });
         return images;
     }
