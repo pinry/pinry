@@ -18,6 +18,9 @@
 /.installed.cfg
 /*.egg
 
+# Bower
+/pinry/static/vendor/
+
 # sphinx
 /docs/_build/
 

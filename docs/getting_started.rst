@@ -21,6 +21,8 @@ virtual environment. What you need initially:
 * pip
 * Pillow build dependencies or the most recent version installed on your OS and
   use ``virtualenv --system-site-packages`` when initiating virtualenv.
+* Node
+* Bower
 
 After you have all of the above you can skip to Testing and make sure it all
 works.

@@ -30,8 +30,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
         {% compress css %}
-            <link rel="stylesheet" href="{% static "vendor/bootstrap/3.0.0/css/bootstrap.css" %}"/>
-            <link rel="stylesheet" href="{% static "vendor/fineuploader/3.1.1/fineuploader.css" %}"/>
+            <link rel="stylesheet" href="{% static "vendor/bootstrap/dist/css/bootstrap.css" %}"/>
             <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
             <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
             <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
@@ -121,10 +120,9 @@
 
         <!-- JavaScript -->
         {% compress js %}
-            <script src="{% static "vendor/jquery/2.0.3/jquery-2.0.3.js" %}"></script>
-            <script src="{% static "vendor/fineuploader/3.1.1/jquery.fineuploader.js" %}"></script>
-            <script src="{% static "vendor/bootstrap/3.0.0/js/bootstrap.js" %}"></script>
-            <script src="{% static "vendor/handlebars/1.0.0/handlebars.js" %}"></script>
+            <script src="{% static "vendor/jquery/jquery.js" %}"></script>
+            <script src="{% static "vendor/bootstrap/dist/js/bootstrap.js" %}"></script>
+            <script src="{% static "vendor/handlebars/handlebars.js" %}"></script>
             <script src="{% static "js/helpers.js" %}"></script>
             <script src="{% static "js/messages.js" %}"></script>
             <script src="{% static "js/lightbox.js" %}"></script>

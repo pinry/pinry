@@ -13,14 +13,16 @@ Ubuntu
 Ubuntu is pretty simple to get Pinry running get some of our required packages
 first::
 
-  sudo apt-get install python-virtualenv git
+  sudo apt-get install python-virtualenv git npm
   sudo apt-get build-dep python-imaging
+  sudo npm install -g bower
 
 Then you'll need to get Pinry and setup our virtualenv::
 
   git clone https://github.com/pinry/pinry.git
   cd pinry
   virtualenv .
+  bower install
   bin/pip install -r requirements.txt
 
 From here you have a full working install of Pinry! You can:

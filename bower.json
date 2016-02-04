@@ -1,0 +1,8 @@
+{
+  "name": "pinry",
+  "dependencies": {
+    "jquery": "2.0.3",
+    "bootstrap": "3.0.0",
+    "handlebars": "1.0.0"
+  }
+}
