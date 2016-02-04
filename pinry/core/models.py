@@ -14,7 +14,7 @@ from ..users.models import User
 class ImageManager(models.Manager):
     # FIXME: Move this into an asynchronous task
     def create_for_url(self, url):
-        file_name = url.split("/")[-1]
+        file_name = url.split("/")[-1].split('#')[0].split('?')[0]
         buf = StringIO()
         response = requests.get(url)
         buf.write(response.content)
