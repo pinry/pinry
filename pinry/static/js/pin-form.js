@@ -9,6 +9,7 @@
 
 
 $(window).load(function() {
+    var uploadedImage = false;
     var editedPin = null;
 
     // Start Helper Functions
@@ -68,6 +69,7 @@ $(window).load(function() {
                 editedPin = data;
                 $('#pin-form-image-url').val(editedPin.image.thumbnail.image);
                 $('#pin-form-image-url').parent().hide();
+                $('#pin-form-image-upload').parent().hide();
                 $('#pin-form-description').val(editedPin.description);
                 $('#pin-form-tags').val(editedPin.tags);
                 createPinPreviewFromForm();
@@ -82,10 +84,34 @@ $(window).load(function() {
                 timer = setTimeout(function() {
                     createPinPreviewFromForm()
                 }, 700);
+                if (!uploadedImage)
+                    $('#pin-form-image-upload').parent().fadeOut(300);
             });
         }
+        // Drag and drop upload
+        $('#pin-form-image-upload').dropzone({
+            url: '/pins/create-image/',
+            paramName: 'qqfile',
+            parallelUploads: 1,
+            uploadMultiple: false,
+            maxFiles: 1,
+            acceptedFiles: 'image/*',
+            success: function(file, resp) {
+                $('#pin-form-image-url').parent().fadeOut(300);
+                var promise = getImageData(resp.success.id);
+                uploadedImage = resp.success.id;
+                promise.success(function(image) {
+                    $('#pin-form-image-url').val(image.thumbnail.image);
+                    createPinPreviewFromForm();
+                });
+                promise.error(function() {
+                    message('Problem uploading image.', 'alert alert-error');
+                });
+            }
+        });
         // If bookmarklet submit
         if (pinFromUrl) {
+            $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
             $('.navbar').css('display', 'none');
             modal.css({
@@ -132,7 +158,8 @@ $(window).load(function() {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                data.url = $('#pin-form-image-url').val();
+                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
+                else data.url = $('#pin-form-image-url').val();
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();
@@ -142,6 +169,7 @@ $(window).load(function() {
                     tileLayout();
                     lightbox();
                     dismissModal(modal);
+                    uploadedImage = false;
                 });
                 promise.error(function() {
                     message('Problem saving image.', 'alert alert-danger');
