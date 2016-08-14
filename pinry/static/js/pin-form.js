@@ -18,7 +18,8 @@ $(window).load(function() {
             submitter: currentUser,
             url: $('#pin-form-image-url').val(),
             description: $('#pin-form-description').val(),
-            tags: cleanTags($('#pin-form-tags').val())
+            tags: cleanTags($('#pin-form-tags').val()),
+            origin: $('#pin-form-origin').val()
         }
     }
 
@@ -27,7 +28,8 @@ $(window).load(function() {
                 submitter: currentUser,
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 description: $('#pin-form-description').val(),
-                tags: cleanTags($('#pin-form-tags').val())
+                tags: cleanTags($('#pin-form-tags').val()),
+                origin: $('#pin-form-origin').val()
             }]},
             html = renderTemplate('#pins-template', context),
             preview = $('#pin-form-image-preview');
@@ -62,6 +64,7 @@ $(window).load(function() {
             formFields = [$('#pin-form-image-url'), $('#pin-form-description'),
             $('#pin-form-tags')],
             pinFromUrl = getUrlParameter('pin-image-url');
+            pinFormOrigin = getUrlParameter('pin-image-origin');
         // If editable grab existing data
         if (editPinId) {
             var promise = getPinData(editPinId);
@@ -72,6 +75,7 @@ $(window).load(function() {
                 $('#pin-form-image-upload').parent().hide();
                 $('#pin-form-description').val(editedPin.description);
                 $('#pin-form-tags').val(editedPin.tags);
+                $('#pin-form-origin').val(editedPin.origin);
                 createPinPreviewFromForm();
             });
         }
@@ -113,6 +117,7 @@ $(window).load(function() {
         if (pinFromUrl) {
             $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
+            $('#pin-form-origin').val(pinFormOrigin);
             $('.navbar').css('display', 'none');
             modal.css({
                 'margin-top': -35,
@@ -128,7 +133,8 @@ $(window).load(function() {
                 var apiUrl = '/api/v1/pin/'+editedPin.id+'/?format=json';
                 var data = {
                     description: $('#pin-form-description').val(),
-                    tags: cleanTags($('#pin-form-tags').val())
+                    tags: cleanTags($('#pin-form-tags').val()),
+                    origin: $('#pin-form-origin').val()
                 }
                 var promise = $.ajax({
                     type: "put",
@@ -156,7 +162,8 @@ $(window).load(function() {
                 var data = {
                     submitter: '/api/v1/user/'+currentUser.id+'/',
                     description: $('#pin-form-description').val(),
-                    tags: cleanTags($('#pin-form-tags').val())
+                    tags: cleanTags($('#pin-form-tags').val()),
+                    origin: $('#pin-form-origin').val()
                 };
                 if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
                 else data.url = $('#pin-form-image-url').val();
