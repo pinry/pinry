@@ -53,14 +53,6 @@ If you'd like a different setup then check out the hundreds of tutorials
 for production Django deployment found via Google.
 
 
-Extra
------
-
-Other software related to Pinry:
-
-* `Pinry Chrome extension`_ (sources in `chrome-pinry GitHub repository`_)
-
-
 .. Links
 
 .. |Pinry| image:: https://raw.github.com/pinry/pinry/master/logo.png
