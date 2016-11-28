@@ -61,12 +61,6 @@ Other software related to Pinry:
 * `Pinry Chrome extension`_ (sources in `chrome-pinry GitHub repository`_)
 
 
-Current Master Build Status
----------------------------
-
-|Codeship Status for pinry/pinry|
-
-
 .. Links
 
 .. |Pinry| image:: https://raw.github.com/pinry/pinry/master/logo.png
