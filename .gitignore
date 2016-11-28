@@ -26,6 +26,7 @@
 
 # Project
 /*.db
+/*.sqlite3
 
 # Misc
 /.idea/
