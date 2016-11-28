@@ -5,8 +5,7 @@ The open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy
 to skim through format.
 
-For more information and a working demo board visit `getpinry.com`_. For the
-latest documentation check out `Read the Docs`_.
+For more information and a working demo board visit `getpinry.com`_.
 
 
 Requirements
@@ -53,13 +52,21 @@ If you'd like a different setup then check out the hundreds of tutorials
 for production Django deployment found via Google.
 
 
+Contributors
+------------
+
+The core contributors for Pinry have been/currently are:
+
+* Isaac Bythewood <http://isaacbythewood.com/>
+* Krzysztof Klimonda
+* Lapo Luchini <https://github.com/lapo-luchini>
+
+For a full list of contributors check out the `GitHub Contributors Graph`_.
+
+
 .. Links
 
 .. |Pinry| image:: https://raw.github.com/pinry/pinry/master/logo.png
-.. |Codeship Status for pinry/pinry| image:: https://www.codeship.io/projects/461ebc50-70be-0130-073a-22000a9d07d8/status?branch=master
-   :target: https://www.codeship.io/projects/2005
 .. _getpinry.com: http://getpinry.com/
-.. _Read the Docs: http://pinry.readthedocs.org/
 .. _docker-pinry GitHub repository: https://github.com/pinry/docker-pinry
-.. _chrome-pinry GitHub repository: https://github.com/lapo-luchini/chrome-pinry
-.. _Pinry Chrome extension: https://chrome.google.com/webstore/detail/pinry-chrome/jmhdcnmfkglikfjafdmdikoonedgijpa
+.. _GitHub Contributors Graph: https://github.com/pinry/pinry/graphs/contributors
