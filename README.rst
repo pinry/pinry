@@ -36,9 +36,10 @@ recommend using our tags/versions though.
 
 To run Pinry's tests inside the Pinry repo run::
 
-    virtualenv .
-    bin/pip install -r requirements.txt
-    bin/python manage.py test
+    virtualenv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    python manage.py test
 
 
 Production Deployment
