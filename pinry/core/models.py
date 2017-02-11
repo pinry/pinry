@@ -46,4 +46,5 @@ class Pin(models.Model):
     tags = TaggableManager()
 
     def __unicode__(self):
-        return self.url
+        return '%s - %s' % (self.submitter, self.published)
+
