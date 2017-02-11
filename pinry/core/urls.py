@@ -13,7 +13,6 @@ v1_api.register(ThumbnailResource())
 v1_api.register(PinResource())
 v1_api.register(UserResource())
 
-
 urlpatterns = patterns('',
     url(r'^api/', include(v1_api.urls, namespace='api')),
 
