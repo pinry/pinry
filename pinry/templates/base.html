@@ -16,10 +16,10 @@
         <title>{% block title %}Pinry{% endblock %}</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.6/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.css"/>
         {% compress css %}
-            <link rel="stylesheet" href="{% static "vendor/bootstrap/dist/css/bootstrap.css" %}"/>
-            <link rel="stylesheet" href="{% static "vendor/dropzone/dist/dropzone.css" %}"/>
             <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
             <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
             <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
