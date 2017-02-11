@@ -108,11 +108,11 @@
         <!-- End Templates -->
 
         <!-- JavaScript -->
+        <script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://unpkg.com/bootstrap@3.3.6/dist/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/handlebars@4.0.6/dist/handlebars.min.js"></script>
+        <script src="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.js"></script>
         {% compress js %}
-            <script src="{% static "vendor/jquery/jquery.js" %}"></script>
-            <script src="{% static "vendor/bootstrap/dist/js/bootstrap.js" %}"></script>
-            <script src="{% static "vendor/handlebars/handlebars.js" %}"></script>
-            <script src="{% static "vendor/dropzone/dist/dropzone.js" %}"></script>
             <script src="{% static "js/helpers.js" %}"></script>
             <script src="{% static "js/messages.js" %}"></script>
             <script src="{% static "js/lightbox.js" %}"></script>
