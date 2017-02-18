@@ -1,3 +1,5 @@
+**Pinry 2.0 is underway! If you'd like to help with the development process check out our current progress on the 2.x branch. If you'd like to use Pinry 2.0 please don't, it's terrible right now. Keep using the 1.x/master branches.**
+
 |Pinry|
 =======
 
