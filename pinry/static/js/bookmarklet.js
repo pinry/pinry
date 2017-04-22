@@ -25,6 +25,11 @@
         src = src.substr(0, src.indexOf('/static/js'));
         return src + '/pins/pin-form/?pin-image-url=';
     }
+
+    function setCSS(el, css) {
+        for (var k in css)
+            el.style[k] = css[k];
+    }
     // End Helper Functions
 
 
@@ -32,29 +37,33 @@
     function pageView() {
         var pinryImages = document.createElement('div');
         pinryImages.id = 'pinry-images';
-        pinryImages.style.position = 'fixed';
-        pinryImages.style.zIndex = 9001;
-        pinryImages.style.background = 'rgba(0, 0, 0, 0.7)';
-        pinryImages.style.paddingTop = '70px';
-        pinryImages.style.top = 0;
-        pinryImages.style.bottom = 0;
-        pinryImages.style.left = 0;
-        pinryImages.style.right = 0;
-        pinryImages.style.textAlign = 'center';
-        pinryImages.style.overflowX = 'hidden';
-        pinryImages.style.overflowY = 'auto';
+        setCSS(pinryImages, {
+            position: 'fixed',
+            zIndex: 9001,
+            background: 'rgba(0, 0, 0, 0.7)',
+            paddingTop: '70px',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            overflowX: 'hidden',
+            overflowY: 'auto'
+        });
         var pinryBar = document.createElement('div');
         pinryBar.id = 'pinry-bar';
-        pinryBar.style.background = 'black';
-        pinryBar.style.padding = '15px';
-        pinryBar.style.position = 'absolute';
-        pinryBar.style.zIndex = 9002;
-        pinryBar.style.width = '100%';
-        pinryBar.style.top = 0;
-        pinryBar.style.borderBottom = '1px solid #555';
-        pinryBar.style.color = 'white';
-        pinryBar.style.textAlign = 'center';
-        pinryBar.style.fontSize = '22px';
+        setCSS(pinryBar, {
+            background: 'black',
+            padding: '15px',
+            position: 'absolute',
+            zIndex: 9002,
+            width: '100%',
+            top: 0,
+            borderBottom: '1px solid #555',
+            color: 'white',
+            textAlign: 'center',
+            fontSize: '22px'
+        });
         pinryBar.textContent = 'Pinry Bookmarklet';
         pinryBar.onclick = closePinry;
         pinryImages.appendChild(pinryBar);
@@ -68,18 +77,20 @@
     function imageView(imageUrl) {
         // Requires that pageView has been created already
         var image = document.createElement('div');
-        image.style.backgroundImage = 'url('+imageUrl+')';
-        image.style.backgroundPosition = 'center center';
-        image.style.backgroundRepeat = 'no-repeat';
-        image.style.backgroundSize = 'cover';
-        image.style.display = 'inline-block';
-        image.style.color = 'blue';
-        image.style.textShadow = 'yellow 0px 0px 2px, yellow 0px 0px 3px, yellow 0px 0px 4px';
-        image.style.width = '200px';
-        image.style.height = '200px';
-        image.style.margin = '15px';
-        image.style.cursor = 'pointer';
-        image.style.border = '1px solid #555';
+        setCSS(image, {
+            backgroundImage: 'url('+imageUrl+')',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            display: 'inline-block',
+            color: 'blue',
+            textShadow: 'yellow 0px 0px 2px, yellow 0px 0px 3px, yellow 0px 0px 4px',
+            width: '200px',
+            height: '200px',
+            margin: '15px',
+            cursor: 'pointer',
+            border: '1px solid #555'
+        });
         image.onclick = function() {
             var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
             window.open(popUrl);
