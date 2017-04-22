@@ -9,30 +9,21 @@
  * Require: None (dynamically loads jQuery if needed)
  */
 
-
-// Start jQuery Check
-if (!window.jQuery) {
-    var body = document.getElementsByTagName('body')[0];
-    var script = document.createElement('script');
-    script.onload = main;
-    script.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-    body.appendChild(script);
-} else
-    jQuery(document).ready(main);
-// End jQuery Check
-
-function main() {
-    var $ = jQuery;
+(function main() {
+    'use strict';
 
     function closePinry() {
-        $('#pinry-images').add('#pinry-bookmarklet').remove();
+        var el = document.getElementById('pinry-images');
+        el.parentNode.removeChild(el);
+        el = document.getElementById('pinry-bookmarklet');
+        el.parentNode.removeChild(el);
     }
 
     // Start Helper Functions
     function getFormUrl() {
-        var hostUrl = $('#pinry-bookmarklet').attr('src').split('/')[2];
-        var formUrl = '/pins/pin-form/?pin-image-url=';
-        return 'http://'+hostUrl+formUrl;
+        var src = document.getElementById('pinry-bookmarklet').src;
+        src = src.substr(0, src.indexOf('/static/js'));
+        return src + '/pins/pin-form/?pin-image-url=';
     }
     // End Helper Functions
 
@@ -41,79 +32,75 @@ function main() {
     function pageView() {
         var pinryImages = document.createElement('div');
         pinryImages.id = 'pinry-images';
-        $(pinryImages).css({
-            'position': 'absolute',
-            'z-index': '9001',
-            'background': 'rgba(0, 0, 0, 0.7)',
-            'padding-top': '70px',
-            'top': '0',
-            'left': '0',
-            'right': '0',
-            'height': $(document).height(),
-            'text-align': 'center',
-            'width': '100%'
-        });
+        pinryImages.style.position = 'fixed';
+        pinryImages.style.zIndex = 9001;
+        pinryImages.style.background = 'rgba(0, 0, 0, 0.7)';
+        pinryImages.style.paddingTop = '70px';
+        pinryImages.style.top = 0;
+        pinryImages.style.bottom = 0;
+        pinryImages.style.left = 0;
+        pinryImages.style.right = 0;
+        pinryImages.style.textAlign = 'center';
+        pinryImages.style.overflowX = 'hidden';
+        pinryImages.style.overflowY = 'auto';
         var pinryBar = document.createElement('div');
         pinryBar.id = 'pinry-bar';
-        $(pinryBar).css({
-            'background': 'black',
-            'padding': '15px',
-            'position': 'absolute',
-            'z-index': '9002',
-            'width': '100%',
-            'top': 0,
-            'border-bottom': '1px solid #555',
-            'color': 'white',
-            'text-align': 'center',
-            'font-size': '22px'
-        });
-        $('body').append(pinryImages);
-        $('#pinry-images').append(pinryBar);
-        $('#pinry-bar').html('Pinry Bookmarklet').click(closePinry);
-        $(document).keyup(function (e) {
+        pinryBar.style.background = 'black';
+        pinryBar.style.padding = '15px';
+        pinryBar.style.position = 'absolute';
+        pinryBar.style.zIndex = 9002;
+        pinryBar.style.width = '100%';
+        pinryBar.style.top = 0;
+        pinryBar.style.borderBottom = '1px solid #555';
+        pinryBar.style.color = 'white';
+        pinryBar.style.textAlign = 'center';
+        pinryBar.style.fontSize = '22px';
+        pinryBar.textContent = 'Pinry Bookmarklet';
+        pinryBar.onclick = closePinry;
+        pinryImages.appendChild(pinryBar);
+        document.body.appendChild(pinryImages);
+        document.onkeyup = function (e) {
             if (e.keyCode == 27) // ESC key
                 closePinry();
-        });
-        $(window).scrollTop(0);
+        };
     }
 
     function imageView(imageUrl) {
         // Requires that pageView has been created already
-        var image = $('<div/>');
-        image.css({
-            'background-image': 'url('+imageUrl+')',
-            'background-position': 'center center',
-            'background-repeat': 'no-repeat',
-            'background-size': 'cover',
-            'display': 'inline-block',
-            'color': 'blue',
-            'text-shadow': 'yellow 0px 0px 2px, yellow 0px 0px 3px, yellow 0px 0px 4px',
-            'width': '200px',
-            'height': '200px',
-            'margin': '15px',
-            'cursor': 'pointer',
-            'border': '1px solid #555'
-        });
-        image.click(function() {
+        var image = document.createElement('div');
+        image.style.backgroundImage = 'url('+imageUrl+')';
+        image.style.backgroundPosition = 'center center';
+        image.style.backgroundRepeat = 'no-repeat';
+        image.style.backgroundSize = 'cover';
+        image.style.display = 'inline-block';
+        image.style.color = 'blue';
+        image.style.textShadow = 'yellow 0px 0px 2px, yellow 0px 0px 3px, yellow 0px 0px 4px';
+        image.style.width = '200px';
+        image.style.height = '200px';
+        image.style.margin = '15px';
+        image.style.cursor = 'pointer';
+        image.style.border = '1px solid #555';
+        image.onclick = function() {
             var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
             window.open(popUrl);
             closePinry();
-        });
-        return image.appendTo('#pinry-images');
+        };
+        document.getElementById('pinry-images').appendChild(image);
+        return image;
     }
     // End View Functions
 
 
     // Start Active Functions
     function addAllImagesToPageView() {
-        var images = $('body').find('img');
-        images.each(function() {
-            var t = $(this),
-                w = this.naturalWidth  || t.width(),
-                h = this.naturalHeight || t.height();
+        var images = document.getElementsByTagName('img');
+        for (var i = 0; i < images.length; ++i) {
+            var t = images[i],
+                w = t.naturalWidth,
+                h = t.naturalHeight;
             if (w > 200 && h > 200)
-                imageView(this.src).text(w + '\u00D7' + h);
-        });
+                imageView(t.src).textContent = w + '\u00D7' + h;
+        }
         return images;
     }
     // End Active Functions
@@ -123,4 +110,4 @@ function main() {
     pageView(); // Build page before we insert images
     addAllImagesToPageView(); // Add all images on page to our new pageView
     // End Init
-}
+})();
