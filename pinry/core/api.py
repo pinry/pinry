@@ -33,7 +33,7 @@ class PinryAuthorization(DjangoAuthorization):
         if klass is False:
             raise Unauthorized("You are not allowed to access that resource.")
 
-        print dir(klass._meta)
+        print(dir(klass._meta))
         permission = '%s.delete_%s' % (klass._meta.app_label, klass._meta.model_name)
 
         if not bundle.request.user.has_perm(permission, bundle.obj):
@@ -123,7 +123,7 @@ class PinResource(ModelResource):
         return bundle
 
     def dehydrate_tags(self, bundle):
-        return map(str, bundle.obj.tags.all())
+        return list(map(str, bundle.obj.tags.all()))
 
     def build_filters(self, filters=None):
         orm_filters = super(PinResource, self).build_filters(filters)

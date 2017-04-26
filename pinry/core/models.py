@@ -1,5 +1,8 @@
 import requests
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO as PinryStringIO
+except ImportError:
+    from io import BytesIO as PinryStringIO
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -15,7 +18,7 @@ class ImageManager(models.Manager):
     # FIXME: Move this into an asynchronous task
     def create_for_url(self, url):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
-        buf = StringIO()
+        buf = PinryStringIO()
         response = requests.get(url)
         buf.write(response.content)
         obj = InMemoryUploadedFile(buf, 'image', file_name,
