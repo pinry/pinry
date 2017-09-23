@@ -33,7 +33,6 @@ class PinryAuthorization(DjangoAuthorization):
         if klass is False:
             raise Unauthorized("You are not allowed to access that resource.")
 
-        print dir(klass._meta)
         permission = '%s.delete_%s' % (klass._meta.app_label, klass._meta.model_name)
 
         if not bundle.request.user.has_perm(permission, bundle.obj):

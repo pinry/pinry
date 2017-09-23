@@ -1,5 +1,9 @@
 import requests
-from cStringIO import StringIO
+
+try:
+    from cStringIO import StringIO
+except ImportError:  # Python 3 support
+    from io import StringIO
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
