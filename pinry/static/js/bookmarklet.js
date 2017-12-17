@@ -20,10 +20,18 @@
     }
 
     // Start Helper Functions
-    function getFormUrl() {
+    function getFormUrl(param) {
         var src = document.getElementById('pinry-bookmarklet').src;
         src = src.substr(0, src.indexOf('/static/js'));
-        return src + '/pins/pin-form/?pin-image-url=';
+        src = src + '/pins/pin-form/';
+        if (param != undefined) {
+            var param_body = [];
+            for (var i in param) {
+                param_body.push(i + '=' + encodeURIComponent(param[i]));
+            }
+            src = src + '?' + param_body.join('&');
+        }
+        return src;
     }
 
     function setCSS(el, css) {
@@ -92,7 +100,7 @@
             border: '1px solid #555'
         });
         image.onclick = function() {
-            var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
+            var popUrl = getFormUrl({'pin-image-url':imageUrl, 'pin-description':document.title+"\n"+location.href});
             window.open(popUrl);
             closePinry();
         };

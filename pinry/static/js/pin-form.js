@@ -126,6 +126,10 @@ $(window).load(function() {
             pinFromDomain = urlParser.hostname;
             $('#pin-form-tags').val($.cookie('pinform_domain_tag-' + pinFromDomain));
         }
+        if (getUrlParameter('pin-description')) {
+            $('#pin-form-description').val(getUrlParameter('pin-description'));
+        }
+
         // Submit pin on post click
         $('#pin-form-submit').click(function(e) {
             e.preventDefault();
