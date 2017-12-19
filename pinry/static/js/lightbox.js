@@ -49,17 +49,31 @@ $(window).load(function() {
         $('body').append(renderTemplate('#lightbox-template', context));
         var box = $('.lightbox-background');
         box.css('height', $(document).height());
-        $('.lightbox-image-wrapper').css('height', context.image.standard.height);
+        if (window.matchMedia('(min-width:'+context.image.standard.width+'px)').matches) {
+            $('.lightbox-image-wrapper').css('height', context.image.standard.height);
+        }
         box.fadeIn(200);
         $('.lightbox-image').load(function() {
             $(this).fadeIn(200);
         });
-        $('.lightbox-wrapper').css({
-            'width': context.image.standard.width,
-            'margin-top': 80,
-            'margin-bottom': 80,
-            'margin-left': -context.image.standard.width/2
-        });
+        if (window.matchMedia('(min-width:'+context.image.standard.width+'px)').matches) {
+            $('.lightbox-wrapper').css({
+                'width': context.image.standard.width,
+                'margin-top': 80,
+                'margin-bottom': 80,
+                'margin-left': -context.image.standard.width/2
+            });
+        } else {
+            $('.lightbox-wrapper').css({
+                'width': '100%',
+                'left': 'initial',
+                'margin-top': 80,
+                'margin-bottom': 80
+            });
+            $('.lightbox-image').css({
+                'width': '100%'
+            });
+        }
         if ($('.lightbox-wrapper').height()+140 > $(window).height())
             $('.lightbox-background').height($('.lightbox-wrapper').height()+160);
 
