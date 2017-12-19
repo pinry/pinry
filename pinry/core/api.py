@@ -6,6 +6,7 @@ from tastypie.exceptions import Unauthorized
 from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
 
+from django.db.models import Q
 from .models import Pin, Image
 from ..users.models import User
 
@@ -129,6 +130,15 @@ class PinResource(ModelResource):
         if filters and 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
         return orm_filters
+
+    def apply_filters(self, request, applicable_filters):
+        filtered = super(PinResource, self).apply_filters(request, applicable_filters)
+        if applicable_filters.has_key('tags__name__in'):
+            if 'private' not in (tag.lower() for tag in applicable_filters['tags__name__in']):
+                filtered = filtered.filter(Q(submitter=request.user.pk) | ~Q(tags__name__iexact='private'))
+        else:
+            filtered = filtered.exclude(tags__name__iexact='private')
+        return filtered
 
     def save_m2m(self, bundle):
         tags = bundle.data.get('tags', None)
