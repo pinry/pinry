@@ -16,16 +16,9 @@ Requirements
 Pinry is built on top of Django and optimized to run on a Linux
 environment. However we have gotten Pinry to work on Windows and Mac as
 well but it may require some extra digging around configuration. Pinry's
-Python requirements are all in the ``requirements.txt`` file and easily
-installable once you have up a virtual environment. What you need
-initially:
-
-* Python
-* pip
-* virtualenv
-* Your OS's build tools (Ubuntu: ``build-essential``, Mac: ``Xcode``)
-* Build dependencies for PIL/Pillow (Ubuntu:
-  ``apt-get build-dep python-imaging``)
+Python requirements are all in the ``Pipfile`` file. You can easily install
+these using pipenv, to get pipenv, if you already have Python and pip, run
+python ``pip install pipenv``.
 
 
 Testing
@@ -38,9 +31,7 @@ recommend using our tags/versions though.
 
 To run Pinry's tests inside the Pinry repo run::
 
-    virtualenv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
+    pipenv install
     python manage.py test
 
 
