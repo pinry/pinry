@@ -32,7 +32,7 @@ recommend using our tags/versions though.
 To run Pinry's tests inside the Pinry repo run::
 
     pipenv install
-    python manage.py test
+    pipenv run python manage.py test
 
 
 Production Deployment
