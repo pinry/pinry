@@ -31,8 +31,16 @@ recommend using our tags/versions though.
 
 To run Pinry's tests inside the Pinry repo run::
 
-    pipenv install
+    pipenv install --dev --three
     pipenv run python manage.py test
+
+
+Linting
+-------
+
+So everything isn't a mess::
+
+    pipenv run flake8 --exclude=migrations
 
 
 Production Deployment

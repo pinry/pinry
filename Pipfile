@@ -7,17 +7,18 @@ verify_ssl = true
 
 [dev-packages]
 
+"flake8" = "*"
 
 
 [packages]
 
-Django = "<1.9,>=1.8"
-Pillow = "*"
+django = "<1.9,>=1.8"
+pillow = "*"
 requests = "*"
 django-taggit = "*"
 django-images = "*"
 django-braces = "*"
-django_compressor = "*"
+django-compressor = "*"
 django-tastypie = "==0.12.2"
 mock = "*"
-factory_boy = "<2.0,>=1.3"
+factory-boy = "<2.0,>=1.3"
