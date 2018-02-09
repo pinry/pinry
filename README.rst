@@ -35,23 +35,33 @@ To run Pinry's tests inside the Pinry repo run::
     pipenv run python manage.py test
 
 
+Docker
+------
+
+Follow the steps below to install Timestrap locally or on any server. This
+process installs the minimal requirements to run Pinry. For development
+requirements and procedures, see testing above.
+
+1. Install the requirements:
+    - Docker
+    - Docker Compose
+
+1. Set any custom configuration options you need and run::
+
+    docker-compose up -d
+
+1. Bootstrap the database and creates the initial site and user
+(username: admin, password: admin)::
+
+    docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
+
+
 Linting
 -------
 
 So everything isn't a mess::
 
     pipenv run flake8 --exclude=migrations
-
-
-Production Deployment
----------------------
-
-Our supported and suggested way to deploy Pinry is using Docker. We
-provide support and instructions for that over at the `docker-pinry
-GitHub repository`_.
-
-If you'd like a different setup then check out the hundreds of tutorials
-for production Django deployment found via Google.
 
 
 Contributors
