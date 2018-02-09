@@ -5,7 +5,7 @@ from django.test.utils import override_settings
 import mock
 
 from .auth.backends import CombinedAuthBackend
-from ..core.models import Image, Pin
+from core.models import Image, Pin
 from .models import User
 
 

@@ -8,8 +8,8 @@ from django_images.models import Thumbnail
 import factory
 from taggit.models import Tag
 
-from ..models import Pin, Image
-from ...users.models import User
+from core.models import Pin, Image
+from users.models import User
 
 
 TEST_IMAGE_PATH = 'logo.png'

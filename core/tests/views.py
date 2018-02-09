@@ -4,7 +4,7 @@ from django.template import TemplateDoesNotExist
 from django.test import TestCase
 
 from .api import UserFactory
-from ...core.models import Image
+from core.models import Image
 
 
 __all__ = ['CreateImageTest']

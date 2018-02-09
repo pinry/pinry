@@ -6,8 +6,8 @@ from tastypie.exceptions import Unauthorized
 from tastypie.test import ResourceTestCase
 
 from .helpers import ImageFactory, PinFactory, UserFactory
-from ..models import Pin, Image
-from ...users.models import User
+from core.models import Pin, Image
+from users.models import User
 
 
 __all__ = ['ImageResourceTest', 'PinResourceTest']
