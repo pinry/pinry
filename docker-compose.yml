@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: gunicorn pinry.wsgi:application -b 0.0.0.0:80 --timeout 30 --log-file -
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      - SECRET_KEY=CHANGE-ME
+    volumes:
+      - media:/app/static/media
+
+volumes:
+  media:
