@@ -40,13 +40,16 @@ Follow the steps below to install Timestrap locally or on any server. This
 process installs the minimal requirements to run Pinry. For development
 requirements and procedures, see testing above.
 
-1. Install the requirements:
+- Install the requirements:
     - Docker
     - Docker Compose
-1. Set any custom configuration options you need and run::
+
+- Set any custom configuration options you need and run::
+
     docker-compose up -d
-1. Bootstrap the database and creates the initial site and user
-(username: admin, password: admin)::
+
+- Bootstrap the database::
+
     docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
 
 
