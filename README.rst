@@ -1,5 +1,3 @@
-**Pinry 2.0 is underway! If you'd like to help with the development process check out our current progress on the 2.x branch. If you'd like to use Pinry 2.0 please don't, it's terrible right now. Keep using the 1.x/master branches.**
-
 |Pinry|
 =======
 
@@ -45,14 +43,10 @@ requirements and procedures, see testing above.
 1. Install the requirements:
     - Docker
     - Docker Compose
-
 1. Set any custom configuration options you need and run::
-
     docker-compose up -d
-
 1. Bootstrap the database and creates the initial site and user
 (username: admin, password: admin)::
-
     docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
 
 
