@@ -10,7 +10,7 @@ from django.utils.functional import lazy
 from django.views.generic import CreateView
 
 from .forms import UserCreationForm
-from pinry.users.models import User
+from users.models import User
 
 
 reverse_lazy = lambda name=None, *args: lazy(reverse, str)(name, args=args)

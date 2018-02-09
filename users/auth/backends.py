@@ -1,7 +1,7 @@
 import re
 
-from pinry.core.models import Pin
-from pinry.users.models import User
+from core.models import Pin
+from users.models import User
 
 email_re = re.compile(
     r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*" # dot-atom

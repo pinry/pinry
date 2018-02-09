@@ -7,7 +7,7 @@ from tastypie.resources import ModelResource
 from django_images.models import Thumbnail
 
 from .models import Pin, Image
-from ..users.models import User
+from users.models import User
 
 
 class PinryAuthorization(DjangoAuthorization):

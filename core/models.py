@@ -9,7 +9,7 @@ from django.db import models, transaction
 from django_images.models import Image as BaseImage, Thumbnail
 from taggit.managers import TaggableManager
 
-from ..users.models import User
+from users.models import User
 
 
 class ImageManager(models.Manager):

@@ -26,8 +26,8 @@ INSTALLED_APPS = [
     'taggit',
     'compressor',
     'django_images',
-    'pinry.core',
-    'pinry.users',
+    'core',
+    'users',
 ]
 
 ROOT_URLCONF = 'pinry.urls'
@@ -39,7 +39,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pinry.users.middleware.Public',
+    'users.middleware.Public',
 ]
 
 TEMPLATES = [
@@ -53,7 +53,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'pinry.core.context_processors.template_settings',
+                'core.context_processors.template_settings',
             ],
         },
     },
@@ -128,7 +128,7 @@ ALLOW_NEW_REGISTRATIONS = True
 PUBLIC = True
 
 AUTHENTICATION_BACKENDS = [
-    'pinry.users.auth.backends.CombinedAuthBackend',
+    'users.auth.backends.CombinedAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -145,7 +145,7 @@ MESSAGE_TAGS = {
 
 API_LIMIT_PER_PAGE = 50
 
-IMAGE_PATH = 'pinry.core.utils.upload_path'
+IMAGE_PATH = 'core.utils.upload_path'
 
 IMAGE_SIZES = {
     'thumbnail': {'size': [240, 0]},
