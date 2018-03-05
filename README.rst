@@ -36,7 +36,7 @@ To run Pinry's tests inside the Pinry repo run::
 Docker
 ------
 
-Follow the steps below to install Timestrap locally or on any server. This
+Follow the steps below to install Pinry locally or on any server. This
 process installs the minimal requirements to run Pinry. For development
 requirements and procedures, see testing above.
 
