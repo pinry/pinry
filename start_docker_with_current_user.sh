@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-CURRENT_UID=$(id -u):$(id -g) sudo docker-compose up ${@}
+_CURRENT_UID=$(id -u):$(id -g)
+sudo CURRENT_UID=${_CURRENT_UID} docker-compose up ${@}
