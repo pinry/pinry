@@ -19,3 +19,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
