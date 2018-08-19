@@ -1,3 +1,6 @@
+# Ignore docker-compose 
+docker-compose.yml
+
 # Virtualenv/Common
 /bin/
 /build/
