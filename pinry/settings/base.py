@@ -133,3 +133,6 @@ IMAGE_SIZES = {
     'standard': {'size': [600, 0]},
     'square': {'crop': True, 'size': [125, 125]},
 }
+
+# User custom settings
+IMAGE_AUTO_DELETE = True

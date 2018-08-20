@@ -5,6 +5,7 @@ from io import BytesIO
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models, transaction
+from django.dispatch import receiver
 
 from django_images.models import Image as BaseImage, Thumbnail
 from taggit.managers import TaggableManager
@@ -49,3 +50,7 @@ class Pin(models.Model):
     def __unicode__(self):
         return '%s - %s' % (self.submitter, self.published)
 
+
+@receiver(models.signals.post_delete, sender=Pin)
+def delete_pin_images(sender, instance, **kwargs):
+    instance.image.delete()
