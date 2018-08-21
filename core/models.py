@@ -14,11 +14,20 @@ from users.models import User
 
 
 class ImageManager(models.Manager):
+    _default_ua = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/48.0.2564.82 Safari/537.36',
+    }
+
     # FIXME: Move this into an asynchronous task
-    def create_for_url(self, url):
+    def create_for_url(self, url, referer=None):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
         buf = BytesIO()
-        response = requests.get(url)
+        headers = dict(self._default_ua)
+        if referer is not None:
+            headers["Referer"] = referer
+        response = requests.get(url, headers=headers)
         buf.write(response.content)
         obj = InMemoryUploadedFile(buf, 'image', file_name,
                                    None, buf.tell(), None)
