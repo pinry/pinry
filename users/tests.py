@@ -9,7 +9,7 @@ from core.models import Image, Pin
 from .models import User
 
 
-def mock_requests_get(url):
+def mock_requests_get(url, headers=None):
     response = mock.Mock(content=open('logo.png', 'rb').read())
     return response
 
