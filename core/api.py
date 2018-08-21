@@ -103,7 +103,10 @@ class PinResource(ModelResource):
     def hydrate_image(self, bundle):
         url = bundle.data.get('url', None)
         if url:
-            image = Image.objects.create_for_url(url)
+            image = Image.objects.create_for_url(
+                url,
+                referer=bundle.data.get('referer', None),
+            )
             bundle.data['image'] = '/api/v1/image/{}/'.format(image.pk)
         return bundle
 
@@ -137,7 +140,7 @@ class PinResource(ModelResource):
         return super(PinResource, self).save_m2m(bundle)
 
     class Meta:
-        fields = ['id', 'url', 'origin', 'description']
+        fields = ['id', 'url', 'origin', 'description', 'referer']
         ordering = ['id']
         filtering = {
             'submitter': ALL_WITH_RELATIONS
