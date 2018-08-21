@@ -67,9 +67,11 @@ class PinResourceTest(ResourceTestCase):
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url(self):
         url = 'http://testserver/mocked/logo.png'
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
+            'referer': referer,
             'description': 'That\'s an Apple!'
         }
         response = self.api_client.post('/api/v1/pin/', data=post_data)
@@ -89,9 +91,11 @@ class PinResourceTest(ResourceTestCase):
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_tags(self):
         url = 'http://testserver/mocked/logo.png'
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
+            'referer': referer,
             'description': 'That\'s an Apple!',
             'tags': []
         }
@@ -105,9 +109,11 @@ class PinResourceTest(ResourceTestCase):
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_unauthorized(self):
         url = 'http://testserver/mocked/logo.png'
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/2/',
             'url': url,
+            'referer': referer,
             'description': 'That\'s an Apple!',
             'tags': []
         }
@@ -119,9 +125,11 @@ class PinResourceTest(ResourceTestCase):
     @mock.patch('requests.get', mock_requests_get)
     def test_post_create_url_with_empty_origin(self):
         url = 'http://testserver/mocked/logo.png'
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
+            'referer': referer,
             'description': 'That\'s an Apple!',
             'origin': None
         }
@@ -135,9 +143,11 @@ class PinResourceTest(ResourceTestCase):
     def test_post_create_url_with_origin(self):
         origin = 'http://testserver/mocked/'
         url = origin + 'logo.png'
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/{}/'.format(self.user.pk),
             'url': url,
+            'referer': referer,
             'description': 'That\'s an Apple!',
             'origin': origin
         }
@@ -149,8 +159,10 @@ class PinResourceTest(ResourceTestCase):
 
     def test_post_create_obj(self):
         image = ImageFactory()
+        referer = 'http://testserver/'
         post_data = {
             'submitter': '/api/v1/user/{}/'.format(self.user.pk),
+            'referer': referer,
             'image': '/api/v1/image/{}/'.format(image.pk),
             'description': 'That\'s something else (probably a CC logo)!',
             'tags': ['random', 'tags'],
@@ -228,6 +240,7 @@ class PinResourceTest(ResourceTestCase):
         pin = PinFactory(**{
             'submitter': self.user,
             'image': image,
+            'referer': 'http://testserver/mocked/',
             'url': 'http://testserver/mocked/logo.png',
             'description': u'Mocked Description',
             'origin': None
