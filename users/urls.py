@@ -1,11 +1,12 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from django.contrib.auth.views import login
 
-from .views import CreateUser
+from . import views
 
-urlpatterns = patterns('',
-    url(r'^private/$', 'users.views.private', name='private'),
-    url(r'^register/$', CreateUser.as_view(), name='register'),
-    url(r'^login/$', 'django.contrib.auth.views.login',
+urlpatterns = [
+    url(r'^private/$', views.private, name='private'),
+    url(r'^register/$', views.CreateUser.as_view(), name='register'),
+    url(r'^login/$', login,
         {'template_name': 'users/login.html'}, name='login'),
-    url(r'^logout/$', 'users.views.logout_user', name='logout'),
-)
+    url(r'^logout/$', views.logout_user, name='logout'),
+]

@@ -80,12 +80,21 @@ class ThumbnailResource(ModelResource):
 
 
 class ImageResource(ModelResource):
-    standard = fields.ToOneField(ThumbnailResource, full=True,
-                                 attribute=lambda bundle: filter_generator_for('standard')(bundle))
-    thumbnail = fields.ToOneField(ThumbnailResource, full=True,
-                                  attribute=lambda bundle: filter_generator_for('thumbnail')(bundle))
-    square = fields.ToOneField(ThumbnailResource, full=True,
-                               attribute=lambda bundle: filter_generator_for('square')(bundle))
+    standard = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('standard')(bundle),
+        related_name='thumbnail',
+    )
+    thumbnail = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('thumbnail')(bundle),
+        related_name='thumbnail',
+    )
+    square = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('square')(bundle),
+        related_name='thumbnail',
+    )
 
     class Meta:
         fields = ['image', 'width', 'height']
@@ -127,8 +136,8 @@ class PinResource(ModelResource):
     def dehydrate_tags(self, bundle):
         return list(map(str, bundle.obj.tags.all()))
 
-    def build_filters(self, filters=None):
-        orm_filters = super(PinResource, self).build_filters(filters)
+    def build_filters(self, filters=None, ignore_bad_filters=False):
+        orm_filters = super(PinResource, self).build_filters(filters, ignore_bad_filters=ignore_bad_filters)
         if filters and 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
         return orm_filters
