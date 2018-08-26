@@ -157,7 +157,9 @@ class ThumbnailViewTest(TestCase):
     def test_redirect(self):
         url = reverse('image-thumbnail', args=[self.image.id, self.size])
         response = self.client.get(url)
-        self.assertRedirects(response, self.thumb.image.url)
+        self.assertNotEqual(url, self.thumb.image.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, self.thumb.image.url)
 
     def test_not_found(self):
         url = reverse('image-thumbnail', args=['42', self.size])
