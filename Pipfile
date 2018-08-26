@@ -5,13 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 "flake8" = "*"
+qrcode = "*"
 
 [packages]
 django = ">=1.11,<1.12"
 pillow = "*"
 requests = "*"
 django-taggit = "*"
-django-images = {git = "https://github.com/winkidney/django-images.git"}
 django-braces = "*"
 django-compressor = "*"
 django-tastypie = ">=0.13.0,<0.14"

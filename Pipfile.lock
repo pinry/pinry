@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8fd24fa32e2a3375d13a2df0faa5dee6e50845bff8dd6c0bf10d6ba970a8e7d4"
+            "sha256": "c632e45ac592ec9c159c042db8c52e221ae133ade94cd11fcfb124a5fd5b9dd0"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -58,10 +58,6 @@
             ],
             "index": "pypi",
             "version": "==2.2"
-        },
-        "django-images": {
-            "git": "https://github.com/winkidney/django-images.git",
-            "ref": "5c22e931145d2f924c06fcf5dcf425068cfa0fe9"
         },
         "django-taggit": {
             "hashes": [
@@ -274,6 +270,21 @@
                 "sha256:8d616a382f243dbf19b54743f280b80198be0bca3a5396f1d2e1fca6223e8805"
             ],
             "version": "==1.6.0"
+        },
+        "qrcode": {
+            "hashes": [
+                "sha256:037b0db4c93f44586e37f84c3da3f763874fcac85b2974a69a98e399ac78e1bf",
+                "sha256:de4ffc15065e6ff20a551ad32b6b41264f3c75275675406ddfa8e3530d154be3"
+            ],
+            "index": "pypi",
+            "version": "==6.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+            ],
+            "version": "==1.11.0"
         }
     }
 }
