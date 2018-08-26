@@ -19,3 +19,10 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, }),
     ]
+
+if settings.IS_TEST:
+    urlpatterns += staticfiles_urlpatterns()
+    # For test running of django_images
+    urlpatterns += [
+        url(r'^__images/', include('django_images.urls')),
+    ]
