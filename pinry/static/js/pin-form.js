@@ -68,6 +68,7 @@ $(window).load(function() {
               $('#pin-form-tags')
             ],
             pinFromUrl = getUrlParameter('pin-image-url'),
+            pinFromDescription = getUrlParameter('description'),
             pinFromReferer = getUrlParameter('referer');
         // If editable grab existing data
         if (editPinId) {
@@ -122,6 +123,7 @@ $(window).load(function() {
             $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
             $('#pin-form-referer').val(pinFromReferer);
+            $('#pin-form-description').val(pinFromDescription);
             $('.navbar').css('display', 'none');
             modal.css({
                 'margin-top': -35,
