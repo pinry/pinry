@@ -49,15 +49,27 @@ Follow the steps below to install Pinry locally or on any server. This
 process installs the minimal requirements to run Pinry. For development
 requirements and procedures, see testing above.
 
+Current docker configuration will just mount source code directory to
+docker app directory and run any codes existed in current git branch,
+you may also add "local_settings.py" to customize settings without
+changing settings file in `pinry/settings`.
+
 - Install the requirements:
     - Docker
     - Docker Compose
 
 - Set any custom configuration options you need and run::
 
+    cp docker-compose.example.yml docker-compose.yml
+    # edit docker-compose.yml and change the secret-key,
+    # don't forget to backup this config file.
     docker-compose up -d
 
-- Bootstrap the database::
+- If you want to run Pinry with current user in docker::
+
+    ./start_docker_with_current_user.sh [-d]
+
+- Bootstrap the database(optional)::
 
     docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
 
