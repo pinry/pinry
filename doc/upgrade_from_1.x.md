@@ -33,7 +33,7 @@ pip uninstall django-images
 #    /path_to_your_python_packages/django_images/migrations/0002_auto_20180826_0845.py
 # Proceed (y/n)? 
 # ------------------------------------------
-# Please remove the file it by hand
+# Please remove the file it by hand if possible (this operation is optional)
 rm /path_to_your_python_packages/django_images/migrations/0002_auto_20180826_0845.py
 
 # exit pipenv's virtualenv
