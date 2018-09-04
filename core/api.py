@@ -10,35 +10,100 @@ from .models import Pin, Image
 from users.models import User
 
 
+def _is_pin_owner(obj_or_list, user):
+    assert obj_or_list is not None
+    if not isinstance(obj_or_list, (tuple, list)):
+        obj_or_list = (obj_or_list,)
+    results = tuple(
+        obj.submitter == user
+        for obj in obj_or_list
+        if isinstance(obj, Pin)
+    )
+    if len(results) <= 0:
+        raise ValueError(
+            "You should never check permission on %s with this function."
+            % obj_or_list
+        )
+    return all(results)
+
+
+def _is_authenticated_and_owner(object_list, bundle):
+    if bundle.request.user.is_anonymous():
+        return object_list.none()
+    return object_list.filter(submitter=bundle.request.user)
+
+
 class PinryAuthorization(DjangoAuthorization):
     """
     Pinry-specific Authorization backend with object-level permission checking.
     """
-    def update_detail(self, object_list, bundle):
+    def _is_obj_owner(self, object_list, bundle):
         klass = self.base_checks(bundle.request, bundle.obj.__class__)
 
         if klass is False:
             raise Unauthorized("You are not allowed to access that resource.")
+        return _is_pin_owner(bundle.obj, bundle.request.user)
 
-        permission = '%s.change_%s' % (klass._meta.app_label, klass._meta.model_name)
+    def read_list(self, object_list, bundle):
+        # This assumes a ``QuerySet`` from ``ModelResource``.
+        return object_list
 
-        if not bundle.request.user.has_perm(permission, bundle.obj):
-            raise Unauthorized("You are not allowed to access that resource.")
-
+    def read_detail(self, object_list, bundle):
+        """
+        User can always read detail of any Pin object.
+        """
         return True
+
+    def create_detail(self, object_list, bundle):
+        return self._is_obj_owner(object_list, bundle)
+
+    def update_detail(self, object_list, bundle):
+        return self._is_obj_owner(object_list, bundle)
 
     def delete_detail(self, object_list, bundle):
-        klass = self.base_checks(bundle.request, bundle.obj.__class__)
+        return self._is_obj_owner(object_list, bundle)
 
-        if klass is False:
-            raise Unauthorized("You are not allowed to access that resource.")
+    def update_list(self, object_list, bundle):
+        return _is_authenticated_and_owner(object_list, bundle)
 
-        permission = '%s.delete_%s' % (klass._meta.app_label, klass._meta.model_name)
+    def delete_list(self, object_list, bundle):
+        return _is_authenticated_and_owner(object_list, bundle)
 
-        if not bundle.request.user.has_perm(permission, bundle.obj):
-            raise Unauthorized("You are not allowed to access that resource.")
 
+class ImageAuthorization(DjangoAuthorization):
+    """
+    Pinry-specific Authorization backend with object-level permission checking.
+    """
+    def __init__(self):
+        DjangoAuthorization.__init__(self)
+
+    def read_list(self, object_list, bundle):
+        return object_list
+
+    def read_detail(self, object_list, bundle):
+        """
+        User can always read detail of any Pin object.
+        """
         return True
+
+    def create_detail(self, object_list, bundle):
+        return bundle.request.user.is_authenticated()
+
+    def update_detail(self, object_list, bundle):
+        return bundle.request.user.is_authenticated()
+
+    def delete_detail(self, object_list, bundle):
+        return bundle.request.user.is_authenticated()
+
+    def update_list(self, object_list, bundle):
+        if not bundle.request.user.is_authenticated():
+            return object_list.none()
+        return object_list
+
+    def delete_list(self, object_list, bundle):
+        if not bundle.request.user.is_authenticated():
+            return object_list.none()
+        return object_list
 
 
 class UserResource(ModelResource):
@@ -80,19 +145,28 @@ class ThumbnailResource(ModelResource):
 
 
 class ImageResource(ModelResource):
-    standard = fields.ToOneField(ThumbnailResource, full=True,
-                                 attribute=lambda bundle: filter_generator_for('standard')(bundle))
-    thumbnail = fields.ToOneField(ThumbnailResource, full=True,
-                                  attribute=lambda bundle: filter_generator_for('thumbnail')(bundle))
-    square = fields.ToOneField(ThumbnailResource, full=True,
-                               attribute=lambda bundle: filter_generator_for('square')(bundle))
+    standard = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('standard')(bundle),
+        related_name='thumbnail',
+    )
+    thumbnail = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('thumbnail')(bundle),
+        related_name='thumbnail',
+    )
+    square = fields.ToOneField(
+        ThumbnailResource, full=True,
+        attribute=lambda bundle: filter_generator_for('square')(bundle),
+        related_name='thumbnail',
+    )
 
     class Meta:
         fields = ['image', 'width', 'height']
         include_resource_uri = False
         resource_name = 'image'
         queryset = Image.objects.all()
-        authorization = DjangoAuthorization()
+        authorization = ImageAuthorization()
 
 
 class PinResource(ModelResource):
@@ -127,8 +201,8 @@ class PinResource(ModelResource):
     def dehydrate_tags(self, bundle):
         return list(map(str, bundle.obj.tags.all()))
 
-    def build_filters(self, filters=None):
-        orm_filters = super(PinResource, self).build_filters(filters)
+    def build_filters(self, filters=None, ignore_bad_filters=False):
+        orm_filters = super(PinResource, self).build_filters(filters, ignore_bad_filters=ignore_bad_filters)
         if filters and 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
         return orm_filters

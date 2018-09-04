@@ -134,5 +134,8 @@ IMAGE_SIZES = {
     'square': {'crop': True, 'size': [125, 125]},
 }
 
+# IS_TEST is a variable to mark if the test is running
+IS_TEST = False
+
 # User custom settings
 IMAGE_AUTO_DELETE = True

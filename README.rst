@@ -8,6 +8,15 @@ to skim through format.
 For more information and a working demo board visit `getpinry.com`_.
 
 
+Upgrade from 1.x
+------------------
+
+For source code users:
+
+Read our `online doc <doc/upgrade_from_1.x.md>`_ about how to upgrade to 2.x
+
+For docker users, please contact us for help: )
+
 Requirements
 ------------
 

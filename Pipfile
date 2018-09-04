@@ -1,25 +1,20 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 name = "pypi"
 verify_ssl = true
 
-
 [dev-packages]
-
 "flake8" = "*"
-
+qrcode = "*"
 
 [packages]
-
-django = "<1.9,>=1.8"
+django = ">=1.11,<1.12"
 pillow = "*"
 requests = "*"
 django-taggit = "*"
-django-images = "*"
 django-braces = "*"
 django-compressor = "*"
-django-tastypie = "==0.12.2"
+django-tastypie = "*"
 mock = "*"
 factory-boy = "<2.0,>=1.3"
 gunicorn = "*"

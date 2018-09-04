@@ -34,21 +34,6 @@ class CombinedAuthBackendTest(TestCase):
     def test_authenticate_unknown_user(self):
         self.assertIsNone(self.backend.authenticate(username='wrong-username', password='wrong-password'))
 
-    @mock.patch('requests.get', mock_requests_get)
-    def test_has_perm_on_pin(self):
-        image = Image.objects.create_for_url('http://testserver/mocked/screenshot.png')
-        user = User.objects.get(username=self.username)
-        pin = Pin.objects.create(submitter=user, image=image)
-        self.assertTrue(self.backend.has_perm(user, 'add_pin', pin))
-
-    @mock.patch('requests.get', mock_requests_get)
-    def test_has_perm_on_pin_unauthorized(self):
-        image = Image.objects.create_for_url('http://testserver/mocked/screenshot.png')
-        user = User.objects.get(username=self.username)
-        other_user = User.objects.create_user('test', 'test@example.com', 'test')
-        pin = Pin.objects.create(submitter=user, image=image)
-        self.assertFalse(self.backend.has_perm(other_user, 'add_pin', pin))
-
 
 class CreateUserTest(TestCase):
     def test_create_post(self):

@@ -33,11 +33,3 @@ class CombinedAuthBackend(object):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
-    def has_perm(self, user, perm, obj=None):
-        """
-        A very simplistic authorization mechanism for now. Basically a pin owner can do anything with the pin.
-        """
-        if obj and isinstance(obj, Pin):
-            return obj.submitter == user
-        return False
