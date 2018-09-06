@@ -1,3 +1,9 @@
+# local_settings
+local_settings.py
+
+# Ignore docker-compose
+docker-compose.yml
+
 # Virtualenv/Common
 /bin/
 /build/
