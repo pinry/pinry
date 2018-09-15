@@ -7,9 +7,20 @@ to skim through format.
 
 For more information and a working demo board visit `getpinry.com`_.
 
+Feature
+-----------------
 
-Upgrade from 1.x
-------------------
+- Image fetch and online preview
+- Tagging system for Pin
+- `Chrome/Firefox plugin support <https://github.com/winkidney/browser-pinry>`_
+- multi-user support
+- Both public and private is supported
+
+Upgrade from old version
+--------------------------
+
+Our currently version is 2.x, If you are old user of Pinry,
+please follow document below to upgrade to 2.x.
 
 For source code users:
 
