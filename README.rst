@@ -16,6 +16,25 @@ Feature
 - multi-user support
 - Both public and private is supported
 
+
+Setup Guide for users
+--------------------------
+
+Please use docker to install `docker-pinry <https://github.com/pinry/docker-pinry>`_
+
+Developers or users which is familiar with python/nginx could setup Pinry following following guide : )
+
+Quick Start for Developers
+----------------------------
+
+You need only three following lines to initialize your pinry::
+
+  make install
+  make serve
+
+Now the development server has been running, enjoy : )
+
+
 Upgrade from old version
 --------------------------
 
@@ -84,6 +103,9 @@ changing settings file in `pinry/settings`.
 
     docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
 
+
+**Note** : No static file server configured, your should configure nginx or other server to serve
+static files from ./static
 
 Linting
 -------
