@@ -22,7 +22,7 @@ Setup Guide for users
 
 Please use docker to install `docker-pinry <https://github.com/pinry/docker-pinry>`_
 
-Developers or users which is familiar with python/nginx could setup Pinry following following guide : )
+Developers or users who are familiar with python/nginx could setup Pinry with following guide : )
 
 Quick Start for Developers
 ----------------------------
