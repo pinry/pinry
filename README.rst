@@ -29,7 +29,7 @@ Quick Start for Developers
 
 You need only three following lines to initialize your pinry::
 
-  make install
+  make bootstrap
   make serve
 
 Now the development server has been running, enjoy : )

@@ -6,6 +6,9 @@ migrate:
 	pipenv run python manage.py migrate
 recover-all:
 	pipenv run python manage.py loaddata db-backup.all.json
+bootstrap:
+	make install
+	pipenv run python manage.py collectstatic
 serve:
 	pipenv run python manage.py runserver 0.0.0.0:8000
 install:
