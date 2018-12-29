@@ -29,6 +29,8 @@ DATABASES = {
     }
 }
 
+USE_X_FORWARDED_HOST = True
+
 try:
     from .local_settings import *
 except ImportError:
