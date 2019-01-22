@@ -4,6 +4,8 @@ backup-all:
 	pipenv run python manage.py dumpdata > db-backup.all.json
 migrate:
 	pipenv run python manage.py migrate
+makemigrations:
+	pipenv run python manage.py makemigrations
 recover-all:
 	pipenv run python manage.py loaddata db-backup.all.json
 bootstrap:
