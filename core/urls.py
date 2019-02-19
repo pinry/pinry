@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from tastypie.api import Api
 
+from core.drf_api import drf_router
 from .api import ImageResource, ThumbnailResource, PinResource, UserResource
 from .views import CreateImage
 

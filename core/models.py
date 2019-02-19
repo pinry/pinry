@@ -43,8 +43,31 @@ class ImageManager(models.Manager):
 class Image(BaseImage):
     objects = ImageManager()
 
+    class Sizes:
+        standard = "standard"
+        thumbnail = "thumbnail"
+        square = "square"
+
     class Meta:
         proxy = True
+
+    @property
+    def standard(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.standard
+        )
+
+    @property
+    def thumbnail(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.thumbnail
+        )
+
+    @property
+    def square(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.square
+        )
 
 
 class Pin(models.Model):
@@ -56,6 +79,9 @@ class Pin(models.Model):
     image = models.ForeignKey(Image, related_name='pin')
     published = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
+
+    def tag_list(self):
+        return self.tags.all()
 
     def __unicode__(self):
         return '%s - %s' % (self.submitter, self.published)

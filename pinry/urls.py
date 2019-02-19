@@ -4,10 +4,18 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from django.views.static import serve
 
+from core.drf_api import drf_router
+
+
 admin.autodiscover()
 
 
 urlpatterns = [
+    # drf api
+    url(r'^drf_api/', include(drf_router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace="rest_framework")),
+
+    # old api and views
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('core.urls', namespace='core')),
     url(r'', include('users.urls', namespace='users')),

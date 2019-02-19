@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'taggit',
     'compressor',
     'django_images',
@@ -142,10 +143,17 @@ IS_TEST = False
 IMAGE_AUTO_DELETE = True
 
 # Rest Framework
+
+DRF_URL_FIELD_NAME = "resource_link"
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'URL_FIELD_NAME': DRF_URL_FIELD_NAME,
 }
