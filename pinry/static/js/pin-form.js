@@ -9,6 +9,8 @@
 
 
 $(window).load(function() {
+    var api_base = "/api/v2/";
+
     var uploadedImage = false;
     var editedPin = null;
 
@@ -99,8 +101,8 @@ $(window).load(function() {
         }
         // Drag and drop upload
         $('#pin-form-image-upload').dropzone({
-            url: '/pins/create-image/',
-            paramName: 'qqfile',
+            url: api_base + "images/",
+            paramName: 'image',
             parallelUploads: 1,
             uploadMultiple: false,
             maxFiles: 1,

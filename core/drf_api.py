@@ -32,6 +32,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = (
+            "id",
             "image",
             "width",
             "height",
@@ -42,8 +43,8 @@ class ImageSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "width": {"read_only": True},
             "height": {"read_only": True},
+            "image": {"read_only": True},
         }
-
 
     standard = ThumbnailSerializer(read_only=True)
     thumbnail = ThumbnailSerializer(read_only=True)
@@ -74,9 +75,12 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             "description",
             "referer",
             "image",
+            "image_by_id",
             "tags",
         )
-
+        extra_kwargs = {
+            "submitter": {"read_only": True},
+        }
 
     tags = serializers.SlugRelatedField(
         many=True,
@@ -84,19 +88,22 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         queryset=Tag.objects.all(),
         slug_field="name",
     )
-    image = ImageSerializer(required=False)
+    image = ImageSerializer(required=False, read_only=True)
+    image_by_id = serializers.PrimaryKeyRelatedField(
+        queryset=Image.objects.all(),
+        write_only=True,
+    )
 
     def create(self, validated_data):
-        image_file = validated_data.pop('image')
-        if validated_data['url']:
+        submitter = self.context['request'].user
+        image = validated_data.pop("image_by_id")
+        if 'url' in validated_data and validated_data['url']:
             image = Image.objects.create_for_url(
                 validated_data['url'],
                 validated_data['referer'],
             )
-        else:
-            image = Image.objects.create(image=image_file['image'])
-        pin = Pin.objects.create(image=image, **validated_data)
         tags = validated_data.pop('tag_list')
+        pin = Pin.objects.create(submitter=submitter, image=image, **validated_data)
         if tags:
             pin.tags.set(*tags)
         return pin
@@ -105,8 +112,5 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         tags = validated_data.pop('tag_list')
         if tags:
             instance.tags.set(*tags)
-        image_file = validated_data.pop('image', None)
-        if image_file:
-            image = Image.objects.create(image=image_file['image'])
-            instance.image = image
+        validated_data.pop('image_id')
         return super(PinSerializer, self).update(instance, validated_data)
