@@ -13,9 +13,9 @@ admin.autodiscover()
 
 urlpatterns = [
     # drf api
-    url(r'^drf_api/', include(drf_router.urls)),
+    url(r'^api/v2/', include(drf_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace="rest_framework")),
-    url(r'^drf_api/docs/', include_docs_urls(title='PinryAPI', schema_url='/')),
+    url(r'^api/v2/docs/', include_docs_urls(title='PinryAPI', schema_url='/')),
 
     # old api and views
     url(r'^admin/', include(admin.site.urls)),
