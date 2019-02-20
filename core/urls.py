@@ -3,10 +3,7 @@ from django.views.generic import TemplateView
 
 from tastypie.api import Api
 
-from core.drf_api import drf_router
 from .api import ImageResource, ThumbnailResource, PinResource, UserResource
-from .views import CreateImage
-
 
 v1_api = Api(api_name='v1')
 v1_api.register(ImageResource())
@@ -19,7 +16,6 @@ urlpatterns = [
 
     url(r'^pins/pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
         name='pin-form'),
-    url(r'^pins/create-image/$', CreateImage.as_view(), name='create-image'),
 
     url(r'^pins/tag/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='tag-pins'),

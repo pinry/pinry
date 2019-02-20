@@ -1,11 +1,10 @@
-from rest_framework import serializers, viewsets, routers, mixins
-from rest_framework.viewsets import GenericViewSet
+from django.conf import settings
+from rest_framework import serializers
 from taggit.models import Tag
 
-from core.models import Image, Pin
-from core.permissions import IsOwnerOrReadOnly
+from core.models import Image
+from core.models import Pin
 from django_images.models import Thumbnail
-from django.conf import settings
 from users.models import User
 
 
@@ -17,11 +16,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'gravatar',
             settings.DRF_URL_FIELD_NAME,
         )
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 
 class ThumbnailSerializer(serializers.HyperlinkedModelSerializer):
@@ -60,11 +54,6 @@ class ImageSerializer(serializers.ModelSerializer):
         for size in settings.IMAGE_SIZES:
             Thumbnail.objects.get_or_create_at_size(image.pk, size)
         return image
-
-
-class ImageViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -121,16 +110,3 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             image = Image.objects.create(image=image_file['image'])
             instance.image = image
         return super(PinSerializer, self).update(instance, validated_data)
-
-
-class PinViewSet(viewsets.ModelViewSet):
-    queryset = Pin.objects.all()
-    serializer_class = PinSerializer
-    filter_fields = ('submitter__username',)
-    permission_classes = [IsOwnerOrReadOnly("submitter"), ]
-
-
-drf_router = routers.DefaultRouter()
-drf_router.register(r'users', UserViewSet)
-drf_router.register(r'pins', PinViewSet)
-drf_router.register(r'images', ImageViewSet)

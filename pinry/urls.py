@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 
-from core.drf_api import drf_router
+from core.views import drf_router
 
 
 admin.autodiscover()
