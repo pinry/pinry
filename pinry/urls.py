@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from django.views.static import serve
+from rest_framework.documentation import include_docs_urls
 
 from core.drf_api import drf_router
 
@@ -14,6 +15,7 @@ urlpatterns = [
     # drf api
     url(r'^drf_api/', include(drf_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace="rest_framework")),
+    url(r'^drf_api/docs/', include_docs_urls(title='PinryAPI', schema_url='/')),
 
     # old api and views
     url(r'^admin/', include(admin.site.urls)),

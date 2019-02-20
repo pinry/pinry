@@ -1,4 +1,5 @@
-from rest_framework import serializers, viewsets, routers
+from rest_framework import serializers, viewsets, routers, mixins
+from rest_framework.viewsets import GenericViewSet
 from taggit.models import Tag
 
 from core.models import Image, Pin
@@ -14,7 +15,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'username',
             'gravatar',
-            'url',
+            settings.DRF_URL_FIELD_NAME,
         )
 
 
@@ -44,16 +45,32 @@ class ImageSerializer(serializers.ModelSerializer):
             "thumbnail",
             "square",
         )
+        extra_kwargs = {
+            "width": {"read_only": True},
+            "height": {"read_only": True},
+        }
+
 
     standard = ThumbnailSerializer(read_only=True)
     thumbnail = ThumbnailSerializer(read_only=True)
     square = ThumbnailSerializer(read_only=True)
 
+    def create(self, validated_data):
+        image = super(ImageSerializer, self).create(validated_data)
+        for size in settings.IMAGE_SIZES:
+            Thumbnail.objects.get_or_create_at_size(image.pk, size)
+        return image
+
+
+class ImageViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ("name", )
+        fields = ("name",)
 
 
 class PinSerializer(serializers.HyperlinkedModelSerializer):
@@ -70,6 +87,7 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             "image",
             "tags",
         )
+
 
     tags = serializers.SlugRelatedField(
         many=True,
@@ -108,10 +126,11 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
 class PinViewSet(viewsets.ModelViewSet):
     queryset = Pin.objects.all()
     serializer_class = PinSerializer
-    filter_fields = ('submitter__username', )
+    filter_fields = ('submitter__username',)
     permission_classes = [IsOwnerOrReadOnly("submitter"), ]
 
 
 drf_router = routers.DefaultRouter()
 drf_router.register(r'users', UserViewSet)
 drf_router.register(r'pins', PinViewSet)
+drf_router.register(r'images', ImageViewSet)
