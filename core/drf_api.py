@@ -92,10 +92,8 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             "image_by_id",
             "tags",
         )
-        extra_kwargs = {
-            "submitter": {"read_only": True},
-        }
 
+    submitter = UserSerializer(read_only=True)
     tags = TagSerializer(
         many=True,
         source="tag_list",

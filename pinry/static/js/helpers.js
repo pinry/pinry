@@ -5,6 +5,7 @@
  * Updated: Feb 26th, 2013
  * Require: jQuery
  */
+var API_BASE = "/api/v2/";
 
 
 function _getCookie(name) {
@@ -60,15 +61,8 @@ function cleanTags(tags) {
     return tags;
 }
 
-
-function getImageData(imageId) {
-    var apiUrl = '/api/v1/image/'+imageId+'/?format=json';
-    return $.get(apiUrl);
-}
-
-
 function getPinData(pinId) {
-    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    var apiUrl = API_BASE + "pins/" + pinId + '/?format=json';
     return $.get(apiUrl);
 }
 
