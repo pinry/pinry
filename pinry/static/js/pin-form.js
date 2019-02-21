@@ -171,7 +171,7 @@ $(window).load(function() {
                     tags: cleanTags($('#pin-form-tags').val())
                 };
                 if (uploadedImage) {
-                    data.image_id = uploadedImage;
+                    data.image_by_id = uploadedImage;
                 } else {
                     data.url = $('#pin-form-image-url').val();
                 }
