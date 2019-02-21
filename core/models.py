@@ -89,4 +89,7 @@ class Pin(models.Model):
 
 @receiver(models.signals.post_delete, sender=Pin)
 def delete_pin_images(sender, instance, **kwargs):
-    instance.image.delete()
+    try:
+        instance.image.delete()
+    except Image.DoesNotExist:
+        pass
