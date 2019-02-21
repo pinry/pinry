@@ -26,11 +26,11 @@
                 </div>
                 <div class="text pull-right">
                     <span class="dim">pinned by</span>
-                    <a href="/pins/user/{{submitter.username}}/">{{submitter.username}}</a>
+                    <a href="/pins/users/{{submitter.username}}/">{{submitter.username}}</a>
                     {{#if tags}}
                         <span class="dim">in</span>
                     {{#each tags}}
-                        <span class="tag"><a href="/pins/tag/{{this}}/">{{this}}</a></span>
+                        <span class="tag"><a href="/pins/tags/{{this}}/">{{this}}</a></span>
                     {{/each}}
                     {{/if}}
                 </div>

@@ -17,9 +17,9 @@ urlpatterns = [
     url(r'^pins/pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
         name='pin-form'),
 
-    url(r'^pins/tag/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
+    url(r'^pins/tags/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='tag-pins'),
-    url(r'^pins/user/(?P<user>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
+    url(r'^pins/users/(?P<user>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='user-pins'),
     url(r'^(?P<pin>[0-9]+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='recent-pins'),
