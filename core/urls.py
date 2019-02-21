@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^pins/users/(?P<user>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='user-pins'),
     url(r'^(?P<pin>[0-9]+)/$', TemplateView.as_view(template_name='core/pins.html'),
-        name='recent-pins'),
+        name='pin-detail'),
     url(r'^$', TemplateView.as_view(template_name='core/pins.html'),
         name='recent-pins'),
 ]
