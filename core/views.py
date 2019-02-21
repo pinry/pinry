@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, mixins, routers
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import GenericViewSet
@@ -24,10 +25,10 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
 class PinViewSet(viewsets.ModelViewSet):
     queryset = Pin.objects.all()
     serializer_class = api.PinSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = ('=submitter__username', )
-    ordering_fields = ('id', )
-    ordering = ('id', )
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_fields = ("submitter__username", 'tags__name', )
+    ordering_fields = ('-id', )
+    ordering = ('-id', )
     permission_classes = [IsOwnerOrReadOnly("submitter"), ]
 
 

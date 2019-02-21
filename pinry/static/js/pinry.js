@@ -118,7 +118,7 @@ $(window).load(function() {
 
         // Fetch our pins from the api using our current offset
         var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
-        if (tagFilter) apiUrl = apiUrl + '&tag=' + tagFilter;
+        if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
         if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
         $.get(apiUrl, function(pins_page) {
             // Set which items are editable by the current user
