@@ -137,13 +137,13 @@ $(window).load(function() {
             $(this).off('click');
             $(this).addClass('disabled');
             if (editedPin) {
-                var apiUrl = '/api/v1/pin/'+editedPin.id+'/?format=json';
+                var apiUrl = API_BASE + 'pins/' + editedPin.id + '/?format=json';
                 var data = {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 }
                 var promise = $.ajax({
-                    type: "put",
+                    type: "patch",
                     url: apiUrl,
                     contentType: 'application/json',
                     data: JSON.stringify(data)

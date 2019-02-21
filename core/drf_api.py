@@ -97,6 +97,7 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializer(
         many=True,
         source="tag_list",
+        required=False,
     )
     image = ImageSerializer(required=False, read_only=True)
     image_by_id = serializers.PrimaryKeyRelatedField(
@@ -122,5 +123,6 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         tags = validated_data.pop('tag_list')
         if tags:
             instance.tags.set(*tags)
-        validated_data.pop('image_id')
+        # change for image-id is not allowed
+        validated_data.pop('image_by_id', None)
         return super(PinSerializer, self).update(instance, validated_data)

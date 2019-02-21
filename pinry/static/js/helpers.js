@@ -68,7 +68,7 @@ function getPinData(pinId) {
 
 
 function deletePinData(pinId) {
-    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    var apiUrl = API_BASE + 'pins/' +pinId + '/?format=json';
     return $.ajax(apiUrl, {
         type: 'DELETE'
     });
