@@ -15,7 +15,6 @@ $(window).load(function() {
     // Start Helper Functions
     function getFormData() {
         return {
-            submitter: currentUser,
             url: $('#pin-form-image-url').val(),
             referer: $('#pin-form-referer').val(),
             description: $('#pin-form-description').val(),
@@ -25,7 +24,6 @@ $(window).load(function() {
 
     function createPinPreviewFromForm() {
         var context = {pins: [{
-                submitter: currentUser,
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 referer: $('#pin-form-referer').val(),
                 description: $('#pin-form-description').val(),
