@@ -77,7 +77,7 @@ function deletePinData(pinId) {
 function postPinData(data) {
     return $.ajax({
         type: "post",
-        url: "/api/v1/pin/",
+        url: API_BASE + "pins/",
         contentType: 'application/json',
         data: JSON.stringify(data)
     });

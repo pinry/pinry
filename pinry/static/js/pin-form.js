@@ -141,7 +141,7 @@ $(window).load(function() {
                 var data = {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
-                }
+                };
                 var promise = $.ajax({
                     type: "patch",
                     url: apiUrl,
@@ -166,13 +166,15 @@ $(window).load(function() {
                 });
             } else {
                 var data = {
-                    submitter: '/api/v1/user/'+currentUser.id+'/',
                     referer: $('#pin-form-referer').val(),
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
-                else data.url = $('#pin-form-image-url').val();
+                if (uploadedImage) {
+                    data.image_id = uploadedImage;
+                } else {
+                    data.url = $('#pin-form-image-url').val();
+                }
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();
