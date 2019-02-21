@@ -1,5 +1,6 @@
 from django.conf import settings
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
 
 from core.models import Image
@@ -103,17 +104,29 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
     image_by_id = serializers.PrimaryKeyRelatedField(
         queryset=Image.objects.all(),
         write_only=True,
+        required=False,
     )
+
+    def validate(self, attrs):
+        if 'url' not in attrs and 'image_by_id' not in attrs:
+            raise ValidationError(
+                detail={
+                    "url-or-image": "Either url or image_by_id is required."
+                },
+            )
+        return attrs
 
     def create(self, validated_data):
         submitter = self.context['request'].user
-        image = validated_data.pop("image_by_id")
         if 'url' in validated_data and validated_data['url']:
+            url = validated_data['url']
             image = Image.objects.create_for_url(
-                validated_data['url'],
-                validated_data['referer'],
+                url,
+                validated_data.get('referer', url),
             )
-        tags = validated_data.pop('tag_list')
+        else:
+            image = validated_data.pop("image_by_id")
+        tags = validated_data.pop('tag_list', [])
         pin = Pin.objects.create(submitter=submitter, image=image, **validated_data)
         if tags:
             pin.tags.set(*tags)
