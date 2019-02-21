@@ -10,7 +10,7 @@
 $(window).load(function() {
     /**
      * tileLayout will simply tile/retile the block/pin container when run. This
-     * was put into a function in order to adjust frequently on screen size 
+     * was put into a function in order to adjust frequently on screen size
      * changes.
      */
     window.tileLayout = function() {
@@ -104,6 +104,11 @@ $(window).load(function() {
      * Load our pins using the pins template into our UI, be sure to define a
      * offset outside the function to keep a running tally of your location.
      */
+
+    function isPinEditable(pinObject) {
+        return pinObject.submitter.username === currentUser.username
+    }
+
     function loadPins() {
         // Disable scroll
         $(window).off('scroll');
@@ -112,21 +117,22 @@ $(window).load(function() {
         $('.spinner').css('display', 'block');
 
         // Fetch our pins from the api using our current offset
-        var apiUrl = '/api/v1/pin/?format=json&order_by=-id&offset='+String(offset);
+        var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
         if (tagFilter) apiUrl = apiUrl + '&tag=' + tagFilter;
         if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
-        $.get(apiUrl, function(pins) {
+        $.get(apiUrl, function(pins_page) {
             // Set which items are editable by the current user
-            for (var i=0; i < pins.objects.length; i++) {
-                pins.objects[i].editable = (pins.objects[i].submitter.username == currentUser.username);
-                pins.objects[i].tags.sort(function (a, b) {
+            var pins = pins_page.results;
+            for (var i=0; i < pins.length; i++) {
+                pins[i].editable = isPinEditable(pins[i]);
+                pins[i].tags.sort(function (a, b) {
                     return a.toLowerCase().localeCompare(b.toLowerCase());
                 });
             }
 
             // Use the fetched pins as our context for our pins template
             var template = Handlebars.compile($('#pins-template').html());
-            var html = template({pins: pins.objects});
+            var html = template({pins: pins});
 
             // Append the newly compiled data to our container
             $('#pins').append(html);
@@ -140,7 +146,7 @@ $(window).load(function() {
                 });
             });
 
-            if (pins.objects.length < apiLimitPerPage) {
+            if (pins.length < apiLimitPerPage) {
                 $('.spinner').css('display', 'none');
                 if ($('#pins').length !== 0) {
                     var theEnd = document.createElement('div');
