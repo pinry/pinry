@@ -57,10 +57,25 @@ class ImageSerializer(serializers.ModelSerializer):
         return image
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.SlugRelatedField):
     class Meta:
         model = Tag
         fields = ("name",)
+
+    queryset = Tag.objects.all()
+
+    def __init__(self, **kwargs):
+        super(TagSerializer, self).__init__(
+            slug_field="name",
+            **kwargs
+        )
+
+    def to_internal_value(self, data):
+        obj, _ = self.get_queryset().get_or_create(
+            **{self.slug_field: data},
+            defaults={self.slug_field: data, "slug": data}
+        )
+        return obj
 
 
 class PinSerializer(serializers.HyperlinkedModelSerializer):
@@ -82,11 +97,9 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             "submitter": {"read_only": True},
         }
 
-    tags = serializers.SlugRelatedField(
+    tags = TagSerializer(
         many=True,
         source="tag_list",
-        queryset=Tag.objects.all(),
-        slug_field="name",
     )
     image = ImageSerializer(required=False, read_only=True)
     image_by_id = serializers.PrimaryKeyRelatedField(
