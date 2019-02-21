@@ -43,7 +43,6 @@ class ImageSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "width": {"read_only": True},
             "height": {"read_only": True},
-            "image": {"read_only": True},
         }
 
     standard = ThumbnailSerializer(read_only=True)
