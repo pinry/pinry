@@ -17,3 +17,5 @@ install:
 	pipenv install
 test:
 	pipenv run python manage.py test
+shell:
+	pipenv run python manage.py shell
