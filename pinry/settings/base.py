@@ -157,5 +157,5 @@ REST_FRAMEWORK = {
     ),
     'URL_FIELD_NAME': DRF_URL_FIELD_NAME,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 50,
+    'PAGE_SIZE': API_LIMIT_PER_PAGE,
 }
