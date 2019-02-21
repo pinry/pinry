@@ -1,22 +1,10 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
-from tastypie.api import Api
-
-from .api import ImageResource, ThumbnailResource, PinResource, UserResource
-
-v1_api = Api(api_name='v1')
-v1_api.register(ImageResource())
-v1_api.register(ThumbnailResource())
-v1_api.register(PinResource())
-v1_api.register(UserResource())
 
 urlpatterns = [
-    url(r'^api/', include(v1_api.urls, namespace='api')),
-
     url(r'^pins/pin-form/$', TemplateView.as_view(template_name='core/pin_form.html'),
         name='pin-form'),
-
     url(r'^pins/tags/(?P<tag>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),
         name='tag-pins'),
     url(r'^pins/users/(?P<user>(\w|-)+)/$', TemplateView.as_view(template_name='core/pins.html'),

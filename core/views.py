@@ -3,7 +3,7 @@ from rest_framework import viewsets, mixins, routers
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import GenericViewSet
 
-from core import drf_api as api
+from core import serializers as api
 from core.models import Image, Pin
 from core.permissions import IsOwnerOrReadOnly
 from users.models import User
