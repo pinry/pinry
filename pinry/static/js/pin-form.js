@@ -107,18 +107,19 @@ $(window).load(function() {
             uploadMultiple: false,
             maxFiles: 1,
             acceptedFiles: 'image/*',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
             success: function(file, resp) {
-                $('#pin-form-image-url').parent().fadeOut(300);
-                var promise = getImageData(resp.success.id);
-                uploadedImage = resp.success.id;
-                promise.success(function(image) {
-                    $('#pin-form-image-url').val(image.thumbnail.image);
-                    createPinPreviewFromForm();
-                });
-                promise.error(function() {
-                    message('Problem uploading image.', 'alert alert-error');
-                });
-            }
+                var image_url = $('#pin-form-image-url');
+                image_url.parent().fadeOut(300);
+                uploadedImage = resp.id;
+                image_url.val(resp.thumbnail.image);
+                createPinPreviewFromForm();
+            },
+            error: function (error) {
+              message('Problem uploading image.', 'alert alert-error');
+            },
         });
         // If bookmarklet submit
         if (pinFromUrl) {
