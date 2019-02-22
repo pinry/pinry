@@ -48,6 +48,16 @@ $(window).load(function() {
             colHeights[sCol] += block.height()+(blockMargin);
         }
 
+        // Open add-to-board panel
+        $('glyphicon-heart').each(function() {
+            var thisPin = $(this);
+            $(this).off('click');
+            $(this).click(function() {
+                $(this).off('click');
+                pinForm($(this).data('id'));
+            });
+        });
+
         // Edit pin if pencil icon clicked
         $('.glyphicon-pencil').each(function() {
             var thisPin = $(this);
