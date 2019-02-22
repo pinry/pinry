@@ -107,16 +107,15 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         required=False,
     )
 
-    def validate(self, attrs):
-        if 'url' not in attrs and 'image_by_id' not in attrs:
+    def create(self, validated_data):
+        if 'url' not in validated_data and\
+                'image_by_id' not in validated_data:
             raise ValidationError(
                 detail={
                     "url-or-image": "Either url or image_by_id is required."
                 },
             )
-        return attrs
 
-    def create(self, validated_data):
         submitter = self.context['request'].user
         if 'url' in validated_data and validated_data['url']:
             url = validated_data['url']
@@ -133,9 +132,9 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         return pin
 
     def update(self, instance, validated_data):
-        tags = validated_data.pop('tag_list')
+        tags = validated_data.pop('tag_list', None)
         if tags:
             instance.tags.set(*tags)
-        # change for image-id is not allowed
+        # change for image-id or image is not allowed
         validated_data.pop('image_by_id', None)
         return super(PinSerializer, self).update(instance, validated_data)
