@@ -78,12 +78,12 @@ $(window).load(function() {
         // Show edit-buttons only on mouse over
         $('.pin').each(function(){
             var thisPin = $(this);
-            thisPin.find('.editable').hide();
+            thisPin.find('.editor').hide();
             thisPin.off('hover');
             thisPin.hover(function() {
-                thisPin.find('.editable').stop(true, true).fadeIn(300);
+                thisPin.find('.editor').stop(true, true).fadeIn(300);
             }, function() {
-                thisPin.find('.editable').stop(true, false).fadeOut(300);
+                thisPin.find('.editor').stop(true, false).fadeOut(300);
             });
         });
 

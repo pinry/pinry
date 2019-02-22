@@ -2,16 +2,20 @@
     <script id="pins-template" type="text/x-handlebars-template">
         {{#each pins}}
         <div class="pin" data-id="{{id}}">
+            <div class="editor">
+                <div class="borderable">
+                    <span class="glyphicon glyphicon-heart" data-id="{{id}}"></span>
+                </div>
             {{#if editable}}
-                <div class="editable">
-                    <div class="borderable">
-                        <span class="glyphicon glyphicon-trash" data-id="{{id}}"></span>
-                    </div>
-                    <div class="borderable">
-                        <span class="glyphicon glyphicon-pencil" data-id="{{id}}"></span>
-                    </div>
+                <div class="borderable">
+                    <span class="glyphicon glyphicon-trash" data-id="{{id}}"></span>
+                </div>
+                <div class="borderable">
+                    <span class="glyphicon glyphicon-pencil" data-id="{{id}}"></span>
                 </div>
             {{/if}}
+            </div>
+
             <a href="{{image.standard.image}}" class="lightbox" data-id="{{id}}">
                 <div class="image-wrapper" style="width: {{image.thumbnail.width}}px; height: {{image.thumbnail.height}}px;">
                     <img src="{{image.thumbnail.image}}" width="{{image.thumbnail.width}}" height="{{image.thumbnail.height}}"/>
