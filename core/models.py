@@ -73,6 +73,8 @@ class Image(BaseImage):
 class Pin(models.Model):
     submitter = models.ForeignKey(User)
     url = models.URLField(null=True, blank=True)
+    # origin is tha same as referer but not work,
+    # should be removed some day
     origin = models.URLField(null=True, blank=True)
     referer = models.URLField(null=True, blank=True)
     description = models.TextField(blank=True, null=True)
