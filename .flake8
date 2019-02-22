@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 121
+exclude = 
+    migrations,
+    south_migrations,
+    pinry/settings/,
+    core/tests/,
+
