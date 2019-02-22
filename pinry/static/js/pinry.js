@@ -49,7 +49,7 @@ $(window).load(function() {
         }
 
         // Open add-to-board panel
-        $('glyphicon-heart').each(function() {
+        $('.glyphicon-heart').each(function() {
             var thisPin = $(this);
             $(this).off('click');
             $(this).click(function() {
