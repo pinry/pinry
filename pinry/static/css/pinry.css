@@ -190,7 +190,7 @@ textarea {
     width: 240px;
 }
 
-.pin .editable {
+.pin .editor {
     background: rgba(255, 255, 255, 0.4);
     border: 2px solid rgba(255, 255, 255, 0.4);
     -webkit-border-radius: 4px;
@@ -202,11 +202,11 @@ textarea {
     color: white;
 }
 
-.pin:hover .editable {
+.pin:hover .editor {
     display: block;
 }
 
-.pin .editable .borderable {
+.pin .editor .borderable {
     background: rgba(0, 0, 0, 0.8);
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
