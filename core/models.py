@@ -4,7 +4,7 @@ from io import BytesIO
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db import models, transaction
+from django.db import models
 from django.dispatch import receiver
 
 from django_images.models import Image as BaseImage, Thumbnail
