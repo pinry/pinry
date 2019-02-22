@@ -1,6 +1,7 @@
 import hashlib
 import os
 
+
 def upload_path(instance, filename, **kwargs):
     hasher = hashlib.md5()
     for chunk in instance.image.chunks():

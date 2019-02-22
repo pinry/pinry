@@ -20,7 +20,7 @@ class ImageModelTest(TestCase):
 
     def test_get_by_size(self):
         size = list(settings.IMAGE_SIZES.keys())[0]
-        thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        Thumbnail.objects.get_or_create_at_size(self.image.id, size)
         self.image.get_by_size(size)
 
     def test_get_absolute_url(self):
@@ -53,7 +53,7 @@ class ThumbnailManagerModelTest(TestCase):
 
     # TODO: Test the image object and data
     def test_create(self):
-        thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
+        Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
         self.assertEqual(self.image.thumbnail_set.count(), 1)
 
     def test_get(self):
@@ -89,7 +89,7 @@ class PostSaveSignalOriginalChangedTestCase(TestCase):
 
     def test_post_save_signal_original_changed(self):
         size = list(settings.IMAGE_SIZES.keys())[0]
-        thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        Thumbnail.objects.get_or_create_at_size(self.image.id, size)
         self.image.delete()
         self.assertFalse(Thumbnail.objects.exists())
 

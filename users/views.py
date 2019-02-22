@@ -13,7 +13,8 @@ from .forms import UserCreationForm
 from users.models import User
 
 
-reverse_lazy = lambda name=None, *args: lazy(reverse, str)(name, args=args)
+def reverse_lazy(name=None, *args):
+    return lazy(reverse, str)(name, args=args)
 
 
 class CreateUser(CreateView):

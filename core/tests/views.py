@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.template import TemplateDoesNotExist
 from django.test import TestCase
 
 from core.models import Image
