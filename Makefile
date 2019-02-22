@@ -19,3 +19,5 @@ test:
 	pipenv run python manage.py test
 shell:
 	pipenv run python manage.py shell
+flake8:
+	pipenv run flake8
