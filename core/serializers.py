@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
 
-from core.models import Image
+from core.models import Image, Board
 from core.models import Pin
 from django_images.models import Thumbnail
 from users.models import User
@@ -137,3 +137,34 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         # change for image-id or image is not allowed
         validated_data.pop('image_by_id', None)
         return super(PinSerializer, self).update(instance, validated_data)
+
+
+class BoardSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Board
+        fields = (
+            "name",
+            "pins",
+            "pins_detail",
+            "published",
+            "submitter",
+        )
+        read_only_fields = ('submitter', 'published')
+
+    pins_detail = PinSerializer(source="pins", many=True, read_only=True)
+    pins = serializers.HyperlinkedRelatedField(
+        write_only=True,
+        queryset=Pin.objects.all(),
+        view_name="pin-detail",
+        many=True,
+        required=False,
+    )
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        if Board.objects.filter(name=validated_data['name'], submitter=user).exists():
+            raise ValidationError(
+                detail={"name": "board with this name already exists."}
+            )
+        validated_data['submitter'] = user
+        return super(BoardSerializer, self).create(validated_data)

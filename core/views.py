@@ -4,7 +4,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import GenericViewSet
 
 from core import serializers as api
-from core.models import Image, Pin
+from core.models import Image, Pin, Board
 from core.permissions import IsOwnerOrReadOnly
 from users.models import User
 
@@ -32,7 +32,18 @@ class PinViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly("submitter"), ]
 
 
+class BoardViewSet(viewsets.ModelViewSet):
+    queryset = Board.objects.all()
+    serializer_class = api.BoardSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filter_fields = ("submitter__username", )
+    ordering_fields = ('-id', )
+    ordering = ('-id', )
+    permission_classes = [IsOwnerOrReadOnly("submitter"), ]
+
+
 drf_router = routers.DefaultRouter()
 drf_router.register(r'users', UserViewSet)
 drf_router.register(r'pins', PinViewSet)
 drf_router.register(r'images', ImageViewSet)
+drf_router.register(r'boards', BoardViewSet)
