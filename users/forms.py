@@ -11,10 +11,14 @@ class UserCreationForm(forms.ModelForm):
     error_messages = {
         'duplicate_username': _("A user with that username already exists."),
     }
-    username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^[\w-]+$')
-    password = forms.CharField(label=_("Password"),
-        widget=forms.PasswordInput)
+    username = forms.RegexField(
+        label=_("Username"), max_length=30,
+        regex=r'^[\w-]+$'
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.PasswordInput
+    )
 
     class Meta:
         model = User

@@ -4,8 +4,9 @@ from django.core.urlresolvers import reverse
 
 
 class Public(object):
+
     def process_request(self, request):
-        if settings.PUBLIC == False and not request.user.is_authenticated():
+        if settings.PUBLIC is False and not request.user.is_authenticated():
             acceptable_paths = [
                 '/login/',
                 '/private/',
