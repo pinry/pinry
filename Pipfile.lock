@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ad217c5e4d0a4207fd060d19af64ff07c87712335f95c89ac0e818c2c2cc435b"
+            "sha256": "1f3e0c6c3d258ec061b439c963d469012a67158bee4abc21a448555ade0f0fed"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -90,13 +90,6 @@
             "index": "pypi",
             "version": "==0.24.0"
         },
-        "django-tastypie": {
-            "hashes": [
-                "sha256:a3a2413510009649e0eac885ead96891c783ced788fd94231dc2f72b7a1b4c04"
-            ],
-            "index": "pypi",
-            "version": "==0.14.2"
-        },
         "djangorestframework": {
             "hashes": [
                 "sha256:79c6efbb2514bc50cf25906d7c0a5cfead714c7af667ff4bd110312cd380ae66",
@@ -104,13 +97,6 @@
             ],
             "index": "pypi",
             "version": "==3.9.1"
-        },
-        "factory-boy": {
-            "hashes": [
-                "sha256:bd5d87634946c8831c0d1389b5995da5dd64ccd97088eebc311eb0c9ef75ae3b"
-            ],
-            "index": "pypi",
-            "version": "==1.3.0"
         },
         "gunicorn": {
             "hashes": [
@@ -267,20 +253,6 @@
             ],
             "index": "pypi",
             "version": "==2.7.7"
-        },
-        "python-dateutil": {
-            "hashes": [
-                "sha256:7e6584c74aeed623791615e26efd690f29817a27c73085b78e4bad02493df2fb",
-                "sha256:c89805f6f4d64db21ed966fda138f8a5ed7a4fdbc1a8ee329ce1b74e3c74da9e"
-            ],
-            "version": "==2.8.0"
-        },
-        "python-mimeparse": {
-            "hashes": [
-                "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
-                "sha256:a295f03ff20341491bfe4717a39cd0a8cc9afad619ba44b77e86b0ab8a2b8282"
-            ],
-            "version": "==1.6.0"
         },
         "pytz": {
             "hashes": [
