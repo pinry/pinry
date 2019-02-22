@@ -28,8 +28,8 @@ class CreateImageTest(TestCase):
 
     def test_post_error(self):
         response = self.client.post(reverse('image-list'), {'image': None})
-        self.assertJSONEqual(
-            response.content,
+        self.assertEqual(
+            response.json(),
             {
                 'image': [
                     'The submitted data was not a file. '
