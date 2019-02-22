@@ -43,19 +43,47 @@ class ImageManager(models.Manager):
 class Image(BaseImage):
     objects = ImageManager()
 
+    class Sizes:
+        standard = "standard"
+        thumbnail = "thumbnail"
+        square = "square"
+
     class Meta:
         proxy = True
+
+    @property
+    def standard(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.standard
+        )
+
+    @property
+    def thumbnail(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.thumbnail
+        )
+
+    @property
+    def square(self):
+        return Thumbnail.objects.get(
+            original=self, size=self.Sizes.square
+        )
 
 
 class Pin(models.Model):
     submitter = models.ForeignKey(User)
-    url = models.URLField(null=True)
-    origin = models.URLField(null=True)
-    referer = models.URLField(null=True)
+    url = models.URLField(null=True, blank=True)
+    # origin is tha same as referer but not work,
+    # should be removed some day
+    origin = models.URLField(null=True, blank=True)
+    referer = models.URLField(null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin')
     published = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
+
+    def tag_list(self):
+        return self.tags.all()
 
     def __unicode__(self):
         return '%s - %s' % (self.submitter, self.published)
@@ -63,4 +91,7 @@ class Pin(models.Model):
 
 @receiver(models.signals.post_delete, sender=Pin)
 def delete_pin_images(sender, instance, **kwargs):
-    instance.image.delete()
+    try:
+        instance.image.delete()
+    except Image.DoesNotExist:
+        pass

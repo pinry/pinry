@@ -14,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'django_filters',
     'taggit',
     'compressor',
     'django_images',
@@ -139,3 +141,21 @@ IS_TEST = False
 
 # User custom settings
 IMAGE_AUTO_DELETE = True
+
+# Rest Framework
+
+DRF_URL_FIELD_NAME = "resource_link"
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'URL_FIELD_NAME': DRF_URL_FIELD_NAME,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': API_LIMIT_PER_PAGE,
+}

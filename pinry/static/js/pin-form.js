@@ -15,7 +15,6 @@ $(window).load(function() {
     // Start Helper Functions
     function getFormData() {
         return {
-            submitter: currentUser,
             url: $('#pin-form-image-url').val(),
             referer: $('#pin-form-referer').val(),
             description: $('#pin-form-description').val(),
@@ -25,7 +24,6 @@ $(window).load(function() {
 
     function createPinPreviewFromForm() {
         var context = {pins: [{
-                submitter: currentUser,
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 referer: $('#pin-form-referer').val(),
                 description: $('#pin-form-description').val(),
@@ -99,24 +97,25 @@ $(window).load(function() {
         }
         // Drag and drop upload
         $('#pin-form-image-upload').dropzone({
-            url: '/pins/create-image/',
-            paramName: 'qqfile',
+            url: API_BASE + "images/",
+            paramName: 'image',
             parallelUploads: 1,
             uploadMultiple: false,
             maxFiles: 1,
             acceptedFiles: 'image/*',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
             success: function(file, resp) {
-                $('#pin-form-image-url').parent().fadeOut(300);
-                var promise = getImageData(resp.success.id);
-                uploadedImage = resp.success.id;
-                promise.success(function(image) {
-                    $('#pin-form-image-url').val(image.thumbnail.image);
-                    createPinPreviewFromForm();
-                });
-                promise.error(function() {
-                    message('Problem uploading image.', 'alert alert-error');
-                });
-            }
+                var image_url = $('#pin-form-image-url');
+                image_url.parent().fadeOut(300);
+                uploadedImage = resp.id;
+                image_url.val(resp.thumbnail.image);
+                createPinPreviewFromForm();
+            },
+            error: function (error) {
+              message('Problem uploading image.', 'alert alert-error');
+            },
         });
         // If bookmarklet submit
         if (pinFromUrl) {
@@ -136,13 +135,13 @@ $(window).load(function() {
             $(this).off('click');
             $(this).addClass('disabled');
             if (editedPin) {
-                var apiUrl = '/api/v1/pin/'+editedPin.id+'/?format=json';
+                var apiUrl = API_BASE + 'pins/' + editedPin.id + '/?format=json';
                 var data = {
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
-                }
+                };
                 var promise = $.ajax({
-                    type: "put",
+                    type: "patch",
                     url: apiUrl,
                     contentType: 'application/json',
                     data: JSON.stringify(data)
@@ -165,13 +164,15 @@ $(window).load(function() {
                 });
             } else {
                 var data = {
-                    submitter: '/api/v1/user/'+currentUser.id+'/',
                     referer: $('#pin-form-referer').val(),
                     description: $('#pin-form-description').val(),
                     tags: cleanTags($('#pin-form-tags').val())
                 };
-                if (uploadedImage) data.image = '/api/v1/image/'+uploadedImage+'/';
-                else data.url = $('#pin-form-image-url').val();
+                if (uploadedImage) {
+                    data.image_by_id = uploadedImage;
+                } else {
+                    data.url = $('#pin-form-image-url').val();
+                }
                 var promise = postPinData(data);
                 promise.success(function(pin) {
                     if (pinFromUrl) return window.close();

@@ -5,6 +5,42 @@
  * Updated: Feb 26th, 2013
  * Require: jQuery
  */
+var API_BASE = "/api/v2/";
+
+
+function _getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function getCSRFToken() {
+    return _getCookie('csrftoken');
+}
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+        }
+    }
+});
 
 
 function renderTemplate(templateId, context) {
@@ -25,21 +61,14 @@ function cleanTags(tags) {
     return tags;
 }
 
-
-function getImageData(imageId) {
-    var apiUrl = '/api/v1/image/'+imageId+'/?format=json';
-    return $.get(apiUrl);
-}
-
-
 function getPinData(pinId) {
-    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    var apiUrl = API_BASE + "pins/" + pinId + '/?format=json';
     return $.get(apiUrl);
 }
 
 
 function deletePinData(pinId) {
-    var apiUrl = '/api/v1/pin/'+pinId+'/?format=json';
+    var apiUrl = API_BASE + 'pins/' +pinId + '/?format=json';
     return $.ajax(apiUrl, {
         type: 'DELETE'
     });
@@ -48,7 +77,7 @@ function deletePinData(pinId) {
 function postPinData(data) {
     return $.ajax({
         type: "post",
-        url: "/api/v1/pin/",
+        url: API_BASE + "pins/",
         contentType: 'application/json',
         data: JSON.stringify(data)
     });
