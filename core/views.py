@@ -9,7 +9,7 @@ from core.permissions import IsOwnerOrReadOnly
 from users.models import User
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(mixins.RetrieveModelMixin, GenericViewSet):
     queryset = User.objects.all()
     serializer_class = api.UserSerializer
 
