@@ -72,8 +72,8 @@ class TagSerializer(serializers.SlugRelatedField):
 
     def to_internal_value(self, data):
         obj, _ = self.get_queryset().get_or_create(
-            **{self.slug_field: data},
-            defaults={self.slug_field: data, "slug": data}
+            defaults={self.slug_field: data, "slug": data},
+            **{self.slug_field: data}
         )
         return obj
 
