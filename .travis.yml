@@ -11,6 +11,7 @@ install:
     - pip install pipenv && pipenv install --dev --system
 script:
     - python manage.py test
+    - make flake8
 notifications:
     email: false
 
