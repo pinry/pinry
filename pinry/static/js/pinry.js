@@ -51,30 +51,30 @@ $(window).load(function() {
         // Open add-to-board panel
         $('.glyphicon-heart').each(function() {
             var thisPin = $(this);
-            $(this).off('click');
-            $(this).click(function() {
-                $(this).off('click');
-                pinForm($(this).data('id'));
+            thisPin.off('click');
+            thisPin.click(function() {
+                thisPin.off('click');
+                pinForm($(thisPin).data('id'));
             });
         });
 
         // Edit pin if pencil icon clicked
         $('.glyphicon-pencil').each(function() {
             var thisPin = $(this);
-            $(this).off('click');
-            $(this).click(function() {
-                $(this).off('click');
-                pinForm($(this).data('id'));
+            thisPin.off('click');
+            thisPin.click(function() {
+                thisPin.off('click');
+                pinForm(thisPin.data('id'));
             });
         });
 
         // Delete pin if trash icon clicked
         $('.glyphicon-trash').each(function() {
             var thisPin = $(this);
-            $(this).off('click');
-            $(this).click(function() {
-                $(this).off('click');
-                var promise = deletePinData($(this).data('id'));
+            thisPin.off('click');
+            thisPin.click(function() {
+                thisPin.off('click');
+                var promise = deletePinData(thisPin.data('id'));
                 promise.success(function() {
                     thisPin.closest('.pin').remove();
                     tileLayout();
