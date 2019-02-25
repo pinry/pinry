@@ -8,14 +8,34 @@ function fetchPins(offset) {
 
 Vue.component('pin', {
   data: function () {
-    return {'loaded': false}
+    return {
+      'loaded': false,
+      'editable': true,
+      'active': false,
+      'textId': null,
+    }
   },
   props: ['pin'],
   template: '#pin-template',
   methods: {
     onImageLoad: function () {
       this.loaded = true;
-    }
+      this.$emit("resize", this.getTextHeight());
+    },
+    getAvatar: function () {
+      return "//gravatar.com/avatar/" + this.pin.submitter.gravatar;
+    },
+    getUserLink: function () {
+      return "/pins/users/" + this.pin.submitter.username + "/"
+    },
+    getTagLink: function (tag) {
+      return "/pins/tags/" + tag + "/"
+    },
+    getTextHeight: function() {
+      var element = this.$el;
+      var height = element.getBoundingClientRect().height;
+      return height
+    },
   }
 });
 

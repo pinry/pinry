@@ -1,9 +1,47 @@
 {% verbatim %}
-  <script type="text/x-template" id="pin-template">
-    <transition name="fade">
-      <div class="pin pin-wrapper" v-show="loaded">
-        <img :src="pin.image.thumbnail.image" v-on:load="onImageLoad">
+<script type="text/x-template" id="pin-template">
+    <div class="pin" :class="{ 'fake-hide': !loaded }" v-on:mouseover="active = true" v-on:mouseleave="active = false">
+      <transition name="fade">
+        <div class="editor" v-show="active">
+          <div class="borderable">
+            <span class="glyphicon glyphicon-heart" data-id="{{id}}"></span>
+          </div>
+          <template v-if="editable">
+            <div class="borderable">
+              <span class="glyphicon glyphicon-trash" data-id="{{id}}"></span>
+            </div>
+            <div class="borderable">
+              <span class="glyphicon glyphicon-pencil" data-id="{{id}}"></span>
+            </div>
+          </template>
+        </div>
+      </transition>
+
+      <a :href="pin.image.image" class="lightbox">
+        <div class="image-wrapper">
+          <img :src="pin.image.thumbnail.image" v-on:load="onImageLoad">
+        </div>
+      </a>
+
+      <div>
+        <p v-if="pin.description">{{ pin.description }}</p>
+        <div class="pin-footer clearfix">
+          <div class="avatar pull-left">
+            <img :src="getAvatar">
+          </div>
+          <div class="text pull-right">
+            <span class="dim">pinned by</span>
+            <a :href="getUserLink">{{ pin.submitter.username }}</a>
+            <template v-if="pin.tags">
+              <span class="dim">in</span>
+              <template v-for="_tag in pin.tags">
+                <span class="tag"><a :href="getTagLink(_tag)">{{ _tag }}</a></span>
+              </template>
+            </template>
+          </div>
+        </div>
       </div>
-    </transition>
-  </script>
+
+    </div>
+</script>
 {% endverbatim %}
