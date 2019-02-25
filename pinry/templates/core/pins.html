@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block yield %}
-    <div id="pins"></div>
-    <div class="spinner"></div>
+    <div id="pins">
+      {% include "includes/vue-pins.html" %}
+    </div>
+    <div v-show="loading" class="spinner"></div>
 {% endblock %}

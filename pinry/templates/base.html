@@ -89,28 +89,30 @@
         <!-- End No Script -->
 
         <!-- Content -->
-        {% block yield %}{% endblock %}
+        <div id="app">
+          {% block yield %}{% endblock %}
+        </div>
         <!-- End Content -->
 
         <!-- Templates -->
-        {% include "includes/messages.html" %}
-        {% include "includes/lightbox.html" %}
-        {% include "includes/pins.html" %}
-        {% include "includes/pin_form.html" %}
         {% block extra_templates %}{% endblock %}
         <!-- End Templates -->
 
         <!-- JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
         <script src="https://unpkg.com/bootstrap@3.3.6/dist/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/handlebars@4.0.6/dist/handlebars.min.js"></script>
         <script src="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.js"></script>
         {% compress js %}
             <script src="{% static "js/helpers.js" %}"></script>
-            <script src="{% static "js/messages.js" %}"></script>
-            <script src="{% static "js/lightbox.js" %}"></script>
-            <script src="{% static "js/pinry.js" %}"></script>
-            <script src="{% static "js/pin-form.js" %}"></script>
+            <script src="{% static "js/vendors/vue-waterfall.min.js" %}"></script>
+{#            <script src="{% static "js/messages.js" %}"></script>#}
+{#            <script src="{% static "js/lightbox.js" %}"></script>#}
+{#            <script src="{% static "js/pinry.js" %}"></script>#}
+{#            <script src="{% static "js/pin-form.js" %}"></script>#}
+            <script src="{% static "js/vue/main.js" %}"></script>
         {% endcompress %}
         {% compress js inline %}
             {% block extra_js %}{% endblock %}
