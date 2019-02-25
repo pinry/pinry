@@ -185,7 +185,6 @@ textarea {
     -webkit-box-shadow: 0 1px 0 #bbb;
        -moz-box-shadow: 0 1px 0 #bbb;
             box-shadow: 0 1px 0 #bbb;
-    display: none;
     position: absolute;
     width: 240px;
 }

@@ -87,15 +87,3 @@ function postPinData(data) {
 function getUrlParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
-
-Handlebars.registerHelper('niceLinks', (function () {
-    var reNL = /\r?\n/g,
-        reURL = /https?:[/][/](?:www[.])?([^/]+)(?:[/]([.]?[^\s,.])+)?/g;
-    return function (text) {
-        var t = Handlebars.Utils.escapeExpression(text);
-        t = t.replace(reURL, '<a href="$&" target="_blank">$1</a>');
-        t = t.replace(reNL, '<br>');
-        return new Handlebars.SafeString(t);
-    };
-})());
-

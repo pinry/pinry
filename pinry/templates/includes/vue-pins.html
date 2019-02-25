@@ -1,6 +1,6 @@
 {% verbatim %}
 
-<waterfall :line-gap="200" :watch="pins">
+<waterfall :line-gap="240" :watch="pins">
   <!-- each component is wrapped by a waterfall slot -->
   <waterfall-slot
     v-for="(item, index) in pins"
@@ -9,7 +9,7 @@
     :order="index"
     :key="item.id"
   >
-    <img :src="item.image.thumbnail.image">
+    <pin :pin="item"></pin>
   </waterfall-slot>
 </waterfall>
 

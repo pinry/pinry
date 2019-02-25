@@ -1,0 +1,9 @@
+{% verbatim %}
+  <script type="text/x-template" id="pin-template">
+    <transition name="fade">
+      <div class="pin pin-wrapper" v-show="loaded">
+        <img :src="pin.image.thumbnail.image" v-on:load="onImageLoad">
+      </div>
+    </transition>
+  </script>
+{% endverbatim %}
