@@ -6,6 +6,20 @@ function fetchPins(offset) {
   return axios.get(apiUrl)
 }
 
+Vue.component('pin', {
+  data: function () {
+    return {'loaded': false}
+  },
+  props: ['pin'],
+  template: '#pin-template',
+  methods: {
+    onImageLoad: function () {
+      this.loaded = true;
+    }
+  }
+});
+
+
 var app = new Vue({
   el: '#app',
   components: {
