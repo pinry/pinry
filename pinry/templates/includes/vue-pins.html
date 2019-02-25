@@ -1,0 +1,16 @@
+{% verbatim %}
+
+<waterfall :line-gap="200" :watch="pins">
+  <!-- each component is wrapped by a waterfall slot -->
+  <waterfall-slot
+    v-for="(item, index) in pins"
+    :width="item.image.thumbnail.width"
+    :height="item.image.thumbnail.height"
+    :order="index"
+    :key="item.id"
+  >
+    <img :src="item.image.thumbnail.image">
+  </waterfall-slot>
+</waterfall>
+
+{% endverbatim %}
