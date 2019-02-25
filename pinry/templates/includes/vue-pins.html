@@ -1,6 +1,6 @@
 {% verbatim %}
 
-<waterfall :line-gap="240" :watch="pins">
+<waterfall :line-gap="240" :line="'v'" :watch="pins" :fixed-height="false">
   <!-- each component is wrapped by a waterfall slot -->
   <waterfall-slot
     v-for="(item, index) in pins"
@@ -9,7 +9,7 @@
     :order="index"
     :key="item.id"
   >
-    <pin :pin="item"></pin>
+    <pin :pin="item" v-on:resize="function(height){item.image.thumbnail.height = height;}"></pin>
   </waterfall-slot>
 </waterfall>
 
