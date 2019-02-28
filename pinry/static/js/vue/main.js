@@ -13,10 +13,17 @@ Vue.component('pin', {
       'editable': true,
       'active': false,
       'textId': null,
+      'imageStyle': null,
     }
   },
   props: ['pin'],
   template: '#pin-template',
+  mounted: function() {
+    this.imageStyle = {
+      width: this.pin.image.thumbnail.width + 'px',
+      height: this.pin.image.thumbnail.height + 'px',
+    };
+  },
   methods: {
     getInlineStyle: function() {
       return {};
@@ -47,7 +54,7 @@ Vue.component('pin-container', {
     return {
         "windowWidth": null,
         "blockWidth": "240px",
-        "blockMargin": "240px",
+        "blockMargin": "15px",
         "pins": [],
     };
   },
