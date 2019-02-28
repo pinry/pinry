@@ -2,15 +2,15 @@
 
 <script type="text/x-template" id="pin-container-template">
   <div>
-    <template v-for="item in pins">
-      <pin :pin="item"></pin>
+    <template v-for="(item, index) in pins">
+      <pin :pin="item" :index="index" :args="args"></pin>
     </template>
   </div>
 
 </script>
 
 <script type="text/x-template" id="pin-template">
-    <div :style="getInlineStyle()" class="pin" :class="{ 'fake-hide': !loaded }" v-on:mouseover="active = true" v-on:mouseleave="active = false">
+    <div :style="pinStyle" class="pin" :class="{ 'fake-hide': !loaded }" v-on:mouseover="active = true" v-on:mouseleave="active = false">
       <transition name="fade">
         <div class="editor" v-show="active">
           <div class="borderable">
