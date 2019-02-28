@@ -14,19 +14,58 @@ Vue.component('pin', {
       'active': false,
       'textId': null,
       'imageStyle': null,
+      'pinStyle': null,
     }
   },
-  props: ['pin'],
+  props: ['pin', 'args', 'index'],
   template: '#pin-template',
   mounted: function() {
     this.imageStyle = {
       width: this.pin.image.thumbnail.width + 'px',
       height: this.pin.image.thumbnail.height + 'px',
     };
+    this.pinStyle = this.getPinStyle();
   },
   methods: {
-    getInlineStyle: function() {
-      return {};
+    getPinStyle: function() {
+      var self = this;
+
+      var marginLeft = 0;
+      var marginTop = 0;
+
+      function isFirstOne(rowSize, index) {
+        index = index + 1;
+        if ((index % rowSize) === 1 ){
+          return true;
+        }
+      }
+
+      function getRowNumber(rowSize, index) {
+        index = index + 1;
+        var rowNumber = Math.floor(index % rowSize);
+        if (rowNumber === 0) {
+          return 7;
+        }
+        return rowNumber;
+      }
+
+      function getLineNumber(rowSize, index) {
+        return Math.floor((index) / rowSize);
+      }
+      var lineNumber = getLineNumber(self.args.rowSize, self.index);
+      marginTop = self.args.blockMargin + (self.args.blockMargin + 300) * lineNumber;
+
+      if (isFirstOne(self.args.rowSize, self.index)) {
+        marginLeft = self.args.rowStartMargin;
+      } else {
+        var marginPerBlock = self.args.blockWidth + self.args.blockMargin;
+        var rowNumber = getRowNumber(self.args.rowSize, self.index);
+        marginLeft = self.args.rowStartMargin + marginPerBlock * (rowNumber - 1);
+      }
+      return {
+        'margin-left': marginLeft + 'px',
+        'margin-top': marginTop + 'px',
+      };
     },
     onImageLoad: function () {
       this.loaded = true;
@@ -52,10 +91,15 @@ Vue.component('pin', {
 Vue.component('pin-container', {
   data: function () {
     return {
-        "windowWidth": null,
-        "blockWidth": "240px",
-        "blockMargin": "15px",
-        "pins": [],
+      args: {
+        "containerWidth": 0,
+        "blockWidth": 240,
+        "blockMargin": 15,
+        "rowSize": 0,
+        "rowStartMargin": 0,
+        "rowEndMargin": 0,
+      },
+      "pins": [],
     };
   },
   template: "#pin-container-template",
@@ -71,6 +115,27 @@ Vue.component('pin-container', {
           );
         },
       );
+  },
+  mounted: function() {
+    this.updateArguments()
+  },
+  methods: {
+    updateArguments: function() {
+      var blockContainer = this.$el;
+      var containerWidth = blockContainer.clientWidth;
+      var blockMargin = this.args.blockMargin,
+          blockWidth = this.args.blockWidth,
+          rowSize = Math.floor(containerWidth / (blockWidth + blockMargin));
+      var rowStartMargin = (containerWidth - rowSize * (blockWidth + blockMargin)) / 2 ;
+      var rowEndMargin = rowStartMargin - blockMargin;
+
+      this.args.containerWidth = containerWidth;
+      this.args.blockWidth = blockWidth;
+      this.args.blockMargin = blockMargin;
+      this.args.rowSize = rowSize;
+      this.args.rowStartMargin = rowStartMargin;
+      this.args.rowEndMargin = rowEndMargin;
+    },
   },
 });
 
