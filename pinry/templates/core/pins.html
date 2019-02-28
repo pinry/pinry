@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block yield %}
-    <div id="pins">
-      {% include "includes/vue-pins.html" %}
-    </div>
+    <pin-container v-on:loaded="onLoaded()" v-on:loading="onLoading()">
+    </pin-container>
     <div v-show="loading" class="spinner"></div>
 {% endblock %}

@@ -1,9 +1,9 @@
 
 function fetchPins(offset) {
-  var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
-  if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
-  if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
-  return axios.get(apiUrl)
+    var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
+    if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
+    if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
+    return axios.get(apiUrl)
 }
 
 Vue.component('pin', {
@@ -18,9 +18,11 @@ Vue.component('pin', {
   props: ['pin'],
   template: '#pin-template',
   methods: {
+    getInlineStyle: function() {
+      return {};
+    },
     onImageLoad: function () {
       this.loaded = true;
-      this.$emit("resize", this.getTextHeight());
     },
     getAvatar: function () {
       return "//gravatar.com/avatar/" + this.pin.submitter.gravatar;
@@ -40,31 +42,45 @@ Vue.component('pin', {
 });
 
 
-var app = new Vue({
-  el: '#app',
-  components: {
-    'waterfall': Waterfall.waterfall,
-    'waterfall-slot': Waterfall.waterfallSlot,
-  },
-  data() {
+Vue.component('pin-container', {
+  data: function () {
     return {
-      pins: [],
-      loading: true,
-    }
+        "windowWidth": null,
+        "blockWidth": "240px",
+        "blockMargin": "240px",
+        "pins": [],
+    };
   },
-  methods: {
-    getInitialPins: function () {
+  template: "#pin-container-template",
+  created: function() {
+      this.$emit("loading");
       var self = this;
       var offset = 0;
       fetchPins(offset).then(
         function (res) {
           self.pins = res.data.results;
-          self.loading = false;
-        }
+          self.$emit(
+            "loaded",
+          );
+        },
       );
-    },
   },
-  created: function () {
-    this.getInitialPins();
+});
+
+
+var app = new Vue({
+  el: '#app',
+  data() {
+    return {
+      loading: true,
+    }
+  },
+  methods: {
+    onLoaded: function(){
+      this.loading = false;
+    },
+    onLoading: function(){
+      this.loading = true;
+    },
   },
 });
