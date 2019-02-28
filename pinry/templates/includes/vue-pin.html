@@ -27,7 +27,7 @@
         </div>
       </transition>
 
-      <a :href="pin.image.image" class="lightbox">
+      <a :href="pin.image.image" class="lightbox" :style="imageStyle">
         <div class="image-wrapper">
           <img :src="pin.image.thumbnail.image" v-on:load="onImageLoad">
         </div>
