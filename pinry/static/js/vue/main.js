@@ -20,13 +20,16 @@ Vue.component('pin', {
   props: ['pin', 'args', 'index'],
   template: '#pin-template',
   mounted: function() {
-    this.imageStyle = {
-      width: this.pin.image.thumbnail.width + 'px',
-      height: this.pin.image.thumbnail.height + 'px',
-    };
+    this.imageStyle = this.getImageStyle();
     this.pinStyle = this.getPinStyle();
   },
   methods: {
+    getImageStyle: function() {
+      return {
+        width: this.pin.image.thumbnail.width + 'px',
+        height: this.pin.image.thumbnail.height + 'px',
+      }
+    },
     getPinStyle: function() {
       var self = this;
 
@@ -52,6 +55,7 @@ Vue.component('pin', {
       function getLineNumber(rowSize, index) {
         return Math.floor((index) / rowSize);
       }
+
       var lineNumber = getLineNumber(self.args.rowSize, self.index);
       marginTop = self.args.blockMargin + (self.args.blockMargin + 300) * lineNumber;
 
