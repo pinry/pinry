@@ -177,6 +177,7 @@ Vue.component('pin-container', {
         );
       },
     );
+    window.addEventListener("resize", this.reflow, {})
   },
   mounted: function() {
     this.reflow();
