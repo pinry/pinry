@@ -37,7 +37,7 @@
         <p v-if="pin.description">{{ pin.description }}</p>
         <div class="pin-footer clearfix">
           <div class="avatar pull-left">
-            <img :src="getAvatar">
+            <img :src="getAvatar()">
           </div>
           <div class="text pull-right">
             <span class="dim">pinned by</span>
