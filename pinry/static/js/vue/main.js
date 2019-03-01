@@ -99,7 +99,7 @@ Vue.component('pin', {
         index = index + 1;
         var rowNumber = Math.floor(index % rowSize);
         if (rowNumber === 0) {
-          return 7;
+          return rowSize;
         }
         return rowNumber;
       }
