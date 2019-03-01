@@ -6,22 +6,74 @@ function fetchPins(offset) {
     return axios.get(apiUrl)
 }
 
+
+function HeightTable(rowSize) {
+  var self = {
+    data: {}
+  };
+  function get(obj, index) {
+    if (!obj.data.hasOwnProperty(index)) {
+      obj.data[index] = null
+    }
+    return obj.data[index];
+  }
+
+  function set(obj, index, value) {
+    if (!obj.data.hasOwnProperty(index)) {
+      obj.data[index] = value
+    }
+    return obj.data[index];
+  }
+
+  function getHeightOffset(obj, indexOfElement) {
+    if (indexOfElement <= rowSize) {
+      return 0;
+    }
+    var height = 0;
+    for (var index = 0; index += rowSize; index < indexOfElement) {
+      var value = obj.get(index);
+      if (value === null) {
+        console.log("Get null value for index: " + index);
+        return null
+      }
+      height += value;
+    }
+    return height
+  }
+
+  self.get = function(index, value) {
+    return get(self, index, value);
+  };
+
+  self.set = function (index, value) {
+    return set(self, index, value)
+  };
+  self.getHeightOffset = function (index) {
+    return getHeightOffset(self, index);
+  };
+  return self;
+}
+
+
 Vue.component('pin', {
   data: function () {
     return {
       'loaded': false,
       'editable': true,
       'active': false,
-      'textId': null,
       'imageStyle': null,
       'pinStyle': null,
+      'height': null,
     }
   },
-  props: ['pin', 'args', 'index'],
+  props: ['pin', 'args', 'index', 'heightOffset'],
   template: '#pin-template',
   mounted: function() {
     this.imageStyle = this.getImageStyle();
     this.pinStyle = this.getPinStyle();
+    this.height = this.getTextHeight();
+    console.log(this.height);
+    this.$emit("rendered", {index: this.index, height: this.height})
   },
   methods: {
     getImageStyle: function() {
@@ -56,8 +108,12 @@ Vue.component('pin', {
         return Math.floor((index) / rowSize);
       }
 
-      var lineNumber = getLineNumber(self.args.rowSize, self.index);
-      marginTop = self.args.blockMargin + (self.args.blockMargin + 300) * lineNumber;
+      if (self.index < self.args.rowSize) {
+        marginTop = 0;
+      } else {
+        var lineNumber = getLineNumber(self.args.rowSize, self.index);
+        marginTop = self.args.blockMargin + (self.args.blockMargin + 300) * lineNumber;
+      }
 
       if (isFirstOne(self.args.rowSize, self.index)) {
         marginLeft = self.args.rowStartMargin;
@@ -104,6 +160,7 @@ Vue.component('pin-container', {
         "rowEndMargin": 0,
       },
       "pins": [],
+      "heightTable": [],
     };
   },
   template: "#pin-container-template",
@@ -121,9 +178,19 @@ Vue.component('pin-container', {
       );
   },
   mounted: function() {
-    this.updateArguments()
+    this.reflow();
+  },
+  updated: function() {
+    this.reflow();
   },
   methods: {
+    updateChildHeight: function(childArg) {
+      this.heightTable.set(childArg.index, childArg.height);
+    },
+    reflow: function() {
+      this.updateArguments();
+      this.heightTable = HeightTable(this.rowSize);
+    },
     updateArguments: function() {
       var blockContainer = this.$el;
       var containerWidth = blockContainer.clientWidth;

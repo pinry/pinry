@@ -3,7 +3,12 @@
 <script type="text/x-template" id="pin-container-template">
   <div>
     <template v-for="(item, index) in pins">
-      <pin :pin="item" :index="index" :args="args"></pin>
+      <pin
+          :pin="item"
+          :index="index"
+          :args="args"
+          v-on:rendered="updateChildHeight"
+      ></pin>
     </template>
   </div>
 
