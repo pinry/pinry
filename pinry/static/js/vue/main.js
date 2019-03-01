@@ -30,10 +30,9 @@ function HeightTable(rowSize) {
       return 0;
     }
     var height = 0;
-    for (var index = 0; index += rowSize; index < indexOfElement) {
+    for (var index = 0; index < indexOfElement; index += rowSize) {
       var value = obj.get(index);
       if (value === null) {
-        console.log("Get null value for index: " + index);
         return null
       }
       height += value;
@@ -64,16 +63,17 @@ Vue.component('pin', {
       'imageStyle': null,
       'pinStyle': null,
       'height': null,
+      'heightOffset': null,
     }
   },
-  props: ['pin', 'args', 'index', 'heightOffset'],
+  props: ['pin', 'args', 'index', 'heightTable'],
   template: '#pin-template',
   mounted: function() {
+    this.heightOffset = this.heightTable.getHeightOffset(this.index);
     this.imageStyle = this.getImageStyle();
     this.pinStyle = this.getPinStyle();
-    this.height = this.getTextHeight();
-    console.log(this.height);
-    this.$emit("rendered", {index: this.index, height: this.height})
+    this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
+    this.$emit("rendered", {index: this.index, height: this.height});
   },
   methods: {
     getImageStyle: function() {
@@ -112,7 +112,7 @@ Vue.component('pin', {
         marginTop = 0;
       } else {
         var lineNumber = getLineNumber(self.args.rowSize, self.index);
-        marginTop = self.args.blockMargin + (self.args.blockMargin + 300) * lineNumber;
+        marginTop = (self.args.blockMargin + self.heightOffset) * lineNumber;
       }
 
       if (isFirstOne(self.args.rowSize, self.index)) {
@@ -140,7 +140,7 @@ Vue.component('pin', {
       return "/pins/tags/" + tag + "/"
     },
     getTextHeight: function() {
-      var element = this.$el;
+      var element = this.$el.querySelector(".pin-description");
       var height = element.getBoundingClientRect().height;
       return height
     },
@@ -165,22 +165,20 @@ Vue.component('pin-container', {
   },
   template: "#pin-container-template",
   created: function() {
-      this.$emit("loading");
-      var self = this;
-      var offset = 0;
-      fetchPins(offset).then(
-        function (res) {
-          self.pins = res.data.results;
-          self.$emit(
-            "loaded",
-          );
-        },
-      );
+    this.heightTable = HeightTable(this.rowSize);
+    this.$emit("loading");
+    var self = this;
+    var offset = 0;
+    fetchPins(offset).then(
+      function (res) {
+        self.pins = res.data.results;
+        self.$emit(
+          "loaded",
+        );
+      },
+    );
   },
   mounted: function() {
-    this.reflow();
-  },
-  updated: function() {
     this.reflow();
   },
   methods: {
@@ -189,7 +187,6 @@ Vue.component('pin-container', {
     },
     reflow: function() {
       this.updateArguments();
-      this.heightTable = HeightTable(this.rowSize);
     },
     updateArguments: function() {
       var blockContainer = this.$el;

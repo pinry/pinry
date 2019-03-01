@@ -7,6 +7,7 @@
           :pin="item"
           :index="index"
           :args="args"
+          :heightTable="heightTable"
           v-on:rendered="updateChildHeight"
       ></pin>
     </template>
@@ -38,7 +39,7 @@
         </div>
       </a>
 
-      <div>
+      <div class="pin-description">
         <p v-if="pin.description">{{ pin.description }}</p>
         <div class="pin-footer clearfix">
           <div class="avatar pull-left">
