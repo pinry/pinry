@@ -161,6 +161,7 @@ Vue.component('pin-container', {
       },
       "pins": [],
       "heightTable": [],
+      "counter": 0,
     };
   },
   template: "#pin-container-template",
@@ -177,7 +178,9 @@ Vue.component('pin-container', {
         );
       },
     );
-    window.addEventListener("resize", this.reflow, {})
+    window.addEventListener("optimizedResize", function() {
+      self.reflow();
+    });
   },
   mounted: function() {
     this.reflow();
@@ -208,6 +211,23 @@ Vue.component('pin-container', {
   },
 });
 
+(function() {
+    var throttle = function(type, name, obj) {
+        obj = obj || window;
+        var running = false;
+        var func = function() {
+            if (running) { return; }
+            running = true;
+             requestAnimationFrame(function() {
+                obj.dispatchEvent(new CustomEvent(name));
+                running = false;
+            });
+        };
+        obj.addEventListener(type, func);
+    };
+
+    throttle("resize", "optimizedResize");
+})();
 
 var app = new Vue({
   el: '#app',
