@@ -157,42 +157,56 @@ Vue.component('pin-container', {
       "pins": [],
       "heightTable": [],
       "counter": 0,
-      "loading": true,
+      status: {
+        loading: true,
+        hasNext: true,
+        offset: 0,
+      },
     };
   },
   template: "#pin-container-template",
   created: function() {
     this.heightTable = HeightTable(this.args.blockMargin);
-    this.markAsLoading();
+    this.loadMore();
     var self = this;
-    var offset = 0;
-    fetchPins(offset).then(
-      function (res) {
-        self.pins = res.data.results;
-        self.markAsLoaded();
-      },
-    );
     window.addEventListener("optimizedResize", function() {
       self.reflow();
     });
+    self.bindScrollHandler();
   },
   mounted: function() {
     this.reflow();
   },
   methods: {
-    markAsLoaded: function() {
-      this.loading = false;
+    loadMore() {
+      var self = this;
+      self.markAsLoading();
+      fetchPins(self.status.offset).then(
+        function (res) {
+          self.pins = self.pins.concat(res.data.results);
+          self.status.offset += res.data.results.length;
+          if (res.data.next === null) {
+            self.markAsLoaded(false);
+          } else {
+            self.markAsLoaded(true);
+          }
+        },
+      );
+    },
+    markAsLoaded: function(hasNext) {
+      this.status.hasNext = hasNext;
+      this.status.loading = false;
       this.$emit(
           "loaded",
       );
     },
     markAsLoading: function() {
-      this.loading = true;
+      this.status.loading = true;
       this.$emit(
           "loading",
       );
     },
-    scrollHandler: function () {
+    bindScrollHandler: function () {
       var self = this;
 
       function getDocumentScrollTop() {
@@ -210,14 +224,13 @@ Vue.component('pin-container', {
         );
       }
       scrollHandler = function() {
-        if (self.loading) {
+        if (self.status.loading || !self.status.hasNext) {
           return
         }
-        console.log('loading...');
         var windowPosition = getDocumentScrollTop() + window.innerHeight;
         var bottom = getDocumentHeight() - 100;
         if(windowPosition > bottom) {
-          self.loadMore()
+          self.loadMore();
         }
       };
       window.addEventListener('scroll', function(e) {
