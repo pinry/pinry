@@ -157,20 +157,19 @@ Vue.component('pin-container', {
       "pins": [],
       "heightTable": [],
       "counter": 0,
+      "loading": true,
     };
   },
   template: "#pin-container-template",
   created: function() {
     this.heightTable = HeightTable(this.args.blockMargin);
-    this.$emit("loading");
+    this.markAsLoading();
     var self = this;
     var offset = 0;
     fetchPins(offset).then(
       function (res) {
         self.pins = res.data.results;
-        self.$emit(
-          "loaded",
-        );
+        self.markAsLoaded();
       },
     );
     window.addEventListener("optimizedResize", function() {
@@ -181,6 +180,51 @@ Vue.component('pin-container', {
     this.reflow();
   },
   methods: {
+    markAsLoaded: function() {
+      this.loading = false;
+      this.$emit(
+          "loaded",
+      );
+    },
+    markAsLoading: function() {
+      this.loading = true;
+      this.$emit(
+          "loading",
+      );
+    },
+    scrollHandler: function () {
+      var self = this;
+
+      function getDocumentScrollTop() {
+        var doc = document.documentElement;
+        return (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+      }
+
+      function getDocumentHeight() {
+        var body = document.body,
+        html = document.documentElement;
+        return Math.max(
+          body.scrollHeight, body.offsetHeight,
+          html.clientHeight, html.scrollHeight,
+          html.offsetHeight,
+        );
+      }
+      scrollHandler = function() {
+        if (self.loading) {
+          return
+        }
+        console.log('loading...');
+        var windowPosition = getDocumentScrollTop() + window.innerHeight;
+        var bottom = getDocumentHeight() - 100;
+        if(windowPosition > bottom) {
+          self.loadMore()
+        }
+      };
+      window.addEventListener('scroll', function(e) {
+          scrollHandler();
+        }
+      );
+    },
     updateChildHeight: function(childArg) {
       this.heightTable.set(childArg.index, childArg.height);
     },
@@ -230,6 +274,7 @@ Vue.component('pin-container', {
 
   throttle("resize", "optimizedResize");
 })();
+
 
 var app = new Vue({
   el: '#app',
