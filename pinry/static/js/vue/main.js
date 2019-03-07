@@ -1,3 +1,4 @@
+var events = new Vue({});
 
 function fetchPins(offset) {
     var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
@@ -66,14 +67,23 @@ Vue.component('pin', {
   },
   props: ['pin', 'args', 'index', 'heightTable'],
   template: '#pin-template',
+  created: function() {
+    var self = this;
+    events.$on("reflow", function () {
+      self.reflow();
+    });
+  },
   mounted: function() {
-    this.heightOffset = this.heightTable.getHeightOffset(this.index, this.args.rowSize);
-    this.imageStyle = this.getImageStyle();
-    this.pinStyle = this.getPinStyle();
-    this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
+    this.reflow();
     this.$emit("rendered", {index: this.index, height: this.height});
   },
   methods: {
+    reflow: function() {
+      this.heightOffset = this.heightTable.getHeightOffset(this.index, this.args.rowSize);
+      this.imageStyle = this.getImageStyle();
+      this.pinStyle = this.getPinStyle();
+      this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
+    },
     getImageStyle: function() {
       return {
         width: this.pin.image.thumbnail.width + 'px',
@@ -127,8 +137,7 @@ Vue.component('pin', {
     },
     getTextHeight: function() {
       var element = this.$el.querySelector(".pin-description");
-      var height = element.getBoundingClientRect().height;
-      return height
+      return element.getBoundingClientRect().height;
     },
   }
 });
@@ -177,6 +186,7 @@ Vue.component('pin-container', {
     },
     reflow: function() {
       this.updateArguments();
+      events.$emit("reflow");
     },
     updateArguments: function() {
       var blockContainer = this.$el;
@@ -205,7 +215,6 @@ Vue.component('pin-container', {
       var func = function() {
           if (running) { return; }
           var now = new Date().getTime();
-          console.log(now, previousResize, now - previousResize);
           if ((now - previousResize) < 200) {
             return
           }
