@@ -152,6 +152,7 @@ Vue.component('pin-container', {
   },
   template: "#pin-container-template",
   created: function() {
+    this.heightTable = HeightTable(this.args.blockMargin);
     this.$emit("loading");
     var self = this;
     var offset = 0;
@@ -176,7 +177,6 @@ Vue.component('pin-container', {
     },
     reflow: function() {
       this.updateArguments();
-      this.heightTable = HeightTable(this.args.blockMargin);
     },
     updateArguments: function() {
       var blockContainer = this.$el;
