@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block yield %}
-    <pin-container v-on:loaded="onLoaded()" v-on:loading="onLoading()">
-    </pin-container>
-    <div v-show="loading" class="spinner"></div>
+  <pin-container
+      v-on:loaded="onLoaded()"
+      v-on:loading="onLoading()"
+      v-on:no-more-pins="onNoMore()"
+  >
+  </pin-container>
+  <div v-show="loading" class="spinner"></div>
+  <div v-show="noMore">&mdash; End &mdash;</div>
 {% endblock %}

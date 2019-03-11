@@ -199,6 +199,9 @@ Vue.component('pin-container', {
       this.$emit(
           "loaded",
       );
+      if (!hasNext) {
+        this.$emit("no-more-pins")
+      }
     },
     markAsLoading: function() {
       this.status.loading = true;
@@ -294,6 +297,7 @@ var app = new Vue({
   data() {
     return {
       loading: true,
+      noMore: false,
     }
   },
   methods: {
@@ -303,5 +307,8 @@ var app = new Vue({
     onLoading: function(){
       this.loading = true;
     },
+    onNoMore: function () {
+      this.noMore = true;
+    }
   },
 });
