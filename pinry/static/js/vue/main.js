@@ -1,10 +1,44 @@
 var events = new Vue({});
+var eventsName = {
+  pinReflowDone: "single-pin-reflow-done",
+  allPinReflowDone: "all-pin-reflow-done",
+};
 
 function fetchPins(offset) {
     var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
     if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
     if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
     return axios.get(apiUrl)
+}
+
+function EventCounter(countEvent, triggerEvent, triggerTimes) {
+
+  var self = {
+    id: new Date().getTime(),
+    count: 0,
+    targetCount: triggerTimes,
+    triggerEvent: countEvent,
+    countEvent: countEvent,
+  };
+  events.$on(
+    countEvent,
+    function() {
+      self.count += 1;
+      console.log(self.id, self.count);
+      if (self.count >= self.targetCount) {
+        events.$emit(triggerEvent)
+      }
+    }
+  );
+  self.resetAfterReflow = function (targetCount) {
+    self.count = 0;
+    self.targetCount = targetCount;
+  };
+  self.reset = function (targetCount) {
+    self.targetCount = targetCount;
+  };
+
+  return self;
 }
 
 
@@ -83,6 +117,7 @@ Vue.component('pin', {
       this.imageStyle = this.getImageStyle();
       this.pinStyle = this.getPinStyle();
       this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
+      events.$emit(eventsName.pinReflowDone);
     },
     getImageStyle: function() {
       return {
@@ -156,7 +191,7 @@ Vue.component('pin-container', {
       },
       "pins": [],
       "heightTable": [],
-      "counter": 0,
+      "counter": null,
       status: {
         loading: true,
         hasNext: true,
@@ -173,17 +208,28 @@ Vue.component('pin-container', {
       self.reflow();
     });
     self.bindScrollHandler();
+    self.counter = EventCounter(
+      eventsName.pinReflowDone,
+      eventsName.allPinReflowDone,
+      self.pins.length,
+    );
+    events.$on(eventsName.allPinReflowDone, this.updateContainerStyle);
   },
   mounted: function() {
     this.reflow();
   },
   methods: {
+    updateContainerStyle: function() {
+
+    },
     loadMore() {
       var self = this;
       self.markAsLoading();
       fetchPins(self.status.offset).then(
         function (res) {
-          self.pins = self.pins.concat(res.data.results);
+          var newPins = self.pins.concat(res.data.results);
+          self.counter.reset(self.pins.length);
+          self.pins = newPins;
           self.status.offset += res.data.results.length;
           if (res.data.next === null) {
             self.markAsLoaded(false);
@@ -245,6 +291,7 @@ Vue.component('pin-container', {
       this.heightTable.set(childArg.index, childArg.height);
     },
     reflow: function() {
+      this.counter.resetAfterReflow(self.pins.length);
       this.updateArguments();
       events.$emit("reflow");
     },
