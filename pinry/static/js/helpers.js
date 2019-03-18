@@ -42,13 +42,6 @@ $.ajaxSetup({
     }
 });
 
-
-function renderTemplate(templateId, context) {
-    var template = Handlebars.compile($(templateId).html());
-    return template(context);
-}
-
-
 function cleanTags(tags) {
     if (typeof tags === 'string' && tags.length > 0) {
         tags = tags.split(/[\s,]+/);
