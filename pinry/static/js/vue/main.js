@@ -48,7 +48,7 @@ function HeightTable(blockMargin) {
   };
   function get(obj, index) {
     if (!obj.data.hasOwnProperty(index)) {
-      obj.data[index] = null
+      return null
     }
     return obj.data[index];
   }
@@ -73,8 +73,8 @@ function HeightTable(blockMargin) {
     return height
   }
 
-  self.get = function(index, value) {
-    return get(self, index, value);
+  self.get = function(index) {
+    return get(self, index);
   };
 
   self.set = function (index, value) {
