@@ -8,5 +8,7 @@
   >
   </pin-container>
   <div v-show="loading" class="spinner"></div>
-  <div v-show="noMore">&mdash; End &mdash;</div>
+  <template v-if="noMore">
+    <div id="the-end">&mdash; End &mdash;</div>
+  </template>
 {% endblock %}

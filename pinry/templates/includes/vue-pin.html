@@ -1,7 +1,7 @@
 {% verbatim %}
 
 <script type="text/x-template" id="pin-container-template">
-  <div id="pins">
+  <div id="pins" :style="containerStyle">
     <template v-for="(item, index) in pins">
       <pin
           :pin="item"

@@ -24,7 +24,6 @@ function EventCounter(countEvent, triggerEvent, triggerTimes) {
     countEvent,
     function() {
       self.count += 1;
-      console.log(self.id, self.count);
       if (self.count >= self.targetCount) {
         events.$emit(triggerEvent)
       }
@@ -83,6 +82,18 @@ function HeightTable(blockMargin) {
   self.getHeightOffset = function (index, rowSize) {
     return getHeightOffset(self, index, rowSize);
   };
+  self.getMaxHeight = function(rowSize, blockMargin) {
+    var size = Object.keys(self.data).length;
+    var heightArray = [];
+    for (var column = 0; column < rowSize; column ++) {
+      heightArray.push(0);
+    }
+    for (var index = 0; index < size; index++) {
+      var column = index % rowSize;
+      heightArray[column] = heightArray[column] + self.get(index) + blockMargin;
+    }
+    return Math.max(...heightArray);
+  };
   return self;
 }
 
@@ -111,13 +122,15 @@ Vue.component('pin', {
     this.reflow();
     this.$emit("rendered", {index: this.index, height: this.height});
   },
+  updated: function() {
+    events.$emit(eventsName.pinReflowDone);
+  },
   methods: {
     reflow: function() {
       this.heightOffset = this.heightTable.getHeightOffset(this.index, this.args.rowSize);
       this.imageStyle = this.getImageStyle();
       this.pinStyle = this.getPinStyle();
       this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
-      events.$emit(eventsName.pinReflowDone);
     },
     getImageStyle: function() {
       return {
@@ -192,6 +205,7 @@ Vue.component('pin-container', {
       "pins": [],
       "heightTable": [],
       "counter": null,
+      "containerStyle": null,
       status: {
         loading: true,
         hasNext: true,
@@ -220,7 +234,13 @@ Vue.component('pin-container', {
   },
   methods: {
     updateContainerStyle: function() {
-
+      var height = this.heightTable.getMaxHeight(
+        this.args.rowSize,
+        this.args.blockMargin,
+      );
+      this.containerStyle = {
+        height: height + "px",
+      };
     },
     loadMore() {
       var self = this;
