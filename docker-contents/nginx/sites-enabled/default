@@ -1,0 +1,26 @@
+server {
+    listen 80 default;
+    server_name _;
+
+    access_log /srv/www/pinry/logs/access.log;
+    error_log /srv/www/pinry/logs/error.log;
+
+    location /media {
+        alias /data/static/media;
+        expires max;
+        access_log off;
+    }
+
+    location /static {
+        alias /data/static;
+        expires max;
+        access_log off;
+    }
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_pass http://localhost:8000;
+    }
+}

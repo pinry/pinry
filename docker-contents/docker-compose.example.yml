@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: >
+      bash -c "/scripts/start.sh"
+    ports:
+# if you use "127.0.0.1", no one except you can visit it from within
+#      - "127.0.0.1:10000:8000"
+      - "80:80"
+    volumes:
+      # overwrite local_settings, you can always modify your local_settings file
+      - ./pinry/local_settings.py:/srv/www/pinry/pinry/settings/local_settings.py
+      - ./data/:/data/
+    restart: always
