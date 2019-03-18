@@ -228,7 +228,7 @@ Vue.component('pin-container', {
       fetchPins(self.status.offset).then(
         function (res) {
           var newPins = self.pins.concat(res.data.results);
-          self.counter.reset(self.pins.length);
+          self.counter.reset(newPins.length);
           self.pins = newPins;
           self.status.offset += res.data.results.length;
           if (res.data.next === null) {
