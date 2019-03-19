@@ -33,7 +33,10 @@
         </div>
       </transition>
 
-      <a :href="pin.image.image" class="lightbox" :style="imageStyle">
+      <a :href="pin.image.image"
+         @click="showImageDetail($event)"
+         class="lightbox"
+         :style="imageStyle">
         <div class="image-wrapper">
           <img :src="pin.image.thumbnail.image" v-on:load="onImageLoad">
         </div>

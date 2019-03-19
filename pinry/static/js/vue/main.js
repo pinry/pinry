@@ -2,6 +2,7 @@ var events = new Vue({});
 var eventsName = {
   pinReflowDone: "single-pin-reflow-done",
   allPinReflowDone: "all-pin-reflow-done",
+  viewPin: "view-single-pin"
 };
 
 function fetchPins(offset) {
@@ -98,6 +99,30 @@ function HeightTable(blockMargin) {
 }
 
 
+Vue.component(
+  'light-box',
+  {
+    data: function () {
+      return {
+        backgroundStyle: null,
+        lightBoxImageWrapperStyle: null,
+      }
+    },
+    props: ['pin'],
+    template: "#lightbox-template",
+    created: function () {
+      var documentHeight = document.documentElement.getBoundingClientRect().height;
+      this.backgroundStyle = {
+        height: documentHeight + "px",
+      };
+      this.lightBoxImageWrapperStyle = {
+        height: this.pin.image.standard.height + 'px',
+      }
+    }
+  }
+);
+
+
 Vue.component('pin', {
   data: function () {
     return {
@@ -126,6 +151,10 @@ Vue.component('pin', {
     events.$emit(eventsName.pinReflowDone);
   },
   methods: {
+    showImageDetail: function(event) {
+      events.$emit(eventsName.viewPin, this.pin);
+      if (event) event.preventDefault();
+    },
     reflow: function() {
       this.heightOffset = this.heightTable.getHeightOffset(this.index, this.args.rowSize);
       this.imageStyle = this.getImageStyle();
@@ -365,9 +394,19 @@ var app = new Vue({
     return {
       loading: true,
       noMore: false,
+      currentPin: null,
     }
   },
+  created: function() {
+    events.$on(
+      eventsName.viewPin,
+      this.onViewPin,
+    );
+  },
   methods: {
+    onViewPin: function(pin) {
+      this.currentPin = pin;
+    },
     onLoaded: function(){
       this.loading = false;
     },

@@ -11,4 +11,6 @@
   <template v-if="noMore">
     <div id="the-end">&mdash; End &mdash;</div>
   </template>
+  <light-box v-if="currentPin" :pin="currentPin">
+  </light-box>
 {% endblock %}

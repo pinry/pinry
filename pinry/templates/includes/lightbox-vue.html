@@ -1,0 +1,37 @@
+{% verbatim %}
+    <script id="lightbox-template" type="text/x-template">
+        <div class="lightbox-background">
+            <div class="lightbox-wrapper">
+                <div class="lightbox-image-wrapper">
+                    <img class="lightbox-image" src="{{ pin.image.image }}" />
+                </div>
+                <div class="lightbox-data clearfix">
+                  <div class="description" v-if="pin.description">
+                      {{ pin.description }}
+                  </div>
+                  <div class="avatar pull-left">
+                      <img src="//gravatar.com/avatar/{{submitter.gravatar}}.jpg">
+                  </div>
+                  <div class="text pull-left">
+                      <span class="dim">pinned by</span> {{ pin.submitter.username }}
+                      <template v-if="pin.tags">
+                        <br /><span class="dim">in</span>
+                        <template v-for="tag in pin.tags">
+                            <span class="tag">
+                              <a href="/pins/tags/{{ tag }}/" class="btn btn-xs btn-primary">
+                                {{ tag }}
+                              </a>
+                            </span>
+                        </template>
+                      </template>
+                  </div>
+                    <div class="text extra pull-right">
+                        <a href="{{ pin.referer }}" class="btn btn-sm btn-default btn-warning" target="_blank">Referer</a>
+                        <a href="{{ pin.url }}" class="btn btn-sm btn-default btn-primary" target="_blank">Original URL</a>
+                        <a href="/{{ pin.id }}/" class="btn btn-sm btn-default btn-success" target="_blank">Pin URL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+{% endverbatim %}
