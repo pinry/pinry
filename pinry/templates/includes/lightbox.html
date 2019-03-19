@@ -1,8 +1,8 @@
 {% verbatim %}
     <script id="lightbox-template" type="text/x-handlebars-template">
-        <div class="lightbox-background">
+        <div class="lightbox-background" :style="backgroundStyle">
             <div class="lightbox-wrapper">
-                <div class="lightbox-image-wrapper">
+                <div class="lightbox-image-wrapper" :style="lightBoxImageWrapperStyle">
                     <img class="lightbox-image" src="{{image.image}}" />
                 </div>
                 <div class="lightbox-data clearfix">
