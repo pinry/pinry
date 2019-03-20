@@ -12,6 +12,21 @@ function fetchPins(offset) {
     return axios.get(apiUrl)
 }
 
+var utils = {
+  getDocumentHeight: function () {
+    var body = document.body,
+    html = document.documentElement;
+    return Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight,
+      html.offsetHeight,
+    );
+  },
+  getWindowHeight: function () {
+    return window.innerHeight
+  }
+};
+
 function EventCounter(countEvent, triggerEvent, triggerTimes) {
 
   var self = {
@@ -105,19 +120,38 @@ Vue.component(
     data: function () {
       return {
         backgroundStyle: null,
+        lightBoxWrapperStyle: null,
         lightBoxImageWrapperStyle: null,
       }
     },
     props: ['pin'],
     template: "#lightbox-template",
-    created: function () {
-      var documentHeight = document.documentElement.getBoundingClientRect().height;
+    mounted: function () {
+      var documentHeight = utils.getDocumentHeight();
+      var imageWidth = this.pin.image.standard.width;
+      var imageHeight = this.pin.image.standard.height;
+      var windowHeight = utils.getWindowHeight();
+      var backgroundHeight = documentHeight;
+      var lightBoxWrapperStyle = {
+        'height': imageHeight + 'px',
+        'width': imageWidth + "px",
+        'marginTop': '80px',
+        'marginBottom': '80px',
+        'margin-left': - imageWidth / 2 + "px",
+      };
+      var wrapper = this.$el.querySelector(".lightbox-wrapper");
+
+      if (wrapper.getBoundingClientRect().height + 140 > windowHeight) {
+        var wrapperHeight = wrapper.getBoundingClientRect().height;
+        backgroundHeight = wrapperHeight + 160;
+      }
       this.backgroundStyle = {
-        height: documentHeight + "px",
+        height: backgroundHeight + 'px',
       };
       this.lightBoxImageWrapperStyle = {
-        height: this.pin.image.standard.height + 'px',
-      }
+        height: imageHeight + 'px',
+      };
+      this.lightBoxWrapperStyle = lightBoxWrapperStyle;
     }
   }
 );
@@ -312,21 +346,12 @@ Vue.component('pin-container', {
         return (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
       }
 
-      function getDocumentHeight() {
-        var body = document.body,
-        html = document.documentElement;
-        return Math.max(
-          body.scrollHeight, body.offsetHeight,
-          html.clientHeight, html.scrollHeight,
-          html.offsetHeight,
-        );
-      }
       scrollHandler = function() {
         if (self.status.loading || !self.status.hasNext) {
           return
         }
         var windowPosition = getDocumentScrollTop() + window.innerHeight;
-        var bottom = getDocumentHeight() - 100;
+        var bottom = utils.getDocumentHeight() - 100;
         if(windowPosition > bottom) {
           self.loadMore();
         }
