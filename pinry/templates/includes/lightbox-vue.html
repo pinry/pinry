@@ -1,7 +1,7 @@
 {% verbatim %}
     <script id="lightbox-template" type="text/x-template">
       <transition name="fade">
-        <div class="lightbox-background" :style="backgroundStyle">
+        <div class="lightbox-background" :style="backgroundStyle" v-on:click.self="onCloseView()">
             <div class="lightbox-wrapper" :style="lightBoxWrapperStyle">
                 <div class="lightbox-image-wrapper" :style="lightBoxImageWrapperStyle">
                     <img class="lightbox-image" :src="pin.image.image" />

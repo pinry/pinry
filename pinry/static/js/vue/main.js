@@ -2,7 +2,10 @@ var events = new Vue({});
 var eventsName = {
   pinReflowDone: "single-pin-reflow-done",
   allPinReflowDone: "all-pin-reflow-done",
-  viewPin: "view-single-pin"
+  pinView: {
+    open: "view-single-pin",
+    close: "close-pin-view",
+  },
 };
 
 function fetchPins(offset) {
@@ -133,7 +136,6 @@ Vue.component(
       var windowHeight = utils.getWindowHeight();
       var backgroundHeight = documentHeight;
       var lightBoxWrapperStyle = {
-        'height': imageHeight + 'px',
         'width': imageWidth + "px",
         'marginTop': '80px',
         'marginBottom': '80px',
@@ -152,6 +154,11 @@ Vue.component(
         height: imageHeight + 'px',
       };
       this.lightBoxWrapperStyle = lightBoxWrapperStyle;
+    },
+    methods: {
+      onCloseView: function() {
+        events.$emit(eventsName.pinView.close);
+      }
     }
   }
 );
@@ -186,7 +193,7 @@ Vue.component('pin', {
   },
   methods: {
     showImageDetail: function(event) {
-      events.$emit(eventsName.viewPin, this.pin);
+      events.$emit(eventsName.pinView.open, this.pin);
       if (event) event.preventDefault();
     },
     reflow: function() {
@@ -424,13 +431,20 @@ var app = new Vue({
   },
   created: function() {
     events.$on(
-      eventsName.viewPin,
+      eventsName.pinView.open,
       this.onViewPin,
+    );
+    events.$on(
+      eventsName.pinView.close,
+      this.onClosePin,
     );
   },
   methods: {
     onViewPin: function(pin) {
       this.currentPin = pin;
+    },
+    onClosePin: function(pin) {
+      this.currentPin = null;
     },
     onLoaded: function(){
       this.loading = false;
