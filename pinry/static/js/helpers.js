@@ -34,8 +34,9 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
 $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
+    beforeSend: function (xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
         }
@@ -61,7 +62,7 @@ function getPinData(pinId) {
 
 
 function deletePinData(pinId) {
-    var apiUrl = API_BASE + 'pins/' +pinId + '/?format=json';
+    var apiUrl = API_BASE + 'pins/' + pinId + '/?format=json';
     return $.ajax(apiUrl, {
         type: 'DELETE'
     });
@@ -78,5 +79,5 @@ function postPinData(data) {
 
 
 function getUrlParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
 }
