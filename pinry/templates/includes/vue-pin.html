@@ -51,7 +51,7 @@
           <div class="text pull-right">
             <span class="dim">pinned by</span>
             <a :href="getUserLink">{{ pin.submitter.username }}</a>
-            <template v-if="pin.tags">
+            <template v-if="pin.tags.length != 0">
               <span class="dim">in</span>
               <template v-for="_tag in pin.tags">
                 <span class="tag"><a :href="getTagLink(_tag)">{{ _tag }}</a></span>
