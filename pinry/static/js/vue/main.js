@@ -348,11 +348,6 @@ Vue.component('pin-container', {
     bindScrollHandler: function () {
       var self = this;
 
-      function getDocumentScrollTop() {
-        var doc = document.documentElement;
-        return (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-      }
-
       scrollHandler = function() {
         if (self.status.loading || !self.status.hasNext) {
           return

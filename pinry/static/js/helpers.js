@@ -81,3 +81,8 @@ function postPinData(data) {
 function getUrlParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
 }
+
+function getDocumentScrollTop() {
+    var doc = document.documentElement;
+    return (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+}
