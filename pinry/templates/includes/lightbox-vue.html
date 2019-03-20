@@ -27,9 +27,9 @@
                       </template>
                   </div>
                     <div class="text extra pull-right">
-                        <a href="{{ pin.referer }}" class="btn btn-sm btn-default btn-warning" target="_blank">Referer</a>
-                        <a href="{{ pin.url }}" class="btn btn-sm btn-default btn-primary" target="_blank">Original URL</a>
-                        <a href="/{{ pin.id }}/" class="btn btn-sm btn-default btn-success" target="_blank">Pin URL</a>
+                        <a :href="pin.referer" class="btn btn-sm btn-default btn-warning" target="_blank">Referer</a>
+                        <a :href="pin.url" class="btn btn-sm btn-default btn-primary" target="_blank">Original URL</a>
+                        <a :href="'/' + pin.id + '/'" class="btn btn-sm btn-default btn-success" target="_blank">Pin URL</a>
                     </div>
                 </div>
             </div>
