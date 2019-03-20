@@ -1,9 +1,9 @@
 {% verbatim %}
     <script id="lightbox-template" type="text/x-template">
       <transition name="fade">
-        <div class="lightbox-background">
-            <div class="lightbox-wrapper">
-                <div class="lightbox-image-wrapper">
+        <div class="lightbox-background" :style="backgroundStyle">
+            <div class="lightbox-wrapper" :style="lightBoxWrapperStyle">
+                <div class="lightbox-image-wrapper" :style="lightBoxImageWrapperStyle">
                     <img class="lightbox-image" :src="pin.image.image" />
                 </div>
                 <div class="lightbox-data clearfix">
@@ -11,7 +11,7 @@
                       {{ pin.description }}
                   </div>
                   <div class="avatar pull-left">
-                      <img src="//gravatar.com/avatar/{{submitter.gravatar}}.jpg">
+                      <img :src="'//gravatar.com/avatar/' + pin.submitter.gravatar + '.jpg'">
                   </div>
                   <div class="text pull-left">
                       <span class="dim">pinned by</span> {{ pin.submitter.username }}
@@ -19,7 +19,7 @@
                         <br /><span class="dim">in</span>
                         <template v-for="tag in pin.tags">
                             <span class="tag">
-                              <a href="/pins/tags/{{ tag }}/" class="btn btn-xs btn-primary">
+                              <a :href="'/pins/tags/' + tag + '/'" class="btn btn-xs btn-primary">
                                 {{ tag }}
                               </a>
                             </span>

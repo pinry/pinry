@@ -8,7 +8,7 @@
 }
 
 .lightbox-wrapper {
-    background: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     background-image: url("../img/loader.gif");
     background-position: center center;
     background-repeat: no-repeat;
