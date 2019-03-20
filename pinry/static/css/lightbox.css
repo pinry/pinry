@@ -1,6 +1,5 @@
 .lightbox-background {
     background: rgba(0, 0, 0, 0.7);
-    display: none;
     left: 0;
     right: 0;
     top: 0;
@@ -23,7 +22,6 @@
 
 .lightbox-wrapper img {
     max-width: 600px;
-    display: none;
     -webkit-border-top-right-radius: 3px;
      -webkit-border-top-left-radius: 3px;
         -moz-border-radius-topright: 3px;
