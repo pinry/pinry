@@ -16,14 +16,14 @@ Running this will get the latest version of pinry itself::
 
   git clone https://github.com/pinry/pinry
   cd pinry
-  ./docker-contents/bootstrap.sh
+  ./docker/bootstrap.sh
 
 Now you can start your container by command like this::
 
   # this is where your database and pins localted
   mkdir data
   # use absolute path for docker to avoid using default data-volume (we use directory instead)
-  ./docker-contents/start_docker.sh `readlink -f data`
+  ./docker/start_docker.sh `readlink -f data`
 
 Please visit `http://your-ip` to visit your instance and register a new account, enjoy it.
 
@@ -41,7 +41,7 @@ Building docker-pinry again
 
 Running this will build you a docker image with the latest version of pinry::
 
-  ./docker-contents/build_docker.sh
+  ./docker/build_docker.sh
 
 
 Running docker-pinry in manual way
@@ -59,12 +59,12 @@ Then you have two choice to run docker-pinry
 
 Fist one, with automaticlly configured default arguments::
 
-  ./docker-contents/start_docker.sh /mnt/pinry
+  ./docker/start_docker.sh /mnt/pinry
 
 
 Second one, start docker by hand with customized arguments::
 
-  SETTINGS_PATH=$(readlink -f docker-contents/pinry/local_settings.py) \
+  SETTINGS_PATH=$(readlink -f docker/pinry/local_settings.py) \
   DATA_PATH=$(readlink -f /mnt/pinry) \
   sudo docker run -d=true -p=10000:80 \
     -v=${DATA_PATH}:/data \
@@ -86,7 +86,7 @@ Running docker-pinry with docker-compose
 Just config your ``docker-compose.yml`` and then run::
 
     sudo pip install -U docker-compose
-    sudo docker-compose --project-directory docker-contents up -d
+    sudo docker-compose --project-directory docker up -d
 
 
 Notes on the run commands
@@ -132,4 +132,4 @@ stronger database solution.
 
 .. _official getting started guide: http://www.docker.io/gettingstarted/
 .. _website: http://getpinry.com/
-.. _additional pinry configuration settings: https://github.com/pinry/pinry/blob/master/docker-contents/pinry/local_settings.example.py
+.. _additional pinry configuration settings: https://github.com/pinry/pinry/blob/master/docker/pinry/local_settings.example.py
