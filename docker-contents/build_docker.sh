@@ -1,3 +1,4 @@
 #!/bin/bash
 
-sudo docker build --no-cache -t pinry/pinry${@} .
+script_dir="$( dirname "${0}" )"
+sudo docker build -t pinry/pinry${@} "${script_dir}/../" -f "${script_dir}/../Dockerfile.autobuild"

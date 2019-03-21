@@ -1,12 +1,13 @@
 #!/bin/bash
 
+script_dir="$( dirname "${0}" )"
 # Force users to login before seeing any pins.
 if [ "${ALLOW_NEW_REGISTRATIONS}" = "" ]; then
     ALLOW_NEW_REGISTRATIONS=true
 fi
 
 if [[ "$(docker images -q pinry/pinry 2> /dev/null)" == "" ]]; then
-  echo "No docker image found, building..." && ./build_docker.sh
+  echo "No docker image found, building..." && "${script_dir}/build_docker.sh"
 fi
 
 echo "=================================================================================="
@@ -25,25 +26,26 @@ echo ""
 echo ${SECRET_KEY}
 echo "=================================================================================="
 
+local_settings_file="${script_dir}/pinry/local_settings.py"
 # Create local_settings.py
-if [ ! -f ./pinry/local_settings.py ];
+if [ ! -f "${local_settings_file}" ];
 then
-    cp ./pinry/local_settings.example.py ./pinry/local_settings.py
-    sed -i "s/secret\_key\_place\_holder/${SECRET_KEY}/" ./pinry/local_settings.py
+    cp "${script_dir}/pinry/local_settings.example.py" "${local_settings_file}"
+    sed -i "s/secret\_key\_place\_holder/${SECRET_KEY}/" "${local_settings_file}"
 
     # Force users to login before seeing any pins.
     if [ "${PRIVATE}" = "true" ]; then
-        sed -i "s/PUBLIC = True/PUBLIC = False/" ./pinry/local_settings.py
+        sed -i "s/PUBLIC = True/PUBLIC = False/" "${local_settings_file}"
     fi
 
     # Enable people from creating new accounts.
     if [ "${ALLOW_NEW_REGISTRATIONS}" = "true" ]; then
-        sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" ./pinry/local_settings.py
+        sed -i "s/ALLOW_NEW_REGISTRATIONS = False/ALLOW_NEW_REGISTRATIONS = True/" "${local_settings_file}"
     fi
 fi
 
 # Copy to docker-compose.yml
-if [ ! -f ./docker-compose.yml ];
+if [ ! -f "${script_dir}/docker-compose.yml" ];
 then
-    cp ./docker-compose.example.yml ./docker-compose.yml
+    cp "${script_dir}/docker-compose.example.yml" "${script_dir}/docker-compose.yml"
 fi

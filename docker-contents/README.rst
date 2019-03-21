@@ -1,30 +1,29 @@
-docker-pinry
+Pinry Docker
 ============
 
 .. image:: https://travis-ci.org/pinry/docker-pinry.svg?branch=master
     :target: https://travis-ci.org/pinry/docker-pinry
 
-A nice and easy way to get a pinry instance up and running using docker. For
+A nice and easy way to get a Pinry instance up and running using docker. For
 help on getting started with docker see the `official getting started guide`_.
 For more information on Pinry and a demo check out it's `website`_.
 
 
-Getting docker-pinry
+Getting Pinry Docker
 ---------------------
 
-Running this will get the latest version of both
-docker-pinry and pinry itself::
+Running this will get the latest version of pinry itself::
 
-  git clone https://github.com/pinry/docker-pinry
-  cd docker-pinry
-  ./bootstrap.sh
+  git clone https://github.com/pinry/pinry
+  cd pinry
+  ./docker-contents/bootstrap.sh
 
 Now you can start your container by command like this::
 
   # this is where your database and pins localted
   mkdir data
   # use absolute path for docker to avoid using default data-volume (we use directory instead)
-  ./start_docker.sh `readlink -f data`
+  ./docker-contents/start_docker.sh `readlink -f data`
 
 Please visit `http://your-ip` to visit your instance and register a new account, enjoy it.
 
@@ -40,10 +39,9 @@ Enable signups for new users by editing ``pinry/local_settings.py``::
 Building docker-pinry again
 ---------------------------
 
-Running this will build you a docker image with the latest version of both
-docker-pinry and pinry itself::
+Running this will build you a docker image with the latest version of pinry::
 
-  ./build_docker.sh
+  ./docker-contents/build_docker.sh
 
 
 Running docker-pinry in manual way
@@ -61,12 +59,12 @@ Then you have two choice to run docker-pinry
 
 Fist one, with automaticlly configured default arguments::
 
-  ./start_docker.sh /mnt/pinry
+  ./docker-contents/start_docker.sh /mnt/pinry
 
 
 Second one, start docker by hand with customized arguments::
 
-  SETTINGS_PATH=$(readlink -f ./pinry/local_settings.py) \
+  SETTINGS_PATH=$(readlink -f docker-contents/pinry/local_settings.py) \
   DATA_PATH=$(readlink -f /mnt/pinry) \
   sudo docker run -d=true -p=10000:80 \
     -v=${DATA_PATH}:/data \
@@ -88,7 +86,7 @@ Running docker-pinry with docker-compose
 Just config your ``docker-compose.yml`` and then run::
 
     sudo pip install -U docker-compose
-    sudo docker-compose up -d
+    sudo docker-compose --project-directory docker-contents up -d
 
 
 Notes on the run commands
@@ -134,4 +132,4 @@ stronger database solution.
 
 .. _official getting started guide: http://www.docker.io/gettingstarted/
 .. _website: http://getpinry.com/
-.. _additional pinry configuration settings: https://github.com/pinry/docker-pinry/blob/master/pinry/local_settings.example.py
+.. _additional pinry configuration settings: https://github.com/pinry/pinry/blob/master/docker-contents/pinry/local_settings.example.py
