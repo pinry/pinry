@@ -1,119 +1,120 @@
 <!DOCTYPE html>
 {% load staticfiles compress %}
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-        <title>{% block title %}Pinry{% endblock %}</title>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <title>{% block title %}Pinry{% endblock %}</title>
+  <link rel="shortcut icon" type="image/png" href="/static/favicon.png"/>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.6/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.css"/>
+  {% compress css %}
+    <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/vue-pin.css" %}"/>
+  {% endcompress %}
+  {% compress css inline %}
+    {% block extra_css %}{% endblock %}
+  {% endcompress %}
+  <!-- End CSS -->
 
-        <link rel="shortcut icon" type="image/png" href="/static/favicon.png"/>
+  <!-- Start JavaScript Variables -->
+  <script>
+    var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
+      errors = {% if not messages %}null,{% else %}[
+          {% for message in messages %}{
+            tags: "{{ message.tags }}",
+            text: "{{ message }}"
+            }{% endfor %}
+      ],{% endif %}
+      currentUser = {
+        id: "{{ user.id }}",
+        username: "{{ user.username }}",
+        gravatar: "{{ user.gravatar }}"
+      },
+      pinFilter = "{{ request.resolver_match.kwargs.pin }}",
+      tagFilter = "{{ request.resolver_match.kwargs.tag }}",
+      userFilter = "{{ request.resolver_match.kwargs.username }}";
+  </script>
+  <!-- End JavaScript Variables -->
+</head>
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.6/dist/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.css"/>
-        {% compress css %}
-            <link rel="stylesheet" href="{% static "css/messages.css" %}"/>
-            <link rel="stylesheet" href="{% static "css/lightbox.css" %}"/>
-            <link rel="stylesheet" href="{% static "css/pinry.css" %}"/>
-            <link rel="stylesheet" href="{% static "css/vue-pin.css" %}"/>
-        {%  endcompress %}
-        {% compress css inline %}
-            {% block extra_css %}{% endblock %}
-        {% endcompress %}
-        <!-- End CSS -->
+<body>
+<div id="app">
+  <!-- Navigation -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{% url 'core:recent-pins' %}" class="navbar-brand">
+          <img src="{% static "img/logo-dark.png" %}" alt="Pinry"/>
+        </a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            <li><a v-on:click="showPinForm()">New Pin</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li>{% include "includes/bookmarklet_link.html" %}</li>
+          {% else %}
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End Navigation -->
 
-        <!-- Start JavaScript Variables -->
-        <script>
-        var apiLimitPerPage = {{ API_LIMIT_PER_PAGE }},
-            errors = {% if not messages %}null,{% else %}[
-                {% for message in messages %}{
-                    tags: "{{ message.tags }}",
-                    text: "{{ message }}"
-                }{% endfor %}
-            ],{% endif %}
-            currentUser = {
-                id: "{{ user.id }}",
-                username: "{{ user.username }}",
-                gravatar: "{{ user.gravatar }}"
-            },
-            pinFilter = "{{ request.resolver_match.kwargs.pin }}",
-            tagFilter = "{{ request.resolver_match.kwargs.tag }}",
-            userFilter = "{{ request.resolver_match.kwargs.username }}";
-        </script>
-        <!-- End JavaScript Variables -->
-    </head>
+  <!-- Messages -->
+  <ul id="messages"></ul>
+  <!-- End Messages -->
 
-    <body>
-        <!-- Navigation -->
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="{% url 'core:recent-pins' %}" class="navbar-brand">
-                        <img src="{% static "img/logo-dark.png" %}" alt="Pinry"/>
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if user.is_authenticated %}
-                            <li><a onclick="pinForm()">New Pin</a></li>
-                            <li><a href="{% url 'users:logout' %}">Logout</a></li>
-                            <li>{% include "includes/bookmarklet_link.html" %}</li>
-                        {% else %}
-                            <li><a href="{% url 'users:login' %}">Login</a></li>
-                            <li><a href="{% url 'users:register' %}">Register</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- End Navigation -->
+  <!-- No Script -->
+  <div id="noscript">
+    <noscript>Scripting is not enabled in your browser, if you are using
+      a plugin like NoScript *high five*! Our code is open source and
+      you can view it on
+      <a href="https://github.com/pinry/pinry/">GitHub</a>.
+      <style>.spinner {
+        display: none;
+      }</style>
+    </noscript>
+  </div>
+  <!-- End No Script -->
 
-        <!-- Messages -->
-        <ul id="messages"></ul>
-        <!-- End Messages -->
+  <!-- Content -->
+  {% block yield %}{% endblock %}
+  <!-- End Content -->
+</div>
+<!-- Templates -->
+{% include 'includes/vue-pin.html' %}
+{% include 'includes/lightbox-vue.html' %}
+{% include 'includes/pin_form-vue.html' %}
+{% block extra_templates %}{% endblock %}
+<!-- End Templates -->
 
-        <!-- No Script -->
-        <div id="noscript">
-            <noscript>Scripting is not enabled in your browser, if you are using
-                a plugin like NoScript *high five*! Our code is open source and
-                you can view it on
-                <a href="https://github.com/pinry/pinry/">GitHub</a>.
-                <style>.spinner{display:none;}</style></noscript>
-        </div>
-        <!-- End No Script -->
-
-        <!-- Content -->
-        <div id="app">
-          {% block yield %}{% endblock %}
-        </div>
-        <!-- End Content -->
-
-        <!-- Templates -->
-        {% include 'includes/vue-pin.html' %}
-        {% include 'includes/lightbox-vue.html' %}
-        {% block extra_templates %}{% endblock %}
-        <!-- End Templates -->
-
-        <!-- JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
-        <script src="https://unpkg.com/bootstrap@3.3.6/dist/js/bootstrap.min.js"></script>
-        <script src="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.js"></script>
-        {% compress js %}
-            <script src="{% static "js/helpers.js" %}"></script>
-            <script src="{% static "js/vue/main.js" %}"></script>
-        {% endcompress %}
-        {% compress js inline %}
-            {% block extra_js %}{% endblock %}
-        {% endcompress %}
-        <!-- End JavaScript -->
-    </body>
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/bootstrap@3.3.6/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/dropzone@4.3.0/dist/min/dropzone.min.js"></script>
+{% compress js %}
+  <script src="{% static "js/helpers.js" %}"></script>
+  <script src="{% static "js/vue/main.js" %}"></script>
+{% endcompress %}
+{% compress js inline %}
+  {% block extra_js %}{% endblock %}
+{% endcompress %}
+<!-- End JavaScript -->
+</body>
 </html>
