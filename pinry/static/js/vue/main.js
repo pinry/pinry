@@ -116,6 +116,19 @@ function HeightTable(blockMargin) {
   return self;
 }
 
+Vue.component(
+  'pin-form',
+  {
+    data: function () {
+      return {};
+    },
+    props: ['url'],
+    template: "#pin-form-template",
+    mounted: function () {},
+    methods: {}
+  }
+);
+
 
 Vue.component(
   'light-box',
@@ -435,6 +448,9 @@ var app = new Vue({
     );
   },
   methods: {
+    showPinForm: function() {
+
+    },
     onViewPin: function(pin) {
       this.currentPin = pin;
     },
