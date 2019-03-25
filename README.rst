@@ -20,7 +20,7 @@ Feature
 Setup Guide for users
 --------------------------
 
-Please use docker to install `docker-pinry <https://github.com/pinry/docker-pinry>`_
+Please use docker to install `pinry <https://github.com/pinry/pinry>`_
 
 Developers or users who are familiar with python/nginx could setup Pinry with following guide : )
 
