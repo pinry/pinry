@@ -1,0 +1,7 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile*
+.flake8
+.travis.yml
+doc
