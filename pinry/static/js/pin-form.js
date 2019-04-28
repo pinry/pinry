@@ -27,7 +27,8 @@ $(window).load(function() {
                 image: {thumbnail: {image: $('#pin-form-image-url').val()}},
                 referer: $('#pin-form-referer').val(),
                 description: $('#pin-form-description').val(),
-                tags: cleanTags($('#pin-form-tags').val())
+                tags: cleanTags($('#pin-form-tags').val()),
+                submitter: currentUser,
             }]},
             html = renderTemplate('#pins-template', context),
             preview = $('#pin-form-image-preview');
