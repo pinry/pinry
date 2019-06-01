@@ -32,7 +32,7 @@ RUN groupadd -g 2300 tmpgroup \
     && apt-get -y install nginx nginx-extras pwgen \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip --no-cache-dir install pipenv gunicorn
+RUN pip --no-cache-dir install pipenv gunicorn mysqlclient psycopg2 cx-Oracle
 
 COPY Pipfile* /srv/www/pinry/
 
@@ -45,7 +45,7 @@ COPY . /srv/www/pinry/
 RUN chown -R www-data:www-data /srv/www \
  && cd /srv/www/pinry \
  && python manage.py collectstatic --noinput
- 
+
 
 # Load in all of our config files.
 ADD docker/nginx/nginx.conf /etc/nginx/nginx.conf
