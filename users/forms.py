@@ -13,7 +13,7 @@ class UserCreationForm(forms.ModelForm):
     }
     username = forms.RegexField(
         label=_("Username"), max_length=30,
-        regex=r'^[\w-]+$'
+        regex=r'^[\w\-.]+$'
     )
     password = forms.CharField(
         label=_("Password"),
