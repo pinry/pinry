@@ -1,5 +1,7 @@
+{% load bootstrap_field %}
+
 <div class="form-group{% if field.errors %} has-error{% endif %}">
-    <input type="{% if field.html_name == "password" %}password{% else %}text{% endif %}" id="id_{{ field.html_name }}" name="{{ field.html_name }}" class="form-control input-lg" placeholder="{{ field.label }}"/>
+    {{ field|bootstrap_field:"form-control input-lg" }}
     {% if field.errors %}
         <span class="help-block">
             {% if field.errors %}
