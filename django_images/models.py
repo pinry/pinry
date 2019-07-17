@@ -67,8 +67,7 @@ class Image(models.Model):
 
 
 class ThumbnailManager(models.Manager):
-    def get_or_create_at_size(self, image_id, size):
-        image = Image.objects.get(id=image_id)
+    def get_or_create_at_size(self, image, size):
         if size not in IMAGE_SIZES:
             raise ValueError("Received unknown size: %s" % size)
         try:

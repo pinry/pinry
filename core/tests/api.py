@@ -14,7 +14,7 @@ from core.models import Pin, Image
 
 def filter_generator_for(size):
     def wrapped_func(obj):
-        return Thumbnail.objects.get_or_create_at_size(obj.pk, size)
+        return Thumbnail.objects.get_or_create_at_size(obj, size)
     return wrapped_func
 
 

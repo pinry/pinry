@@ -36,7 +36,7 @@ class ImageManager(models.Manager):
         # try to create thumbnails one by one later
         image = self.create(image=obj)
         for size in settings.IMAGE_SIZES.keys():
-            Thumbnail.objects.get_or_create_at_size(image.pk, size)
+            Thumbnail.objects.get_or_create_at_size(image, size)
         return image
 
 

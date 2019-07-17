@@ -53,7 +53,7 @@ class ImageSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         image = super(ImageSerializer, self).create(validated_data)
         for size in settings.IMAGE_SIZES:
-            Thumbnail.objects.get_or_create_at_size(image.pk, size)
+            Thumbnail.objects.get_or_create_at_size(image, size)
         return image
 
 

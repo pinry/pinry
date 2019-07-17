@@ -20,7 +20,7 @@ class ImageModelTest(TestCase):
 
     def test_get_by_size(self):
         size = list(settings.IMAGE_SIZES.keys())[0]
-        Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        Thumbnail.objects.get_or_create_at_size(self.image, size)
         self.image.get_by_size(size)
 
     def test_get_absolute_url(self):
@@ -28,7 +28,7 @@ class ImageModelTest(TestCase):
         self.assertEqual(url, self.image.image.url)
         # For thumbnail
         size = list(settings.IMAGE_SIZES.keys())[0]
-        thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        thumb = Thumbnail.objects.get_or_create_at_size(self.image, size)
         url = self.image.get_absolute_url(size)
         self.assertEqual(url, thumb.image.url)
         # Fallback on creation url
@@ -49,16 +49,16 @@ class ThumbnailManagerModelTest(TestCase):
 
     def test_unknown_size(self):
         self.assertRaises(ValueError, Thumbnail.objects.get_or_create_at_size,
-                          self.image.id, 'foo')
+                          self.image, 'foo')
 
     # TODO: Test the image object and data
     def test_create(self):
-        Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
+        Thumbnail.objects.get_or_create_at_size(self.image, self.size)
         self.assertEqual(self.image.thumbnail_set.count(), 1)
 
     def test_get(self):
-        thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
-        thumb2 = Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
+        thumb = Thumbnail.objects.get_or_create_at_size(self.image, self.size)
+        thumb2 = Thumbnail.objects.get_or_create_at_size(self.image, self.size)
         self.assertEqual(thumb.id, thumb2.id)
 
 
@@ -70,7 +70,7 @@ class ThumbnailModelTest(TestCase):
         self.image = Image.objects.create(width=370, height=370,
                                           image=ImageFile(image_obj, '01.png'))
         size = list(settings.IMAGE_SIZES.keys())[0]
-        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image, size)
 
     def test_get_absolute_url(self):
         url = self.thumb.get_absolute_url()
@@ -85,11 +85,11 @@ class PostSaveSignalOriginalChangedTestCase(TestCase):
         self.image = Image.objects.create(width=370, height=370,
                                           image=ImageFile(image_obj, '01.png'))
         size = list(settings.IMAGE_SIZES.keys())[0]
-        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image, size)
 
     def test_post_save_signal_original_changed(self):
         size = list(settings.IMAGE_SIZES.keys())[0]
-        Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        Thumbnail.objects.get_or_create_at_size(self.image, size)
         self.image.delete()
         self.assertFalse(Thumbnail.objects.exists())
 
@@ -102,7 +102,7 @@ class PostDeleteSignalDeleteImageFileTest(TestCase):
         self.image = Image.objects.create(width=370, height=370,
                                           image=ImageFile(image_obj, '01.png'))
         size = list(settings.IMAGE_SIZES.keys())[0]
-        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image, size)
 
     @mock.patch('django_images.models.IMAGE_AUTO_DELETE', True)
     def test_post_delete_signal_delete_image_files_enabled(self):
@@ -136,7 +136,7 @@ class AtSizeTemplateTagTest(TestCase):
         self.image = Image.objects.create(width=370, height=370,
                                           image=ImageFile(image_obj, '01.png'))
         size = list(settings.IMAGE_SIZES.keys())[0]
-        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, size)
+        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image, size)
 
     def test_at_size(self):
         size = list(settings.IMAGE_SIZES.keys())[0]
@@ -152,7 +152,7 @@ class ThumbnailViewTest(TestCase):
         self.image = Image.objects.create(width=370, height=370,
                                           image=ImageFile(image_obj, '01.png'))
         self.size = list(settings.IMAGE_SIZES.keys())[0]
-        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image.id, self.size)
+        self.thumb = Thumbnail.objects.get_or_create_at_size(self.image, self.size)
 
     def test_redirect(self):
         url = reverse('image-thumbnail', args=[self.image.id, self.size])
