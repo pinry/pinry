@@ -1,10 +1,10 @@
-from django.template import loader, Context, Library
-
-
+from django.template import Library
+ 
 register = Library()
-
-
-@register.simple_tag
-def bootstrap_field(field):
-    template = loader.get_template('core/templatetags/bootstrap_field.html')
-    return template.render(Context({'field': field}))
+ 
+@register.filter(name='bootstrap_field')
+def bootstrap_field(field, class_attr):
+    return field.as_widget(attrs={
+        'placeholder': field.label,
+        'class': class_attr
+    })
