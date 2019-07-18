@@ -35,8 +35,7 @@ class ImageManager(models.Manager):
         # a chance of getting Database into a inconsistent state when we
         # try to create thumbnails one by one later
         image = self.create(image=obj)
-        for size in settings.IMAGE_SIZES.keys():
-            Thumbnail.objects.get_or_create_at_size(image, size)
+        Thumbnail.objects.get_or_create_at_sizes(image, settings.IMAGE_SIZES.keys())
         return image
 
 

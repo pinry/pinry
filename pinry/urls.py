@@ -32,7 +32,3 @@ if settings.DEBUG:
 
 if settings.IS_TEST:
     urlpatterns += staticfiles_urlpatterns()
-    # For test running of django_images
-    urlpatterns += [
-        url(r'^__images/', include('django_images.urls')),
-    ]
