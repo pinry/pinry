@@ -23,7 +23,7 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    queryset = Pin.objects.all()
+    queryset = Pin.objects.all().select_related('image', 'submitter')
     serializer_class = api.PinSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ("submitter__username", 'tags__name', )
