@@ -32,8 +32,7 @@ def create_tag(name):
 
 def create_image():
     image = Image.objects.create(image=ImageFile(open(TEST_IMAGE_PATH, 'rb')))
-    for size in settings.IMAGE_SIZES.keys():
-        Thumbnail.objects.get_or_create_at_size(image.pk, size)
+    Thumbnail.objects.get_or_create_at_sizes(image, settings.IMAGE_SIZES.keys())
     return image
 
 

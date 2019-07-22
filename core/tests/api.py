@@ -12,12 +12,6 @@ from .helpers import create_image, create_user, create_pin
 from core.models import Pin, Image
 
 
-def filter_generator_for(size):
-    def wrapped_func(obj):
-        return Thumbnail.objects.get_or_create_at_size(obj.pk, size)
-    return wrapped_func
-
-
 def mock_requests_get(url, **kwargs):
     response = mock.Mock(content=open('logo.png', 'rb').read())
     return response
