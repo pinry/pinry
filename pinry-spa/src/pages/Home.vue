@@ -1,20 +1,19 @@
 <template>
   <div class="hello">
     <PHeader></PHeader>
-    <section class="section">
-      <div class="container">
-      </div>
-    </section>
+    <Pins></Pins>
   </div>
 </template>
 
 <script>
 import PHeader from '../components/PHeader.vue';
+import Pins from '../components/Pins.vue';
 
 export default {
   name: 'p-header',
   components: {
     PHeader,
+    Pins,
   },
 };
 </script>
