@@ -6,19 +6,23 @@ var eventsName = {
     open: "view-single-pin",
     close: "close-pin-view",
   },
+  pinForm: {
+    close: "pin_form.close",
+    open: "pin_form.open",
+  }
 };
 
 function fetchPins(offset) {
-    var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset='+String(offset);
-    if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
-    if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
-    return axios.get(apiUrl)
+  var apiUrl = API_BASE + 'pins/?format=json&ordering=-id&limit=50&offset=' + String(offset);
+  if (tagFilter) apiUrl = apiUrl + '&tags__name=' + tagFilter;
+  if (userFilter) apiUrl = apiUrl + '&submitter__username=' + userFilter;
+  return axios.get(apiUrl)
 }
 
 var utils = {
   getDocumentHeight: function () {
     var body = document.body,
-    html = document.documentElement;
+      html = document.documentElement;
     return Math.max(
       body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight,
@@ -41,7 +45,7 @@ function EventCounter(countEvent, triggerEvent, triggerTimes) {
   };
   events.$on(
     countEvent,
-    function() {
+    function () {
       self.count += 1;
       if (self.count >= self.targetCount) {
         events.$emit(triggerEvent)
@@ -64,6 +68,7 @@ function HeightTable(blockMargin) {
   var self = {
     data: {}
   };
+
   function get(obj, index) {
     if (!obj.data.hasOwnProperty(index)) {
       return null
@@ -91,7 +96,7 @@ function HeightTable(blockMargin) {
     return height
   }
 
-  self.get = function(index) {
+  self.get = function (index) {
     return get(self, index);
   };
 
@@ -101,10 +106,10 @@ function HeightTable(blockMargin) {
   self.getHeightOffset = function (index, rowSize) {
     return getHeightOffset(self, index, rowSize);
   };
-  self.getMaxHeight = function(rowSize, blockMargin) {
+  self.getMaxHeight = function (rowSize, blockMargin) {
     var size = Object.keys(self.data).length;
     var heightArray = [];
-    for (var column = 0; column < rowSize; column ++) {
+    for (var column = 0; column < rowSize; column++) {
       heightArray.push(0);
     }
     for (var index = 0; index < size; index++) {
@@ -122,10 +127,53 @@ Vue.component(
     data: function () {
       return {};
     },
-    props: ['url'],
+    props: ['url', 'show'],
     template: "#pin-form-template",
-    mounted: function () {},
-    methods: {}
+    mounted: function () {
+      this.initilize();
+      events.$on(
+        eventsName.pinForm.open,
+        this.showModal,
+      )
+    },
+    methods: {
+      getModal: function () {
+        return $('#pin-form');
+      },
+      initilize: function () {
+        $('#pin-form-image-upload').dropzone(
+          {
+            url: API_BASE + "images/",
+            paramName: 'image',
+            parallelUploads: 1,
+            uploadMultiple: false,
+            maxFiles: 1,
+            acceptedFiles: 'image/*',
+            headers: {
+              'X-CSRFToken': getCSRFToken(),
+            },
+            success: function (file, resp) {
+              var image_url = $('#pin-form-image-url');
+              image_url.parent().fadeOut(300);
+              uploadedImage = resp.id;
+              image_url.val(resp.thumbnail.image);
+              // createPinPreviewFromForm();
+            },
+            error: function (error) {
+              message('Problem uploading image.', 'alert alert-error');
+            },
+          },
+        );
+      },
+      showModal: function () {
+        var modal = this.getModal();
+        modal.show();
+      },
+      hideModal: function () {
+        var modal = this.getModal();
+        modal.hide();
+      },
+    }
   }
 );
 
@@ -152,7 +200,7 @@ Vue.component(
         'width': imageWidth + "px",
         'marginTop': '80px',
         'marginBottom': '80px',
-        'margin-left': - imageWidth / 2 + "px",
+        'margin-left': -imageWidth / 2 + "px",
       };
       var wrapper = this.$el.querySelector(".lightbox-wrapper");
 
@@ -169,7 +217,7 @@ Vue.component(
       this.lightBoxWrapperStyle = lightBoxWrapperStyle;
     },
     methods: {
-      onCloseView: function() {
+      onCloseView: function () {
         events.$emit(eventsName.pinView.close);
       }
     }
@@ -191,44 +239,44 @@ Vue.component('pin', {
   },
   props: ['pin', 'args', 'index', 'heightTable'],
   template: '#pin-template',
-  created: function() {
+  created: function () {
     var self = this;
     events.$on("reflow", function () {
       self.reflow();
     });
   },
-  mounted: function() {
+  mounted: function () {
     this.reflow();
     this.$emit("rendered", {index: this.index, height: this.height});
   },
-  updated: function() {
+  updated: function () {
     events.$emit(eventsName.pinReflowDone);
   },
   methods: {
-    showImageDetail: function(event) {
+    showImageDetail: function (event) {
       events.$emit(eventsName.pinView.open, this.pin);
       if (event) event.preventDefault();
     },
-    reflow: function() {
+    reflow: function () {
       this.heightOffset = this.heightTable.getHeightOffset(this.index, this.args.rowSize);
       this.imageStyle = this.getImageStyle();
       this.pinStyle = this.getPinStyle();
       this.height = this.getTextHeight() + this.pin.image.thumbnail.height;
     },
-    getImageStyle: function() {
+    getImageStyle: function () {
       return {
         width: this.pin.image.thumbnail.width + 'px',
         height: this.pin.image.thumbnail.height + 'px',
       }
     },
-    getPinStyle: function() {
+    getPinStyle: function () {
       var self = this;
       var marginTop = self.heightOffset;
       var marginLeft = 0;
 
       function isFirstOne(rowSize, index) {
         index = index + 1;
-        if ((index % rowSize) === 1 ){
+        if ((index % rowSize) === 1) {
           return true;
         }
       }
@@ -266,7 +314,7 @@ Vue.component('pin', {
     getTagLink: function (tag) {
       return "/pins/tags/" + tag + "/"
     },
-    getTextHeight: function() {
+    getTextHeight: function () {
       var element = this.$el.querySelector(".pin-description");
       return element.getBoundingClientRect().height;
     },
@@ -297,11 +345,11 @@ Vue.component('pin-container', {
     };
   },
   template: "#pin-container-template",
-  created: function() {
+  created: function () {
     this.heightTable = HeightTable(this.args.blockMargin);
     this.loadMore();
     var self = this;
-    window.addEventListener("optimizedResize", function() {
+    window.addEventListener("optimizedResize", function () {
       self.reflow();
     });
     self.bindScrollHandler();
@@ -312,11 +360,11 @@ Vue.component('pin-container', {
     );
     events.$on(eventsName.allPinReflowDone, this.updateContainerStyle);
   },
-  mounted: function() {
+  mounted: function () {
     this.reflow();
   },
   methods: {
-    updateContainerStyle: function() {
+    updateContainerStyle: function () {
       var height = this.heightTable.getMaxHeight(
         this.args.rowSize,
         this.args.blockMargin,
@@ -342,55 +390,55 @@ Vue.component('pin-container', {
         },
       );
     },
-    markAsLoaded: function(hasNext) {
+    markAsLoaded: function (hasNext) {
       this.status.hasNext = hasNext;
       this.status.loading = false;
       this.$emit(
-          "loaded",
+        "loaded",
       );
       if (!hasNext) {
         this.$emit("no-more-pins")
       }
     },
-    markAsLoading: function() {
+    markAsLoading: function () {
       this.status.loading = true;
       this.$emit(
-          "loading",
+        "loading",
       );
     },
     bindScrollHandler: function () {
       var self = this;
 
-      scrollHandler = function() {
+      scrollHandler = function () {
         if (self.status.loading || !self.status.hasNext) {
           return
         }
         var windowPosition = getDocumentScrollTop() + window.innerHeight;
         var bottom = utils.getDocumentHeight() - 100;
-        if(windowPosition > bottom) {
+        if (windowPosition > bottom) {
           self.loadMore();
         }
       };
-      window.addEventListener('scroll', function(e) {
+      window.addEventListener('scroll', function (e) {
           scrollHandler();
         }
       );
     },
-    updateChildHeight: function(childArg) {
+    updateChildHeight: function (childArg) {
       this.heightTable.set(childArg.index, childArg.height);
     },
-    reflow: function() {
+    reflow: function () {
       this.counter.resetAfterReflow(self.pins.length);
       this.updateArguments();
       events.$emit("reflow");
     },
-    updateArguments: function() {
+    updateArguments: function () {
       var blockContainer = this.$el;
       var containerWidth = blockContainer.clientWidth;
       var blockMargin = this.args.blockMargin,
-          blockWidth = this.args.blockWidth,
-          rowSize = Math.floor(containerWidth / (blockWidth + blockMargin));
-      var rowStartMargin = (containerWidth - rowSize * (blockWidth + blockMargin)) / 2 ;
+        blockWidth = this.args.blockWidth,
+        rowSize = Math.floor(containerWidth / (blockWidth + blockMargin));
+      var rowStartMargin = (containerWidth - rowSize * (blockWidth + blockMargin)) / 2;
       var rowEndMargin = rowStartMargin - blockMargin;
 
       this.args.containerWidth = containerWidth;
@@ -403,25 +451,27 @@ Vue.component('pin-container', {
   },
 });
 
-(function() {
+(function () {
   var previousResize = 0;
-  var throttle = function(type, name, obj) {
-      obj = obj || window;
-      var running = false;
-      var func = function() {
-          if (running) { return; }
-          var now = new Date().getTime();
-          if ((now - previousResize) < 200) {
-            return
-          }
-          previousResize = now;
-          running = true;
-           requestAnimationFrame(function() {
-              obj.dispatchEvent(new CustomEvent(name));
-              running = false;
-          });
-      };
-      obj.addEventListener(type, func);
+  var throttle = function (type, name, obj) {
+    obj = obj || window;
+    var running = false;
+    var func = function () {
+      if (running) {
+        return;
+      }
+      var now = new Date().getTime();
+      if ((now - previousResize) < 200) {
+        return
+      }
+      previousResize = now;
+      running = true;
+      requestAnimationFrame(function () {
+        obj.dispatchEvent(new CustomEvent(name));
+        running = false;
+      });
+    };
+    obj.addEventListener(type, func);
   };
 
   throttle("resize", "optimizedResize");
@@ -437,7 +487,7 @@ var app = new Vue({
       currentPin: null,
     }
   },
-  created: function() {
+  created: function () {
     events.$on(
       eventsName.pinView.open,
       this.onViewPin,
@@ -448,19 +498,21 @@ var app = new Vue({
     );
   },
   methods: {
-    showPinForm: function() {
-
+    showPinForm: function () {
+      events.$emit(
+        eventsName.pinForm.open,
+      )
     },
-    onViewPin: function(pin) {
+    onViewPin: function (pin) {
       this.currentPin = pin;
     },
-    onClosePin: function(pin) {
+    onClosePin: function (pin) {
       this.currentPin = null;
     },
-    onLoaded: function(){
+    onLoaded: function () {
       this.loading = false;
     },
-    onLoading: function(){
+    onLoading: function () {
       this.loading = true;
     },
     onNoMore: function () {
