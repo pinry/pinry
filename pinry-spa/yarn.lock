@@ -1533,6 +1533,14 @@ aws4@^1.8.0:
   resolved "https://registry.npm.taobao.org/aws4/download/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha1-8OAD2cqef1nHpQiUXXsu+aBKVC8=
 
+axios@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  integrity sha1-jgm/89kSLhM/e4EByPvdAO09Krg=
+  dependencies:
+    follow-redirects "1.5.10"
+    is-buffer "^2.0.2"
+
 babel-eslint@^10.0.3:
   version "10.0.3"
   resolved "https://registry.npm.taobao.org/babel-eslint/download/babel-eslint-10.0.3.tgz#81a2c669be0f205e19462fed2482d33e4687a88a"
@@ -1706,6 +1714,13 @@ braces@^2.3.1, braces@^2.3.2:
     snapdragon-node "^2.0.1"
     split-string "^3.0.2"
     to-regex "^3.0.1"
+
+bricks.js@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npm.taobao.org/bricks.js/download/bricks.js-1.8.0.tgz#8fdeb3c0226af251f4d5727a7df7f9ac0092b4b2"
+  integrity sha1-j96zwCJq8lH01XJ6fff5rACStLI=
+  dependencies:
+    knot.js "^1.1.5"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -2732,6 +2747,13 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
+debug@=3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
+  dependencies:
+    ms "2.0.0"
+
 debug@^3.0.0, debug@^3.1.1, debug@^3.2.5, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.npm.taobao.org/debug/download/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
@@ -3725,6 +3747,13 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.10.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
+  dependencies:
+    debug "=3.1.0"
+
 follow-redirects@^1.0.0:
   version "1.9.0"
   resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.9.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.9.0.tgz#8d5bcdc65b7108fe1508649c79c12d732dcedb4f"
@@ -4548,6 +4577,11 @@ is-buffer@^1.1.5:
   resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
   integrity sha1-76ouqdqg16suoTqXsritUf776L4=
 
+is-buffer@^2.0.2:
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-2.0.4.tgz#3e572f23c8411a5cfd9557c849e3665e0b290623"
+  integrity sha1-PlcvI8hBGlz9lVfISeNmXgspBiM=
+
 is-callable@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npm.taobao.org/is-callable/download/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
@@ -4957,6 +4991,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.npm.taobao.org/kind-of/download/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha1-ARRrNqYhjmTljzqNZt5df8b20FE=
+
+knot.js@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npm.taobao.org/knot.js/download/knot.js-1.1.5.tgz#28e72522f703f50fe98812fde224dd72728fef5d"
+  integrity sha1-KOclIvcD9Q/piBL94iTdcnKP710=
 
 launch-editor-middleware@^2.2.1:
   version "2.2.1"
@@ -8482,6 +8521,13 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz?cache=0&sync_timestamp=1572870717730&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvm-browserify%2Fdownload%2Fvm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
+
+vue-bricks@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/vue-bricks/download/vue-bricks-2.0.0.tgz#86e2569843249f2a84911843c898bfc8de2d2b34"
+  integrity sha1-huJWmEMknyqEkRhDyJi/yN4tKzQ=
+  dependencies:
+    bricks.js "^1.8.0"
 
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
