@@ -5,9 +5,10 @@ module.exports = {
         target: 'http://localhost:8000/',
         changeOrigin: true,
         ws: true,
-        pathRewrite: {
-          '^/api': '/api',
-        },
+      },
+      '/static/media': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true,
       },
     },
   },
