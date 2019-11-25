@@ -90,11 +90,6 @@ export default {
 /*     fn(i)
 */
 
-@media screen and (min-width: 33px) {
-  #pins-container {
-    max-width: -15px;
-  }
-}
 @media screen and (min-width: 288px) {
   #pins-container {
     max-width: 240px;
