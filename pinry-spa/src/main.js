@@ -1,12 +1,12 @@
 import Buefy from 'buefy';
-import 'vue-bricks/lib/vueBricks.css';
-import VueBricks from 'vue-bricks';
 import Vue from 'vue';
+import VueMasonryPlugin from 'vue-masonry';
 import App from './App.vue';
+
 
 Vue.config.productionTip = false;
 Vue.use(Buefy);
-Vue.use(VueBricks);
+Vue.use(VueMasonryPlugin);
 
 new Vue({
   render: h => h(App),
