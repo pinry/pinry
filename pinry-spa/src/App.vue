@@ -24,4 +24,7 @@ export default {
   #app {
     background-color: #F5F5EB;
   }
+  .body {
+    font-family: 'Open Sans', sans-serif;
+  }
 </style>
