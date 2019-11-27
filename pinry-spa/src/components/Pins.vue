@@ -14,7 +14,10 @@
               <div class="grid-sizer"></div>
               <div class="gutter-sizer"></div>
               <div class="pin-card grid-item">
-                <img :src="item.url" alt="item.description">
+                <img :src="item.url"
+                     @click="openPreview(item)"
+                     alt="item.description"
+                     class="pin-preview-image">
                 <div class="pin-footer">
                   <div class="description" v-show="item.description"><p>{{ item.description }}</p></div>
                   <div class="details">
@@ -49,6 +52,7 @@
 <script>
 import API from './api';
 import pinHandler from './utils/PinHandler';
+import PinPreview from './PinPreview.vue';
 
 function createImageItem(pin) {
   const image = {};
@@ -58,6 +62,8 @@ function createImageItem(pin) {
   image.tags = pin.tags;
   image.author = pin.submitter.username;
   image.avatar = `//gravatar.com/avatar/${pin.submitter.gravatar}`;
+  image.original_url = pin.image.image;
+  image.orgianl_width = pin.image.width;
   return image;
 }
 
@@ -80,6 +86,20 @@ export default {
         },
       );
       return blocks;
+    },
+    openPreview(pinItem) {
+      this.$buefy.modal.open(
+        {
+          parent: this,
+          component: PinPreview,
+          props: {
+            pinItem,
+          },
+          // width: pinItem.orgianl_width,
+          hasModalCard: true,
+          customClass: 'pin-preview-at-home',
+        },
+      );
     },
   },
   created() {
@@ -123,6 +143,9 @@ $avatar-height: 30px;
 }
 
 .pin-card{
+  .pin-preview-image {
+    cursor: pointer;
+  }
   > img {
     border-radius: 3px 3px 0 0;
   }
