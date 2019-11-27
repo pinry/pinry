@@ -8,6 +8,9 @@
             </figure>
           </div>
           <div class="card-content">
+            <div class="content">
+                <p class="description subtitle">{{ pinItem.description }}</p>
+            </div>
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
@@ -17,13 +20,12 @@
               <div class="media-content">
                 <p class="title is-4">{{ pinItem.author }}</p>
                 <p class="subtitle is-6">
+                  <span class="subtitle-font">in</span>
                   <template v-for="tag in pinItem.tags">
                     <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
                   </template>
                 </p>
               </div>
-            </div>
-            <div class="content">
             </div>
           </div>
         </div>
@@ -39,11 +41,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './utils/fonts.scss';
+
+.card {
+  background-color: #0C110D;
+  .content {
+    border-bottom: 1px solid #333;
+  }
+  .card-content {
+    padding: 0;
+    .content {
+      padding: 0.3rem;
+      margin-bottom: 0;
+    }
+    .media {
+      padding: 0.3rem;
+    }
+  }
+  .description {
+    @include title-font;
+    @include title-font-color-in-dark;
+    font-size: 16px;
+    padding: 8px;
+  }
+}
 .pin-preview-tag {
   margin-right: 0.2rem;
+  margin-bottom: 2px;
 }
 /* preview size should always less then screen */
-.image > img {
-  max-height: calc(100vh - 225px);
+.card-image img {
+  width: 100%;
 }
 </style>
