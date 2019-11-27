@@ -25,13 +25,18 @@
                       <img class="avatar" :src="item.avatar" alt="">
                     </div>
                     <div class="pin-info">
-                      <span class="dim">pined by&nbsp;<span><router-link to="/">{{ item.author }}</router-link></span>
+                      <span class="dim">pined by&nbsp;
+                        <span>
+                          <router-link
+                            :to="{ name: 'user', params: {user: item.author} }">
+                            {{ item.author }}
+                          </router-link>
+                        </span>
                         <template v-if="item.tags.length > 0">
                           &nbsp;in&nbsp;
                           <template v-for="tag in item.tags">
                             <span v-bind:key="tag" class="pin-tag">
-                              &nbsp;
-                              <router-link to="/tags/">{{ tag }}</router-link>
+                              <router-link :to="{ name: 'tag', params: {tag: tag} }" params="{tag: tag}">{{ tag }}</router-link>
                             </span>
                           </template>
                         </template>
@@ -73,7 +78,19 @@ export default {
   data() {
     return {
       blocks: [],
+      offset: 0,
     };
+  },
+  props: {
+    pinFilters: {
+      type: Object,
+      default() {
+        return {
+          tagFilter: null,
+          userFilter: null,
+        };
+      },
+    },
   },
   methods: {
     buildBlocks(results) {
@@ -100,13 +117,24 @@ export default {
         },
       );
     },
+    fetchMore() {
+      let promise;
+      if (this.pinFilters.tagFilter) {
+        promise = API.fetchPins(this.offset, this.pinFilters.tagFilter);
+      } else if (this.pinFilters.userFilter) {
+        promise = API.fetchPins(this.offset, null, this.pinFilters.userFilter);
+      } else {
+        promise = API.fetchPins(this.offset);
+      }
+      promise.then(
+        (resp) => {
+          this.blocks = this.buildBlocks(resp.data.results);
+        },
+      );
+    },
   },
   created() {
-    API.fetchPins(0).then(
-      (resp) => {
-        this.blocks = this.buildBlocks(resp.data.results);
-      },
-    );
+    this.fetchMore();
   },
 };
 </script>
@@ -152,6 +180,9 @@ $avatar-height: 30px;
     height: $avatar-height;
     width: $avatar-width;
     border-radius: 3px;
+  }
+  .pin-tag {
+    margin-right: 0.2rem;
   }
 }
 .pin-footer {
