@@ -95,8 +95,7 @@ export default {
           props: {
             pinItem,
           },
-          // width: pinItem.orgianl_width,
-          hasModalCard: true,
+          scroll: 'keep',
           customClass: 'pin-preview-at-home',
         },
       );
@@ -144,7 +143,7 @@ $avatar-height: 30px;
 
 .pin-card{
   .pin-preview-image {
-    cursor: pointer;
+    cursor: zoom-in;
   }
   > img {
     border-radius: 3px 3px 0 0;
