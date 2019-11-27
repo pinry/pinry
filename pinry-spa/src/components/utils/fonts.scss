@@ -1,0 +1,11 @@
+@mixin title-font {
+  font-family: "Georgia", "Times", "Times New Roman", Serif, serif;
+}
+
+@mixin title-font-color-in-dark {
+  color: white;
+}
+
+@mixin secondary-font-color-in-dark {
+  color: #878787;
+}
