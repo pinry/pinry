@@ -22,7 +22,7 @@
                       <img class="avatar" :src="item.avatar" alt="">
                     </div>
                     <div class="pin-info">
-                      <span class="dim">pined by&nbsp;<span>{{ item.author }}</span>
+                      <span class="dim">pined by&nbsp;<span><router-link to="/">{{ item.author }}</router-link></span>
                         <template v-if="item.tags.length > 0">
                           &nbsp;in&nbsp;
                           <template v-for="tag in item.tags">
@@ -153,7 +153,7 @@ $avatar-height: 30px;
       width: 220px;
       padding-left: $avatar-width + 5px;
     }
-    .pin-tag > a {
+    .pin-info a {
       font-weight: bold;
     }
   }
