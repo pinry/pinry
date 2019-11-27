@@ -9,7 +9,7 @@
           </div>
           <div class="card-content">
             <div class="content">
-                <p class="description subtitle">{{ pinItem.description }}</p>
+                <p class="description title">{{ pinItem.description }}</p>
             </div>
             <div class="media">
               <div class="media-left">
@@ -18,13 +18,35 @@
                 </figure>
               </div>
               <div class="media-content">
-                <p class="title is-4">{{ pinItem.author }}</p>
-                <p class="subtitle is-6">
-                  <span class="subtitle-font">in</span>
-                  <template v-for="tag in pinItem.tags">
-                    <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
-                  </template>
-                </p>
+                <div class="is-pulled-left">
+                  <p class="title is-4 pin-meta-info"><span class="dim">pined by </span><span class="author">{{ pinItem.author }}</span></p>
+                  <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
+                    <span class="subtitle dim">in&nbsp;</span>
+                    <template v-for="tag in pinItem.tags">
+                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
+                    </template>
+                  </p>
+                </div>
+                <div class="is-pulled-right">
+                  <b-button tag="router-link"
+                      to="/"
+                      class="meta-link"
+                      type="is-warning">
+                      Referer
+                  </b-button>
+                  <b-button tag="router-link"
+                      to="/"
+                      class="meta-link"
+                      type="is-link">
+                      Original URL
+                  </b-button>
+                  <b-button tag="router-link"
+                      to="/"
+                      class="meta-link"
+                      type="is-success">
+                      Pin URL
+                  </b-button>
+                </div>
               </div>
             </div>
           </div>
@@ -43,12 +65,24 @@ export default {
 <style lang="scss" scoped>
 @import './utils/fonts.scss';
 
+.meta-link {
+  margin-left: 0.3rem;
+}
+.dim {
+  @include secondary-font-color-in-dark;
+}
+.pin-meta-info {
+  line-height: 16px;
+}
 .card {
-  background-color: #0C110D;
+  background-color: rgba(0, 0, 0, 0.6);
   .content {
     border-bottom: 1px solid #333;
   }
   .card-content {
+    .author {
+      @include title-font-color-in-dark;
+    }
     padding: 0;
     .content {
       padding: 0.3rem;
