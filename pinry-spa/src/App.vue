@@ -16,7 +16,7 @@ export default {
   // Import Bulma and Buefy styles
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
-  #app {
+  html {
     background-color: #F5F5EB;
   }
   .body {
