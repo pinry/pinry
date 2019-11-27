@@ -8,13 +8,14 @@
           </a>
           <a role="button" class="navbar-burger burger"
              aria-label="menu" aria-expanded="false"
+             v-on:click="toggleMenu"
              data-target="PinryNav">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div id="PinryNav" class="navbar-menu">
+        <div id="PinryNav" class="navbar-menu" :class="{ 'is-active': active}">
           <div class="navbar-start">
             <a class="navbar-item">
               BookmarkLet
@@ -57,6 +58,17 @@
 <script>
 export default {
   name: 'p-header',
+  data() {
+    return {
+      active: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      console.log(this.active);
+      this.active = !this.active;
+    },
+  },
 };
 </script>
 
