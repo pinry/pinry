@@ -22,13 +22,16 @@
                       <img class="avatar" :src="item.avatar" alt="">
                     </div>
                     <div class="pin-info">
-                      <span class="dim">pined by&nbsp;<span>{{ item.author }}</span>&nbsp;in&nbsp;
-                      <template v-for="tag in item.tags">
-                        <span v-bind:key="tag" class="pin-tag">
-                          &nbsp;
-                          <router-link to="/tags/">{{ tag }}</router-link>
-                        </span>
-                      </template>
+                      <span class="dim">pined by&nbsp;<span>{{ item.author }}</span>
+                        <template v-if="item.tags.length > 0">
+                          &nbsp;in&nbsp;
+                          <template v-for="tag in item.tags">
+                            <span v-bind:key="tag" class="pin-tag">
+                              &nbsp;
+                              <router-link to="/tags/">{{ tag }}</router-link>
+                            </span>
+                          </template>
+                        </template>
                       </span>
                     </div>
                     <div class="is-clearfix"></div>
@@ -101,6 +104,9 @@ export default {
 }
 /* card */
 $pin-footer-position-fix: -6px;
+$avatar-width: 30px;
+$avatar-height: 30px;
+
 @mixin pin-detail-font-size{
   font-size: 12px;
 }
@@ -121,8 +127,8 @@ $pin-footer-position-fix: -6px;
     border-radius: 3px 3px 0 0;
   }
   .avatar {
-    height: 30px;
-    width: 30px;
+    height: $avatar-height;
+    width: $avatar-width;
     border-radius: 3px;
   }
 }
@@ -145,6 +151,7 @@ $pin-footer-position-fix: -6px;
     > .pin-info {
       line-height: 16px;
       width: 220px;
+      padding-left: $avatar-width + 5px;
     }
     .pin-tag > a {
       font-weight: bold;
