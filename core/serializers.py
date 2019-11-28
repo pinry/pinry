@@ -143,6 +143,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Board
         fields = (
+            "id",
             "name",
             "pins",
             "pins_detail",
