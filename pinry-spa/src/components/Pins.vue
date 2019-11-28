@@ -123,6 +123,8 @@ export default {
         promise = API.fetchPins(this.offset, this.pinFilters.tagFilter);
       } else if (this.pinFilters.userFilter) {
         promise = API.fetchPins(this.offset, null, this.pinFilters.userFilter);
+      } else if (this.pinFilters.boardFilter) {
+        promise = API.fetchPinsForBoard(this.pinFilters.boardFilter);
       } else {
         promise = API.fetchPins(this.offset);
       }

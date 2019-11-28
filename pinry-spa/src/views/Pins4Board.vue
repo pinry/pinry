@@ -1,5 +1,5 @@
 <template>
-  <div class="pins-for-user">
+  <div class="pins-for-board">
     <PHeader></PHeader>
     <Pins :pin-filters="filters"></Pins>
   </div>
@@ -13,7 +13,7 @@ export default {
   name: 'p-header',
   data() {
     return {
-      filters: { userFilter: null },
+      filters: { boardFilter: null },
     };
   },
   components: {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     initializeBoard() {
-      this.filters.userFilter = this.$route.params.user;
+      this.filters.boardFilter = this.$route.params.boardId;
     },
   },
 };
