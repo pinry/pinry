@@ -24,7 +24,7 @@ function fetchPinsForBoard(boardId) {
     (resolve, reject) => {
       axios.get(url).then(
         (resp) => {
-          resolve({ data: { results: resp.data.pins_detail } });
+          resolve({ data: { results: resp.data.pins_detail, next: null } });
         },
         error => reject(error),
       );

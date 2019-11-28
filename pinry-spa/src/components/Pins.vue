@@ -60,6 +60,7 @@ import API from './api';
 import pinHandler from './utils/PinHandler';
 import PinPreview from './PinPreview.vue';
 import loadingSpinner from './loadingSpinner.vue';
+import scroll from './utils/scroll';
 
 function createImageItem(pin) {
   const image = {};
@@ -101,6 +102,17 @@ export default {
     },
   },
   methods: {
+    registerScrollEvent() {
+      const self = this;
+      scroll.bindScroll2Bottom(
+        () => {
+          if (self.status.loading || !self.status.hasNext) {
+            return;
+          }
+          self.fetchMore();
+        },
+      );
+    },
     buildBlocks(results) {
       const blocks = [];
       results.forEach(
@@ -125,14 +137,23 @@ export default {
         },
       );
     },
-    fetchMore(created) {
-      let promise;
+    shouldFetchMore(created) {
       if (!created) {
         if (this.status.loading) {
-          return;
+          return false;
+        }
+        if (!this.status.hasNext) {
+          return false;
         }
       }
+      return true;
+    },
+    fetchMore(created) {
+      if (!this.shouldFetchMore(created)) {
+        return;
+      }
       this.status.loading = true;
+      let promise;
       if (this.pinFilters.tagFilter) {
         promise = API.fetchPins(this.status.offset, this.pinFilters.tagFilter);
       } else if (this.pinFilters.userFilter) {
@@ -144,7 +165,12 @@ export default {
       }
       promise.then(
         (resp) => {
-          this.blocks = this.buildBlocks(resp.data.results);
+          const { results, next } = resp.data;
+          let newBlocks = this.buildBlocks(results);
+          newBlocks = this.blocks.concat(newBlocks);
+          this.blocks = newBlocks;
+          this.status.offset = newBlocks.length;
+          this.status.hasNext = !(next === null);
           this.status.loading = false;
         },
         () => { this.status.loading = false; },
@@ -152,6 +178,7 @@ export default {
     },
   },
   created() {
+    this.registerScrollEvent();
     this.fetchMore(true);
   },
 };
