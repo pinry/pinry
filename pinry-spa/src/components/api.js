@@ -18,6 +18,21 @@ function fetchPins(offset, tagFilter, userFilter) {
   );
 }
 
+function fetchPinsForBoard(boardId) {
+  const url = `${API_PREFIX}boards/${boardId}`;
+  return new Promise(
+    (resolve, reject) => {
+      axios.get(url).then(
+        (resp) => {
+          resolve({ data: { results: resp.data.pins_detail } });
+        },
+        error => reject(error),
+      );
+    },
+  );
+}
+
 export default {
   fetchPins,
+  fetchPinsForBoard,
 };

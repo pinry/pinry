@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="pins-for-tag">
     <PHeader></PHeader>
     <Pins :pin-filters="filters"></Pins>
   </div>
