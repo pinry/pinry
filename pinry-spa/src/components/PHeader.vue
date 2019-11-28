@@ -25,6 +25,23 @@
             </a>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
+                My Collections
+              </a>
+              <div class="navbar-dropdown">
+                <router-link
+                  to="/boards"
+                  class="navbar-item">
+                  Boards
+                </router-link>
+                <router-link
+                  to="/pins"
+                  class="navbar-item">
+                  Pins
+                </router-link>
+              </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
                 Browser Extensions
               </a>
               <div class="navbar-dropdown">
