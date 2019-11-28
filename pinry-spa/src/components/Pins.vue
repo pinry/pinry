@@ -51,6 +51,7 @@
         </div>
       </div>
       <loadingSpinner v-bind:show="status.loading"></loadingSpinner>
+      <noMore v-bind:show="!status.hasNext"></noMore>
     </section>
   </div>
 </template>
@@ -60,6 +61,7 @@ import API from './api';
 import pinHandler from './utils/PinHandler';
 import PinPreview from './PinPreview.vue';
 import loadingSpinner from './loadingSpinner.vue';
+import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 
 function createImageItem(pin) {
@@ -79,6 +81,7 @@ export default {
   name: 'pins',
   components: {
     loadingSpinner,
+    noMore,
   },
   data() {
     return {
