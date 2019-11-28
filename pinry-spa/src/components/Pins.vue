@@ -17,6 +17,7 @@
                 <img :src="item.url"
                      @click="openPreview(item)"
                      alt="item.description"
+                     :style="item.style"
                      class="pin-preview-image">
                 <div class="pin-footer">
                   <div class="description" v-show="item.description"><p>{{ item.description }}</p></div>
@@ -74,6 +75,10 @@ function createImageItem(pin) {
   image.avatar = `//gravatar.com/avatar/${pin.submitter.gravatar}`;
   image.original_url = pinHandler.escapeUrl(pin.image.image);
   image.orgianl_width = pin.image.width;
+  image.style = {
+    width: pin.image.thumbnail.width,
+    height: pin.image.thumbnail.height,
+  };
   return image;
 }
 
