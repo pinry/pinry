@@ -50,6 +50,7 @@
           </template>
         </div>
       </div>
+      <loadingSpinner v-bind:show="status.loading"></loadingSpinner>
     </section>
   </div>
 </template>
@@ -58,6 +59,7 @@
 import API from './api';
 import pinHandler from './utils/PinHandler';
 import PinPreview from './PinPreview.vue';
+import loadingSpinner from './loadingSpinner.vue';
 
 function createImageItem(pin) {
   const image = {};
@@ -74,11 +76,17 @@ function createImageItem(pin) {
 
 export default {
   name: 'pins',
-  components: {},
+  components: {
+    loadingSpinner,
+  },
   data() {
     return {
       blocks: [],
-      offset: 0,
+      status: {
+        loading: false,
+        hasNext: true,
+        offset: 0,
+      },
     };
   },
   props: {
@@ -117,26 +125,34 @@ export default {
         },
       );
     },
-    fetchMore() {
+    fetchMore(created) {
       let promise;
+      if (!created) {
+        if (this.status.loading) {
+          return;
+        }
+      }
+      this.status.loading = true;
       if (this.pinFilters.tagFilter) {
-        promise = API.fetchPins(this.offset, this.pinFilters.tagFilter);
+        promise = API.fetchPins(this.status.offset, this.pinFilters.tagFilter);
       } else if (this.pinFilters.userFilter) {
-        promise = API.fetchPins(this.offset, null, this.pinFilters.userFilter);
+        promise = API.fetchPins(this.status.offset, null, this.pinFilters.userFilter);
       } else if (this.pinFilters.boardFilter) {
         promise = API.fetchPinsForBoard(this.pinFilters.boardFilter);
       } else {
-        promise = API.fetchPins(this.offset);
+        promise = API.fetchPins(this.status.offset);
       }
       promise.then(
         (resp) => {
           this.blocks = this.buildBlocks(resp.data.results);
+          this.status.loading = false;
         },
+        () => { this.status.loading = false; },
       );
     },
   },
   created() {
-    this.fetchMore();
+    this.fetchMore(true);
   },
 };
 </script>
