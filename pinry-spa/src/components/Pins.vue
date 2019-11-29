@@ -76,8 +76,8 @@ function createImageItem(pin) {
   image.original_url = pinHandler.escapeUrl(pin.image.image);
   image.orgianl_width = pin.image.width;
   image.style = {
-    width: pin.image.thumbnail.width,
-    height: pin.image.thumbnail.height,
+    width: `${pin.image.thumbnail.width}px`,
+    height: `${pin.image.thumbnail.height}px`,
   };
   return image;
 }
