@@ -39,7 +39,7 @@ const User = {
     const self = this;
     return new Promise(
       (resolve) => {
-        axios.get('/api-auth/logout/?next=/api/v2/').then(
+        axios.get('/api-auth/logout/').then(
           () => {
             storage.set(self.storageKey, null, 1);
             resolve();
