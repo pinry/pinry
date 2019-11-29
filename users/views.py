@@ -1,14 +1,18 @@
+import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.utils.functional import lazy
 from django.views.generic import CreateView
+from rest_framework.renderers import JSONRenderer
 
+from core.serializers import UserSerializer
 from .forms import UserCreationForm
 from users.models import User
 
@@ -37,6 +41,39 @@ class CreateUser(CreateView):
         user.user_permissions = permissions
         login(self.request, user)
         return redirect
+
+
+def login_user(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest()
+    if 'username' not in data:
+        return HttpResponseBadRequest(
+            json.dumps({"username": "this field is required"})
+        )
+    if 'password' not in data:
+        return HttpResponseBadRequest(
+            json.dumps({"password": "this field is required"})
+        )
+    user = authenticate(
+        request,
+        username=data['username'],
+        password=data['password']
+    )
+    if not user:
+        return HttpResponseBadRequest(
+            json.dumps({"password": "username and password doesn't match"})
+        )
+    login(request, user)
+    data = UserSerializer(
+        user,
+        context={'request': request},
+    ).data
+    return HttpResponse(
+        JSONRenderer().render(data),
+        content_type="application/json"
+    )
 
 
 @login_required
