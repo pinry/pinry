@@ -66,6 +66,7 @@
                 </a>
                 <a
                   v-show="!user.loggedIn"
+                  v-on:click="logIn"
                   class="button is-light">
                   Log in
                 </a>
@@ -86,6 +87,7 @@
 
 <script>
 import api from './api';
+import LoginForm from './LoginForm.vue';
 
 export default {
   name: 'p-header',
@@ -102,12 +104,25 @@ export default {
     toggleMenu() {
       this.active = !this.active;
     },
+    onLoginSucceed() {
+      this.initializeUser();
+    },
     logOut() {
       api.User.logOut().then(
         () => {
           window.location.reload();
         },
       );
+    },
+    logIn() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: LoginForm,
+        hasModalCard: true,
+        events: {
+          'login.succeed': this.onLoginSucceed,
+        },
+      });
     },
     initializeUser() {
       const self = this;

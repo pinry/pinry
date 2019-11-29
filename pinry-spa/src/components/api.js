@@ -55,7 +55,7 @@ const User = {
           },
           (error) => {
             console.log('Failed to log in due to unexpected error:', error);
-            reject(error);
+            reject(error.response);
           },
         );
       },
