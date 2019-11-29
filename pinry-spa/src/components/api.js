@@ -1,4 +1,5 @@
 import axios from 'axios';
+import storage from './utils/storage';
 
 const API_PREFIX = '/api/v2/';
 
@@ -32,7 +33,51 @@ function fetchPinsForBoard(boardId) {
   );
 }
 
+const User = {
+  storageKey: 'pinry.user',
+  logOut() {
+    const self = this;
+    return new Promise(
+      (resolve) => {
+        axios.get('/api-auth/logout/?next=/api/v2/').then(
+          () => {
+            storage.set(self.storageKey, null, 1);
+            resolve();
+          },
+        );
+      },
+    );
+  },
+  fetchUserInfo() {
+    /* returns null if user not logged in */
+    const self = this;
+    const userInfo = storage.get(self.storageKey);
+    if (userInfo !== null) {
+      return new Promise(
+        resolve => resolve(userInfo),
+      );
+    }
+    const url = `${API_PREFIX}users/`;
+    return new Promise(
+      (resolve) => {
+        axios.get(url).then(
+          (resp) => {
+            const users = resp.data;
+            if (users.length === 0) {
+              return resolve(null);
+            }
+            const value = users[0];
+            storage.set(self.storageKey, value, 60 * 5 * 1000);
+            return resolve(users[0]);
+          },
+        );
+      },
+    );
+  },
+};
+
 export default {
   fetchPins,
   fetchPinsForBoard,
+  User,
 };

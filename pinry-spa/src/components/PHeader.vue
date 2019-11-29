@@ -20,10 +20,12 @@
             <a class="navbar-item">
               BookmarkLet
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" v-show="user.loggedIn">
               Create Pin
             </a>
-            <div class="navbar-item has-dropdown is-hoverable">
+            <div
+              v-show="user.loggedIn"
+              class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
                 My Collections
               </a>
@@ -57,11 +59,21 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-primary">
+                <a
+                  v-show="!user.loggedIn"
+                  class="button is-primary">
                   <strong>Sign up</strong>
                 </a>
-                <a class="button is-light">
+                <a
+                  v-show="!user.loggedIn"
+                  class="button is-light">
                   Log in
+                </a>
+                <a
+                  v-show="user.loggedIn"
+                  v-on:click="logOut"
+                  class="button is-light">
+                  Log out
                 </a>
               </div>
             </div>
@@ -73,18 +85,47 @@
 </template>
 
 <script>
+import api from './api';
+
 export default {
   name: 'p-header',
   data() {
     return {
       active: false,
+      user: {
+        loggedIn: false,
+        meta: {},
+      },
     };
   },
   methods: {
     toggleMenu() {
-      console.log(this.active);
       this.active = !this.active;
     },
+    logOut() {
+      api.User.logOut().then(
+        () => {
+          this.$router.push('/');
+        },
+      );
+    },
+    initializeUser() {
+      const self = this;
+      api.User.fetchUserInfo().then(
+        (user) => {
+          if (user === null) {
+            self.user.loggedIn = false;
+            self.user.meta = {};
+          } else {
+            self.user.meta = user;
+            self.user.loggedIn = true;
+          }
+        },
+      );
+    },
+  },
+  beforeMount() {
+    this.initializeUser();
   },
 };
 </script>
