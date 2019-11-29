@@ -7,7 +7,7 @@ function fetchPins(offset, tagFilter, userFilter) {
   const queryArgs = {
     format: 'json',
     ordering: '-id',
-    limit: 50,
+    limit: 30,
     offset,
   };
   if (tagFilter) queryArgs.tags__name = tagFilter;
