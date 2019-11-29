@@ -35,6 +35,32 @@ function fetchPinsForBoard(boardId) {
 
 const User = {
   storageKey: 'pinry.user',
+  logIn(username, password) {
+    const url = `${API_PREFIX}profile/login/`;
+    return new Promise(
+      (resolve, reject) => {
+        const p = axios.post(
+          url,
+          {
+            username,
+            password,
+          },
+        );
+        p.then(
+          (resp) => {
+            if (resp.status !== 200) {
+              reject(resp);
+            }
+            resolve(resp.data);
+          },
+          (error) => {
+            console.log('Failed to log in due to unexpected error:', error);
+            reject(error);
+          },
+        );
+      },
+    );
+  },
   logOut() {
     const self = this;
     return new Promise(
