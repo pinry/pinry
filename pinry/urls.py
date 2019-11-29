@@ -20,7 +20,7 @@ urlpatterns = [
     # old api and views
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('core.urls', namespace='core')),
-    url(r'', include('users.urls', namespace='users')),
+    url(r'^api/v2/profile/', include('users.urls', namespace='users')),
 ]
 
 
