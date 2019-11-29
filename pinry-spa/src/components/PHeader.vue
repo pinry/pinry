@@ -105,7 +105,7 @@ export default {
     logOut() {
       api.User.logOut().then(
         () => {
-          this.$router.push('/');
+          window.location.reload();
         },
       );
     },
