@@ -10,17 +10,22 @@
           gutter=".gutter-sizer"
         >
           <template v-for="item in blocks">
-            <div v-bind:key="item.id" v-masonry-tile class="grid">
+            <div v-bind:key="item.id"
+                 v-masonry-tile
+                 :class="item.class"
+                 class="grid pin-masonry">
               <div class="grid-sizer"></div>
               <div class="gutter-sizer"></div>
               <div class="pin-card grid-item">
                 <img :src="item.url"
+                     @load="onPinImageLoaded(item.id)"
                      @click="openPreview(item)"
                      alt="item.description"
                      :style="item.style"
                      class="pin-preview-image">
                 <div class="pin-footer">
-                  <div class="description" v-show="item.description"><p>{{ item.description }}</p></div>
+                  <div class="description" v-show="item.description"><p>{{ item.description }}</p>
+                  </div>
                   <div class="details">
                     <div class="is-pulled-left">
                       <img class="avatar" :src="item.avatar" alt="">
@@ -37,7 +42,8 @@
                           &nbsp;in&nbsp;
                           <template v-for="tag in item.tags">
                             <span v-bind:key="tag" class="pin-tag">
-                              <router-link :to="{ name: 'tag', params: {tag: tag} }" params="{tag: tag}">{{ tag }}</router-link>
+                              <router-link :to="{ name: 'tag', params: {tag: tag} }"
+                                           params="{tag: tag}">{{ tag }}</router-link>
                             </span>
                           </template>
                         </template>
@@ -79,6 +85,7 @@ function createImageItem(pin) {
     width: `${pin.image.thumbnail.width}px`,
     height: `${pin.image.thumbnail.height}px`,
   };
+  image.class = {};
   return image;
 }
 
@@ -91,6 +98,7 @@ export default {
   data() {
     return {
       blocks: [],
+      blocksMap: {},
       status: {
         loading: false,
         hasNext: true,
@@ -110,6 +118,11 @@ export default {
     },
   },
   methods: {
+    onPinImageLoaded(itemId) {
+      this.blocksMap[itemId].class = {
+        'image-loaded': true,
+      };
+    },
     registerScrollEvent() {
       const self = this;
       scroll.bindScroll2Bottom(
@@ -125,8 +138,9 @@ export default {
       const blocks = [];
       results.forEach(
         (pin) => {
+          const item = createImageItem(pin);
           blocks.push(
-            createImageItem(pin),
+            item,
           );
         },
       );
@@ -175,6 +189,9 @@ export default {
         (resp) => {
           const { results, next } = resp.data;
           let newBlocks = this.buildBlocks(results);
+          newBlocks.forEach(
+            (item) => { this.blocksMap[item.id] = item; },
+          );
           newBlocks = this.blocks.concat(newBlocks);
           this.blocks = newBlocks;
           this.status.offset = newBlocks.length;
@@ -202,6 +219,16 @@ export default {
 .gutter-sizer {
   width: 15px;
 }
+
+/* pin-image transition */
+.pin-masonry.image-loaded{
+  opacity: 1;
+  transition: opacity .3s;
+}
+.pin-masonry {
+  opacity: 0;
+}
+
 /* card */
 $pin-footer-position-fix: -6px;
 $avatar-width: 30px;
@@ -222,12 +249,20 @@ $avatar-height: 30px;
   font-weight: normal;
 }
 
+@mixin loader {
+  background: url('../assets/loader.gif');
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 .pin-card{
   .pin-preview-image {
     cursor: zoom-in;
   }
   > img {
+    background-color: white;
     border-radius: 3px 3px 0 0;
+    @include loader;
   }
   .avatar {
     height: $avatar-height;
