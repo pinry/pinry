@@ -10,7 +10,7 @@ import PHeader from '../components/PHeader.vue';
 import Pins from '../components/Pins.vue';
 
 export default {
-  name: 'p-header',
+  name: 'Home',
   components: {
     PHeader,
     Pins,
