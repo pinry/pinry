@@ -10,10 +10,10 @@ import PHeader from '../components/PHeader.vue';
 import Pins from '../components/Pins.vue';
 
 export default {
-  name: 'p-header',
+  name: 'Pins4Id',
   data() {
     return {
-      filters: { tagFilter: null },
+      filters: { idFilter: null },
     };
   },
   components: {
@@ -21,15 +21,15 @@ export default {
     Pins,
   },
   created() {
-    this.initializeTag();
+    this.initialize();
   },
   beforeRouteUpdate(to, from, next) {
-    this.initializeTag();
+    this.initialize();
     next();
   },
   methods: {
-    initializeTag() {
-      this.filters.tagFilter = this.$route.params.tag;
+    initialize() {
+      this.filters.idFilter = this.$route.params.pinId;
     },
   },
 };

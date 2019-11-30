@@ -184,6 +184,8 @@ export default {
         promise = API.fetchPins(this.status.offset, null, this.pinFilters.userFilter);
       } else if (this.pinFilters.boardFilter) {
         promise = API.fetchPinsForBoard(this.pinFilters.boardFilter);
+      } else if (this.pinFilters.idFilter) {
+        promise = API.fetchPin(this.pinFilters.idFilter);
       } else {
         promise = API.fetchPins(this.status.offset);
       }

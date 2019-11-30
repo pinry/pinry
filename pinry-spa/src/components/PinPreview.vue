@@ -28,7 +28,7 @@
                   </p>
                 </div>
                 <div class="is-pulled-right">
-                  <a :href="pinItem.referer">
+                  <a :href="pinItem.referer" target="_blank">
                     <b-button
                         v-show="pinItem.referer !== null"
                         class="meta-link"
@@ -36,7 +36,7 @@
                       Referer
                     </b-button>
                   </a>
-                  <a :href="pinItem.original_image_url">
+                  <a :href="pinItem.original_image_url" target="_blank">
                     <b-button
                         v-show="pinItem.original_image_url !== null"
                         class="meta-link"
@@ -44,11 +44,11 @@
                         Original Image
                     </b-button>
                   </a>
-                  <b-button tag="router-link"
-                      :to="{ name: 'pin', params: { pinId: pinItem.id } }"
+                  <b-button
+                      @click="closeAndGoTo"
                       class="meta-link"
                       type="is-success">
-                      Pin URL
+                      Goto Pin Link
                   </b-button>
                 </div>
               </div>
@@ -63,6 +63,14 @@
 export default {
   name: 'PinPreview',
   props: ['pinItem'],
+  methods: {
+    closeAndGoTo() {
+      this.$parent.close();
+      this.$router.push(
+        { name: 'pin', params: { pinId: this.pinItem.id } },
+      );
+    },
+  },
 };
 </script>
 
