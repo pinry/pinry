@@ -79,7 +79,9 @@ function createImageItem(pin) {
   image.tags = pin.tags;
   image.author = pin.submitter.username;
   image.avatar = `//gravatar.com/avatar/${pin.submitter.gravatar}`;
-  image.original_url = pinHandler.escapeUrl(pin.image.image);
+  image.large_image_url = pinHandler.escapeUrl(pin.image.image);
+  image.original_image_url = pin.url;
+  image.referer = pin.referer;
   image.orgianl_width = pin.image.width;
   image.style = {
     width: `${pin.image.thumbnail.width}px`,

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Pins4Tag from '../views/Pins4Tag.vue';
 import Pins4User from '../views/Pins4User.vue';
 import Pins4Board from '../views/Pins4Board.vue';
+import Pins4Id from '../views/Pins4Id.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/pins/boards/:boardId',
     name: 'board',
     component: Pins4Board,
+  },
+  {
+    path: '/pins/:pinId',
+    name: 'pin',
+    component: Pins4Id,
   },
 ];
 

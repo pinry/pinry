@@ -4,7 +4,7 @@
         <div class="card">
           <div class="card-image">
             <figure class="image">
-              <img :src="pinItem.original_url" alt="Image">
+              <img :src="pinItem.large_image_url" alt="Image">
             </figure>
           </div>
           <div class="card-content">
@@ -28,20 +28,24 @@
                   </p>
                 </div>
                 <div class="is-pulled-right">
-                  <b-button tag="router-link"
-                      to="/"
-                      class="meta-link"
-                      type="is-warning">
+                  <a :href="pinItem.referer">
+                    <b-button
+                        v-show="pinItem.referer !== null"
+                        class="meta-link"
+                        type="is-warning">
                       Referer
-                  </b-button>
+                    </b-button>
+                  </a>
+                  <a :href="pinItem.original_image_url">
+                    <b-button
+                        v-show="pinItem.original_image_url !== null"
+                        class="meta-link"
+                        type="is-link">
+                        Original Image
+                    </b-button>
+                  </a>
                   <b-button tag="router-link"
-                      to="/"
-                      class="meta-link"
-                      type="is-link">
-                      Original URL
-                  </b-button>
-                  <b-button tag="router-link"
-                      to="/"
+                      :to="{ name: 'pin', params: { pinId: pinItem.id } }"
                       class="meta-link"
                       type="is-success">
                       Pin URL
