@@ -19,6 +19,28 @@ function fetchPins(offset, tagFilter, userFilter) {
   );
 }
 
+function fetchPin(pinId) {
+  const url = `${API_PREFIX}pins/${pinId}`;
+  return new Promise(
+    (resolve, reject) => {
+      const p = axios.get(
+        url,
+      );
+      p.then(
+        (resp) => {
+          const response = {
+            data: { results: [resp.data], next: null },
+          };
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        },
+      );
+    },
+  );
+}
+
 function fetchPinsForBoard(boardId) {
   const url = `${API_PREFIX}boards/${boardId}`;
   return new Promise(
@@ -103,6 +125,7 @@ const User = {
 };
 
 export default {
+  fetchPin,
   fetchPins,
   fetchPinsForBoard,
   User,
