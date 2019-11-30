@@ -75,6 +75,7 @@ function createImageItem(pin) {
   const image = {};
   image.url = pinHandler.escapeUrl(pin.image.thumbnail.image);
   image.id = pin.id;
+  image.owner_id = pin.submitter.id;
   image.description = pin.description;
   image.tags = pin.tags;
   image.author = pin.submitter.username;

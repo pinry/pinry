@@ -36,7 +36,7 @@
                   Boards
                 </router-link>
                 <router-link
-                  to="/pins"
+                  :to="{ name: 'user', params: {user: user.meta.username} }"
                   class="navbar-item">
                   Pins
                 </router-link>
