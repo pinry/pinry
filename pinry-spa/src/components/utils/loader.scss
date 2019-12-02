@@ -1,5 +1,5 @@
-@mixin loader {
-  background: url('/assets/loader.gif');
+@mixin loader($loaderGifURL) {
+  background: url(#{$loaderGifURL});
   background-position: center center;
   background-repeat: no-repeat;
 }

@@ -248,7 +248,7 @@ $avatar-height: 30px;
   > img {
     background-color: white;
     border-radius: 3px 3px 0 0;
-    @include loader;
+    @include loader('../assets/loader.gif');
   }
   .avatar {
     height: $avatar-height;
