@@ -2,11 +2,10 @@
  * Bookmarklet for Pinry
  * Descrip: This is trying to be as standalone a script as possible hence
  *          why it has built in helpers and such when the rest of the
- *          scripts make use of helpers.js. In the future i want to remove
- *          all dependencies on jQuery.
+ *          scripts make use of helpers.js.
  * Authors: Pinry Contributors
- * Updated: Mar 4th, 2013
- * Require: None (dynamically loads jQuery if needed)
+ * Updated: Aug 26th, 2018
+ * Require: None
  */
 
 (function main() {
