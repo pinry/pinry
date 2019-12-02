@@ -9,6 +9,7 @@
 @mixin secondary-font-color-in-dark {
   color: #878787;
 }
+$main-title-font-color: rgb(51, 51, 51);
 
 // for pins component
 @mixin pin-detail-font-size{

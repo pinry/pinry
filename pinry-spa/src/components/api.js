@@ -55,6 +55,11 @@ function fetchPinsForBoard(boardId) {
   );
 }
 
+function fetchBoardForUser(username) {
+  const url = `${API_PREFIX}boards/?submitter__username=${username}`;
+  return axios.get(url);
+}
+
 const User = {
   storageKey: 'pinry.user',
   logIn(username, password) {
@@ -128,5 +133,6 @@ export default {
   fetchPin,
   fetchPins,
   fetchPinsForBoard,
+  fetchBoardForUser,
   User,
 };
