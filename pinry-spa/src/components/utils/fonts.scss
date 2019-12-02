@@ -9,3 +9,19 @@
 @mixin secondary-font-color-in-dark {
   color: #878787;
 }
+
+// for pins component
+@mixin pin-detail-font-size{
+  font-size: 12px;
+}
+
+@mixin description-font {
+  @include pin-detail-font-size;
+  font-family: 'Georgia', 'Times', 'Times New Roman', serif;
+}
+
+@mixin secondary-font {
+  @include pin-detail-font-size;
+  color: #999;
+  font-weight: normal;
+}

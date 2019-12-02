@@ -238,21 +238,7 @@ export default {
 $pin-footer-position-fix: -6px;
 $avatar-width: 30px;
 $avatar-height: 30px;
-
-@mixin pin-detail-font-size{
-  font-size: 12px;
-}
-
-@mixin description-font {
-  @include pin-detail-font-size;
-  font-family: 'Georgia', 'Times', 'Times New Roman', serif;
-}
-
-@mixin secondary-font {
-  @include pin-detail-font-size;
-  color: #999;
-  font-weight: normal;
-}
+@import './utils/fonts';
 
 @mixin loader {
   background: url('../assets/loader.gif');
