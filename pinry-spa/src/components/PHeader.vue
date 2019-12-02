@@ -31,7 +31,7 @@
               </a>
               <div class="navbar-dropdown">
                 <router-link
-                  to="/boards"
+                  :to="{ name: 'boards4user', params: {username: user.meta.username} }"
                   class="navbar-item">
                   Boards
                 </router-link>
