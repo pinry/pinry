@@ -239,12 +239,7 @@ $pin-footer-position-fix: -6px;
 $avatar-width: 30px;
 $avatar-height: 30px;
 @import './utils/fonts';
-
-@mixin loader {
-  background: url('../assets/loader.gif');
-  background-position: center center;
-  background-repeat: no-repeat;
-}
+@import './utils/loader.scss';
 
 .pin-card{
   .pin-preview-image {
