@@ -291,7 +291,7 @@ $avatar-height: 30px;
   }
 }
 
-@import './utils/pin-grid-layout';
+@import 'utils/grid-layout';
 @include screen-grid-layout("#pins-container")
 
 </style>
