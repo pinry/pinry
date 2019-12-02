@@ -20,9 +20,25 @@
             <a class="navbar-item">
               BookmarkLet
             </a>
-            <a class="navbar-item" v-show="user.loggedIn">
-              Create Pin
-            </a>
+            <div
+              v-show="user.loggedIn"
+              class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Create
+              </a>
+              <div class="navbar-dropdown">
+                <router-link
+                  to="/"
+                  class="navbar-item">
+                  Pin
+                </router-link>
+                <router-link
+                  to="/"
+                  class="navbar-item">
+                  Board
+                </router-link>
+              </div>
+            </div>
             <div
               v-show="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
