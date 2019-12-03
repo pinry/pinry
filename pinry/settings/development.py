@@ -20,6 +20,10 @@ DATABASES = {
     }
 }
 
+INSTALLED_APPS += [
+    'django_extensions',
+]
+
 try:
     from .local_settings import *
 except ImportError:

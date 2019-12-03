@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 "flake8" = "*"
 qrcode = "*"
+django-extensions = "*"
 
 [packages]
 django = ">=1.11,<1.12"
