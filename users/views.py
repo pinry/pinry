@@ -4,19 +4,15 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
-from django.template.response import TemplateResponse
 from django.utils.functional import lazy
-from django.views.generic import CreateView
 from rest_framework import mixins, routers
 from rest_framework.permissions import BasePermission
 from rest_framework.renderers import JSONRenderer
 from rest_framework.viewsets import GenericViewSet
 
 from core.serializers import UserSerializer
-from .forms import UserCreationForm
 from users.models import User
 
 
