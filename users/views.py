@@ -10,7 +10,10 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRespon
 from django.template.response import TemplateResponse
 from django.utils.functional import lazy
 from django.views.generic import CreateView
+from rest_framework import mixins, routers
+from rest_framework.permissions import BasePermission
 from rest_framework.renderers import JSONRenderer
+from rest_framework.viewsets import GenericViewSet
 
 from core.serializers import UserSerializer
 from .forms import UserCreationForm
@@ -21,26 +24,29 @@ def reverse_lazy(name=None, *args):
     return lazy(reverse, str)(name, args=args)
 
 
-class CreateUser(CreateView):
-    template_name = 'users/register.html'
-    model = User
-    form_class = UserCreationForm
-    success_url = reverse_lazy('core:recent-pins')
+class UserViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet,
+):
+    class Permission(BasePermission):
+        def has_permission(self, request, view):
+            if not request.method == "POST":
+                return True
+            return settings.ALLOW_NEW_REGISTRATIONS
 
-    def get(self, request, *args, **kwargs):
-        if not settings.ALLOW_NEW_REGISTRATIONS:
-            messages.error(request, "The admin of this service is not allowing new registrations.")
-            return HttpResponseRedirect(reverse('core:recent-pins'))
-        return super(CreateUser, self).get(request, *args, **kwargs)
+        def has_object_permission(self, request, view, obj):
+            return request.user == obj
 
-    def form_valid(self, form):
-        redirect = super(CreateUser, self).form_valid(form)
-        permissions = Permission.objects.filter(codename__in=['add_pin', 'add_image'])
-        user = authenticate(username=form.cleaned_data['username'],
-                            password=form.cleaned_data['password'])
-        user.user_permissions = permissions
-        login(self.request, user)
-        return redirect
+    permission_classes = [Permission, ]
+    serializer_class = UserSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        if self.request.user.is_anonymous:
+            return User.objects.none()
+        return User.objects.filter(id=self.request.user.id)
 
 
 def login_user(request):
@@ -83,5 +89,5 @@ def logout_user(request):
     return HttpResponseRedirect(reverse('core:recent-pins'))
 
 
-def private(request):
-    return TemplateResponse(request, 'users/private.html', None)
+drf_router = routers.DefaultRouter()
+drf_router.register(r'users', UserViewSet, base_name="user")

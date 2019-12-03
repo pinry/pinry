@@ -6,17 +6,7 @@ from taggit.models import Tag
 from core.models import Image, Board
 from core.models import Pin
 from django_images.models import Thumbnail
-from users.models import User
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'gravatar',
-            settings.DRF_URL_FIELD_NAME,
-        )
+from users.serializers import UserSerializer
 
 
 class ThumbnailSerializer(serializers.HyperlinkedModelSerializer):
