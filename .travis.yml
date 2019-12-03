@@ -6,7 +6,6 @@ cache:
 python:
     - "3.5"
     - "3.6"
-    - "3.7.4"
 install:
     - pip install pipenv && pipenv install --dev --system
 script:
