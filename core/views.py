@@ -6,21 +6,6 @@ from rest_framework.viewsets import GenericViewSet
 from core import serializers as api
 from core.models import Image, Pin, Board
 from core.permissions import IsOwnerOrReadOnly
-from users.models import User
-
-
-class UserViewSet(
-    mixins.RetrieveModelMixin,
-    mixins.ListModelMixin,
-    GenericViewSet,
-):
-    serializer_class = api.UserSerializer
-    pagination_class = None
-
-    def get_queryset(self):
-        if self.request.user.is_anonymous:
-            return User.objects.none()
-        return User.objects.filter(id=self.request.user.id)
 
 
 class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
@@ -52,7 +37,6 @@ class BoardViewSet(viewsets.ModelViewSet):
 
 
 drf_router = routers.DefaultRouter()
-drf_router.register(r'users', UserViewSet, base_name="user")
 drf_router.register(r'pins', PinViewSet)
 drf_router.register(r'images', ImageViewSet)
 drf_router.register(r'boards', BoardViewSet)
