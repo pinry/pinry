@@ -141,6 +141,9 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             "submitter",
         )
         read_only_fields = ('submitter', 'published')
+        extra_kwargs = {
+            'submitter': {"view_name": "users:user-detail"},
+        }
 
     pins_detail = PinSerializer(source="pins", many=True, read_only=True)
     pins = serializers.HyperlinkedRelatedField(
