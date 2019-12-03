@@ -62,6 +62,34 @@ function fetchBoardForUser(username) {
 
 const User = {
   storageKey: 'pinry.user',
+  signUp(username, email, password, passwordRepeat) {
+    const url = `${API_PREFIX}profile/users/`;
+    return new Promise(
+      (resolve, reject) => {
+        const p = axios.post(
+          url,
+          {
+            username,
+            email,
+            password,
+            password_repeat: passwordRepeat,
+          },
+        );
+        p.then(
+          (resp) => {
+            if (resp.status !== 201) {
+              reject(resp);
+            }
+            resolve(resp.data);
+          },
+          (error) => {
+            console.log('Failed to sign up due to unexpected error:', error);
+            reject(error.response);
+          },
+        );
+      },
+    );
+  },
   logIn(username, password) {
     const url = `${API_PREFIX}profile/login/`;
     return new Promise(
@@ -101,14 +129,16 @@ const User = {
       },
     );
   },
-  fetchUserInfo() {
+  fetchUserInfo(force = false) {
     /* returns null if user not logged in */
     const self = this;
-    const userInfo = storage.get(self.storageKey);
-    if (userInfo !== null) {
-      return new Promise(
-        resolve => resolve(userInfo),
-      );
+    if (!force) {
+      const userInfo = storage.get(self.storageKey);
+      if (userInfo !== null) {
+        return new Promise(
+          resolve => resolve(userInfo),
+        );
+      }
     }
     const url = `${API_PREFIX}/profile/users/`;
     return new Promise(

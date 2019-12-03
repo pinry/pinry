@@ -21,7 +21,7 @@
               BookmarkLet
             </a>
             <div
-              v-show="user.loggedIn"
+              v-if="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
                 Create
@@ -40,7 +40,7 @@
               </div>
             </div>
             <div
-              v-show="user.loggedIn"
+              v-if="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
                 My Collections
@@ -76,6 +76,7 @@
             <div class="navbar-item">
               <div class="buttons">
                 <a
+                  @click="signUp"
                   v-show="!user.loggedIn"
                   class="button is-primary">
                   <strong>Sign up</strong>
@@ -104,6 +105,7 @@
 <script>
 import api from './api';
 import LoginForm from './LoginForm.vue';
+import SignUpForm from './SignUpForm.vue';
 
 export default {
   name: 'p-header',
@@ -121,7 +123,10 @@ export default {
       this.active = !this.active;
     },
     onLoginSucceed() {
-      this.initializeUser();
+      this.initializeUser(true);
+    },
+    onSignUpSucceed() {
+      this.initializeUser(true);
     },
     logOut() {
       api.User.logOut().then(
@@ -140,9 +145,19 @@ export default {
         },
       });
     },
-    initializeUser() {
+    signUp() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: SignUpForm,
+        hasModalCard: true,
+        events: {
+          'signup.succeed': this.onSignUpSucceed,
+        },
+      });
+    },
+    initializeUser(force = false) {
       const self = this;
-      api.User.fetchUserInfo().then(
+      api.User.fetchUserInfo(force).then(
         (user) => {
           if (user === null) {
             self.user.loggedIn = false;
