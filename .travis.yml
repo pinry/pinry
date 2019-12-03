@@ -4,9 +4,10 @@ language: python
 cache:
     pip: true
 python:
-    - "3.4"
     - "3.5"
     - "3.6"
+    - "3.7"
+    - "3.8"
 install:
     - pip install pipenv && pipenv install --dev --system
 script:
