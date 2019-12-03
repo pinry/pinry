@@ -1,3 +1,5 @@
+import json
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
@@ -39,16 +41,29 @@ class CreateUserTest(TestCase):
         data = {
             'username': 'jdoe',
             'email': 'jdoe@example.com',
-            'password': 'password'
+            'password': 'password',
+            'password_repeat': 'password',
         }
-        response = self.client.post(reverse('users:register'), data=data)
-        self.assertRedirects(response, reverse('core:recent-pins'))
-        self.assertIn('_auth_user_id', self.client.session)
+        response = self.client.post(
+            reverse('users:user-list'),
+            data=data,
+        )
+        self.assertEqual(response.status_code, 201)
 
     @override_settings(ALLOW_NEW_REGISTRATIONS=False)
     def test_create_post_not_allowed(self):
-        response = self.client.get(reverse('users:register'))
-        self.assertRedirects(response, reverse('core:recent-pins'))
+        data = {
+            'username': 'jdoe',
+            'email': 'jdoe@example.com',
+            'password': 'password',
+            'password_repeat': 'password',
+
+        }
+        response = self.client.post(
+            reverse('users:user-list'),
+            data=data,
+        )
+        self.assertEqual(response.status_code, 403)
 
 
 class LogoutViewTest(TestCase):
@@ -58,4 +73,4 @@ class LogoutViewTest(TestCase):
 
     def test_logout_view(self):
         response = self.client.get(reverse('users:logout'))
-        self.assertRedirects(response, reverse('core:recent-pins'))
+        self.assertEqual(response.status_code, 302)
