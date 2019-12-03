@@ -110,7 +110,7 @@ const User = {
         resolve => resolve(userInfo),
       );
     }
-    const url = `${API_PREFIX}users/`;
+    const url = `${API_PREFIX}/profile/users/`;
     return new Promise(
       (resolve) => {
         axios.get(url).then(
