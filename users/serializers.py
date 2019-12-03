@@ -1,4 +1,7 @@
+from copy import deepcopy
+
 from django.conf import settings
+from django.contrib.auth import login
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -51,4 +54,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         )
         user.set_password(password)
         user.save()
+        login(
+            self.context['request'],
+            user=user,
+            backend=settings.AUTHENTICATION_BACKENDS[0],
+        )
         return user
