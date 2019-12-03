@@ -188,9 +188,6 @@ $avatar-height: 30px;
 @import './utils/loader.scss';
 
 .board-card{
-  .preview-image {
-    max-height: 200px;
-  }
   .card-image > img {
     background-color: white;
     border-radius: 3px 3px 0 0;
