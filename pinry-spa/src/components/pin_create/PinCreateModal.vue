@@ -75,6 +75,7 @@
 <script>
 import API from '../api';
 import FileUpload from './FileUpload.vue';
+import bus from '../utils/bus';
 
 function isURLBlank(url) {
   return url !== null && url !== '';
@@ -131,6 +132,7 @@ export default {
       }
       promise.then(
         (resp) => {
+          bus.bus.$emit(bus.events.refreshPin);
           self.$emit('pinCreated', resp);
           self.$parent.close();
         },
