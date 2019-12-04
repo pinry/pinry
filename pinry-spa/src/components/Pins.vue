@@ -70,6 +70,7 @@ import PinPreview from './PinPreview.vue';
 import loadingSpinner from './loadingSpinner.vue';
 import noMore from './noMore.vue';
 import scroll from './utils/scroll';
+import bus from './utils/bus';
 
 function createImageItem(pin) {
   const image = {};
@@ -92,6 +93,18 @@ function createImageItem(pin) {
   return image;
 }
 
+function initialData() {
+  return {
+    blocks: [],
+    blocksMap: {},
+    status: {
+      loading: false,
+      hasNext: true,
+      offset: 0,
+    },
+  };
+}
+
 export default {
   name: 'pins',
   components: {
@@ -99,15 +112,7 @@ export default {
     noMore,
   },
   data() {
-    return {
-      blocks: [],
-      blocksMap: {},
-      status: {
-        loading: false,
-        hasNext: true,
-        offset: 0,
-      },
-    };
+    return initialData();
   },
   props: {
     pinFilters: {
@@ -173,6 +178,19 @@ export default {
       }
       return true;
     },
+    initialize() {
+      this.fetchMore(true);
+    },
+    reset() {
+      const data = initialData();
+      Object.entries(data).forEach(
+        (kv) => {
+          const [key, value] = kv;
+          this[key] = value;
+        },
+      );
+      this.initialize();
+    },
     fetchMore(created) {
       if (!this.shouldFetchMore(created)) {
         return;
@@ -208,8 +226,9 @@ export default {
     },
   },
   created() {
+    bus.bus.$on(bus.events.refreshPin, this.reset);
     this.registerScrollEvent();
-    this.fetchMore(true);
+    this.initialize();
   },
 };
 </script>
