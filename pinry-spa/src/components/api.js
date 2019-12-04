@@ -3,6 +3,17 @@ import storage from './utils/storage';
 
 const API_PREFIX = '/api/v2/';
 
+const Pin = {
+  createFromURL(jsonData) {
+    const url = `${API_PREFIX}pins/`;
+    return axios.post(
+      url,
+      jsonData,
+    );
+  },
+};
+
+
 function fetchPins(offset, tagFilter, userFilter) {
   const url = `${API_PREFIX}pins/`;
   const queryArgs = {
@@ -160,6 +171,7 @@ const User = {
 };
 
 export default {
+  Pin,
   fetchPin,
   fetchPins,
   fetchPinsForBoard,

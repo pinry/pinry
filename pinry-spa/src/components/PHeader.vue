@@ -27,16 +27,15 @@
                 Create
               </a>
               <div class="navbar-dropdown">
-                <router-link
-                  to="/"
+                <a
+                  @click="createPin"
                   class="navbar-item">
                   Pin
-                </router-link>
-                <router-link
-                  to="/"
+                </a>
+                <a
                   class="navbar-item">
                   Board
-                </router-link>
+                </a>
               </div>
             </div>
             <div
@@ -104,8 +103,7 @@
 
 <script>
 import api from './api';
-import LoginForm from './LoginForm.vue';
-import SignUpForm from './SignUpForm.vue';
+import modals from './modals';
 
 export default {
   name: 'p-header',
@@ -128,6 +126,8 @@ export default {
     onSignUpSucceed() {
       this.initializeUser(true);
     },
+    onPinCreated() {
+    },
     logOut() {
       api.User.logOut().then(
         () => {
@@ -136,24 +136,13 @@ export default {
       );
     },
     logIn() {
-      this.$buefy.modal.open({
-        parent: this,
-        component: LoginForm,
-        hasModalCard: true,
-        events: {
-          'login.succeed': this.onLoginSucceed,
-        },
-      });
+      modals.openLogin(this, this.onLoginSucceed);
+    },
+    createPin() {
+      modals.openPinCreate(this, this.onPinCreated);
     },
     signUp() {
-      this.$buefy.modal.open({
-        parent: this,
-        component: SignUpForm,
-        hasModalCard: true,
-        events: {
-          'signup.succeed': this.onSignUpSucceed,
-        },
-      });
+      modals.openSignUp(this, this.onSignUpSucceed);
     },
     initializeUser(force = false) {
       const self = this;
