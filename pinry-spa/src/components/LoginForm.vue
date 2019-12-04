@@ -43,40 +43,24 @@
 
 <script>
 import api from './api';
+import form from './utils/form';
+
+const fields = ['username', 'password'];
 
 export default {
   name: 'LoginForm',
   data() {
-    return {
-      username: {
-        value: null,
-        error: null,
-        type: null,
-      },
-      password: {
-        value: null,
-        error: null,
-        type: null,
-      },
-    };
+    return form.createFormModel(fields);
   },
   methods: {
     resetStatus() {
-      this.resetField('username');
-      this.resetField('password');
-    },
-    resetField(fieldName) {
-      this[fieldName].type = 'is-info';
-      this[fieldName].error = null;
-    },
-    markFieldAsDanger(fieldName, errorMsg) {
-      this[fieldName].error = errorMsg;
-      this[fieldName].type = 'is-danger';
+      form.FormHelper(this, fields).resetAllFields();
     },
     doLogin() {
       this.resetStatus();
       const self = this;
       const promise = api.User.logIn(self.username.value, self.password.value);
+      const helper = form.FormHelper(self);
       promise.then(
         (user) => {
           self.$emit('login.succeed', user);
@@ -84,10 +68,10 @@ export default {
         },
         (resp) => {
           if (resp.data.username) {
-            self.markFieldAsDanger('username', resp.data.username);
+            helper.markFieldAsDanger('username', resp.data.username);
           }
           if (resp.data.password) {
-            self.markFieldAsDanger('password', resp.data.password);
+            helper.markFieldAsDanger('password', resp.data.password);
           }
         },
       );

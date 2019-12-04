@@ -3,6 +3,28 @@ import storage from './utils/storage';
 
 const API_PREFIX = '/api/v2/';
 
+const Board = {
+  create(name) {
+    const url = `${API_PREFIX}boards/`;
+    const data = { name };
+    return new Promise(
+      (resolve, reject) => {
+        axios.post(url, data).then(
+          (resp) => {
+            if (resp.status !== 201) {
+              reject(resp);
+            }
+            resolve(resp.data);
+          },
+          (error) => {
+            reject(error.response);
+          },
+        );
+      },
+    );
+  },
+};
+
 const Pin = {
   create(jsonData) {
     const url = `${API_PREFIX}pins/`;
@@ -192,6 +214,7 @@ const User = {
 
 export default {
   Pin,
+  Board,
   fetchPin,
   fetchPins,
   fetchPinsForBoard,

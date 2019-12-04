@@ -33,6 +33,7 @@
                   Pin
                 </a>
                 <a
+                  @click="createBoard"
                   class="navbar-item">
                   Board
                 </a>
@@ -140,6 +141,9 @@ export default {
     },
     createPin() {
       modals.openPinCreate(this, this.onPinCreated);
+    },
+    createBoard() {
+      modals.openBoardCreate(this);
     },
     signUp() {
       modals.openSignUp(this, this.onSignUpSucceed);
