@@ -4,11 +4,31 @@ import storage from './utils/storage';
 const API_PREFIX = '/api/v2/';
 
 const Pin = {
-  createFromURL(jsonData) {
+  create(jsonData) {
     const url = `${API_PREFIX}pins/`;
     return axios.post(
       url,
       jsonData,
+    );
+  },
+  createFromURL(jsonData) {
+    return this.create(jsonData);
+  },
+  createFromUploaded(jsonData) {
+    return this.create(jsonData);
+  },
+  uploadImage(fileObject) {
+    const url = `${API_PREFIX}images/`;
+    const data = new FormData();
+    data.append('image', fileObject);
+    return axios.post(
+      url,
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
   },
 };

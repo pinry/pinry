@@ -8,10 +8,15 @@
         <section class="modal-card-body">
           <div class="columns">
             <div class="column">
-              <FileUpload :previewImageURL="form.url.value"></FileUpload>
+              <FileUpload
+                :previewImageURL="form.url.value"
+                v-on:imageUploadSucceed="onUploadDone"
+                v-on:imageUploadProcessing="onUploadProcessing"
+              ></FileUpload>
             </div>
             <div class="column">
               <b-field label="Image URL"
+                       v-show="!disableUrlField"
                        :type="form.url.type"
                        :message="form.url.error">
                 <b-input
@@ -68,7 +73,7 @@
 </template>
 
 <script>
-import api from '../api';
+import API from '../api';
 import FileUpload from './FileUpload.vue';
 
 function isURLBlank(url) {
@@ -82,32 +87,54 @@ export default {
   },
   data() {
     return {
+      disableUrlField: false,
       form: {
         url: { value: null, error: null, type: null },
         referer: { value: null, error: null, type: null },
         description: { value: null, error: null, type: null },
         tags: { value: [], error: null, type: null },
       },
+      formUpload: {
+        imageId: null,
+      },
     };
   },
   methods: {
+    onUploadProcessing() {
+      this.disableUrlField = true;
+    },
+    onUploadDone(imageId) {
+      this.formUpload.imageId = imageId;
+    },
     createPin() {
       const self = this;
-      if (isURLBlank(isURLBlank)) {
+      let promise;
+      if (isURLBlank(this.form.url.value) && this.formUpload.imageId === null) {
+        return;
+      }
+      if (this.formUpload.imageId === null) {
         const data = {
           url: this.form.url.value,
           referer: this.form.referer.value,
           description: this.form.description.value,
           tags: this.form.tags.value,
         };
-        const promise = api.Pin.createFromURL(data);
-        promise.then(
-          (resp) => {
-            self.$emit('pin.created', resp);
-            self.$parent.close();
-          },
-        );
+        promise = API.Pin.createFromURL(data);
+      } else {
+        const data = {
+          referer: this.form.referer.value,
+          description: this.form.description.value,
+          tags: this.form.tags.value,
+          image_by_id: this.formUpload.imageId,
+        };
+        promise = API.Pin.createFromUploaded(data);
       }
+      promise.then(
+        (resp) => {
+          self.$emit('pinCreated', resp);
+          self.$parent.close();
+        },
+      );
     },
   },
 };
