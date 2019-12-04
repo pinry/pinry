@@ -216,8 +216,10 @@ export default {
 
 <style lang="scss" scoped>
 /* grid */
+@import 'utils/pin';
+
 .grid-sizer,
-.grid-item { width: 240px; }
+.grid-item { width: $pin-preview-width; }
 .grid-item {
   margin-bottom: 15px;
 }
