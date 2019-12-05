@@ -32,14 +32,14 @@
 
 <script>
 import API from './api';
-import formUtils from './utils/form';
+import ModelForm from './utils/ModelForm';
 
 const fields = ['name'];
 
 export default {
   name: 'BoardEditModal',
   data() {
-    const model = formUtils.fromFields(fields);
+    const model = ModelForm.fromFields(fields);
     return {
       form: model.form,
       helper: model,
@@ -55,18 +55,7 @@ export default {
           self.$parent.close();
         },
         (resp) => {
-          Object.entries(resp.data).forEach(
-            (errorTuple) => {
-              const [key, error] = errorTuple;
-              let msg;
-              if (Array.isArray(error)) {
-                [msg] = error;
-              } else {
-                msg = error;
-              }
-              this.helper.markFieldAsDanger(key, msg);
-            },
-          );
+          self.helper.markFieldsAsDanger(resp.data);
         },
       );
     },

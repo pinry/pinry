@@ -24,6 +24,20 @@ function FormHelper(form, fields = []) {
     self[fieldName].error = errorMsg;
     self[fieldName].type = 'is-danger';
   }
+  function markFieldsAsDanger(errorRespObjecct) {
+    Object.entries(errorRespObjecct).forEach(
+      (errorTuple) => {
+        const [key, error] = errorTuple;
+        let msg;
+        if (Array.isArray(error)) {
+          [msg] = error;
+        } else {
+          msg = error;
+        }
+        markFieldAsDanger(key, msg);
+      },
+    );
+  }
   function resetAllFields() {
     fields.forEach(
       (fieldName) => {
@@ -34,6 +48,7 @@ function FormHelper(form, fields = []) {
   return {
     form,
     fields,
+    markFieldsAsDanger,
     markFieldAsDanger,
     resetField,
     resetAllFields,

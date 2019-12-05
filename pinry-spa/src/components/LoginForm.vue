@@ -7,11 +7,11 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Username"
-                   :type="username.type"
-                   :message="username.error">
+                   :type="form.username.type"
+                   :message="form.username.error">
             <b-input
               type="string"
-              v-model="username.value"
+              v-model="form.username.value"
               placeholder="Your Username"
               maxlength="30"
               required>
@@ -19,11 +19,11 @@
           </b-field>
 
           <b-field label="Password"
-                   :type="password.type"
-                   :message="password.error">
+                   :type="form.password.type"
+                   :message="form.password.error">
             <b-input
               type="password"
-              v-model="password.value"
+              v-model="form.password.value"
               password-reveal
               placeholder="Your password"
               required>
@@ -43,36 +43,34 @@
 
 <script>
 import api from './api';
-import form from './utils/form';
+import ModelForm from './utils/ModelForm';
 
 const fields = ['username', 'password'];
 
 export default {
   name: 'LoginForm',
   data() {
-    return form.createFormModel(fields);
+    const model = ModelForm.fromFields(fields);
+    return {
+      form: model.form,
+      helper: model,
+    };
   },
   methods: {
-    resetStatus() {
-      form.FormHelper(this, fields).resetAllFields();
-    },
     doLogin() {
-      this.resetStatus();
+      this.helper.resetAllFields();
       const self = this;
-      const promise = api.User.logIn(self.username.value, self.password.value);
-      const helper = form.FormHelper(self);
+      const promise = api.User.logIn(
+        self.form.username.value,
+        self.form.password.value,
+      );
       promise.then(
         (user) => {
           self.$emit('login.succeed', user);
           self.$parent.close();
         },
         (resp) => {
-          if (resp.data.username) {
-            helper.markFieldAsDanger('username', resp.data.username);
-          }
-          if (resp.data.password) {
-            helper.markFieldAsDanger('password', resp.data.password);
-          }
+          self.helper.markFieldsAsDanger(resp.data);
         },
       );
     },
