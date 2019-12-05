@@ -7,11 +7,11 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Username"
-                   :type="username.type"
-                   :message="username.error">
+                   :type="form.username.type"
+                   :message="form.username.error">
             <b-input
               type="string"
-              v-model="username.value"
+              v-model="form.username.value"
               placeholder="Your Username"
               maxlength="30"
               required>
@@ -19,33 +19,33 @@
           </b-field>
 
           <b-field label="Email"
-                   :type="email.type"
-                   :message="email.error">
+                   :type="form.email.type"
+                   :message="form.email.error">
             <b-input
               type="email"
-              v-model="email.value"
+              v-model="form.email.value"
               password-reveal
               placeholder="Your email"
               required>
             </b-input>
           </b-field>
           <b-field label="Password"
-                   :type="password.type"
-                   :message="password.error">
+                   :type="form.password.type"
+                   :message="form.password.error">
             <b-input
               type="password"
-              v-model="password.value"
+              v-model="form.password.value"
               password-reveal
               placeholder="Your password"
               required>
             </b-input>
           </b-field>
           <b-field label="Password repeat"
-                   :type="password_repeat.type"
-                   :message="password_repeat.error">
+                   :type="form.password_repeat.type"
+                   :message="form.password_repeat.error">
             <b-input
               type="password"
-              v-model="password_repeat.value"
+              v-model="form.password_repeat.value"
               password-reveal
               placeholder="Your password again"
               required>
@@ -65,56 +65,33 @@
 
 <script>
 import api from './api';
+import ModelForm from './utils/ModelForm';
+
+const fields = [
+  'username',
+  'email',
+  'password',
+  'password_repeat',
+];
 
 export default {
   name: 'SignUpForm',
   data() {
+    const model = ModelForm.fromFields(fields);
     return {
-      username: {
-        value: null,
-        error: null,
-        type: null,
-      },
-      email: {
-        value: null,
-        error: null,
-        type: null,
-      },
-      password: {
-        value: null,
-        error: null,
-        type: null,
-      },
-      password_repeat: {
-        value: null,
-        error: null,
-        type: null,
-      },
+      form: model.form,
+      helper: model,
     };
   },
   methods: {
-    resetStatus() {
-      this.resetField('username');
-      this.resetField('email');
-      this.resetField('password');
-      this.resetField('password_repeat');
-    },
-    resetField(fieldName) {
-      this[fieldName].type = 'is-info';
-      this[fieldName].error = null;
-    },
-    markFieldAsDanger(fieldName, errorMsg) {
-      this[fieldName].error = errorMsg;
-      this[fieldName].type = 'is-danger';
-    },
     doRegister() {
-      this.resetStatus();
+      this.helper.resetAllFields();
       const self = this;
       const promise = api.User.signUp(
-        self.username.value,
-        self.email.value,
-        self.password.value,
-        self.password_repeat.value,
+        self.form.username.value,
+        self.form.email.value,
+        self.form.password.value,
+        self.form.password_repeat.value,
       );
       promise.then(
         (user) => {
@@ -122,18 +99,7 @@ export default {
           self.$parent.close();
         },
         (resp) => {
-          Object.entries(resp.data).forEach(
-            (errorTuple) => {
-              const [key, error] = errorTuple;
-              let msg;
-              if (Array.isArray(error)) {
-                [msg] = error;
-              } else {
-                msg = error;
-              }
-              this.markFieldAsDanger(key, msg);
-            },
-          );
+          self.helper.markFieldsAsDanger(resp.data);
         },
       );
     },

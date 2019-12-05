@@ -76,10 +76,13 @@
 import API from '../api';
 import FileUpload from './FileUpload.vue';
 import bus from '../utils/bus';
+import ModelForm from '../utils/ModelForm';
 
 function isURLBlank(url) {
   return url !== null && url !== '';
 }
+
+const fields = ['url', 'referer', 'description', 'tags'];
 
 export default {
   name: 'PinCreateModal',
@@ -87,14 +90,11 @@ export default {
     FileUpload,
   },
   data() {
+    const form = ModelForm.createFormModel(fields);
+    form.tags.value = [];
     return {
       disableUrlField: false,
-      form: {
-        url: { value: null, error: null, type: null },
-        referer: { value: null, error: null, type: null },
-        description: { value: null, error: null, type: null },
-        tags: { value: [], error: null, type: null },
-      },
+      form,
       formUpload: {
         imageId: null,
       },
