@@ -140,7 +140,11 @@ export default {
       modals.openLogin(this, this.onLoginSucceed);
     },
     createPin() {
-      modals.openPinCreate(this, this.onPinCreated);
+      modals.openPinCreate(
+        this,
+        this.onPinCreated,
+        { username: this.user.meta.username },
+      );
     },
     createBoard() {
       modals.openBoardCreate(this);

@@ -24,7 +24,7 @@
                   v-model="form.url.value"
                   placeholder="where to fetch the image"
                   maxlength="256"
-                  >
+                >
                 </b-input>
               </b-field>
               <b-field label="Image Referer"
@@ -35,7 +35,7 @@
                   v-model="form.referer.value"
                   placeholder="where to find the pin"
                   maxlength="256"
-                  >
+                >
                 </b-input>
               </b-field>
               <b-field label="Descripton"
@@ -46,7 +46,7 @@
                   v-model="form.description.value"
                   placeholder="idea from this pin"
                   maxlength="1024"
-                  >
+                >
                 </b-input>
               </b-field>
               <b-field label="Tags">
@@ -57,6 +57,9 @@
                   placeholder="Add a tag">
                 </b-taginput>
               </b-field>
+            </div>
+            <div class="column">
+              <FilterSelect :allOptions="boardOptions"></FilterSelect>
             </div>
           </div>
         </section>
@@ -75,6 +78,7 @@
 <script>
 import API from '../api';
 import FileUpload from './FileUpload.vue';
+import FilterSelect from './FilterSelect.vue';
 import bus from '../utils/bus';
 import ModelForm from '../utils/ModelForm';
 
@@ -86,8 +90,10 @@ const fields = ['url', 'referer', 'description', 'tags'];
 
 export default {
   name: 'PinCreateModal',
+  props: ['username'],
   components: {
     FileUpload,
+    FilterSelect,
   },
   data() {
     const form = ModelForm.createFormModel(fields);
@@ -98,9 +104,30 @@ export default {
       formUpload: {
         imageId: null,
       },
+      boardOptions: [],
     };
   },
+  created() {
+    this.fetchBoardList();
+  },
   methods: {
+    fetchBoardList() {
+      API.Board.fetchFullList(this.username).then(
+        (resp) => {
+          const boardOptions = [];
+          resp.data.forEach(
+            (board) => {
+              const boardOption = { name: board.name, value: board.id };
+              boardOptions.push(boardOption);
+            },
+          );
+          this.boardOptions = boardOptions;
+        },
+        () => {
+          console.log('Error occurs while fetch board full list');
+        },
+      );
+    },
     onUploadProcessing() {
       this.disableUrlField = true;
     },
