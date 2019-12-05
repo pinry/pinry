@@ -129,16 +129,25 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         return super(PinSerializer, self).update(instance, validated_data)
 
 
+class PinIdListField(serializers.ListField):
+    child = serializers.IntegerField(
+        min_value=1
+    )
+
+
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Board
         fields = (
+            settings.DRF_URL_FIELD_NAME,
             "id",
             "name",
             "pins",
             "pins_detail",
             "published",
             "submitter",
+            "pins_to_add",
+            "pins_to_remove",
         )
         read_only_fields = ('submitter', 'published')
         extra_kwargs = {
@@ -153,8 +162,45 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         many=True,
         required=False,
     )
+    pins_to_add = PinIdListField(
+        max_length=10,
+        write_only=True,
+        required=False,
+        allow_empty=False,
+        help_text="only patch method works for this field",
+    )
+    pins_to_remove = PinIdListField(
+        max_length=10,
+        write_only=True,
+        required=False,
+        allow_empty=False,
+        help_text="only patch method works for this field"
+    )
+
+    @staticmethod
+    def _get_list(pins_id):
+        return tuple(Pin.objects.filter(id__in=pins_id))
+
+    def update(self, instance: Board, validated_data):
+        pins_to_add = validated_data.pop("pins_to_add", [])
+        pins_to_remove = validated_data.pop("pins_to_remove", [])
+        instance = super(BoardSerializer, self).update(instance, validated_data)
+        changed = False
+        if pins_to_add:
+            changed = True
+            for pin in self._get_list(pins_to_add):
+                instance.pins.add(pin)
+        if pins_to_remove:
+            changed = True
+            for pin in self._get_list(pins_to_remove):
+                instance.pins.remove(pin)
+        if changed:
+            instance.save()
+        return instance
 
     def create(self, validated_data):
+        validated_data.pop('pins_to_remove', None)
+        validated_data.pop('pins_to_remove', None)
         user = self.context['request'].user
         if Board.objects.filter(name=validated_data['name'], submitter=user).exists():
             raise ValidationError(
