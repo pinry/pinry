@@ -36,7 +36,21 @@ class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly("submitter"), ]
 
 
+class BoardAutoCompleteViewSet(
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = Board.objects.all()
+    serializer_class = api.BoardAutoCompleteSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filter_fields = ("submitter__username", )
+    ordering_fields = ('-id', )
+    ordering = ('-id', )
+    pagination_class = None
+
+
 drf_router = routers.DefaultRouter()
 drf_router.register(r'pins', PinViewSet)
 drf_router.register(r'images', ImageViewSet)
 drf_router.register(r'boards', BoardViewSet)
+drf_router.register(r'boards-auto-complete', BoardAutoCompleteViewSet)

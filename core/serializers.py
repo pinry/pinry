@@ -135,6 +135,16 @@ class PinIdListField(serializers.ListField):
     )
 
 
+class BoardAutoCompleteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Board
+        fields = (
+            settings.DRF_URL_FIELD_NAME,
+            'id',
+            'name',
+        )
+
+
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Board
