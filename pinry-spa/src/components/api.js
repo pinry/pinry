@@ -23,6 +23,10 @@ const Board = {
       },
     );
   },
+  fetchFullList(username) {
+    const url = `${API_PREFIX}boards-auto-complete/?submitter__username=${username}`;
+    return axios.get(url);
+  },
 };
 
 const Pin = {

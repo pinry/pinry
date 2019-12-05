@@ -4,11 +4,12 @@ import SignUpForm from './SignUpForm.vue';
 import BoardEdit from './BoardEdit.vue';
 
 
-function openPinCreate(vm, onCreate) {
+function openPinCreate(vm, onCreate, props = null) {
   vm.$buefy.modal.open(
     {
       parent: vm,
       component: PinCreateModal,
+      props,
       hasModalCard: true,
       events: {
         'create.succeed': onCreate,
