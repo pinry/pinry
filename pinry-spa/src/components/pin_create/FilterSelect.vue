@@ -13,6 +13,7 @@
     </b-field>
     <b-field>
       <button
+        @click="createNewBoard"
         class="button is-primary">
         Create New Board
       </button>
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-// import API from '../api';
+import API from '../api';
 import ModelForm from '../utils/ModelForm';
 
 const fields = ['board'];
@@ -50,6 +51,10 @@ function getFilteredOptions(options, filterText) {
       return index >= 0;
     },
   );
+}
+
+function getBoardFromResp(boardObject) {
+  return { name: boardObject.name, value: boardObject.id };
 }
 
 export default {
@@ -69,17 +74,44 @@ export default {
       selectedOptions: [],
       helper: model,
       availableOptions: [],
+      createdOptions: [],
     };
+  },
+  methods: {
+    select(board) {
+      this.selectedOptions = [board.value];
+    },
+    createNewBoard() {
+      const self = this;
+      const promise = API.Board.create(this.form.board.value);
+      promise.then(
+        (data) => {
+          self.$emit('boardCreated', data);
+          const board = getBoardFromResp(data);
+          self.createdOptions.unshift(board);
+          self.select(board);
+          self.form.board.value = null;
+        },
+        (resp) => {
+          self.helper.markFieldsAsDanger(resp.data);
+        },
+      );
+    },
   },
   watch: {
     'form.board.value': function (newVal) {
+      let availableOptions;
       if (newVal === '' || newVal === null) {
-        this.availableOptions = this.allOptions;
+        availableOptions = this.allOptions;
       } else {
-        this.availableOptions = getFilteredOptions(
+        availableOptions = getFilteredOptions(
           this.allOptions, this.form.board.value,
         );
       }
+      this.availableOptions = availableOptions;
+    },
+    createdOptions() {
+      this.availableOptions = this.createdOptions.concat(this.availableOptions);
     },
     allOptions() {
       this.availableOptions = this.allOptions;
