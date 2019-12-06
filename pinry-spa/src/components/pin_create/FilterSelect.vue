@@ -57,6 +57,19 @@ function getBoardFromResp(boardObject) {
   return { name: boardObject.name, value: boardObject.id };
 }
 
+function getAvailableOptions(vm, filter) {
+  let availableOptions;
+  if (filter === '' || filter === null) {
+    availableOptions = vm.allOptions;
+  } else {
+    availableOptions = getFilteredOptions(
+      vm.allOptions, vm.form.name.value,
+    );
+  }
+  return availableOptions;
+}
+
+
 export default {
   name: 'FilterSelect',
   props: {
@@ -89,6 +102,8 @@ export default {
           self.$emit('boardCreated', data);
           const board = getBoardFromResp(data);
           self.createdOptions.unshift(board);
+          const options = getAvailableOptions(this);
+          this.availableOptions = this.createdOptions.concat(options);
           self.select(board);
           self.form.name.value = null;
         },
@@ -101,18 +116,8 @@ export default {
   watch: {
     // eslint-disable-next-line func-names
     'form.name.value': function (newVal) {
-      let availableOptions;
-      if (newVal === '' || newVal === null) {
-        availableOptions = this.allOptions;
-      } else {
-        availableOptions = getFilteredOptions(
-          this.allOptions, this.form.name.value,
-        );
-      }
-      this.availableOptions = this.createdOptions.concat(availableOptions);
-    },
-    createdOptions() {
-      this.availableOptions = this.createdOptions.concat(this.availableOptions);
+      const options = getAvailableOptions(this, newVal);
+      this.availableOptions = this.createdOptions.concat(options);
     },
     allOptions() {
       this.availableOptions = this.allOptions;
