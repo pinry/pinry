@@ -59,7 +59,10 @@
               </b-field>
             </div>
             <div class="column">
-              <FilterSelect :allOptions="boardOptions"></FilterSelect>
+              <FilterSelect
+                :allOptions="boardOptions"
+                v-on:selected="onSelectBoard"
+              ></FilterSelect>
             </div>
           </div>
         </section>
@@ -104,6 +107,7 @@ export default {
       formUpload: {
         imageId: null,
       },
+      boardId: null,
       boardOptions: [],
     };
   },
@@ -127,6 +131,10 @@ export default {
           console.log('Error occurs while fetch board full list');
         },
       );
+    },
+    onSelectBoard(boardIds) {
+      console.log('boardId', boardIds);
+      this.boardIds = boardIds;
     },
     onUploadProcessing() {
       this.disableUrlField = true;
@@ -162,6 +170,14 @@ export default {
           bus.bus.$emit(bus.events.refreshPin);
           self.$emit('pinCreated', resp);
           self.$parent.close();
+          if (self.boardIds !== null) {
+            // FIXME(winkidney): Should handle error for add-to board
+            self.boardIds.forEach(
+              (boardId) => {
+                API.Board.addToBoard(boardId, [resp.data.id]);
+              },
+            );
+          }
         },
       );
     },

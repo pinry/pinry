@@ -1,11 +1,11 @@
 <template>
   <div class="filter-select">
     <b-field label="Select Board"
-             :type="form.board.type"
-             :message="form.board.error">
+             :type="form.name.type"
+             :message="form.name.error">
       <b-input
         type="text"
-        v-model="form.board.value"
+        v-model="form.name.value"
         placeholder="Type to filter or Create one"
         maxlength="128"
       >
@@ -39,7 +39,7 @@
 import API from '../api';
 import ModelForm from '../utils/ModelForm';
 
-const fields = ['board'];
+const fields = ['name'];
 
 function getFilteredOptions(options, filterText) {
   return options.filter(
@@ -83,14 +83,14 @@ export default {
     },
     createNewBoard() {
       const self = this;
-      const promise = API.Board.create(this.form.board.value);
+      const promise = API.Board.create(this.form.name.value);
       promise.then(
         (data) => {
           self.$emit('boardCreated', data);
           const board = getBoardFromResp(data);
           self.createdOptions.unshift(board);
           self.select(board);
-          self.form.board.value = null;
+          self.form.name.value = null;
         },
         (resp) => {
           self.helper.markFieldsAsDanger(resp.data);
@@ -99,22 +99,27 @@ export default {
     },
   },
   watch: {
-    'form.board.value': function (newVal) {
+    // eslint-disable-next-line func-names
+    'form.name.value': function (newVal) {
       let availableOptions;
       if (newVal === '' || newVal === null) {
         availableOptions = this.allOptions;
       } else {
         availableOptions = getFilteredOptions(
-          this.allOptions, this.form.board.value,
+          this.allOptions, this.form.name.value,
         );
       }
-      this.availableOptions = availableOptions;
+      this.availableOptions = this.createdOptions.concat(availableOptions);
     },
     createdOptions() {
       this.availableOptions = this.createdOptions.concat(this.availableOptions);
     },
     allOptions() {
       this.availableOptions = this.allOptions;
+    },
+    selectedOptions() {
+      this.helper.resetAllFields();
+      this.$emit('selected', this.selectedOptions);
     },
   },
 };
