@@ -133,7 +133,6 @@ export default {
       );
     },
     onSelectBoard(boardIds) {
-      console.log('boardId', boardIds);
       this.boardIds = boardIds;
     },
     onUploadProcessing() {
