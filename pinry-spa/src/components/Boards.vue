@@ -104,6 +104,7 @@ export default {
       this.blocksMap[itemId].class = {
         'image-loaded': true,
       };
+      this.blocksMap[itemId].style.height = 'auto';
     },
     registerScrollEvent() {
       const self = this;
@@ -191,6 +192,7 @@ $avatar-height: 30px;
 
 .board-card{
   .card-image > img {
+    min-width: $pin-preview-width;
     background-color: white;
     border-radius: 3px 3px 0 0;
     @include loader('../assets/loader.gif');
