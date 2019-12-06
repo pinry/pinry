@@ -27,6 +27,13 @@ const Board = {
     const url = `${API_PREFIX}boards-auto-complete/?submitter__username=${username}`;
     return axios.get(url);
   },
+  addToBoard(boardId, pinIds) {
+    const url = `${API_PREFIX}boards/${boardId}/`;
+    return axios.patch(
+      url,
+      { pins_to_add: pinIds },
+    );
+  },
 };
 
 const Pin = {
