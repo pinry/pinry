@@ -1,4 +1,4 @@
-import PinCreateModal from './pin_create/PinCreateModal.vue';
+import PinCreateModal from './pin_edit/PinCreateModal.vue';
 import LoginForm from './LoginForm.vue';
 import SignUpForm from './SignUpForm.vue';
 import BoardEdit from './BoardEdit.vue';
