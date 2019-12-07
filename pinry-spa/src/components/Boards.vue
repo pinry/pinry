@@ -24,6 +24,7 @@
                       v-show="shouldShowEdit(item.id)"
                       :board="item"
                       v-on:board-delete-succeed="reset"
+                      v-on:board-save-succeed="reset"
                     ></BoardEditorUI>
                     <router-link :to="{ name: 'board', params: { boardId: item.id } }">
                       <img :src="item.preview_image_url"

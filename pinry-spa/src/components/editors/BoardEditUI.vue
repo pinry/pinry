@@ -8,7 +8,7 @@
            custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container">
+      <span class="icon-container" @click="editBoard">
        <b-icon
          type="is-light"
          icon="pencil"
@@ -21,6 +21,8 @@
 
 <script>
 import API from '../api';
+import modals from '../modals';
+
 
 export default {
   name: 'BoardEditor',
@@ -33,6 +35,16 @@ export default {
     },
   },
   methods: {
+    onBoardSaved() {
+      this.$emit('board-save-succeed');
+    },
+    editBoard() {
+      modals.openBoardEdit(
+        this,
+        this.board,
+        this.onBoardSaved,
+      );
+    },
     deleteBoard() {
       this.$buefy.dialog.confirm({
         message: 'Delete this Board?',
