@@ -92,7 +92,7 @@ import bus from '../utils/bus';
 import ModelForm from '../utils/ModelForm';
 
 function isURLBlank(url) {
-  return url !== null && url !== '';
+  return url !== null && url === '';
 }
 
 const fields = ['url', 'referer', 'description', 'tags'];
@@ -100,6 +100,10 @@ const fields = ['url', 'referer', 'description', 'tags'];
 export default {
   name: 'PinCreateModal',
   props: {
+    fromUrl: {
+      type: Object,
+      default: null,
+    },
     username: {
       type: String,
       default: null,
@@ -141,6 +145,11 @@ export default {
       this.pinModel.form.referer.value = this.existedPin.referer;
       this.pinModel.form.description.value = this.existedPin.description;
       this.pinModel.form.tags.value = this.existedPin.tags;
+    }
+    if (this.fromUrl) {
+      this.pinModel.form.url.value = this.fromUrl.url;
+      this.pinModel.form.referer.value = this.fromUrl.referer;
+      this.pinModel.form.description.value = this.fromUrl.description;
     }
   },
   methods: {
