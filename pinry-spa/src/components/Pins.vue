@@ -17,12 +17,17 @@
               <div class="grid-sizer"></div>
               <div class="gutter-sizer"></div>
               <div class="pin-card grid-item">
-                <img :src="item.url"
+                <div>
+                  <EditorUI v-show="shouldShowEdit(item.id)"></EditorUI>
+                  <img :src="item.url"
+                     @mouseenter="showEditButtons(item.id)"
+                     @mouseleave="hideEditButtons(item.id)"
                      @load="onPinImageLoaded(item.id)"
                      @click="openPreview(item)"
                      alt="item.description"
                      :style="item.style"
                      class="pin-preview-image">
+                </div>
                 <div class="pin-footer">
                   <div class="description" v-show="item.description"><p>{{ item.description }}</p>
                   </div>
@@ -71,6 +76,7 @@ import loadingSpinner from './loadingSpinner.vue';
 import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 import bus from './utils/bus';
+import EditorUI from './EditorUI.vue';
 
 function createImageItem(pin) {
   const image = {};
@@ -95,6 +101,7 @@ function createImageItem(pin) {
 
 function initialData() {
   return {
+    currentEditId: null,
     blocks: [],
     blocksMap: {},
     status: {
@@ -110,6 +117,7 @@ export default {
   components: {
     loadingSpinner,
     noMore,
+    EditorUI,
   },
   data() {
     return initialData();
@@ -126,6 +134,15 @@ export default {
     },
   },
   methods: {
+    shouldShowEdit(id) {
+      return this.currentEditId === id;
+    },
+    showEditButtons(id) {
+      this.currentEditId = id;
+    },
+    hideEditButtons() {
+      this.currentEditId = null;
+    },
     onPinImageLoaded(itemId) {
       this.blocksMap[itemId].class = {
         'image-loaded': true,
