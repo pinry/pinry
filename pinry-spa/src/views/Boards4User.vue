@@ -13,7 +13,7 @@ export default {
   name: 'Boards4User',
   data() {
     return {
-      username: null,
+      username: '',
     };
   },
   components: {
@@ -24,7 +24,7 @@ export default {
     this.initialize();
   },
   beforeRouteUpdate(to, from, next) {
-    this.initialize();
+    this.username = to.params.username;
     next();
   },
   methods: {
