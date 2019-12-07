@@ -23,6 +23,10 @@ const Board = {
       },
     );
   },
+  get(boardId) {
+    const url = `${API_PREFIX}boards/${boardId}/`;
+    return axios.get(url);
+  },
   fetchFullList(username) {
     const url = `${API_PREFIX}boards-auto-complete/?submitter__username=${username}`;
     return axios.get(url);
@@ -123,12 +127,12 @@ function fetchPin(pinId) {
 }
 
 function fetchPinsForBoard(boardId) {
-  const url = `${API_PREFIX}boards/${boardId}`;
+  const url = `${API_PREFIX}boards/${boardId}/`;
   return new Promise(
     (resolve, reject) => {
       axios.get(url).then(
         (resp) => {
-          resolve({ data: { results: resp.data.pins_detail, next: null } });
+          resolve({ data: { results: resp.data.pins_detail, next: null, board: resp.data } });
         },
         error => reject(error),
       );

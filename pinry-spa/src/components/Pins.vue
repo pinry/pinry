@@ -23,6 +23,8 @@
                   <EditorUI
                     v-show="shouldShowEdit(item.id)"
                     :pin="item"
+                    :currentUsername="editorMeta.user.meta.username"
+                    :currentBoardId="editorMeta.currentBoard.id"
                     v-on:pin-delete-succeed="reset"
                   ></EditorUI>
                   <img :src="item.url"
@@ -105,13 +107,20 @@ function createImageItem(pin) {
 
 function initialData() {
   return {
-    currentEditId: null,
     blocks: [],
     blocksMap: {},
     status: {
       loading: false,
       hasNext: true,
       offset: 0,
+    },
+    editorMeta: {
+      currentEditId: null,
+      currentBoard: {},
+      user: {
+        loggedIn: false,
+        meta: {},
+      },
     },
   };
 }
@@ -133,19 +142,20 @@ export default {
         return {
           tagFilter: null,
           userFilter: null,
+          boardFilter: null,
         };
       },
     },
   },
   methods: {
     shouldShowEdit(id) {
-      return this.currentEditId === id;
+      return this.editorMeta.currentEditId === id;
     },
     showEditButtons(id) {
-      this.currentEditId = id;
+      this.editorMeta.currentEditId = id;
     },
     hideEditButtons() {
-      this.currentEditId = null;
+      this.editorMeta.currentEditId = null;
     },
     onPinImageLoaded(itemId) {
       this.blocksMap[itemId].class = {
@@ -201,7 +211,22 @@ export default {
       return true;
     },
     initialize() {
+      this.initializeMeta();
       this.fetchMore(true);
+    },
+    initializeMeta() {
+      const self = this;
+      API.User.fetchUserInfo().then(
+        (user) => {
+          if (user === null) {
+            self.editorMeta.user.loggedIn = false;
+            self.editorMeta.user.meta = {};
+          } else {
+            self.editorMeta.user.meta = user;
+            self.editorMeta.user.loggedIn = true;
+          }
+        },
+      );
     },
     reset() {
       const data = initialData();
@@ -224,7 +249,19 @@ export default {
       } else if (this.pinFilters.userFilter) {
         promise = API.fetchPins(this.status.offset, null, this.pinFilters.userFilter);
       } else if (this.pinFilters.boardFilter) {
-        promise = API.fetchPinsForBoard(this.pinFilters.boardFilter);
+        promise = new Promise(
+          (resolve, reject) => {
+            API.fetchPinsForBoard(this.pinFilters.boardFilter).then(
+              (resp) => {
+                this.editorMeta.currentBoard = resp.data.board;
+                resolve(resp);
+              },
+              (error) => {
+                reject(error);
+              },
+            );
+          },
+        );
       } else if (this.pinFilters.idFilter) {
         promise = API.fetchPin(this.pinFilters.idFilter);
       } else {
