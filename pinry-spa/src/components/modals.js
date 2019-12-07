@@ -2,6 +2,7 @@ import PinCreateModal from './pin_edit/PinCreateModal.vue';
 import LoginForm from './LoginForm.vue';
 import SignUpForm from './SignUpForm.vue';
 import BoardEdit from './BoardEdit.vue';
+import Add2Board from './pin_edit/Add2Board.vue';
 
 
 function openPinCreate(vm, onCreate, props = null) {
@@ -14,6 +15,17 @@ function openPinCreate(vm, onCreate, props = null) {
       events: {
         'create.succeed': onCreate,
       },
+    },
+  );
+}
+
+function openAdd2Board(vm, pin, username) {
+  vm.$buefy.modal.open(
+    {
+      parent: vm,
+      component: Add2Board,
+      props: { pin, username },
+      hasModalCard: true,
     },
   );
 }
@@ -70,6 +82,7 @@ function openSignUp(vm, onSignUpSucceed) {
 export default {
   openBoardCreate,
   openBoardEdit,
+  openAdd2Board,
   openPinCreate,
   openLogin,
   openSignUp,
