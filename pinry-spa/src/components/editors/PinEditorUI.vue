@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="editor-buttons">
-      <span class="icon-container">
+      <span class="icon-container" v-if="inBoard">
           <b-icon
             type="is-light"
             icon="minus-box"
@@ -15,14 +15,14 @@
             custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container" @click="deletePin">
+      <span class="icon-container" @click="deletePin" v-if="isOwner">
          <b-icon
            type="is-light"
            icon="delete"
            custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container">
+      <span class="icon-container" v-if="isOwner">
        <b-icon
          type="is-light"
          icon="pencil"
@@ -39,11 +39,27 @@ import API from '../api';
 export default {
   name: 'Editor',
   props: {
+    currentBoardId: {
+      type: Number,
+      default: null,
+    },
+    currentUsername: {
+      default: '',
+      type: String,
+    },
     pin: {
       default() {
         return {};
       },
       type: Object,
+    },
+  },
+  computed: {
+    isOwner() {
+      return this.pin.author === this.currentUsername;
+    },
+    inBoard() {
+      return this.currentBoardId !== null;
     },
   },
   methods: {
