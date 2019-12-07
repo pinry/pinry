@@ -8,7 +8,7 @@
             custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container">
+      <span class="icon-container" @click="addToBoar">
           <b-icon
             type="is-light"
             icon="plus-box"
@@ -35,6 +35,7 @@
 
 <script>
 import API from '../api';
+import modals from '../modals';
 
 export default {
   name: 'Editor',
@@ -68,6 +69,9 @@ export default {
     },
   },
   methods: {
+    addToBoar() {
+      modals.openAdd2Board(this, this.pin, this.currentUsername);
+    },
     removeFromBoard() {
       this.$buefy.dialog.confirm({
         message: 'Remove Pin from Board?',
