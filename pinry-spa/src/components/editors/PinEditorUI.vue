@@ -50,7 +50,9 @@ export default {
               this.$emit('pin-delete-succeed', this.pin.id);
             },
             () => {
-              this.$buefy.toast.open('Failed to delete Pin');
+              this.$buefy.toast.open(
+                { type: 'is-danger', message: 'Failed to delete Pin' },
+              );
             },
           );
         },
