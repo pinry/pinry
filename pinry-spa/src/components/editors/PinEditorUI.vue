@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="editor-buttons">
-      <span class="icon-container" v-if="inBoard" @click="removeFromBoard">
+      <span class="icon-container" v-if="inOwnedBoard" @click="removeFromBoard">
           <b-icon
             type="is-light"
             icon="minus-box"
@@ -39,12 +39,14 @@ import API from '../api';
 export default {
   name: 'Editor',
   props: {
-    currentBoardId: {
-      type: Number,
-      default: null,
+    currentBoard: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
     currentUsername: {
-      default: '',
+      default: null,
       type: String,
     },
     pin: {
@@ -58,8 +60,11 @@ export default {
     isOwner() {
       return this.pin.author === this.currentUsername;
     },
-    inBoard() {
-      return this.currentBoardId !== null;
+    inOwnedBoard() {
+      return (
+        Object.values(this.currentBoard).length !== 0
+        && this.currentBoard.submitter.username === this.currentUsername
+      );
     },
   },
   methods: {
@@ -67,7 +72,7 @@ export default {
       this.$buefy.dialog.confirm({
         message: 'Remove Pin from Board?',
         onConfirm: () => {
-          API.Board.removeFromBoard(this.currentBoardId, [this.pin.id]).then(
+          API.Board.removeFromBoard(this.currentBoard.id, [this.pin.id]).then(
             () => {
               this.$buefy.toast.open('Pin removed');
               this.$emit('pin-remove-from-board-succeed', this.pin.id);

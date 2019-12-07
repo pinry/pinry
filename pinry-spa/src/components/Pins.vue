@@ -24,7 +24,7 @@
                     v-show="shouldShowEdit(item.id)"
                     :pin="item"
                     :currentUsername="editorMeta.user.meta.username"
-                    :currentBoardId="editorMeta.currentBoard.id"
+                    :currentBoard="editorMeta.currentBoard"
                     v-on:pin-delete-succeed="reset"
                     v-on:pin-remove-from-board-succeed="reset"
                   ></EditorUI>
@@ -150,6 +150,9 @@ export default {
   },
   methods: {
     shouldShowEdit(id) {
+      if (!this.editorMeta.user.loggedIn) {
+        return false;
+      }
       return this.editorMeta.currentEditId === id;
     },
     showEditButtons(id) {

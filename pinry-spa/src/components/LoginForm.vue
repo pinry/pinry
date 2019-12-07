@@ -68,6 +68,7 @@ export default {
         (user) => {
           self.$emit('login.succeed', user);
           self.$parent.close();
+          window.location.reload();
         },
         (resp) => {
           self.helper.markFieldsAsDanger(resp.data);
