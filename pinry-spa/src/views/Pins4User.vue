@@ -24,12 +24,12 @@ export default {
     this.initializeBoard();
   },
   beforeRouteUpdate(to, from, next) {
-    this.initializeBoard();
+    this.filters = { userFilter: to.params.user };
     next();
   },
   methods: {
     initializeBoard() {
-      this.filters.userFilter = this.$route.params.user;
+      this.filters = { userFilter: this.$route.params.user };
     },
   },
 };

@@ -10,7 +10,7 @@ import PHeader from '../components/PHeader.vue';
 import Pins from '../components/Pins.vue';
 
 export default {
-  name: 'p-header',
+  name: 'Pins4Board',
   data() {
     return {
       filters: { boardFilter: null },
@@ -20,16 +20,16 @@ export default {
     PHeader,
     Pins,
   },
+  beforeRouteUpdate(to, from, next) {
+    this.filters = { boardFilter: to.params.boardId };
+    next();
+  },
   created() {
     this.initializeBoard();
   },
-  beforeRouteUpdate(to, from, next) {
-    this.initializeBoard();
-    next();
-  },
   methods: {
     initializeBoard() {
-      this.filters.boardFilter = this.$route.params.boardId;
+      this.filters = { boardFilter: this.$route.params.boardId };
     },
   },
 };

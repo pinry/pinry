@@ -24,12 +24,12 @@ export default {
     this.initializeTag();
   },
   beforeRouteUpdate(to, from, next) {
-    this.initializeTag();
+    this.filters = { tagFilter: to.params.tag };
     next();
   },
   methods: {
     initializeTag() {
-      this.filters.tagFilter = this.$route.params.tag;
+      this.filters = { tagFilter: this.$route.params.tag };
     },
   },
 };
