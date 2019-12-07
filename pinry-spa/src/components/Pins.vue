@@ -80,7 +80,7 @@ import loadingSpinner from './loadingSpinner.vue';
 import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 import bus from './utils/bus';
-import EditorUI from './PinEditorUI.vue';
+import EditorUI from './editors/PinEditorUI.vue';
 
 function createImageItem(pin) {
   const image = {};
