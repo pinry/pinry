@@ -118,6 +118,11 @@ export default {
   },
   data: initialData,
   props: ['boardUsername'],
+  watch: {
+    boardUsername() {
+      this.reset();
+    },
+  },
   methods: {
     initialize() {
       this.fetchMore(true);
