@@ -45,6 +45,13 @@ const Board = {
       { pins_to_add: pinIds },
     );
   },
+  removeFromBoard(boardId, pinIds) {
+    const url = `${API_PREFIX}boards/${boardId}/`;
+    return axios.patch(
+      url,
+      { pins_to_remove: pinIds },
+    );
+  },
   delete(boardId) {
     const url = `${API_PREFIX}boards/${boardId}/`;
     return axios.delete(url);

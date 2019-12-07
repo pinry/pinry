@@ -26,6 +26,7 @@
                     :currentUsername="editorMeta.user.meta.username"
                     :currentBoardId="editorMeta.currentBoard.id"
                     v-on:pin-delete-succeed="reset"
+                    v-on:pin-remove-from-board-succeed="reset"
                   ></EditorUI>
                   <img :src="item.url"
                      @load="onPinImageLoaded(item.id)"

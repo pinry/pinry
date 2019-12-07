@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="editor-buttons">
-      <span class="icon-container" v-if="inBoard">
+      <span class="icon-container" v-if="inBoard" @click="removeFromBoard">
           <b-icon
             type="is-light"
             icon="minus-box"
@@ -63,6 +63,24 @@ export default {
     },
   },
   methods: {
+    removeFromBoard() {
+      this.$buefy.dialog.confirm({
+        message: 'Remove Pin from Board?',
+        onConfirm: () => {
+          API.Board.removeFromBoard(this.currentBoardId, [this.pin.id]).then(
+            () => {
+              this.$buefy.toast.open('Pin removed');
+              this.$emit('pin-remove-from-board-succeed', this.pin.id);
+            },
+            () => {
+              this.$buefy.toast.open(
+                { type: 'is-danger', message: 'Failed to Remove Pin' },
+              );
+            },
+          );
+        },
+      });
+    },
     deletePin() {
       this.$buefy.dialog.confirm({
         message: 'Delete this Pin?',
