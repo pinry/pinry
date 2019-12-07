@@ -28,6 +28,23 @@ function openBoardCreate(vm) {
   );
 }
 
+function openBoardEdit(vm, board, onSaved) {
+  vm.$buefy.modal.open(
+    {
+      parent: vm,
+      component: BoardEdit,
+      props: {
+        board,
+        isEdit: true,
+      },
+      events: {
+        boardSaved: onSaved,
+      },
+      hasModalCard: true,
+    },
+  );
+}
+
 function openLogin(vm, onSucceed) {
   vm.$buefy.modal.open({
     parent: vm,
@@ -52,6 +69,7 @@ function openSignUp(vm, onSignUpSucceed) {
 
 export default {
   openBoardCreate,
+  openBoardEdit,
   openPinCreate,
   openLogin,
   openSignUp,
