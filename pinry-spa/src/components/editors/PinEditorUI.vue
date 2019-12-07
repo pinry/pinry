@@ -4,7 +4,14 @@
       <span class="icon-container">
           <b-icon
             type="is-light"
-            icon="heart"
+            icon="minus-box"
+            custom-size="mdi-24px">
+         </b-icon>
+      </span>
+      <span class="icon-container">
+          <b-icon
+            type="is-light"
+            icon="plus-box"
             custom-size="mdi-24px">
          </b-icon>
       </span>
