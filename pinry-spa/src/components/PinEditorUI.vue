@@ -8,7 +8,7 @@
             custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container">
+      <span class="icon-container" @click="deletePin">
          <b-icon
            type="is-light"
            icon="delete"
@@ -27,12 +27,34 @@
 </template>
 
 <script>
+import API from './api';
+
 export default {
   name: 'Editor',
   props: {
-    show: {
-      default: false,
-      type: Boolean,
+    pin: {
+      default() {
+        return {};
+      },
+      type: Object,
+    },
+  },
+  methods: {
+    deletePin() {
+      this.$buefy.dialog.confirm({
+        message: 'Delete this Pin?',
+        onConfirm: () => {
+          API.Pin.deleteById(this.pin.id).then(
+            () => {
+              this.$buefy.toast.open('Pin deleted');
+              this.$emit('pin-delete-succeed', this.pin.id);
+            },
+            () => {
+              this.$buefy.toast.open('Failed to delete Pin');
+            },
+          );
+        },
+      });
     },
   },
 };

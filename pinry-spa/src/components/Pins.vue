@@ -17,11 +17,15 @@
               <div class="grid-sizer"></div>
               <div class="gutter-sizer"></div>
               <div class="pin-card grid-item">
-                <div>
-                  <EditorUI v-show="shouldShowEdit(item.id)"></EditorUI>
-                  <img :src="item.url"
-                     @mouseenter="showEditButtons(item.id)"
+                <div @mouseenter="showEditButtons(item.id)"
                      @mouseleave="hideEditButtons(item.id)"
+                >
+                  <EditorUI
+                    v-show="shouldShowEdit(item.id)"
+                    :pin="item"
+                    v-on:pin-delete-succeed="reset"
+                  ></EditorUI>
+                  <img :src="item.url"
                      @load="onPinImageLoaded(item.id)"
                      @click="openPreview(item)"
                      alt="item.description"
@@ -76,7 +80,7 @@ import loadingSpinner from './loadingSpinner.vue';
 import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 import bus from './utils/bus';
-import EditorUI from './EditorUI.vue';
+import EditorUI from './PinEditorUI.vue';
 
 function createImageItem(pin) {
   const image = {};

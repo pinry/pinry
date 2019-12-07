@@ -64,6 +64,12 @@ const Pin = {
       },
     );
   },
+  deleteById(pinId) {
+    const url = `${API_PREFIX}pins/${pinId}/`;
+    return axios.delete(
+      url,
+    );
+  },
 };
 
 
