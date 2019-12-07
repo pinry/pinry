@@ -1,6 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework.validators import UniqueTogetherValidator
 from taggit.models import Tag
 
 from core.models import Image, Board
@@ -194,6 +195,13 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
     def update(self, instance: Board, validated_data):
         pins_to_add = validated_data.pop("pins_to_add", [])
         pins_to_remove = validated_data.pop("pins_to_remove", [])
+        if Board.objects.filter(
+            submitter=instance.submitter,
+            name=validated_data.get('name', None)
+        ).exists():
+            raise ValidationError(
+                detail={'name': "Board with this name already exists"}
+            )
         instance = super(BoardSerializer, self).update(instance, validated_data)
         changed = False
         if pins_to_add:
