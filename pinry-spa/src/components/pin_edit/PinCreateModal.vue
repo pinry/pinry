@@ -90,6 +90,7 @@ import FileUpload from './FileUpload.vue';
 import FilterSelect from './FilterSelect.vue';
 import bus from '../utils/bus';
 import ModelForm from '../utils/ModelForm';
+import Loading from '../utils/Loading';
 
 function isURLBlank(url) {
   return url !== null && url === '';
@@ -194,6 +195,7 @@ export default {
       );
     },
     createPin() {
+      const loading = Loading.open(this);
       const self = this;
       let promise;
       if (isURLBlank(this.pinModel.form.url.value) && this.formUpload.imageId === null) {
@@ -214,6 +216,7 @@ export default {
           bus.bus.$emit(bus.events.refreshPin);
           self.$emit('pinCreated', resp);
           self.$parent.close();
+          loading.close();
           if (self.boardIds !== null) {
             // FIXME(winkidney): Should handle error for add-to board
             self.boardIds.forEach(
