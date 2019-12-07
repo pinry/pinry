@@ -22,7 +22,7 @@
     function getFormUrl() {
         var src = document.getElementById('pinry-bookmarklet').src;
         src = src.substr(0, src.indexOf('/static/js'));
-        return src + '/pins/pin-form/?pin-image-url=';
+        return src + '#/pin-creation/from-url?url=';
     }
 
     function setCSS(el, css) {
