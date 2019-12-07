@@ -43,7 +43,9 @@ export default {
               this.$emit('board-delete-succeed', this.board.id);
             },
             () => {
-              this.$buefy.toast.open('Failed to delete Board');
+              this.$buefy.toast.open(
+                { type: 'is-danger', message: 'Failed to delete Board' },
+              );
             },
           );
         },
