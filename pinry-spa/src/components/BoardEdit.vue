@@ -100,8 +100,8 @@ export default {
           self.$emit('boardSaved', resp);
           self.$parent.close();
         },
-        (resp) => {
-          self.editModel.markFieldsAsDanger(resp.data);
+        (error) => {
+          self.editModel.markFieldsAsDanger(error.response.data);
         },
       );
     },
