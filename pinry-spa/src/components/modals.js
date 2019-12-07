@@ -5,13 +5,20 @@ import BoardEdit from './BoardEdit.vue';
 import Add2Board from './pin_edit/Add2Board.vue';
 
 
-function openPinEdit(vm, props = null) {
+function openPinEdit(vm, props = null, onCreated = null) {
   vm.$buefy.modal.open(
     {
       parent: vm,
       component: PinCreateModal,
       props,
       hasModalCard: true,
+      events: {
+        pinCreated() {
+          if (onCreated !== null) {
+            onCreated();
+          }
+        },
+      },
     },
   );
 }
