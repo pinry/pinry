@@ -24,12 +24,12 @@ export default {
     this.initialize();
   },
   beforeRouteUpdate(to, from, next) {
-    this.initialize();
+    this.filters = { idFilter: to.params.pinId };
     next();
   },
   methods: {
     initialize() {
-      this.filters.idFilter = this.$route.params.pinId;
+      this.filters = { idFilter: this.$route.params.pinId };
     },
   },
 };

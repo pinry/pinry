@@ -148,6 +148,11 @@ export default {
       },
     },
   },
+  watch: {
+    pinFilters() {
+      this.reset();
+    },
+  },
   methods: {
     shouldShowEdit(id) {
       if (!this.editorMeta.user.loggedIn) {
