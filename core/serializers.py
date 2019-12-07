@@ -165,6 +165,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             'submitter': {"view_name": "users:user-detail"},
         }
 
+    submitter = UserSerializer(read_only=True)
     pins_detail = PinSerializer(source="pins", many=True, read_only=True)
     pins = serializers.HyperlinkedRelatedField(
         write_only=True,
