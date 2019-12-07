@@ -127,8 +127,6 @@ export default {
     onSignUpSucceed() {
       this.initializeUser(true);
     },
-    onPinCreated() {
-    },
     logOut() {
       api.User.logOut().then(
         () => {
@@ -140,9 +138,8 @@ export default {
       modals.openLogin(this, this.onLoginSucceed);
     },
     createPin() {
-      modals.openPinCreate(
+      modals.openPinEdit(
         this,
-        this.onPinCreated,
         { username: this.user.meta.username },
       );
     },

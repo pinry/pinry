@@ -22,7 +22,7 @@
            custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container" v-if="isOwner">
+      <span class="icon-container" v-if="isOwner" @click="editPin">
        <b-icon
          type="is-light"
          icon="pencil"
@@ -89,6 +89,17 @@ export default {
           );
         },
       });
+    },
+    editPin() {
+      const props = {
+        username: this.currentUsername,
+        existedPin: this.pin,
+        isEdit: true,
+      };
+      modals.openPinEdit(
+        this,
+        props,
+      );
     },
     deletePin() {
       this.$buefy.dialog.confirm({

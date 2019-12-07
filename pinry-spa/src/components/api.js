@@ -92,6 +92,13 @@ const Pin = {
       url,
     );
   },
+  updateById(pinId, data) {
+    const url = `${API_PREFIX}pins/${pinId}/`;
+    return axios.patch(
+      url,
+      data,
+    );
+  },
 };
 
 
