@@ -1,0 +1,24 @@
+@mixin border-radius {
+  border-radius: 3px;
+}
+
+.editor-buttons {
+  padding: 3px 1px 3px 3px;
+  background-color: rgba(225, 225, 225, 0.6);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  float: right;
+  cursor: pointer;
+
+  @include border-radius;
+  .icon-container {
+    @include border-radius;
+    padding: 5px 2px 2px 2px;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-right: 2px;
+    span {
+      opacity: 0.9;
+    }
+  }
+}

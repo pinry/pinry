@@ -34,6 +34,10 @@ const Board = {
       { pins_to_add: pinIds },
     );
   },
+  delete(boardId) {
+    const url = `${API_PREFIX}boards/${boardId}/`;
+    return axios.delete(url);
+  },
 };
 
 const Pin = {

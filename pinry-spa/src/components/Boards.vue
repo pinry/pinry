@@ -16,24 +16,32 @@
               <div class="grid-sizer"></div>
               <div class="gutter-sizer"></div>
               <div class="board-card grid-item">
-                <router-link :to="{ name: 'board', params: { boardId: item.id } }">
+                <div @mouseenter="currentEditBoard = item.id"
+                     @mouseleave="currentEditBoard = null"
+                >
                   <div class="card-image">
-                    <img :src="item.preview_image_url"
-                       @load="onPinImageLoaded(item.id)"
-                       :style="item.style"
-                       v-show="item.preview_image_url"
-                       class="preview-image">
+                    <BoardEditorUI
+                      v-show="shouldShowEdit(item.id)"
+                      :board="item"
+                      v-on:board-delete-succeed="reset"
+                    ></BoardEditorUI>
+                    <router-link :to="{ name: 'board', params: { boardId: item.id } }">
+                      <img :src="item.preview_image_url"
+                         @load="onPinImageLoaded(item.id)"
+                         :style="item.style"
+                         v-show="item.preview_image_url"
+                         class="preview-image">
+                    </router-link>
                   </div>
                   <div class="board-footer">
                     <p class="sub-title board-info">{{ item.name }}</p>
-
                     <p class="description">
                       <small>
                         Pins in board: <span class="num-pins">{{ item.total_pins }}</span>
                       </small>
                     </p>
                   </div>
-                </router-link>
+                </div>
               </div>
             </div>
           </template>
@@ -52,6 +60,7 @@ import loadingSpinner from './loadingSpinner.vue';
 import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 import placeholder from '../assets/pinry-placeholder.jpg';
+import BoardEditorUI from './editors/BoardEditUI.vue';
 
 function createBoardItem(board) {
   const defaultPreviewImage = placeholder;
@@ -81,25 +90,45 @@ function createBoardItem(board) {
   return boardItem;
 }
 
+function initialData() {
+  return {
+    currentEditBoard: null,
+    blocks: [],
+    blocksMap: {},
+    status: {
+      loading: false,
+      hasNext: true,
+      offset: 0,
+    },
+  };
+}
+
 export default {
   name: 'boards',
   components: {
     loadingSpinner,
     noMore,
+    BoardEditorUI,
   },
-  data() {
-    return {
-      blocks: [],
-      blocksMap: {},
-      status: {
-        loading: false,
-        hasNext: true,
-        offset: 0,
-      },
-    };
-  },
+  data: initialData,
   props: ['boardUsername'],
   methods: {
+    initialize() {
+      this.fetchMore(true);
+    },
+    reset() {
+      const data = initialData();
+      Object.entries(data).forEach(
+        (kv) => {
+          const [key, value] = kv;
+          this[key] = value;
+        },
+      );
+      this.initialize();
+    },
+    shouldShowEdit(boardId) {
+      return this.currentEditBoard === boardId;
+    },
     onPinImageLoaded(itemId) {
       this.blocksMap[itemId].class = {
         'image-loaded': true,
@@ -165,7 +194,7 @@ export default {
   },
   created() {
     this.registerScrollEvent();
-    this.fetchMore(true);
+    this.initialize();
   },
 };
 </script>

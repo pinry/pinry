@@ -1,14 +1,7 @@
 <template>
   <div class="editor">
     <div class="editor-buttons">
-      <span class="icon-container">
-          <b-icon
-            type="is-light"
-            icon="heart"
-            custom-size="mdi-24px">
-         </b-icon>
-      </span>
-      <span class="icon-container" @click="deletePin">
+      <span class="icon-container" @click="deleteBoard">
          <b-icon
            type="is-light"
            icon="delete"
@@ -30,9 +23,9 @@
 import API from '../api';
 
 export default {
-  name: 'Editor',
+  name: 'BoardEditor',
   props: {
-    pin: {
+    board: {
       default() {
         return {};
       },
@@ -40,17 +33,17 @@ export default {
     },
   },
   methods: {
-    deletePin() {
+    deleteBoard() {
       this.$buefy.dialog.confirm({
-        message: 'Delete this Pin?',
+        message: 'Delete this Board?',
         onConfirm: () => {
-          API.Pin.deleteById(this.pin.id).then(
+          API.Board.delete(this.board.id).then(
             () => {
-              this.$buefy.toast.open('Pin deleted');
-              this.$emit('pin-delete-succeed', this.pin.id);
+              this.$buefy.toast.open('Board deleted');
+              this.$emit('board-delete-succeed', this.board.id);
             },
             () => {
-              this.$buefy.toast.open('Failed to delete Pin');
+              this.$buefy.toast.open('Failed to delete Board');
             },
           );
         },
