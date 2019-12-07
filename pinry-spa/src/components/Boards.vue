@@ -21,7 +21,7 @@
                 >
                   <div class="card-image">
                     <BoardEditorUI
-                      v-show="shouldShowEdit(item.id)"
+                      v-show="shouldShowEdit(item)"
                       :board="item"
                       v-on:board-delete-succeed="reset"
                       v-on:board-save-succeed="reset"
@@ -89,6 +89,7 @@ function createBoardItem(board) {
     height: `${previewImage.image.thumbnail.height}px`,
   };
   boardItem.class = {};
+  boardItem.author = board.submitter.username;
   return boardItem;
 }
 
@@ -101,6 +102,9 @@ function initialData() {
       loading: false,
       hasNext: true,
       offset: 0,
+    },
+    editorMeta: {
+      user: { loggedIn: false, meta: { username: null } },
     },
   };
 }
@@ -118,6 +122,20 @@ export default {
     initialize() {
       this.fetchMore(true);
     },
+    initializeMeta() {
+      const self = this;
+      API.User.fetchUserInfo().then(
+        (user) => {
+          if (user === null) {
+            self.editorMeta.user.loggedIn = false;
+            self.editorMeta.user.meta = {};
+          } else {
+            self.editorMeta.user.meta = user;
+            self.editorMeta.user.loggedIn = true;
+          }
+        },
+      );
+    },
     reset() {
       const data = initialData();
       Object.entries(data).forEach(
@@ -128,8 +146,14 @@ export default {
       );
       this.initialize();
     },
-    shouldShowEdit(boardId) {
-      return this.currentEditBoard === boardId;
+    shouldShowEdit(board) {
+      if (!this.editorMeta.user.loggedIn) {
+        return false;
+      }
+      if (this.editorMeta.user.meta.username !== board.author) {
+        return false;
+      }
+      return this.currentEditBoard === board.id;
     },
     onPinImageLoaded(itemId) {
       this.blocksMap[itemId].class = {
@@ -197,6 +221,7 @@ export default {
   created() {
     bus.bus.$on(bus.events.refreshBoards, this.reset);
     this.registerScrollEvent();
+    this.initializeMeta();
     this.initialize();
   },
 };
