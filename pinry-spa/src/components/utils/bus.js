@@ -6,5 +6,6 @@ export default {
   bus: eventBus,
   events: {
     refreshPin: 'refreshPin',
+    refreshBoards: 'refreshBoards',
   },
 };

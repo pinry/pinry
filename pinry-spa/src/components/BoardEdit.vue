@@ -54,6 +54,7 @@
 <script>
 import API from './api';
 import ModelForm from './utils/ModelForm';
+import bus from './utils/bus';
 
 const fields = ['name'];
 
@@ -110,6 +111,7 @@ export default {
       const promise = API.Board.create(this.createModel.form.name.value);
       promise.then(
         (resp) => {
+          bus.bus.$emit(bus.events.refreshBoards);
           self.$emit('boardCreated', resp);
           self.$parent.close();
         },

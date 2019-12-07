@@ -62,6 +62,7 @@ import noMore from './noMore.vue';
 import scroll from './utils/scroll';
 import placeholder from '../assets/pinry-placeholder.jpg';
 import BoardEditorUI from './editors/BoardEditUI.vue';
+import bus from './utils/bus';
 
 function createBoardItem(board) {
   const defaultPreviewImage = placeholder;
@@ -194,6 +195,7 @@ export default {
     },
   },
   created() {
+    bus.bus.$on(bus.events.refreshBoards, this.reset);
     this.registerScrollEvent();
     this.initialize();
   },
