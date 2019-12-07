@@ -48,6 +48,17 @@ function FormHelper(form, fields = []) {
     );
     return data;
   }
+
+  function asDataByFields(requiredFields) {
+    const data = {};
+    requiredFields.forEach(
+      (fieldName) => {
+        data[fieldName] = self[fieldName].value;
+      },
+    );
+    return data;
+  }
+
   function assignToForm(data) {
     Object.entries(data).forEach(
       (dataField) => {
@@ -72,6 +83,7 @@ function FormHelper(form, fields = []) {
     markFieldAsDanger,
     resetField,
     asData,
+    asDataByFields,
     assignToForm,
     resetAllFields,
   };

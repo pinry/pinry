@@ -9,7 +9,7 @@
           <div class="columns">
             <div class="column">
               <FileUpload
-                :previewImageURL="form.url.value"
+                :previewImageURL="createModel.form.url.value"
                 v-on:imageUploadSucceed="onUploadDone"
                 v-on:imageUploadProcessing="onUploadProcessing"
               ></FileUpload>
@@ -17,33 +17,33 @@
             <div class="column">
               <b-field label="Image URL"
                        v-show="!disableUrlField"
-                       :type="form.url.type"
-                       :message="form.url.error">
+                       :type="createModel.form.url.type"
+                       :message="createModel.form.url.error">
                 <b-input
                   type="text"
-                  v-model="form.url.value"
+                  v-model="createModel.form.url.value"
                   placeholder="where to fetch the image"
                   maxlength="256"
                 >
                 </b-input>
               </b-field>
               <b-field label="Image Referer"
-                       :type="form.referer.type"
-                       :message="form.referer.error">
+                       :type="createModel.form.referer.type"
+                       :message="createModel.form.referer.error">
                 <b-input
                   type="text"
-                  v-model="form.referer.value"
+                  v-model="createModel.form.referer.value"
                   placeholder="where to find the pin"
                   maxlength="256"
                 >
                 </b-input>
               </b-field>
               <b-field label="Descripton"
-                       :type="form.description.type"
-                       :message="form.description.error">
+                       :type="createModel.form.description.type"
+                       :message="createModel.form.description.error">
                 <b-input
                   type="textarea"
-                  v-model="form.description.value"
+                  v-model="createModel.form.description.value"
                   placeholder="idea from this pin"
                   maxlength="1024"
                 >
@@ -51,7 +51,7 @@
               </b-field>
               <b-field label="Tags">
                 <b-taginput
-                  v-model="form.tags.value"
+                  v-model="createModel.form.tags.value"
                   ellipsis
                   icon="label"
                   placeholder="Add a tag">
@@ -99,11 +99,11 @@ export default {
     FilterSelect,
   },
   data() {
-    const form = ModelForm.createFormModel(fields);
-    form.tags.value = [];
+    const createModel = ModelForm.fromFields(fields);
+    createModel.form.tags.value = [];
     return {
       disableUrlField: false,
-      form,
+      createModel,
       formUpload: {
         imageId: null,
       },
@@ -144,24 +144,17 @@ export default {
     createPin() {
       const self = this;
       let promise;
-      if (isURLBlank(this.form.url.value) && this.formUpload.imageId === null) {
+      if (isURLBlank(this.createModel.form.url.value) && this.formUpload.imageId === null) {
         return;
       }
       if (this.formUpload.imageId === null) {
-        const data = {
-          url: this.form.url.value,
-          referer: this.form.referer.value,
-          description: this.form.description.value,
-          tags: this.form.tags.value,
-        };
+        const data = this.createModel.asDataByFields(fields);
         promise = API.Pin.createFromURL(data);
       } else {
-        const data = {
-          referer: this.form.referer.value,
-          description: this.form.description.value,
-          tags: this.form.tags.value,
-          image_by_id: this.formUpload.imageId,
-        };
+        const data = this.createModel.asDataByFields(
+          ['referer', 'description', 'tags'],
+        );
+        data.image_by_id = this.formUpload.imageId;
         promise = API.Pin.createFromUploaded(data);
       }
       promise.then(
