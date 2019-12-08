@@ -12,7 +12,7 @@ Feature
 
 - Image fetch and online preview
 - Tagging system for Pin
-- `Chrome/Firefox plugin support <https://github.com/winkidney/browser-pinry>`_
+- Browser Extension: `Chrome <https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/>`_ and `Firefox <https://addons.mozilla.org/it/firefox/addon/add-to-pinry/>`_
 - multi-user support
 - Both public and private is supported
 
