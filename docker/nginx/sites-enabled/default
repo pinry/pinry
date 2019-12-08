@@ -26,7 +26,7 @@ server {
     }
 
     location / {
-        root /app/pinry-spa/dist/;
+        root /srv/www/pinry/pinry-spa/dist/;
         access_log off;
     }
 }
