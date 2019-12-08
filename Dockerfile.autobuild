@@ -52,7 +52,7 @@ RUN cd /srv/www/pinry/pinry-spa/ && yarn install && yarn build
 # Fix permissions
 RUN chown -R www-data:www-data /srv/www \
  && cd /srv/www/pinry \
- && python manage.py --settings=pinry.settings.docker collectstatic --noinput
+ && python manage.py collectstatic --noinput --settings=pinry.settings.docker
 
 
 # Load in all of our config files.
