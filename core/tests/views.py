@@ -19,7 +19,7 @@ class CreateImageTest(TestCase):
         Image.objects.all().delete()
 
     def test_post(self):
-        with open('logo.png', mode='rb') as image:
+        with open('docs/src/imgs/logo-dark.png', mode='rb') as image:
             response = self.client.post(reverse('image-list'), {'image': image})
         image = Image.objects.latest('pk')
         self.assertEqual(response.json()['id'], image.pk)

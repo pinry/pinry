@@ -13,7 +13,7 @@ from core.models import Pin, Image
 
 
 def mock_requests_get(url, **kwargs):
-    response = mock.Mock(content=open('logo.png', 'rb').read())
+    response = mock.Mock(content=open('docs/src/imgs/logo-dark.png', 'rb').read())
     return response
 
 

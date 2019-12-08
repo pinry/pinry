@@ -8,7 +8,7 @@ from core.models import Pin, Image
 from users.models import User
 
 
-TEST_IMAGE_PATH = 'logo.png'
+TEST_IMAGE_PATH = 'docs/src/imgs/logo-dark.png'
 
 
 def create_user(username):
