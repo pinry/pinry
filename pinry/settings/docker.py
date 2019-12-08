@@ -31,6 +31,10 @@ DATABASES = {
 
 USE_X_FORWARDED_HOST = True
 
+REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+    'rest_framework.renderers.JSONRenderer',
+]
+
 try:
     from .local_settings import *
 except ImportError:
