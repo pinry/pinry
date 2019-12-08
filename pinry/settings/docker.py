@@ -8,7 +8,7 @@ if 'SECRET_KEY' not in os.environ:
     logging.warning(
         "No SECRET_KEY given in environ, please have a check"
     )
-SECRET_KEY = os.environ.get('SECRET_KEY', None)
+SECRET_KEY = os.environ.get('SECRET_KEY', "PLEASE_REPLACE_ME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
