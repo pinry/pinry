@@ -42,7 +42,7 @@ RUN cd /srv/www/pinry \
 COPY . /srv/www/pinry/
 
 # config nodejs and build frontend
-RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
+RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n || exit
 RUN bash n 10
 RUN npm -g install yarn
 
