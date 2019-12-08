@@ -1,10 +1,18 @@
-# Pinry
+# Pinry, the open-source tiling image board.
+
+![Pinry](imgs/logo-dark.png)
 
 The open-source core of Pinry, a tiling image board system for people who want
 to save, tag, and share images, videos and webpages in an easy to skim through
 format.
 
 ![Home](imgs/screenshot.png)
+
+## Demo Site
+
+We currently have a running demo up at
+[https://pin.37soloist.com/](https://pin.37soloist.com/). If you'd like to
+showcase your Pinry website toss us a link!
 
 ## As Seen On
 

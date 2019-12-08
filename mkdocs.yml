@@ -16,6 +16,7 @@ nav:
   - Home: 'index.md'
   - Screenshots: 'screenshots.md'
   - Docs: 'docs.md'
+  - Assets: 'assets.md'
   - Contributing: 'contributing.md'
   - License: 'license.md'
 
