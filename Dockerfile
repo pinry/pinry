@@ -11,3 +11,4 @@ RUN npm -g install yarn
 WORKDIR /app
 RUN pip install pipenv
 RUN pipenv install --three --system --dev
+RUN rm -fr /app/*
