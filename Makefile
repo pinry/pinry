@@ -26,4 +26,4 @@ docs-serve:
 docs-build:
 	pipenv run mkdocs build
 docs-publish:
-	pipenv run mkdocs publish
+	pipenv run mkdocs gh-deploy

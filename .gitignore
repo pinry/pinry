@@ -39,3 +39,6 @@ docker-compose.yml
 /.idea/
 *.pyc
 *.swp
+
+# mkdocs
+/docs/dist/
