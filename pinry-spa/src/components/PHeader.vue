@@ -63,10 +63,10 @@
                 Browser Extensions
               </a>
               <div class="navbar-dropdown">
-                <a class="navbar-item">
+                <a class="navbar-item" href="https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/">
                   Chrome
                 </a>
-                <a class="navbar-item">
+                <a class="navbar-item" href="https://addons.mozilla.org/it/firefox/addon/add-to-pinry/">
                   Firefox
                 </a>
               </div>
