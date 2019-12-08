@@ -12,7 +12,7 @@ Feature
 
 - Image fetch and online preview
 - Tagging system for Pin
-- Browser Extension: `Chrome <https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/>`_ and `Firefox <https://addons.mozilla.org/it/firefox/addon/add-to-pinry/>`_
+- Browser Extension: `Chrome <https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/>`_ and `Firefox <https://addons.mozilla.org/en-US/firefox/addon/add-to-pinry/>`_
 - multi-user support
 - Both public and private is supported
 
