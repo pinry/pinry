@@ -15,6 +15,7 @@ copyright: "Copyright &copy; 2019 Pinry's Contributors"
 nav:
   - Home: 'index.md'
   - Screenshots: 'screenshots.md'
+  - Extensions: 'extensions.md'
   - Docs: 'docs.md'
   - Assets: 'assets.md'
   - Contributing: 'contributing.md'
