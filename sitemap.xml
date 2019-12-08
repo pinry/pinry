@@ -21,6 +21,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>https://docs.getpinry.com/development/</loc>
+     <lastmod>2019-12-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>https://docs.getpinry.com/docs/</loc>
      <lastmod>2019-12-08</lastmod>
      <changefreq>daily</changefreq>

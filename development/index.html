@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Pinry project.">
       
       
-        <link rel="canonical" href="https://docs.getpinry.com/contributing/">
+        <link rel="canonical" href="https://docs.getpinry.com/development/">
       
       
         <meta name="author" content="Pinry's Contributors">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Contributing - Pinry Docs</title>
+        <title>Development - Pinry Docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#contributing" tabindex="1" class="md-skip">
+      <a href="#developing-pinry" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Contributing
+                Development
               
             </span>
           
@@ -276,11 +276,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../development/" title="Development" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Development" class="md-nav__link md-nav__link--active">
       Development
     </a>
+    
   </li>
 
     
@@ -324,20 +333,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Contributing" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../contributing/" title="Contributing" class="md-nav__link">
       Contributing
     </a>
-    
   </li>
 
     
@@ -380,12 +380,42 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/contributing.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/development.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h1>
-<p>We welcome any and all types of contributions, even if it's just fixing a single
-small spelling mistake.</p>
+                <h1 id="developing-pinry">Developing Pinry<a class="headerlink" href="#developing-pinry" title="Permanent link">&para;</a></h1>
+<p>Pinry currently has two major requirements:</p>
+<ul>
+<li>Python 3.6+</li>
+<li>Node 10+</li>
+</ul>
+<p>For minor requirements you need two have installed two package managers that
+are not the defaults for these languages:</p>
+<ul>
+<li>Python, pipenv</li>
+<li>Node, yarn</li>
+</ul>
+<p>To install these is pretty simple, you can just run:</p>
+<div class="codehilite"><pre><span></span><span class="err">pip install pipenv</span>
+<span class="err">npm install -g yarn</span>
+</pre></div>
+
+
+<p>After that you can install this project with:</p>
+<div class="codehilite"><pre><span></span><span class="err">pipenv install --dev</span>
+<span class="err">cd pinry-spa; yarn install</span>
+</pre></div>
+
+
+<p>You will need to run two separate items as of right now, the SPA and the
+backend:</p>
+<div class="codehilite"><pre><span></span><span class="err">pipenv run python manage.py</span>
+</pre></div>
+
+
+<p>And from another terminal:</p>
+<div class="codehilite"><pre><span></span><span class="err">cd pinry-spa; yarn serve</span>
+</pre></div>
                 
                   
                 
@@ -406,7 +436,7 @@ small spelling mistake.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../assets/" title="Assets" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../theories/" title="Theories" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -415,19 +445,19 @@ small spelling mistake.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Assets
+                Theories
               </span>
             </div>
           </a>
         
         
-          <a href="../license/" title="License" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                License
+                Docs
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
