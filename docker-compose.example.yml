@@ -2,6 +2,7 @@ version: '3'
 
 services:
   web:
+    image: development
     build: .
     working_dir: /app
     command: >
@@ -16,3 +17,13 @@ services:
     volumes:
       - .:/app
     restart: always
+  build_frontend:
+    image: development
+    build: .
+    working_dir: /app/pinry-spa/
+    command: >
+      bash -c "yarn install && yarn build"
+    user: ${CURRENT_UID}
+    volumes:
+      - .:/app
+    restart: no
