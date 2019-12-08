@@ -239,7 +239,7 @@ const User = {
         );
       }
     }
-    const url = `${API_PREFIX}/profile/users/`;
+    const url = `${API_PREFIX}profile/users/`;
     return new Promise(
       (resolve) => {
         axios.get(url).then(
