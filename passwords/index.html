@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Pinry project.">
       
       
-        <link rel="canonical" href="https://docs.getpinry.com/license/">
+        <link rel="canonical" href="https://docs.getpinry.com/passwords/">
       
       
         <meta name="author" content="Pinry's Contributors">
@@ -42,7 +42,7 @@
     
     
       
-        <title>License - Pinry Docs</title>
+        <title>Passwords - Pinry Docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#license" tabindex="1" class="md-skip">
+      <a href="#updating-passwords" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                License
+                Passwords
               
             </span>
           
@@ -288,11 +288,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../passwords/" title="Passwords" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Passwords" class="md-nav__link md-nav__link--active">
       Passwords
     </a>
+    
   </li>
 
     
@@ -324,49 +333,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        License
-      </label>
-    
-    <a href="./" title="License" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../license/" title="License" class="md-nav__link">
       License
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-bsd-2-clause-license" class="md-nav__link">
-    The BSD 2-Clause License
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -387,22 +358,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-bsd-2-clause-license" class="md-nav__link">
-    The BSD 2-Clause License
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -413,36 +368,18 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/license.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/passwords.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h1>
-<h2 id="the-bsd-2-clause-license">The BSD 2-Clause License<a class="headerlink" href="#the-bsd-2-clause-license" title="Permanent link">&para;</a></h2>
-<p>Copyright (c) <code>2019</code>, <code>Pinry's Contributors</code>
-All rights reserved.</p>
-<p>Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:</p>
-<ol>
-<li>
-<p>Redistributions of source code must retain the above copyright notice,
-    this list of conditions and the following disclaimer.</p>
-</li>
-<li>
-<p>Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.</p>
-</li>
-</ol>
-<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+                <h1 id="updating-passwords">Updating Passwords<a class="headerlink" href="#updating-passwords" title="Permanent link">&para;</a></h1>
+<p>Currently we don't have a good "forgot my password" method on Pinry since that
+generally requries an email to be sent. The current method for changing
+passwords involves:</p>
+<ul>
+<li>Create a new super user <code>pipenv run python manage.py createsuperuser</code></li>
+<li>Login to your admin panel <code>{your_website_url}/admin/</code></li>
+<li>Go to the users section, select the user, change their password.</li>
+</ul>
                 
                   
                 
@@ -463,7 +400,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../contributing/" title="Contributing" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -472,11 +409,25 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Contributing
+                Docs
               </span>
             </div>
           </a>
         
+        
+          <a href="../assets/" title="Assets" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Assets
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
