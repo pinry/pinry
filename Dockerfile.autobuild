@@ -12,7 +12,7 @@
 
 
 # Base system is the LTS version of Ubuntu.
-FROM python:3.6-stretch
+FROM python:3.7-stretch
 
 RUN groupadd -g 2300 tmpgroup \
  && usermod -g tmpgroup www-data \
@@ -40,6 +40,14 @@ RUN cd /srv/www/pinry \
  && pipenv install --three --system --clear
 
 COPY . /srv/www/pinry/
+
+# config nodejs and build frontend
+RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
+RUN bash n 10
+RUN npm -g install yarn
+
+# build frontend
+RUN cd /srv/www/pinry/pinry-spa/ && yarn install && yarn build
 
 # Fix permissions
 RUN chown -R www-data:www-data /srv/www \
