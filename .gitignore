@@ -42,3 +42,6 @@ docker-compose.yml
 
 # mkdocs
 /docs/dist/
+
+# vscode
+/.vscode
