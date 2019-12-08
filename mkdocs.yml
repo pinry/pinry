@@ -1,0 +1,46 @@
+# Project information
+site_name: 'Pinry Docs'
+site_description: 'Docs for the Pinry project.'
+site_author: 'Pinry\'s Contributors''
+site_url: 'https://docs.getpinry.com/'
+
+# Repository
+repo_name: 'pinry/pinry'
+repo_url: 'https://github.com/pinry/pinry'
+
+# Copyright
+copyright: 'Copyright &copy; 2019 Pinry\'s Contributors'
+
+# Navigation
+nav:
+  - Home: 'index.md'
+  - Screenshots: 'screenshots.md'
+  - Docs: 'docs.md'
+  - Contributing: 'contributing.md'
+  - License: 'license.md'
+
+# Configuration
+docs_dir: 'docs/src'
+site_dir: 'docs/dist'
+edit_uri: 'edit/master/docs/src/'
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+# Customization
+extra:
+  manifest: 'manifest.webmanifest'
+  social:
+    - type: 'github'
+      link: 'https://github.com/pinry'
+
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true

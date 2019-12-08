@@ -21,3 +21,9 @@ shell:
 	pipenv run python manage.py shell
 flake8:
 	pipenv run flake8
+docs-serve:
+	pipenv run mkdocs serve
+docs-build:
+	pipenv run mkdocs build
+docs-publish:
+	pipenv run mkdocs publish

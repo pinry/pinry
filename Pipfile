@@ -3,10 +3,15 @@ url = "https://pypi.python.org/simple"
 name = "pypi"
 verify_ssl = true
 
+[requires]
+python_version = "3.6"
+
 [dev-packages]
 "flake8" = "*"
 qrcode = "*"
 django-extensions = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [packages]
 django = ">=1.11,<1.12"
