@@ -10,6 +10,10 @@ module.exports = {
         target: 'http://localhost:8000/',
         changeOrigin: true,
       },
+      '/static/js/': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true,
+      },
     },
   },
 };

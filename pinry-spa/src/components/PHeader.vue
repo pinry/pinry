@@ -17,7 +17,7 @@
         </div>
         <div id="PinryNav" class="navbar-menu" :class="{ 'is-active': active}">
           <div class="navbar-start">
-            <a class="navbar-item">
+            <a class="navbar-item" :href="bookmarkLet">
               BookmarkLet
             </a>
             <div
@@ -116,6 +116,13 @@ export default {
         meta: {},
       },
     };
+  },
+  computed: {
+    bookmarkLet() {
+      const url = new URL(window.location);
+      const host = url.origin;
+      return `javascript:void((function(d){var s=d.createElement('script');s.id='pinry-bookmarklet';s.src='${host}/static/js/bookmarklet.js?'+Math.random()*10000000000000000;d.body.appendChild(s)})(document));`;
+    },
   },
   methods: {
     toggleMenu() {
