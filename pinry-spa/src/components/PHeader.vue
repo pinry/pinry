@@ -66,7 +66,7 @@
                 <a class="navbar-item" href="https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/">
                   Chrome
                 </a>
-                <a class="navbar-item" href="https://addons.mozilla.org/it/firefox/addon/add-to-pinry/">
+                <a class="navbar-item" href="https://addons.mozilla.org/en-US/firefox/addon/add-to-pinry/">
                   Firefox
                 </a>
               </div>
