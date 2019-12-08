@@ -7,7 +7,7 @@ if [ "${ALLOW_NEW_REGISTRATIONS}" = "" ]; then
 fi
 
 if [[ "$(docker images -q pinry/pinry 2> /dev/null)" == "" ]]; then
-  echo "No docker image found, building..." && "${script_dir}/build_docker.sh"
+  echo "No docker image found, building..." && "${script_dir}/build_docker.sh" || echo "Failed to build docker image..." && exit
 fi
 
 echo "=================================================================================="
