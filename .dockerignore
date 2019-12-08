@@ -1,7 +1,25 @@
+# git
 .git
 .gitignore
+
+# docs
+docs
+
+# docker
 .dockerignore
 Dockerfile*
+docker-compose*
+
+# database
+db.sqlite3
+
+# misc conf
 .flake8
 .travis.yml
-doc
+
+# vscode
+.vscode
+
+# markdown
+LICENSE.md
+README.md
