@@ -21,7 +21,7 @@ echo "If you want to use docker-compose, just edit docker-compose.yml and use 'd
 SECRET_KEY=$(sudo docker run pinry/pinry /scripts/gen_key.sh)
 
 echo ""
-echo "Your secret-key is(also saved/overwritten your pinry/production_secret_key.txt):"
+echo "Your secret-key is(also saved/overwritten your docker's /data/production_secret_key.txt):"
 echo ""
 echo ${SECRET_KEY}
 echo "=================================================================================="
