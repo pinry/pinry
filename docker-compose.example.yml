@@ -26,4 +26,4 @@ services:
     user: ${CURRENT_UID}
     volumes:
       - .:/app
-    restart: no
+    restart: "no"
