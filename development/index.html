@@ -396,7 +396,8 @@ are not the defaults for these languages:</p>
 <li>Node, yarn</li>
 </ul>
 <p>To install these is pretty simple, you can just run:</p>
-<div class="codehilite"><pre><span></span><span class="err">pip install pipenv</span>
+<div class="codehilite"><pre><span></span><span class="err">cd pinry</span>
+<span class="err">pip install pipenv</span>
 <span class="err">npm install -g yarn</span>
 </pre></div>
 
@@ -409,7 +410,8 @@ are not the defaults for these languages:</p>
 
 <p>You will need to run two separate items as of right now, the SPA and the
 backend:</p>
-<div class="codehilite"><pre><span></span><span class="err">pipenv run python manage.py</span>
+<div class="codehilite"><pre><span></span><span class="err">pipenv run python manage.py migrate</span>
+<span class="err">pipenv run python manage.py runserver</span>
 </pre></div>
 
 
