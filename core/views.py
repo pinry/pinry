@@ -1,7 +1,10 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, mixins, routers
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import GenericViewSet
+from taggit.models import Tag
 
 from core import serializers as api
 from core.models import Image, Pin, Board
@@ -49,8 +52,23 @@ class BoardAutoCompleteViewSet(
     pagination_class = None
 
 
+class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = api.TagAutoCompleteSerializer
+    pagination_class = None
+
+    @method_decorator(cache_page(60*5))
+    def list(self, request, *args, **kwargs):
+        return super(TagAutoCompleteViewSet, self).list(
+            request,
+            *args,
+            **kwargs
+        )
+
+
 drf_router = routers.DefaultRouter()
 drf_router.register(r'pins', PinViewSet)
 drf_router.register(r'images', ImageViewSet)
 drf_router.register(r'boards', BoardViewSet)
+drf_router.register(r'tags-auto-complete/', TagAutoCompleteViewSet)
 drf_router.register(r'boards-auto-complete', BoardAutoCompleteViewSet)

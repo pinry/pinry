@@ -226,3 +226,10 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             )
         validated_data['submitter'] = user
         return super(BoardSerializer, self).create(validated_data)
+
+
+class TagAutoCompleteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = ('name', )
