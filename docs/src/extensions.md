@@ -7,5 +7,5 @@ Firefox. You can find his repo for these extensions at:
 
 If you'd like to install either extension they are available at:
 
-- [https://chrome.google.com/webstore/detail/pinry-chrome/pcbmmomiecgodaaffdgfeclomnjnmhin](https://chrome.google.com/webstore/detail/pinry-chrome/pcbmmomiecgodaaffdgfeclomnjnmhin)
-- [https://addons.mozilla.org/zh-CN/firefox/addon/pinry/](https://addons.mozilla.org/zh-CN/firefox/addon/pinry/)
+- [https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/](https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/)
+- [https://addons.mozilla.org/it/firefox/addon/add-to-pinry/](https://addons.mozilla.org/it/firefox/addon/add-to-pinry/)
