@@ -56,10 +56,10 @@ changing settings file in `pinry/settings`.
 
 - Set any custom configuration options you need and run::
 
-    cp docker-compose.example.yml docker-compose.yml
-    # edit docker-compose.yml and change the secret-key,
-    # don't forget to backup this config file.
-    docker-compose up -d
+  cp docker-compose.example.yml docker-compose.yml  
+  \# edit docker-compose.yml and change the secret-key,  
+  \# don't forget to backup this config file.  
+  docker-compose up -d
 
 - If you want to run Pinry with current user in docker::
 
