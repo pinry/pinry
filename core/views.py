@@ -57,7 +57,7 @@ class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = api.TagAutoCompleteSerializer
     pagination_class = None
 
-    @method_decorator(cache_page(60*5))
+    @method_decorator(cache_page(60 * 5))
     def list(self, request, *args, **kwargs):
         return super(TagAutoCompleteViewSet, self).list(
             request,
