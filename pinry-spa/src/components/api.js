@@ -258,7 +258,15 @@ const User = {
   },
 };
 
+const Tag = {
+  fetchList() {
+    const url = `${API_PREFIX}tags-auto-complete/`;
+    return axios.get(url);
+  },
+};
+
 export default {
+  Tag,
   Pin,
   Board,
   fetchPin,
