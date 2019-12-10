@@ -59,7 +59,10 @@ changing settings file in `pinry/settings`.
   cp docker-compose.example.yml docker-compose.yml  
   \# edit docker-compose.yml and change the secret-key,  
   \# don't forget to backup this config file.  
-  docker-compose up -d
+  \# You should build frontend first  
+  docker-compose up build_frontend  
+  \# then start the backend server  
+  docker-compose up -d web
 
 - If you want to run Pinry with current user in docker::
 
@@ -71,7 +74,7 @@ changing settings file in `pinry/settings`.
 
 
 **Note** : No static file server configured, your should configure nginx or other server to serve
-static files from ./static
+static files from `./static`(as path `/static`) and `./pinry-spa/dist` (as html root `/`)
 
 
 ## Contributors
