@@ -38,6 +38,24 @@
                 >
                 </b-input>
               </b-field>
+              <b-field label="Tags">
+                <b-taginput
+                    v-model="pinModel.form.tags.value"
+                    :data="editorMeta.filteredTagOptions"
+                    autocomplete
+                    ellipsis
+                    icon="label"
+                    :allow-new="true"
+                    placeholder="Add a tag"
+                    @typing="getFilteredTags">
+                  <template slot-scope="props">
+                    <strong>{{ props.option }}</strong>
+                  </template>
+                  <template slot="empty">
+                    There are no items
+                  </template>
+                </b-taginput>
+              </b-field>
               <b-field label="Descripton"
                        :type="pinModel.form.description.type"
                        :message="pinModel.form.description.error">
@@ -48,14 +66,6 @@
                   maxlength="1024"
                 >
                 </b-input>
-              </b-field>
-              <b-field label="Tags">
-                <b-taginput
-                  v-model="pinModel.form.tags.value"
-                  ellipsis
-                  icon="label"
-                  placeholder="Add a tag">
-                </b-taginput>
               </b-field>
             </div>
             <div class="column" v-if="!isEdit">
@@ -91,6 +101,7 @@ import FilterSelect from './FilterSelect.vue';
 import bus from '../utils/bus';
 import ModelForm from '../utils/ModelForm';
 import Loading from '../utils/Loading';
+import AutoComplete from '../utils/AutoComplete';
 
 function isURLBlank(url) {
   return url !== null && url === '';
@@ -133,13 +144,16 @@ export default {
       },
       boardId: null,
       boardOptions: [],
+      tagOptions: [],
       editorMeta: {
         title: 'New Pin',
+        filteredTagOptions: [],
       },
     };
   },
   created() {
     this.fetchBoardList();
+    this.fetchTagList();
     if (this.isEdit) {
       this.editorMeta.title = 'Edit Pin';
       this.pinModel.form.url.value = this.existedPin.url;
@@ -154,6 +168,25 @@ export default {
     }
   },
   methods: {
+    fetchTagList() {
+      API.Tag.fetchList().then(
+        (resp) => {
+          this.tagOptions = resp.data;
+        },
+      );
+    },
+    getFilteredTags(text) {
+      const filteredTagOptions = [];
+      AutoComplete.getFilteredOptions(
+        this.tagOptions,
+        text,
+      ).forEach(
+        (option) => {
+          filteredTagOptions.push(option.name);
+        },
+      );
+      this.editorMeta.filteredTagOptions = filteredTagOptions;
+    },
     fetchBoardList() {
       API.Board.fetchFullList(this.username).then(
         (resp) => {

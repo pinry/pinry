@@ -38,20 +38,9 @@
 <script>
 import API from '../api';
 import ModelForm from '../utils/ModelForm';
+import AutoComplete from '../utils/AutoComplete';
 
 const fields = ['name'];
-
-function getFilteredOptions(options, filterText) {
-  return options.filter(
-    (option) => {
-      const index = option.name
-        .toString()
-        .toLowerCase()
-        .indexOf(filterText.toLowerCase());
-      return index >= 0;
-    },
-  );
-}
 
 function getBoardFromResp(boardObject) {
   return { name: boardObject.name, value: boardObject.id };
@@ -62,7 +51,7 @@ function getAvailableOptions(vm, filter) {
   if (filter === '' || filter === null) {
     availableOptions = vm.allOptions;
   } else {
-    availableOptions = getFilteredOptions(
+    availableOptions = AutoComplete.getFilteredOptions(
       vm.allOptions, vm.form.name.value,
     );
   }
