@@ -4,6 +4,7 @@ import { VueMasonryPlugin } from 'vue-masonry';
 import App from './App.vue';
 import router from './router';
 import setUpAxiosCsrfConfig from './components/utils/csrf';
+import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 Vue.use(Buefy);
