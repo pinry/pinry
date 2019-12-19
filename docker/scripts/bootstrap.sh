@@ -25,5 +25,6 @@ then
     cp "/pinry/pinry/settings/local_settings.example.py" "${local_settings_file}"
     gen_key
     sed -i "s/secret\_key\_place\_holder/${SECRET_KEY}/" "${local_settings_file}"
-    ln -s "${local_settings_file}" "/pinry/pinry/settings/local_settings.py"
 fi
+
+ln -s "${local_settings_file}" "/pinry/pinry/settings/local_settings.py"
