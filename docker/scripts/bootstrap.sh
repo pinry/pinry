@@ -22,8 +22,8 @@ local_settings_file="/data/local_settings.py"
 # Create local_settings.py
 if [ ! -f "${local_settings_file}" ];
 then
-    cp "/srv/www/pinry/settings/local_settings.example.py" "${local_settings_file}"
+    cp "/pinry/pinry/settings/local_settings.example.py" "${local_settings_file}"
     gen_key
     sed -i "s/secret\_key\_place\_holder/${SECRET_KEY}/" "${local_settings_file}"
-    ln -s "${local_settings_file}" "/srv/www/pinry/settings/local_settings.py"
+    ln -s "${local_settings_file}" "/pinry/pinry/settings/local_settings.py"
 fi
