@@ -10,7 +10,6 @@
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
-
 # Base system is the LTS version of Ubuntu.
 FROM python:3.7-stretch
 
@@ -20,40 +19,32 @@ RUN groupadd -g 2300 tmpgroup \
  && groupadd -g 1000 www-data \
  && usermod -g www-data www-data \
  && usermod -u 1000 www-data \
- && groupdel tmpgroup \
-#
- && mkdir -p /srv/www/pinry/logs \
-#
- && mkdir /data \
- && chown -R www-data:www-data /data \
-#
- && mkdir -p /var/log/gunicorn \
- && apt-get update \
+ && groupdel tmpgroup
+
+RUN mkdir /data
+RUN mkdir -p /data/logs
+RUN chown -R www-data:www-data /data
+
+RUN apt-get update \
     && apt-get -y install nginx nginx-extras pwgen \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get autoclean
 
 RUN pip --no-cache-dir install pipenv gunicorn mysqlclient psycopg2 cx-Oracle
 
-COPY Pipfile* /srv/www/pinry/
+# COPY and start installation
+COPY . /srv/www/pinry/
 
 RUN cd /srv/www/pinry \
  && pipenv install --three --system --clear
 
-COPY . /srv/www/pinry/
-
-# config nodejs and build frontend
+# config nodejs
 RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n || exit
 RUN bash n 10
 RUN npm -g install yarn
 
 # build frontend
 RUN cd /srv/www/pinry/pinry-spa/ && yarn install && yarn build
-
-# Fix permissions
-RUN chown -R www-data:www-data /srv/www \
- && cd /srv/www/pinry \
- && python manage.py collectstatic --noinput --settings=pinry.settings.docker
-
 
 # Load in all of our config files.
 ADD docker/nginx/nginx.conf /etc/nginx/nginx.conf

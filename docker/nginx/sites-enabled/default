@@ -2,14 +2,10 @@ server {
     listen 80 default;
     server_name _;
 
-    access_log /srv/www/pinry/logs/access.log;
-    error_log /srv/www/pinry/logs/error.log;
+    access_log /data/logs/access.log;
+    error_log /data/logs/error.log;
 
-    location /media {
-        alias /data/static/media;
-        expires max;
-        access_log off;
-    }
+    root /srv/www/pinry/pinry-spa/dist/;
 
     location /static {
         alias /data/static;

@@ -9,13 +9,11 @@
 # Updated: Aug 19th, 2014
 # -----------------------------------------------------------------------------
 
+bash /scripts/bootstrap.sh
 
 # If static files don't exist collect them
-if [ ! -d /data/static ]
-then
-    cd /srv/www/pinry
-    python manage.py collectstatic --noinput
-fi
+cd /srv/www/pinry
+python manage.py collectstatic --noinput
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
