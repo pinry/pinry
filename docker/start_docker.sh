@@ -12,5 +12,4 @@ fi
 
 sudo docker run -d=true -p=80:80 \
     -v=${DATA_PATH}:/data \
-    -v=${SETTINGS_PATH}:/srv/www/pinry/pinry/settings/local_settings.py \
-    pinry/pinry /scripts/start.sh
+    pinry/pinry

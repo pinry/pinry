@@ -17,6 +17,7 @@ nav:
   - Screenshots: 'screenshots.md'
   - Extensions: 'extensions.md'
   - Theories: 'theories.md'
+  - InstallWithDocker: 'install-with-docker.md'
   - Development: 'development.md'
   - Docs: 'docs.md'
   - Passwords: 'passwords.md'

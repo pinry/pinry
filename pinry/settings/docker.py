@@ -6,7 +6,8 @@ from .base import *
 # SECURITY WARNING: keep the secret key used in production secret!
 if 'SECRET_KEY' not in os.environ:
     logging.warning(
-        "No SECRET_KEY given in environ, please have a check"
+        "No SECRET_KEY given in environ, please have a check."
+        "If you have a local_settings file, please ignore this warning."
     )
 SECRET_KEY = os.environ.get('SECRET_KEY', "PLEASE_REPLACE_ME")
 
@@ -35,7 +36,5 @@ REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
     'rest_framework.renderers.JSONRenderer',
 ]
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# should not ignore import error in production, local_settings is required
+from .local_settings import *

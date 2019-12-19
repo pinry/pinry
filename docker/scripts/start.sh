@@ -8,19 +8,18 @@
 # Authors: Isaac Bythewood
 # Updated: Aug 19th, 2014
 # -----------------------------------------------------------------------------
+PROJECT_ROOT="/pinry"
 
+bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 
 # If static files don't exist collect them
-if [ ! -d /data/static ]
-then
-    cd /srv/www/pinry
-    python manage.py collectstatic --noinput
-fi
+cd ${PROJECT_ROOT}
+python manage.py collectstatic --noinput --settings=pinry.settings.docker
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
-    cd /srv/www/pinry
+    cd ${PROJECT_ROOT}
     python manage.py migrate --noinput --settings=pinry.settings.docker
 fi
 
@@ -30,5 +29,5 @@ chown -R www-data:www-data /data
 # start all process
 /usr/sbin/nginx
 
-cd /srv/www/pinry/
-/scripts/_start_gunicorn.sh
+cd ${PROJECT_ROOT}
+./docker/scripts/_start_gunicorn.sh
