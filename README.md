@@ -16,6 +16,8 @@ For more information visit [getpinry.com](https://getpinry.com).
 - Both public and private boards
 - Works well with docker
 
+## Install with Docker
+See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker//)
 
 ## Requirements
 
