@@ -14,6 +14,7 @@ For more information visit [getpinry.com](https://getpinry.com).
 - Browser Extensions
 - Multi-user support
 - Both public and private boards
+- Works well with docker
 
 
 ## Requirements
