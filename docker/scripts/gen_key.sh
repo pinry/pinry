@@ -13,3 +13,4 @@ gen_key() {
 
   echo ${PRODUCTION_SECRET_KEY}
 }
+gen_key
