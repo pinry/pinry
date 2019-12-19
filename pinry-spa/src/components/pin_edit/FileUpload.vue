@@ -8,6 +8,7 @@
     <div v-show="previewImage === null">
       <b-field>
         <b-upload v-model="dropFile"
+                  accept="image/*"
                   :loading="loading"
                   drag-drop>
           <section class="section">
