@@ -9,7 +9,7 @@ gen_key() {
   echo "If no previous pinry/local_settings.py generated, you can have a look and edit it."
   echo "If you want to use docker-compose, just edit docker-compose.yml and use 'docker-compose up'"
 
-  SECRET_KEY=$(bash /scripts/gen_key.sh)
+  SECRET_KEY=$(bash /pinry/docker/scripts/gen_key.sh)
 
   echo ""
   echo "Your secret-key is(also saved/overwritten your docker's /data/production_secret_key.txt):"
