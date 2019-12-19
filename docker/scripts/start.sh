@@ -10,7 +10,7 @@
 # -----------------------------------------------------------------------------
 PROJECT_ROOT="/pinry"
 
-bash /scripts/bootstrap.sh
+bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 
 # If static files don't exist collect them
 cd ${PROJECT_ROOT}
