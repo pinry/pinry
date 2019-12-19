@@ -36,7 +36,5 @@ REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
     'rest_framework.renderers.JSONRenderer',
 ]
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# should not ignore import error in production, local_settings is required
+from .local_settings import *
