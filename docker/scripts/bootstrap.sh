@@ -27,4 +27,4 @@ then
     sed -i "s/secret\_key\_place\_holder/${SECRET_KEY}/" "${local_settings_file}"
 fi
 
-ln -s "${local_settings_file}" "/pinry/pinry/settings/local_settings.py"
+cp "${local_settings_file}" "/pinry/pinry/settings/local_settings.py"
