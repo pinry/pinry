@@ -205,7 +205,7 @@ export default {
         return;
       }
       this.status.loading = true;
-      const promise = API.fetchBoardForUser(this.boardUsername);
+      const promise = API.fetchBoardForUser(this.boardUsername, this.status.offset);
       promise.then(
         (resp) => {
           const { results, next } = resp.data;

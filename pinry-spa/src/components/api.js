@@ -154,8 +154,9 @@ function fetchPinsForBoard(boardId) {
   );
 }
 
-function fetchBoardForUser(username) {
-  const url = `${API_PREFIX}boards/?submitter__username=${username}`;
+function fetchBoardForUser(username, offset = 0, limit = 50) {
+  const prefix = `${API_PREFIX}boards/?submitter__username=${username}`;
+  const url = `${prefix}&offset=${offset}&limit=${limit}`;
   return axios.get(url);
 }
 
