@@ -13,6 +13,7 @@ services:
       - "127.0.0.1:2048:8000"
     environment:
       - SECRET_KEY=CHANGE-ME
+      - DJANGO_SETTINGS_MODULE=pinry.settings.development
     user: ${CURRENT_UID}
     volumes:
       - .:/app
