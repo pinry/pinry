@@ -4,9 +4,9 @@ import storage from './utils/storage';
 const API_PREFIX = '/api/v2/';
 
 const Board = {
-  create(name) {
+  create(name, private_ = false) {
     const url = `${API_PREFIX}boards/`;
-    const data = { name };
+    const data = { name, private: private_ };
     return new Promise(
       (resolve, reject) => {
         axios.post(url, data).then(

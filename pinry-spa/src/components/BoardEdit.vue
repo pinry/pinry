@@ -17,6 +17,13 @@
                   maxlength="128"
                   >
                 </b-input>
+            </b-field>
+            <b-field label="Privacy Option"
+                       :type="createModel.form.private.type"
+                       :message="createModel.form.private.error">
+                <b-checkbox v-model="createModel.form.private.value">
+                    {{ pinModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                </b-checkbox>
               </b-field>
           </div>
           <div v-if="isEdit">
@@ -30,6 +37,13 @@
                   maxlength="128"
                   >
                 </b-input>
+            </b-field>
+            <b-field label="Privacy Option"
+                       :type="editModel.form.private.type"
+                       :message="editModel.form.private.error">
+                <b-checkbox v-model="editModel.form.private.value">
+                    {{ editModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                </b-checkbox>
               </b-field>
           </div>
         </section>
@@ -56,7 +70,7 @@ import API from './api';
 import ModelForm from './utils/ModelForm';
 import bus from './utils/bus';
 
-const fields = ['name'];
+const fields = ['name', 'private'];
 
 export default {
   name: 'BoardEditModal',
@@ -108,7 +122,10 @@ export default {
     },
     createBoard() {
       const self = this;
-      const promise = API.Board.create(this.createModel.form.name.value);
+      const promise = API.Board.create(
+        this.createModel.form.name.value,
+        this.createModel.form.private.value,
+      );
       promise.then(
         (resp) => {
           bus.bus.$emit(bus.events.refreshBoards);

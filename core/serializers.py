@@ -221,10 +221,11 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
     def update(self, instance: Board, validated_data):
         pins_to_add = validated_data.pop("pins_to_add", [])
         pins_to_remove = validated_data.pop("pins_to_remove", [])
-        if Board.objects.filter(
+        board = Board.objects.filter(
             submitter=instance.submitter,
             name=validated_data.get('name', None)
-        ).exists():
+        ).first()
+        if board.id != instance.id:
             raise ValidationError(
                 detail={'name': "Board with this name already exists"}
             )
