@@ -81,6 +81,7 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         model = Pin
         fields = (
             settings.DRF_URL_FIELD_NAME,
+            "private",
             "id",
             "submitter",
             "url",
