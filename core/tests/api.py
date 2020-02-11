@@ -35,10 +35,55 @@ class ImageTests(APITestCase):
         self.assertEqual(response.status_code, 403, response.data)
 
 
-class PrivacyTests(APITestCase):
+class BoardPrivacyTests(APITestCase):
 
     def setUp(self):
-        super(PrivacyTests, self).setUp()
+        super(BoardPrivacyTests, self).setUp()
+        self.owner = create_user("default")
+        self.non_owner = create_user("non_owner")
+
+        self.private_board = Board.objects.create(
+            name="test_board",
+            submitter=self.owner,
+            private=True,
+        )
+        self.board_url = reverse("board-detail", kwargs={"pk": self.private_board.pk})
+        self.boards_url = reverse("board-list")
+
+    def tearDown(self):
+        _teardown_models()
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_board(self):
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+    def test_should_owner_has_permission_to_list_private_board(self):
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_view_private_board(self):
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 404)
+
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 404)
+
+    def test_should_owner_has_permission_to_view_private_board(self):
+        self.client.login(username=self.owner.username, password='password')
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+
+
+class PinPrivacyTests(APITestCase):
+
+    def setUp(self):
+        super(PinPrivacyTests, self).setUp()
         self.owner = create_user("default")
         self.non_owner = create_user("non_owner")
 

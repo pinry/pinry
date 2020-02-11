@@ -56,6 +56,7 @@ class BoardAutoCompleteViewSet(
     ordering_fields = ('-id', )
     ordering = ('-id', )
     pagination_class = None
+    permission_classes = [OwnerOnlyIfPrivate("submitter"), ]
 
     def get_queryset(self):
         return filter_private_board(self.request, Board.objects.all())
