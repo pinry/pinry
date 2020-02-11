@@ -10,7 +10,8 @@
                    :type="form.username.type"
                    :message="form.username.error">
             <b-input
-              type="string"
+              name="username"
+              type="text"
               v-model="form.username.value"
               placeholder="Your Username"
               maxlength="30"
