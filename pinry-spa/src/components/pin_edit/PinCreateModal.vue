@@ -27,6 +27,13 @@
                 >
                 </b-input>
               </b-field>
+              <b-field label="Privacy Option"
+                       :type="pinModel.form.private.type"
+                       :message="pinModel.form.private.error">
+                <b-checkbox v-model="pinModel.form.private.value">
+                    {{ pinModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                </b-checkbox>
+              </b-field>
               <b-field label="Image Referer"
                        :type="pinModel.form.referer.type"
                        :message="pinModel.form.referer.error">
@@ -107,7 +114,7 @@ function isURLBlank(url) {
   return url !== null && url === '';
 }
 
-const fields = ['url', 'referer', 'description', 'tags'];
+const fields = ['url', 'referer', 'description', 'tags', 'private'];
 
 export default {
   name: 'PinCreateModal',
@@ -160,11 +167,13 @@ export default {
       this.pinModel.form.referer.value = this.existedPin.referer;
       this.pinModel.form.description.value = this.existedPin.description;
       this.pinModel.form.tags.value = this.existedPin.tags;
+      this.pinModel.form.private.value = this.existedPin.private;
     }
     if (this.fromUrl) {
       this.pinModel.form.url.value = this.fromUrl.url;
       this.pinModel.form.referer.value = this.fromUrl.referer;
       this.pinModel.form.description.value = this.fromUrl.description;
+      this.pinModel.form.private.value = false;
     }
   },
   methods: {
@@ -216,7 +225,7 @@ export default {
     savePin() {
       const self = this;
       const data = this.pinModel.asDataByFields(
-        ['referer', 'description', 'tags'],
+        ['referer', 'description', 'tags', 'private'],
       );
       const promise = API.Pin.updateById(this.existedPin.id, data);
       promise.then(
@@ -239,7 +248,7 @@ export default {
         promise = API.Pin.createFromURL(data);
       } else {
         const data = this.pinModel.asDataByFields(
-          ['referer', 'description', 'tags'],
+          ['referer', 'description', 'tags', 'private'],
         );
         data.image_by_id = this.formUpload.imageId;
         promise = API.Pin.createFromUploaded(data);
