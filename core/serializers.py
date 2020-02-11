@@ -217,7 +217,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('pins_to_remove', None)
-        validated_data.pop('pins_to_remove', None)
+        validated_data.pop('pins_to_add', None)
         user = self.context['request'].user
         if Board.objects.filter(name=validated_data['name'], submitter=user).exists():
             raise ValidationError(
