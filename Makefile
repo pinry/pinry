@@ -1,3 +1,7 @@
+dev-docker-serve:
+	docker-compose up web
+dev-docker-build-frontend:
+	docker-compose up build_frontend
 backup-images:
 	pipenv run python manage.py dumpdata django_images > db-backup.django_images.json
 backup-all:
