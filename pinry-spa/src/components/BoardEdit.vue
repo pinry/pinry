@@ -22,7 +22,7 @@
                        :type="createModel.form.private.type"
                        :message="createModel.form.private.error">
                 <b-checkbox v-model="createModel.form.private.value">
-                    {{ pinModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                    {{ createModel.form.private.value?"only visible to yourself":"visible to everyone" }}
                 </b-checkbox>
               </b-field>
           </div>
