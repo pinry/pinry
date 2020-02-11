@@ -225,7 +225,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             submitter=instance.submitter,
             name=validated_data.get('name', None)
         ).first()
-        if board.id != instance.id:
+        if board and board.id != instance.id:
             raise ValidationError(
                 detail={'name': "Board with this name already exists"}
             )
