@@ -36,7 +36,6 @@ class ImageTests(APITestCase):
 
 
 class PrivacyTests(APITestCase):
-    _JSON_TYPE = "application/json"
 
     def setUp(self):
         super(PrivacyTests, self).setUp()

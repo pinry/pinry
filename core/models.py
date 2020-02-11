@@ -76,6 +76,7 @@ class Board(models.Model):
 
     submitter = models.ForeignKey(User)
     name = models.CharField(max_length=128, blank=False, null=False)
+    private = models.BooleanField(default=False, blank=False)
     pins = models.ManyToManyField("Pin", related_name="pins", blank=True)
 
     published = models.DateTimeField(auto_now_add=True)

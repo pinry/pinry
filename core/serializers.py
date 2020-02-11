@@ -18,6 +18,14 @@ def filter_private_pin(request, query):
     return query.select_related('image', 'submitter')
 
 
+def filter_private_board(request, query):
+    if request.user.is_authenticated:
+        query = query.exclude(~Q(submitter=request.user), private=True)
+    else:
+        query = query.exclude(private=True)
+    return query
+
+
 class ThumbnailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Thumbnail
