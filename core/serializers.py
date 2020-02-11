@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
@@ -7,6 +8,14 @@ from core.models import Image, Board
 from core.models import Pin
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
+
+
+def filter_private_pin(request, query):
+    if request.user.is_authenticated:
+        query = query.exclude(~Q(submitter=request.user), private=True)
+    else:
+        query = query.exclude(private=True)
+    return query.select_related('image', 'submitter')
 
 
 class ThumbnailSerializer(serializers.HyperlinkedModelSerializer):
@@ -164,7 +173,9 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         }
 
     submitter = UserSerializer(read_only=True)
-    pins_detail = PinSerializer(source="pins", many=True, read_only=True)
+    pins_detail = serializers.SerializerMethodField(
+        read_only=True,
+    )
     pins = serializers.HyperlinkedRelatedField(
         write_only=True,
         queryset=Pin.objects.all(),
@@ -186,6 +197,12 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         allow_empty=False,
         help_text="only patch method works for this field"
     )
+
+    def get_pins_detail(self, instance):
+        query = instance.pins.all()
+        request = self.context['request']
+        query = filter_private_pin(request, query)
+        return [PinSerializer(pin, context=self.context).data for pin in query]
 
     @staticmethod
     def _get_list(pins_id):

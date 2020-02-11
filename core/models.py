@@ -83,6 +83,7 @@ class Board(models.Model):
 
 class Pin(models.Model):
     submitter = models.ForeignKey(User)
+    private = models.BooleanField(default=False, blank=False)
     url = models.CharField(null=True, blank=True, max_length=256)
     referer = models.CharField(null=True, blank=True, max_length=256)
     description = models.TextField(blank=True, null=True)

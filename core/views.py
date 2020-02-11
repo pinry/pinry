@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
@@ -8,7 +9,8 @@ from taggit.models import Tag
 
 from core import serializers as api
 from core.models import Image, Pin, Board
-from core.permissions import IsOwnerOrReadOnly
+from core.permissions import IsOwnerOrReadOnly, OwnerOnlyIfPrivate
+from core.serializers import filter_private_pin
 
 
 class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
@@ -20,13 +22,17 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    queryset = Pin.objects.all().select_related('image', 'submitter')
     serializer_class = api.PinSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ("submitter__username", 'tags__name', )
     ordering_fields = ('-id', )
     ordering = ('-id', )
-    permission_classes = [IsOwnerOrReadOnly("submitter"), ]
+    permission_classes = [IsOwnerOrReadOnly("submitter"), OwnerOnlyIfPrivate("submitter")]
+
+    def get_queryset(self):
+        query = Pin.objects.all()
+        request = self.request
+        return filter_private_pin(request, query)
 
 
 class BoardViewSet(viewsets.ModelViewSet):
@@ -67,7 +73,7 @@ class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 drf_router = routers.DefaultRouter()
-drf_router.register(r'pins', PinViewSet)
+drf_router.register(r'pins', PinViewSet, basename="pin")
 drf_router.register(r'images', ImageViewSet)
 drf_router.register(r'boards', BoardViewSet)
 drf_router.register(r'tags-auto-complete', TagAutoCompleteViewSet)
