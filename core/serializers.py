@@ -169,6 +169,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             settings.DRF_URL_FIELD_NAME,
             "id",
             "name",
+            "private",
             "pins",
             "pins_detail",
             "published",
