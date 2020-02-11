@@ -75,7 +75,6 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             "id",
             "submitter",
             "url",
-            "origin",
             "description",
             "referer",
             "image",

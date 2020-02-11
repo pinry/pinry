@@ -84,9 +84,6 @@ class Board(models.Model):
 class Pin(models.Model):
     submitter = models.ForeignKey(User)
     url = models.CharField(null=True, blank=True, max_length=256)
-    # origin is tha same as referer but not work,
-    # should be removed some day
-    origin = models.CharField(null=True, blank=True, max_length=256)
     referer = models.CharField(null=True, blank=True, max_length=256)
     description = models.TextField(blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin')
