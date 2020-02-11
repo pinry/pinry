@@ -90,6 +90,7 @@ function createImageItem(pin) {
   image.url = pinHandler.escapeUrl(pin.image.thumbnail.image);
   image.id = pin.id;
   image.owner_id = pin.submitter.id;
+  image.private = pin.private;
   image.description = pin.description;
   image.tags = pin.tags;
   image.author = pin.submitter.username;

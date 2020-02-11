@@ -5,11 +5,17 @@ import mock
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from django_images.models import Thumbnail
 from taggit.models import Tag
 
 from .helpers import create_image, create_user, create_pin
-from core.models import Pin, Image
+from core.models import Pin, Image, Board
+
+
+def _teardown_models():
+    Pin.objects.all().delete()
+    Image.objects.all().delete()
+    Tag.objects.all().delete()
+    Board.objects.all().delete()
 
 
 def mock_requests_get(url, **kwargs):
@@ -29,6 +35,117 @@ class ImageTests(APITestCase):
         self.assertEqual(response.status_code, 403, response.data)
 
 
+class BoardPrivacyTests(APITestCase):
+
+    def setUp(self):
+        super(BoardPrivacyTests, self).setUp()
+        self.owner = create_user("default")
+        self.non_owner = create_user("non_owner")
+
+        self.private_board = Board.objects.create(
+            name="test_board",
+            submitter=self.owner,
+            private=True,
+        )
+        self.board_url = reverse("board-detail", kwargs={"pk": self.private_board.pk})
+        self.boards_url = reverse("board-list")
+
+    def tearDown(self):
+        _teardown_models()
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_board(self):
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+    def test_should_owner_has_permission_to_list_private_board(self):
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.boards_url)
+        self.assertEqual(len(resp.data), 0, resp.data)
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_view_private_board(self):
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 404)
+
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 404)
+
+    def test_should_owner_has_permission_to_view_private_board(self):
+        self.client.login(username=self.owner.username, password='password')
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+
+
+class PinPrivacyTests(APITestCase):
+
+    def setUp(self):
+        super(PinPrivacyTests, self).setUp()
+        self.owner = create_user("default")
+        self.non_owner = create_user("non_owner")
+
+        with mock.patch('requests.get', mock_requests_get):
+            image = Image.objects.create_for_url('http://a.com/b.png')
+        self.private_pin = Pin.objects.create(
+            submitter=self.owner,
+            image=image,
+            private=True,
+        )
+        self.private_pin_url = reverse("pin-detail", kwargs={"pk": self.private_pin.pk})
+
+        self.board = Board.objects.create(name="test_board", submitter=self.owner)
+        self.board.pins.add(self.private_pin)
+        self.board.save()
+        self.board_url = reverse("board-detail", kwargs={"pk": self.board.pk})
+
+    def tearDown(self):
+        _teardown_models()
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_pin(self):
+        resp = self.client.get(reverse("pin-list"))
+        self.assertEqual(len(resp.data['results']), 0, resp.data)
+
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(reverse("pin-list"))
+        self.assertEqual(len(resp.data['results']), 0, resp.data)
+
+    def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_pin_in_board(self):
+        resp = self.client.get(self.board_url)
+        self.assertEqual(len(resp.data['pins_detail']), 0, resp.data)
+        self.client.login(username=self.non_owner.username, password='password')
+
+        resp = self.client.get(self.board_url)
+        self.assertEqual(len(resp.data['pins_detail']), 0, resp.data)
+
+    def test_should_owner_user_has_permission_to_list_private_pin_in_board(self):
+        self.client.login(username=self.owner.username, password='password')
+        resp = self.client.get(self.board_url)
+        self.assertEqual(len(resp.data['pins_detail']), 1, resp.data)
+
+    def test_should_owner_user_has_permission_to_list_private_pin(self):
+        self.client.login(username=self.owner.username, password='password')
+        resp = self.client.get(reverse("pin-list"))
+        self.assertEqual(len(resp.data['results']), 1, resp.data)
+
+    def test_should_owner_has_permission_to_view_private_pin(self):
+        self.client.login(username=self.owner.username, password='password')
+        resp = self.client.get(self.private_pin_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.data['id'], self.private_pin.id)
+
+    def test_should_anonymous_user_has_no_permission_to_view_private_pin(self):
+        resp = self.client.get(self.private_pin_url)
+        self.assertEqual(resp.status_code, 404)
+
+    def test_should_non_owner_has_no_permission_to_view_private_pin(self):
+        self.client.login(username=self.non_owner.username, password='password')
+        resp = self.client.get(self.private_pin_url)
+        self.assertEqual(resp.status_code, 404)
+
+
 class PinTests(APITestCase):
     _JSON_TYPE = "application/json"
 
@@ -38,9 +155,7 @@ class PinTests(APITestCase):
         self.client.login(username=self.user.username, password='password')
 
     def tearDown(self):
-        Pin.objects.all().delete()
-        Image.objects.all().delete()
-        Tag.objects.all().delete()
+        _teardown_models()
 
     @mock.patch('requests.get', mock_requests_get)
     def test_should_create_pin(self):
@@ -49,6 +164,7 @@ class PinTests(APITestCase):
         referer = 'http://testserver.com/'
         post_data = {
             'url': url,
+            'private': False,
             'referer': referer,
             'description': 'That\'s an Apple!'
         }

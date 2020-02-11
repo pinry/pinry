@@ -8,7 +8,8 @@ from taggit.models import Tag
 
 from core import serializers as api
 from core.models import Image, Pin, Board
-from core.permissions import IsOwnerOrReadOnly
+from core.permissions import IsOwnerOrReadOnly, OwnerOnlyIfPrivate
+from core.serializers import filter_private_pin, filter_private_board
 
 
 class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
@@ -20,36 +21,45 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    queryset = Pin.objects.all().select_related('image', 'submitter')
     serializer_class = api.PinSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ("submitter__username", 'tags__name', )
     ordering_fields = ('-id', )
     ordering = ('-id', )
-    permission_classes = [IsOwnerOrReadOnly("submitter"), ]
+    permission_classes = [IsOwnerOrReadOnly("submitter"), OwnerOnlyIfPrivate("submitter")]
+
+    def get_queryset(self):
+        query = Pin.objects.all()
+        request = self.request
+        return filter_private_pin(request, query)
 
 
 class BoardViewSet(viewsets.ModelViewSet):
-    queryset = Board.objects.all()
     serializer_class = api.BoardSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filter_fields = ("submitter__username", )
     ordering_fields = ('-id', )
     ordering = ('-id', )
-    permission_classes = [IsOwnerOrReadOnly("submitter"), ]
+    permission_classes = [IsOwnerOrReadOnly("submitter"), OwnerOnlyIfPrivate("submitter")]
+
+    def get_queryset(self):
+        return filter_private_board(self.request, Board.objects.all())
 
 
 class BoardAutoCompleteViewSet(
     mixins.ListModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Board.objects.all()
     serializer_class = api.BoardAutoCompleteSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filter_fields = ("submitter__username", )
     ordering_fields = ('-id', )
     ordering = ('-id', )
     pagination_class = None
+    permission_classes = [OwnerOnlyIfPrivate("submitter"), ]
+
+    def get_queryset(self):
+        return filter_private_board(self.request, Board.objects.all())
 
 
 class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -67,8 +77,8 @@ class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 drf_router = routers.DefaultRouter()
-drf_router.register(r'pins', PinViewSet)
+drf_router.register(r'pins', PinViewSet, basename="pin")
 drf_router.register(r'images', ImageViewSet)
-drf_router.register(r'boards', BoardViewSet)
+drf_router.register(r'boards', BoardViewSet, basename="board")
 drf_router.register(r'tags-auto-complete', TagAutoCompleteViewSet)
-drf_router.register(r'boards-auto-complete', BoardAutoCompleteViewSet)
+drf_router.register(r'boards-auto-complete', BoardAutoCompleteViewSet, base_name="board")

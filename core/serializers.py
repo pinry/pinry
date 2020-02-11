@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
@@ -7,6 +8,22 @@ from core.models import Image, Board
 from core.models import Pin
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
+
+
+def filter_private_pin(request, query):
+    if request.user.is_authenticated:
+        query = query.exclude(~Q(submitter=request.user), private=True)
+    else:
+        query = query.exclude(private=True)
+    return query.select_related('image', 'submitter')
+
+
+def filter_private_board(request, query):
+    if request.user.is_authenticated:
+        query = query.exclude(~Q(submitter=request.user), private=True)
+    else:
+        query = query.exclude(private=True)
+    return query
 
 
 class ThumbnailSerializer(serializers.HyperlinkedModelSerializer):
@@ -72,6 +89,7 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         model = Pin
         fields = (
             settings.DRF_URL_FIELD_NAME,
+            "private",
             "id",
             "submitter",
             "url",
@@ -151,6 +169,7 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             settings.DRF_URL_FIELD_NAME,
             "id",
             "name",
+            "private",
             "pins",
             "pins_detail",
             "published",
@@ -164,7 +183,9 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         }
 
     submitter = UserSerializer(read_only=True)
-    pins_detail = PinSerializer(source="pins", many=True, read_only=True)
+    pins_detail = serializers.SerializerMethodField(
+        read_only=True,
+    )
     pins = serializers.HyperlinkedRelatedField(
         write_only=True,
         queryset=Pin.objects.all(),
@@ -187,6 +208,12 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         help_text="only patch method works for this field"
     )
 
+    def get_pins_detail(self, instance):
+        query = instance.pins.all()
+        request = self.context['request']
+        query = filter_private_pin(request, query)
+        return [PinSerializer(pin, context=self.context).data for pin in query]
+
     @staticmethod
     def _get_list(pins_id):
         return tuple(Pin.objects.filter(id__in=pins_id))
@@ -194,10 +221,11 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
     def update(self, instance: Board, validated_data):
         pins_to_add = validated_data.pop("pins_to_add", [])
         pins_to_remove = validated_data.pop("pins_to_remove", [])
-        if Board.objects.filter(
+        board = Board.objects.filter(
             submitter=instance.submitter,
             name=validated_data.get('name', None)
-        ).exists():
+        ).first()
+        if board.id != instance.id:
             raise ValidationError(
                 detail={'name': "Board with this name already exists"}
             )

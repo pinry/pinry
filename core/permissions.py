@@ -21,6 +21,19 @@ class IsOwnerOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
         return getattr(obj, self.__owner_field_name) == request.user
 
 
+class OwnerOnlyIfPrivate(permissions.BasePermission):
+    def __init__(self, owner_field_name="owner"):
+        self.__owner_field_name = owner_field_name
+
+    def __call__(self):
+        return self
+
+    def has_object_permission(self, request, view, obj):
+        if getattr(obj, "private"):
+            return request.user == getattr(obj, self.__owner_field_name)
+        return True
+
+
 class OwnerOnly(permissions.IsAuthenticatedOrReadOnly):
 
     def has_permission(self, request, view):
