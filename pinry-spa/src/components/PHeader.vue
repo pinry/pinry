@@ -43,7 +43,7 @@
               v-if="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
-                My Collections
+                My
               </a>
               <div class="navbar-dropdown">
                 <router-link
