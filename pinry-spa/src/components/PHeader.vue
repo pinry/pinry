@@ -73,6 +73,15 @@
             </div>
           </div>
           <div class="navbar-end">
+            <router-link
+              :to="{ name: 'search' }"
+              class="navbar-item">
+              <b-icon
+                type="is-dark"
+                icon="magnify"
+                custom-size="mdi-24px">
+              </b-icon>
+            </router-link>
             <div class="navbar-item">
               <div class="buttons">
                 <a
