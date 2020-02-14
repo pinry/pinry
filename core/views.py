@@ -36,7 +36,8 @@ class PinViewSet(viewsets.ModelViewSet):
 
 class BoardViewSet(viewsets.ModelViewSet):
     serializer_class = api.BoardSerializer
-    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+    search_fields = ("name", )
     filter_fields = ("submitter__username", )
     ordering_fields = ('-id', )
     ordering = ('-id', )

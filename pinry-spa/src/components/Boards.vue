@@ -118,14 +118,15 @@ export default {
     BoardEditorUI,
   },
   data: initialData,
-  props: ['boardUsername'],
+  props: ['filters'],
   watch: {
-    boardUsername() {
+    filters() {
       this.reset();
     },
   },
   methods: {
     initialize() {
+      this.initializeMeta();
       this.fetchMore(true);
     },
     initializeMeta() {
@@ -205,8 +206,21 @@ export default {
       if (!this.shouldFetchMore(created)) {
         return;
       }
+      let promise;
+      if (this.filters.boardUsername) {
+        promise = API.fetchBoardForUser(
+          this.filters.boardUsername,
+          this.status.offset,
+        );
+      } else if (this.filters.boardNameContains) {
+        promise = API.Board.fetchListWhichContains(
+          this.filters.boardNameContains,
+          this.status.offset,
+        );
+      } else {
+        return;
+      }
       this.status.loading = true;
-      const promise = API.fetchBoardForUser(this.boardUsername, this.status.offset);
       promise.then(
         (resp) => {
           const { results, next } = resp.data;
@@ -227,7 +241,6 @@ export default {
   created() {
     bus.bus.$on(bus.events.refreshBoards, this.reset);
     this.registerScrollEvent();
-    this.initializeMeta();
     this.initialize();
   },
 };
