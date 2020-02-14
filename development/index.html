@@ -278,8 +278,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../install-with-docker/" title="InstallWithDocker" class="md-nav__link">
-      InstallWithDocker
+    <a href="../install-with-docker/" title="Install with Docker" class="md-nav__link">
+      Install with Docker
     </a>
   </li>
 
@@ -298,9 +298,38 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Development
+      </label>
+    
     <a href="./" title="Development" class="md-nav__link md-nav__link--active">
       Development
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -382,6 +411,22 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -430,6 +475,57 @@ backend:</p>
 <p>And from another terminal:</p>
 <div class="codehilite"><pre><span></span><span class="err">cd pinry-spa; yarn serve</span>
 </pre></div>
+
+
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
+<p>We have many tests built into Pinry to ensure that changes don't break
+anything. If you are live dangerously and have cutting edge new Pinry
+features first you can use our master branch for your own instance. We
+recommend using our tags/versions though.</p>
+<p>To run Pinry's tests inside the Pinry repo run:</p>
+<div class="codehilite"><pre><span></span><span class="err">pipenv run python manage.py test</span>
+</pre></div>
+
+
+<h1 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h1>
+<p>Follow the steps below to install Pinry locally or on any server. This
+process installs the minimal requirements to run Pinry. For development
+requirements and procedures, see testing above.</p>
+<p>Current docker configuration will just mount source code directory to
+docker app directory and run any codes existed in current git branch,
+you may also add "local_settings.py" to customize settings without
+changing settings file in <code>pinry/settings</code>.</p>
+<ul>
+<li>
+<p>Install the requirements:</p>
+<ul>
+<li>Docker</li>
+<li>Docker Compose</li>
+</ul>
+</li>
+<li>
+<p>Set any custom configuration options you need and run::</p>
+</li>
+</ul>
+<p>cp docker-compose.example.yml docker-compose.yml<br />
+  # edit docker-compose.yml and change the secret-key,<br />
+  # don't forget to backup this config file.<br />
+  # You should build frontend first<br />
+  docker-compose up build_frontend<br />
+  # then start the backend server<br />
+  docker-compose up -d web</p>
+<ul>
+<li>
+<p>If you want to run Pinry with current user in docker::</p>
+<p>./start_docker_with_current_user.sh [-d]</p>
+</li>
+<li>
+<p>Bootstrap the database(optional)::</p>
+<p>docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker</p>
+</li>
+</ul>
+<p><strong>Note</strong> : No static file server configured, your should configure nginx or other server to serve
+static files from <code>./static</code>(as path <code>/static</code>) and <code>./pinry-spa/dist</code> (as html root <code>/</code>)</p>
                 
                   
                 
@@ -450,7 +546,7 @@ backend:</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../install-with-docker/" title="InstallWithDocker" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../install-with-docker/" title="Install with Docker" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -459,7 +555,7 @@ backend:</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                InstallWithDocker
+                Install with Docker
               </span>
             </div>
           </a>
