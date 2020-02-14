@@ -126,6 +126,7 @@ export default {
   },
   methods: {
     initialize() {
+      this.initializeMeta();
       this.fetchMore(true);
     },
     initializeMeta() {
@@ -240,7 +241,6 @@ export default {
   created() {
     bus.bus.$on(bus.events.refreshBoards, this.reset);
     this.registerScrollEvent();
-    this.initializeMeta();
     this.initialize();
   },
 };
