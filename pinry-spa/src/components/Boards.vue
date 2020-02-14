@@ -205,7 +205,6 @@ export default {
       if (!this.shouldFetchMore(created)) {
         return;
       }
-      this.status.loading = true;
       let promise;
       if (this.filters.boardUsername) {
         promise = API.fetchBoardForUser(
@@ -217,7 +216,10 @@ export default {
           this.filters.boardNameContains,
           this.status.offset,
         );
+      } else {
+        return;
       }
+      this.status.loading = true;
       promise.then(
         (resp) => {
           const { results, next } = resp.data;

@@ -12,21 +12,26 @@
             class="search-input"
             v-model="name"
             :data="filteredDataArray"
-            :keep-first="false"
+            :keep-first="true"
             :open-on-focus="true"
             placeholder="select a filter then type to filter"
             icon="magnify"
             @select="option => selected = option">
             <template slot="empty">No results found</template>
           </b-autocomplete>
-          <b-input
-            v-show="filterType === 'Board'"
-            class="search-input"
-            v-model="boardText"
-            placeholder="type to search board"
-            icon="magnify"
-          >
-          </b-input>
+          <template v-if="filterType === 'Board'">
+            <b-input
+              class="search-input"
+              type="search"
+              v-model="boardText"
+              placeholder="type to search board"
+              icon="magnify"
+            >
+            </b-input>
+            <p class="control">
+              <b-button @click="searchBoard" class="button is-primary">Search</b-button>
+            </p>
+          </template>
         </b-field>
       </div>
     </div>
@@ -52,21 +57,23 @@ export default {
   },
   methods: {
     selectOption(filterName) {
+      this.name = '';
+      this.boardText = '';
       if (filterName === 'Tag') {
         this.selectedOption = this.options.Tag;
       }
     },
-  },
-  watch: {
-    boardText(newVal) {
-      if (newVal === '') {
+    searchBoard() {
+      if (this.boardText === '') {
         return;
       }
       this.$emit(
         'selected',
-        { filterType: this.filterType, selected: newVal },
+        { filterType: this.filterType, selected: this.boardText },
       );
     },
+  },
+  watch: {
     filterType(newVal) {
       this.selectOption(newVal);
     },
