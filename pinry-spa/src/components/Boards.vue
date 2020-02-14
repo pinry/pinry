@@ -118,9 +118,9 @@ export default {
     BoardEditorUI,
   },
   data: initialData,
-  props: ['boardUsername'],
+  props: ['filters'],
   watch: {
-    boardUsername() {
+    filters() {
       this.reset();
     },
   },
@@ -206,7 +206,18 @@ export default {
         return;
       }
       this.status.loading = true;
-      const promise = API.fetchBoardForUser(this.boardUsername, this.status.offset);
+      let promise;
+      if (this.filters.boardUsername) {
+        promise = API.fetchBoardForUser(
+          this.filters.boardUsername,
+          this.status.offset,
+        );
+      } else if (this.filters.boardNameContains) {
+        promise = API.Board.fetchListWhichContains(
+          this.filters.boardNameContains,
+          this.status.offset,
+        );
+      }
       promise.then(
         (resp) => {
           const { results, next } = resp.data;

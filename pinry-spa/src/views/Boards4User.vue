@@ -1,7 +1,7 @@
 <template>
   <div class="boards-for-user">
     <PHeader></PHeader>
-    <Boards :boardUsername="username"></Boards>
+    <Boards :filters="filters"></Boards>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'Boards4User',
   data() {
     return {
-      username: '',
+      filters: { boardUsername: null },
     };
   },
   components: {
@@ -24,12 +24,12 @@ export default {
     this.initialize();
   },
   beforeRouteUpdate(to, from, next) {
-    this.username = to.params.username;
+    this.filters = { boardUsername: to.params.username };
     next();
   },
   methods: {
     initialize() {
-      this.username = this.$route.params.username;
+      this.filters = { boardUsername: this.$route.params.username };
     },
   },
 };

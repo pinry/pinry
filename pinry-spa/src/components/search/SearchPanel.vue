@@ -3,11 +3,12 @@
     <div class="filter-selector">
       <div class="card-content">
         <b-field>
-          <b-select placeholder="Filter Type" v-model="filterType">
+          <b-select placeholder="Choose Filter" v-model="filterType">
             <option>Tag</option>
             <option>Board</option>
           </b-select>
           <b-autocomplete
+            v-show="filterType === 'Tag'"
             class="search-input"
             v-model="name"
             :data="filteredDataArray"
@@ -18,6 +19,14 @@
             @select="option => selected = option">
             <template slot="empty">No results found</template>
           </b-autocomplete>
+          <b-input
+            v-show="filterType === 'Board'"
+            class="search-input"
+            v-model="boardText"
+            placeholder="type to search board"
+            icon="magnify"
+          >
+          </b-input>
         </b-field>
       </div>
     </div>
@@ -35,9 +44,9 @@ export default {
       selectedOption: [],
       options: {
         Tag: [],
-        Board: [],
       },
       name: '',
+      boardText: '',
       selected: null,
     };
   },
@@ -45,12 +54,19 @@ export default {
     selectOption(filterName) {
       if (filterName === 'Tag') {
         this.selectedOption = this.options.Tag;
-      } else {
-        this.selectedOption = this.options.Board;
       }
     },
   },
   watch: {
+    boardText(newVal) {
+      if (newVal === '') {
+        return;
+      }
+      this.$emit(
+        'selected',
+        { filterType: this.filterType, selected: newVal },
+      );
+    },
     filterType(newVal) {
       this.selectOption(newVal);
     },
@@ -75,17 +91,6 @@ export default {
     },
   },
   created() {
-    api.Board.fetchSiteFullList().then(
-      (resp) => {
-        const options = [];
-        resp.data.forEach(
-          (board) => {
-            options.push(board.name);
-          },
-        );
-        this.options.Board = options;
-      },
-    );
     api.Tag.fetchList().then(
       (resp) => {
         const options = [];
