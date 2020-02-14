@@ -31,6 +31,10 @@ const Board = {
     const url = `${API_PREFIX}boards-auto-complete/?submitter__username=${username}`;
     return axios.get(url);
   },
+  fetchSiteFullList() {
+    const url = `${API_PREFIX}boards-auto-complete/`;
+    return axios.get(url);
+  },
   saveChanges(boardId, fieldsForm) {
     const url = `${API_PREFIX}boards/${boardId}/`;
     return axios.patch(
