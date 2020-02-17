@@ -43,7 +43,7 @@
                       <img class="avatar" :src="item.avatar" alt="">
                     </div>
                     <div class="pin-info">
-                      <span class="dim">pined by&nbsp;
+                      <span class="dim">Pinned by&nbsp;
                         <span>
                           <router-link
                             :to="{ name: 'user', params: {user: item.author} }">
