@@ -19,7 +19,7 @@
               </div>
               <div class="media-content">
                 <div class="is-pulled-left">
-                  <p class="title is-4 pin-meta-info"><span class="dim">pined by </span><span class="author">{{ pinItem.author }}</span></p>
+                  <p class="title is-4 pin-meta-info"><span class="dim">Pinned by </span><span class="author">{{ pinItem.author }}</span></p>
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
                     <template v-for="tag in pinItem.tags">
