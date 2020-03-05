@@ -1,6 +1,6 @@
 <template>
   <div class="pin-create-modal">
-    <form action="">
+    <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">{{ editorMeta.title }}</p>
@@ -97,7 +97,7 @@
           </button>
         </footer>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -168,12 +168,13 @@ export default {
       this.pinModel.form.description.value = this.existedPin.description;
       this.pinModel.form.tags.value = this.existedPin.tags;
       this.pinModel.form.private.value = this.existedPin.private;
+    } else {
+      this.pinModel.form.private.value = false;
     }
     if (this.fromUrl) {
       this.pinModel.form.url.value = this.fromUrl.url;
       this.pinModel.form.referer.value = this.fromUrl.referer;
       this.pinModel.form.description.value = this.fromUrl.description;
-      this.pinModel.form.private.value = false;
     }
   },
   methods: {

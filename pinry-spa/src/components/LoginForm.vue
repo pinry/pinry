@@ -1,6 +1,6 @@
 <template>
   <div class="login-modal">
-    <form action="">
+    <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Login</p>
@@ -38,7 +38,7 @@
             class="button is-primary">Login</button>
         </footer>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 

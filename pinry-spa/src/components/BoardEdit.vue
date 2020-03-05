@@ -1,6 +1,6 @@
 <template>
   <div class="board-modal">
-    <form action="">
+    <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">{{ UIMeta.title }}</p>
@@ -61,7 +61,7 @@
           </button>
         </footer>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -101,6 +101,8 @@ export default {
     if (this.isEdit) {
       this.UIMeta.title = 'Board Edit';
       this.editModel.assignToForm(this.board);
+    } else {
+      this.createModel.form.private.value = false;
     }
   },
   methods: {

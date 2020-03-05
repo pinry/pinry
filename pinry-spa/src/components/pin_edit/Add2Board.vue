@@ -1,6 +1,6 @@
 <template>
   <div class="add2board-modal">
-    <form action="">
+    <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Add Pin to Board</p>
@@ -28,7 +28,7 @@
           </button>
         </footer>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 

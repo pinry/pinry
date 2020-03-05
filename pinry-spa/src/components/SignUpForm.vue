@@ -1,6 +1,6 @@
 <template>
   <div class="signup-modal">
-    <form action="">
+    <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Sign Up</p>
@@ -59,7 +59,7 @@
             class="button is-primary">Register</button>
         </footer>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
