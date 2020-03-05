@@ -35,3 +35,9 @@ class CreateImageTest(TestCase):
                 ]
             }
         )
+
+
+class TestDocs(TestCase):
+    def test_should_doc_api_available_without_error(self):
+        response = self.client.get("/api/v2/docs")
+        self.assertEqual(response.status_code, 200)
