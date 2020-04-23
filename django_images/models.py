@@ -1,6 +1,8 @@
 import hashlib
 import os.path
+import sys
 
+from io import BytesIO
 from django.db import models
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.urlresolvers import reverse
@@ -12,7 +14,10 @@ except ImportError:
     from django.utils.importlib import import_module
 
 from . import utils
+from .utils import add_watermark
+from pinry.settings.base import DOMAIN, WATER_MARK
 from .settings import IMAGE_SIZES, IMAGE_PATH, IMAGE_AUTO_DELETE
+from PIL import Image as PilImage
 
 
 def hashed_upload_to(instance, filename, **kwargs):
@@ -62,6 +67,20 @@ class Image(models.Model):
             return self.get_by_size(size).image.url
         except Thumbnail.DoesNotExist:
             return reverse('image-thumbnail', args=(self.id, size))
+
+    def save(self, *args, **kwargs):
+        if WATER_MARK:
+            img = add_watermark(PilImage.open(self.image), DOMAIN)  # Set domain of your site as watermark.
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=100)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
+                                              'image/jpeg',
+                                              sys.getsizeof(output), None)
+
+        super().save(*args, **kwargs)
 
 
 class ThumbnailManager(models.Manager):

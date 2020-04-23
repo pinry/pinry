@@ -139,6 +139,14 @@ IMAGE_SIZES = {
     'square': {'crop': True, 'size': [125, 125]},
 }
 
+FONT_PATH = '/static/arial.ttf'
+
+# Change the domain to your own site.
+DOMAIN = "getpinry.com"
+
+# Enable watermark or not. Default is False
+WATER_MARK = False
+
 # IS_TEST is a variable to mark if the test is running
 IS_TEST = False
 
