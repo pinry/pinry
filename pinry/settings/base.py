@@ -139,7 +139,7 @@ IMAGE_SIZES = {
     'square': {'crop': True, 'size': [125, 125]},
 }
 
-FONT_PATH = '/static/arial.ttf'
+FONT_PATH = '/settings/font/arial.ttf'
 
 # Change the domain to your own site.
 DOMAIN = "getpinry.com"
