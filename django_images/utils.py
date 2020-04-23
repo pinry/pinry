@@ -5,12 +5,12 @@ from PIL import Image
 
 
 @contextmanager
-def open_django_file(fieldfile):
-    fieldfile.open()
+def open_django_file(field_file):
+    field_file.open()
     try:
-        yield fieldfile
+        yield field_file
     finally:
-        fieldfile.close()
+        field_file.close()
 
 
 def scale_and_crop_iter(image, options):
@@ -19,9 +19,9 @@ def scale_and_crop_iter(image, options):
     Resize, crop and/or change quality of image.
 
     :param image: Source image file
-    :param type: :class:`django.core.files.images.ImageFile
+    :type image : :class:`django.core.files.images.ImageFile
 
-    :param`options: List of option dictionaries, See scale_and_crop_single
+    :param options: List of option dictionaries, See scale_and_crop_single
     argument names for available keys.
     :type options: list of dict
     """
@@ -39,7 +39,7 @@ def scale_and_crop_single(image, size, crop=False, upscale=False, quality=None):
     Resize, crop and/or change quality of an image.
 
     :param image: Source image file
-    :param type: :class:`PIL.Image`
+    :type image : :class:`PIL.Image`
 
     :param size: Size as width & height, zero as either means unrestricted
     :type size: tuple of two int
