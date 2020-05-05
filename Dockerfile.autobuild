@@ -14,7 +14,7 @@
 FROM node:10.20.1-alpine3.11 as yarn-build
 
 WORKDIR pinry-spa
-COPY pinry-spa/package.json .
+COPY pinry-spa/package.json pinry-spa/yarn.lock ./
 RUN yarn install
 COPY pinry-spa .
 RUN yarn build
