@@ -44,7 +44,7 @@ RUN groupadd -g 2300 tmpgroup \
 
 # Install nginx
 RUN apt-get update \
-    && apt-get -y  install nginx \
+    && apt-get -y  install nginx pwgen\
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
