@@ -45,3 +45,6 @@ docker-compose.yml
 
 # vscode
 /.vscode
+
+# docker image data
+docker/data/*
