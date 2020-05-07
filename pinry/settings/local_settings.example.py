@@ -42,3 +42,7 @@ IMAGE_SIZES = {
 
 # Whether people can view pins without login
 PUBLIC = True
+
+ENABLED_PLUGINS = [
+    'pinry_plugins.batteries.plugin_example.Plugin',
+]
