@@ -19,7 +19,7 @@ nav:
   - Theories: 'theories.md'
   - Install with Docker: 'install-with-docker.md'
   - Development: 'development.md'
-  - Development: 'plugin-system.md'
+  - PluginSystem: 'plugin-system.md'
   - Docs: 'docs.md'
   - Passwords: 'passwords.md'
   - Assets: 'assets.md'

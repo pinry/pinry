@@ -1,4 +1,4 @@
-# Pinry, the open-source tiling image board.
+# New plugin system for Pinry
 
 New plugin system is under development.
 
