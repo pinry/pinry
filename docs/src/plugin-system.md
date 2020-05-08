@@ -49,9 +49,9 @@ left blank to fill, coming soon...
 
 
 # Install Plugin in Docker
-If you have some plugin which named `hello.py` and a have a `Plugin` class inside.
+If you have a plugin named `hello.py` and it have a `Plugin` class inside.
 
-You could just copy them to directory `pinry_plugins/batteries`.
+You could just copy it to directory `pinry_plugins/batteries`.
 
 Now add config to local_settings.py
 
