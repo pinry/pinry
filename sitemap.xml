@@ -2,57 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://docs.getpinry.com/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/screenshots/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/extensions/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/theories/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/install-with-docker/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/development/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://docs.getpinry.com/plugin-system/</loc>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/docs/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/passwords/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/assets/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/contributing/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://docs.getpinry.com/license/</loc>
-     <lastmod>2020-05-05</lastmod>
+     <lastmod>2020-05-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

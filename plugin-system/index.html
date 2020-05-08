@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Pinry project.">
       
       
-        <link rel="canonical" href="https://docs.getpinry.com/install-with-docker/">
+        <link rel="canonical" href="https://docs.getpinry.com/plugin-system/">
       
       
         <meta name="author" content="Pinry's Contributors">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Install with Docker - Pinry Docs</title>
+        <title>PluginSystem - Pinry Docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#pinry-docker" tabindex="1" class="md-skip">
+      <a href="#new-plugin-system-for-pinry" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Install with Docker
+                PluginSystem
               
             </span>
           
@@ -276,20 +276,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Install with Docker" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install-with-docker/" title="Install with Docker" class="md-nav__link">
       Install with Docker
     </a>
-    
   </li>
 
     
@@ -309,11 +300,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../plugin-system/" title="PluginSystem" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="PluginSystem" class="md-nav__link md-nav__link--active">
       PluginSystem
     </a>
+    
   </li>
 
     
@@ -404,64 +404,25 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/install-with-docker.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/plugin-system.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="pinry-docker">Pinry Docker<a class="headerlink" href="#pinry-docker" title="Permanent link">&para;</a></h1>
-<p>A nice and easy way to get a Pinry instance up and running using docker. For
-help on getting started with docker see the official getting started guide at
-the end of this page.</p>
-<h1 id="getting-pinry-docker">Getting Pinry Docker<a class="headerlink" href="#getting-pinry-docker" title="Permanent link">&para;</a></h1>
-<p>Running this will get the latest version of pinry itself</p>
-<div class="codehilite"><pre><span></span><span class="err">git clone https://github.com/pinry/pinry</span>
-<span class="err">cd pinry/docker</span>
-<span class="err">./build_docker.sh</span>
-</pre></div>
-
-
-<p>Now you can start your container by command like this</p>
-<div class="codehilite"><pre><span></span><span class="err"># this is where your database, local_settings and pins located</span>
-<span class="err">mkdir data</span>
-<span class="err"># use absolute path for docker to avoid using default data-volume (we use directory instead)</span>
-<span class="err">./start_docker.sh `readlink -f data`</span>
-</pre></div>
-
-
-<p>Please visit <code>http://your-ip</code> to visit your instance and register a new account, enjoy it.</p>
-<h2 id="configuring-docker-pinry">Configuring docker-pinry<a class="headerlink" href="#configuring-docker-pinry" title="Permanent link">&para;</a></h2>
-<p>Enable signups for new users by editing <code>pinry/local_settings.py</code></p>
-<div class="codehilite"><pre><span></span><span class="err">ALLOW_NEW_REGISTRATIONS = True</span>
-</pre></div>
-
-
-<h1 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h1>
-<p>Running this will build you a docker image with the latest version of pinry</p>
-<div class="codehilite"><pre><span></span><span class="err">git pull --rebase</span>
-<span class="err">cd ./docker/</span>
-<span class="err">./build_docker.sh</span>
-</pre></div>
-
-
-<h1 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">&para;</a></h1>
-<p>Just copy <code>data</code> folder's content to an safe place, enjoy :)</p>
-<h1 id="why-include-nginx-and-not-just-map-to-gunicorn-directly">Why include nginx and not just map to gunicorn directly?<a class="headerlink" href="#why-include-nginx-and-not-just-map-to-gunicorn-directly" title="Permanent link">&para;</a></h1>
-<p>Because gunicorn/django can't serve static files very well and it is unwise to do
-so for security reasons. I built this so that people can have a full hosted
-solution in a container. If you have a host machine running nginx then of course
-there is no point to run nginx in the container as well, you can simply disable
-nginx, map gunicorn to a port and then set your host machine's nginx to display
-your media and static files since that directory is shared between the container
-and host.</p>
-<h1 id="why-use-sqlite3">Why use sqlite3?<a class="headerlink" href="#why-use-sqlite3" title="Permanent link">&para;</a></h1>
-<p>Because it has a very low resource cost and most pinry websites are small
-personal ones. Why have a full on database for that? If you need more power
-than you can easily modify the <code>data/local_settings.py</code> to point to a
-stronger database solution.</p>
-<h1 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h1>
+                <h1 id="new-plugin-system-for-pinry">New plugin system for Pinry<a class="headerlink" href="#new-plugin-system-for-pinry" title="Permanent link">&para;</a></h1>
+<p>New plugin system is under development.</p>
+<p>Now you could access it via project example plugin file <code>pinry_plugins/batteries/plugin_example.py</code>.</p>
+<p>You could create a simple plugin which has a class which owns methods named:</p>
 <ul>
-<li><a href="http://www.docker.io/gettingstarted/">official getting started guide</a></li>
-<li><a href="https://github.com/pinry/pinry/blob/master/pinry/settings/local_settings.example.py">additional pinry configuration settings</a></li>
+<li>process_image_pre_creation</li>
+<li>process_thumbnail_pre_creation</li>
 </ul>
+<p>And, add the plugin class to local_settings.py as:</p>
+<div class="codehilite"><pre><span></span><span class="err">ENABLED_PLUGINS = [</span>
+<span class="err">    &#39;pinry_plugins.batteries.plugin_example.Plugin&#39;,</span>
+<span class="err">]</span>
+</pre></div>
+
+
+<p>Now the plugin will work like a charm!</p>
                 
                   
                 
@@ -482,7 +443,7 @@ stronger database solution.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../theories/" title="Theories" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../development/" title="Development" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -491,19 +452,19 @@ stronger database solution.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Theories
+                Development
               </span>
             </div>
           </a>
         
         
-          <a href="../development/" title="Development" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Development
+                Docs
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
