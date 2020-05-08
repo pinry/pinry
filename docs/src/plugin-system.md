@@ -3,10 +3,10 @@
 New plugin system is under development and a naive version has been released.
 
 A `PinryPlugin` is a python class or object which is callable.
-The plugin loader will call the plugin argument only once and use the plugin
+The plugin loader will call the `Plugin` target only once and use the plugin
 instance after specified events triggered just like the way django-middleware works.
 
-You could create a plugin as python-package with content:
+You could create a plugin as python-package with content below:
 
 ```
 from core.models import Image
@@ -16,7 +16,7 @@ from django_images.models import Thumbnail
 class Plugin:
     
     def __init__(self):
-        # do something you want, just be called only
+        # do something you want, just be called only once
         pass
 
     def process_image_pre_creation(self, django_settings, image_instance: Image):
