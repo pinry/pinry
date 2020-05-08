@@ -42,7 +42,7 @@
     
     
       
-        <title>PluginSystem - Pinry Docs</title>
+        <title>Plugin System - Pinry Docs</title>
       
     
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                PluginSystem
+                Plugin System
               
             </span>
           
@@ -310,8 +310,8 @@
       
     
     
-    <a href="./" title="PluginSystem" class="md-nav__link md-nav__link--active">
-      PluginSystem
+    <a href="./" title="Plugin System" class="md-nav__link md-nav__link--active">
+      Plugin System
     </a>
     
   </li>
@@ -408,14 +408,33 @@
                 
                 
                 <h1 id="new-plugin-system-for-pinry">New plugin system for Pinry<a class="headerlink" href="#new-plugin-system-for-pinry" title="Permanent link">&para;</a></h1>
-<p>New plugin system is under development.</p>
-<p>Now you could access it via project example plugin file <code>pinry_plugins/batteries/plugin_example.py</code>.</p>
-<p>You could create a simple plugin which has a class which owns methods named:</p>
-<ul>
-<li>process_image_pre_creation</li>
-<li>process_thumbnail_pre_creation</li>
-</ul>
-<p>And, add the plugin class to local_settings.py as:</p>
+<p>New plugin system is under development and a naive version has been released.</p>
+<p>A <code>PinryPlugin</code> is a python class or object which is callable.
+The plugin loader will call the plugin argument only once and use the plugin
+instance after specified events triggered just like the way django-middleware works.</p>
+<p>You could create a plugin as python-package with content:</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">core.models</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">django_images.models</span> <span class="kn">import</span> <span class="n">Thumbnail</span>
+
+
+<span class="k">class</span> <span class="nc">Plugin</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># do something you want, just be called only</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">process_image_pre_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">django_settings</span><span class="p">,</span> <span class="n">image_instance</span><span class="p">:</span> <span class="n">Image</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">process_thumbnail_pre_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">django_settings</span><span class="p">,</span> <span class="n">thumbnail_instance</span><span class="p">:</span> <span class="n">Thumbnail</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<p>You could make some changes on Image object and Thumbnail object 
+before they actually be saved (for example, add water-mark to them).</p>
+<p>You could access example plugin via <code>pinry_plugins/batteries/plugin_example.py</code>.</p>
+<p>After all, enable the plugin in local_settings.py:</p>
 <div class="codehilite"><pre><span></span><span class="err">ENABLED_PLUGINS = [</span>
 <span class="err">    &#39;pinry_plugins.batteries.plugin_example.Plugin&#39;,</span>
 <span class="err">]</span>
@@ -423,6 +442,20 @@
 
 
 <p>Now the plugin will work like a charm!</p>
+<h1 id="list-of-available-plugins">List of Available Plugins<a class="headerlink" href="#list-of-available-plugins" title="Permanent link">&para;</a></h1>
+<p>left blank to fill, coming soon...</p>
+<h1 id="install-plugin-in-docker">Install Plugin in Docker<a class="headerlink" href="#install-plugin-in-docker" title="Permanent link">&para;</a></h1>
+<p>If you have some plugin which named <code>hello.py</code> and a have a <code>Plugin</code> class inside.</p>
+<p>You could just copy them to directory <code>pinry_plugins/batteries</code>.</p>
+<p>Now add config to local_settings.py</p>
+<div class="codehilite"><pre><span></span><span class="err">ENABLED_PLUGINS = [</span>
+<span class="err">    &#39;pinry_plugins.batteries.hello.Plugin&#39;,</span>
+<span class="err">]</span>
+</pre></div>
+
+
+<p>Then, rebuild your docker image, the plugin will work 
+if no further python dependencies required.</p>
                 
                   
                 
