@@ -25,7 +25,9 @@ def process_image_pre_creation(sender, instance: Image, **kwargs):
     if instance.pk is not None:
         return
     for plugin in _plugin_instances:
-        process_fn = getattr(plugin, "process_image_pre_creation")
+        process_fn = getattr(plugin, "process_image_pre_creation", None)
+        if process_fn is None:
+            continue
         try:
             process_fn(
                 django_settings=settings,
@@ -46,7 +48,9 @@ def process_thumbnail_pre_creation(sender, instance: Thumbnail, **kwargs):
         return
 
     for plugin in _plugin_instances:
-        process_fn = getattr(plugin, "process_thumbnail_pre_creation")
+        process_fn = getattr(plugin, "process_thumbnail_pre_creation", None)
+        if process_fn is None:
+            continue
         try:
             process_fn(
                 django_settings=settings,
