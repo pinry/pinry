@@ -410,9 +410,9 @@
                 <h1 id="new-plugin-system-for-pinry">New plugin system for Pinry<a class="headerlink" href="#new-plugin-system-for-pinry" title="Permanent link">&para;</a></h1>
 <p>New plugin system is under development and a naive version has been released.</p>
 <p>A <code>PinryPlugin</code> is a python class or object which is callable.
-The plugin loader will call the plugin argument only once and use the plugin
+The plugin loader will call the <code>Plugin</code> target only once and use the plugin
 instance after specified events triggered just like the way django-middleware works.</p>
-<p>You could create a plugin as python-package with content:</p>
+<p>You could create a plugin as python-package with content below:</p>
 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">core.models</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">django_images.models</span> <span class="kn">import</span> <span class="n">Thumbnail</span>
 
@@ -420,7 +420,7 @@ instance after specified events triggered just like the way django-middleware wo
 <span class="k">class</span> <span class="nc">Plugin</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># do something you want, just be called only</span>
+        <span class="c1"># do something you want, just be called only once</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">process_image_pre_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">django_settings</span><span class="p">,</span> <span class="n">image_instance</span><span class="p">:</span> <span class="n">Image</span><span class="p">):</span>
