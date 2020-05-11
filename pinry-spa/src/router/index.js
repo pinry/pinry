@@ -8,6 +8,7 @@ import Pins4Id from '../views/Pins4Id.vue';
 import Boards4User from '../views/Boards4User.vue';
 import PinCreate from '../views/PinCreate.vue';
 import Search from '../views/Search.vue';
+import PageNotFound from '../views/PageNotFound.vue';
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/search',
     name: 'search',
     component: Search,
+  },
+  {
+    path: '*',
+    name: 'PageNotFound',
+    component: PageNotFound,
   },
 ];
 
