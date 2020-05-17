@@ -411,7 +411,24 @@
 <p>A nice and easy way to get a Pinry instance up and running using docker. For
 help on getting started with docker see the official getting started guide at
 the end of this page.</p>
-<h1 id="getting-pinry-docker">Getting Pinry Docker<a class="headerlink" href="#getting-pinry-docker" title="Permanent link">&para;</a></h1>
+<h1 id="get-image-form-dockerhub">Get Image form DockerHub<a class="headerlink" href="#get-image-form-dockerhub" title="Permanent link">&para;</a></h1>
+<p>The image is here: https://hub.docker.com/repository/docker/getpinry/pinry
+or you could simply pull the image from DockerHub's registry via</p>
+<div class="codehilite"><pre><span></span><span class="err">docker pull getpinry/pinry</span>
+</pre></div>
+
+
+<p>Then use the command line like:</p>
+<div class="codehilite"><pre><span></span># this should be an abs-path not relative path like &quot;.&quot;
+DATA_PATH=/abs/path/to/your/data/directory
+
+sudo docker run -d=true -p=80:80 \
+    -v=<span class="cp">${</span><span class="n">DATA_PATH</span><span class="cp">}</span>:/data \
+    pinry/pinry
+</pre></div>
+
+
+<h1 id="build-docker-from-source">Build Docker from Source<a class="headerlink" href="#build-docker-from-source" title="Permanent link">&para;</a></h1>
 <p>Running this will get the latest version of pinry itself</p>
 <div class="codehilite"><pre><span></span><span class="err">git clone https://github.com/pinry/pinry</span>
 <span class="err">cd pinry/docker</span>
@@ -429,12 +446,13 @@ the end of this page.</p>
 
 <p>Please visit <code>http://your-ip</code> to visit your instance and register a new account, enjoy it.</p>
 <h2 id="configuring-docker-pinry">Configuring docker-pinry<a class="headerlink" href="#configuring-docker-pinry" title="Permanent link">&para;</a></h2>
+<hr />
 <p>Enable signups for new users by editing <code>pinry/local_settings.py</code></p>
 <div class="codehilite"><pre><span></span><span class="err">ALLOW_NEW_REGISTRATIONS = True</span>
 </pre></div>
 
 
-<h1 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h1>
+<h2 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h2>
 <p>Running this will build you a docker image with the latest version of pinry</p>
 <div class="codehilite"><pre><span></span><span class="err">git pull --rebase</span>
 <span class="err">cd ./docker/</span>
@@ -456,7 +474,7 @@ and host.</p>
 <p>Because it has a very low resource cost and most pinry websites are small
 personal ones. Why have a full on database for that? If you need more power
 than you can easily modify the <code>data/local_settings.py</code> to point to a
-stronger database solution.</p>
+stronger database solution ( e.g: PostgreSQL or MySQL ) .</p>
 <h1 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h1>
 <ul>
 <li><a href="http://www.docker.io/gettingstarted/">official getting started guide</a></li>
