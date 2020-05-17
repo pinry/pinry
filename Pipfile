@@ -15,8 +15,8 @@ mkdocs-material = "*"
 black = "==19.10b0"
 
 [packages]
-django = ">=1.11,<1.12"
-pillow = "*"
+django = ">=>=1.11.28,<1.12"
+pillow = ">=6.2.2"
 requests = "*"
 django-taggit = "*"
 django-braces = "*"
