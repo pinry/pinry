@@ -86,4 +86,4 @@ def logout_user(request):
 
 
 drf_router = routers.DefaultRouter()
-drf_router.register(r'users', UserViewSet, base_name="user")
+drf_router.register(r'users', UserViewSet, basename="user")
