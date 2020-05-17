@@ -6,7 +6,26 @@ help on getting started with docker see the official getting started guide at
 the end of this page.
 
 
-# Getting Pinry Docker
+# Get Image form DockerHub
+
+The image is here: https://hub.docker.com/repository/docker/getpinry/pinry
+or you could simply pull the image from DockerHub's registry via
+```
+docker pull getpinry/pinry
+```
+
+Then use the command line like:
+
+```
+# this should be an abs-path not relative path like "."
+DATA_PATH=/abs/path/to/your/data/directory
+
+sudo docker run -d=true -p=80:80 \
+    -v=${DATA_PATH}:/data \
+    pinry/pinry
+```
+
+# Build Docker from Source
 
 
 Running this will get the latest version of pinry itself
@@ -25,14 +44,14 @@ mkdir data
 Please visit `http://your-ip` to visit your instance and register a new account, enjoy it.
 
 
-Configuring docker-pinry
+## Configuring docker-pinry
 ------------------------
 Enable signups for new users by editing `pinry/local_settings.py`
 ```
 ALLOW_NEW_REGISTRATIONS = True
 ```
 
-# Building docker-pinry again (with latest version)
+## Building docker-pinry again (with latest version)
 
 
 Running this will build you a docker image with the latest version of pinry
@@ -62,7 +81,7 @@ and host.
 Because it has a very low resource cost and most pinry websites are small
 personal ones. Why have a full on database for that? If you need more power
 than you can easily modify the `data/local_settings.py` to point to a
-stronger database solution.
+stronger database solution ( e.g: PostgreSQL or MySQL ) .
 
 
 # Links
