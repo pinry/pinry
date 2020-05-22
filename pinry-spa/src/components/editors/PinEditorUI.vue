@@ -8,7 +8,7 @@
             custom-size="mdi-24px">
          </b-icon>
       </span>
-      <span class="icon-container" @click="addToBoar">
+      <span class="icon-container" @click="addToBoard">
           <b-icon
             type="is-light"
             icon="plus-box"
@@ -69,7 +69,7 @@ export default {
     },
   },
   methods: {
-    addToBoar() {
+    addToBoard() {
       modals.openAdd2Board(this, this.pin, this.currentUsername);
     },
     removeFromBoard() {
