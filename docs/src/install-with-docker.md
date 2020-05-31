@@ -8,8 +8,9 @@ the end of this page.
 
 # Get Image form DockerHub
 
-The image is here: https://hub.docker.com/repository/docker/getpinry/pinry
+The image is here: [getpinry/pinry](https://hub.docker.com/r/getpinry/pinry), 
 or you could simply pull the image from DockerHub's registry via
+
 ```
 docker pull getpinry/pinry
 ```
@@ -34,13 +35,25 @@ git clone https://github.com/pinry/pinry
 cd pinry/docker
 ./build_docker.sh
 ```
+
 Now you can start your container by command like this
+
 ```
 # this is where your database, local_settings and pins located
 mkdir data
 # use absolute path for docker to avoid using default data-volume (we use directory instead)
 ./start_docker.sh `readlink -f data`
 ```
+
+Also, if you want to use a "named volume" instead, you can do this:
+
+````
+docker volume create pinry
+docker run -d=true -p=80:80 \
+    -v pinry:/data \
+    getpinry/pinry
+````
+
 Please visit `http://your-ip` to visit your instance and register a new account, enjoy it.
 
 
