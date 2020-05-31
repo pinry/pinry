@@ -412,7 +412,7 @@
 help on getting started with docker see the official getting started guide at
 the end of this page.</p>
 <h1 id="get-image-form-dockerhub">Get Image form DockerHub<a class="headerlink" href="#get-image-form-dockerhub" title="Permanent link">&para;</a></h1>
-<p>The image is here: https://hub.docker.com/repository/docker/getpinry/pinry
+<p>The image is here: <a href="https://hub.docker.com/r/getpinry/pinry">getpinry/pinry</a>, 
 or you could simply pull the image from DockerHub's registry via</p>
 <div class="codehilite"><pre><span></span><span class="err">docker pull getpinry/pinry</span>
 </pre></div>
@@ -441,6 +441,14 @@ sudo docker run -d=true -p=80:80 \
 <span class="err">mkdir data</span>
 <span class="err"># use absolute path for docker to avoid using default data-volume (we use directory instead)</span>
 <span class="err">./start_docker.sh `readlink -f data`</span>
+</pre></div>
+
+
+<p>Also, if you want to use a "named volume" instead, you can do this:</p>
+<div class="codehilite"><pre><span></span><span class="err">docker volume create pinry</span>
+<span class="err">docker run -d=true -p=80:80 \</span>
+<span class="err">    -v pinry:/data \</span>
+<span class="err">    getpinry/pinry</span>
 </pre></div>
 
 
