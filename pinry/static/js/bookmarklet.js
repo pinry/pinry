@@ -104,16 +104,37 @@
 
 
     // Start Active Functions
+    var images = {}, // cache URLs to avoid duplicates
+        reURL = /url[(]"([^"]+)"[)]/; // match an URL in CSS
+    function addImage(img) {
+        if (images[img.src])
+            return;
+        images[img.src] = true;
+        var w = img.naturalWidth,
+            h = img.naturalHeight;
+        if (w > 200 && h > 200)
+            imageView(img.src).textContent = w + '\u00D7' + h;
+    }
     function addAllImagesToPageView() {
+        // add all explicit IMGs
         var images = document.getElementsByTagName('img');
-        for (var i = 0; i < images.length; ++i) {
-            var t = images[i],
-                w = t.naturalWidth,
-                h = t.naturalHeight;
-            if (w > 200 && h > 200)
-                imageView(t.src).textContent = w + '\u00D7' + h;
-        }
-        return images;
+        for (var i = 0; i < images.length; ++i)
+            addImage(images[i]);
+        // add all background images
+        ['body', 'div', 'td'].forEach(function (tagName) {
+             var tags = document.getElementsByTagName(tagName);
+             for (var i = 0; i < tags.length; ++i) {
+                 var m = reURL.exec(tags[i].style.backgroundImage);
+                 if (m) {
+                     // load image to know size
+                     var img = new Image();
+                     img.onload = function () {
+                         addImage(this);
+                     };
+                     img.src = m[1];
+                 }
+             }
+        });
     }
     // End Active Functions
 
