@@ -36,8 +36,7 @@
                      class="pin-preview-image">
                 </div>
                 <div class="pin-footer">
-                  <div class="description" v-show="item.description"><p>{{ item.description }}</p>
-                  </div>
+                  <div class="description" v-show="item.description" v-html="niceLinks(item.description)"></div>
                   <div class="details">
                     <div class="is-pulled-left">
                       <img class="avatar" :src="item.avatar" alt="">
@@ -125,6 +124,18 @@ function initialData() {
       },
     },
   };
+}
+
+const encoder = document.createElement('div');
+function escapeHTML(text) {
+  encoder.innerText = text;
+  return encoder.innerHTML;
+}
+
+const reURL = /https?:[/][/](?:www[.])?([^/]+)(?:[/]([.]?[^\s,.<>])+)?/g;
+function niceLinks(text) {
+  if (!text) return '';
+  return escapeHTML(text).replace(reURL, '<a href="$&" target="_blank">$1</a>');
 }
 
 export default {
@@ -293,6 +304,7 @@ export default {
         () => { this.status.loading = false; },
       );
     },
+    niceLinks,
   },
   created() {
     bus.bus.$on(bus.events.refreshPin, this.reset);
