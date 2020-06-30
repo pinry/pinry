@@ -271,7 +271,10 @@ export default {
             );
           }
         },
-      );
+      ).catch((error) => {
+        console.log('Cannot create pin:', error);
+        loading.close();
+      });
     },
     niceLinks,
   },
