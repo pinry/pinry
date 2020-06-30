@@ -13,6 +13,7 @@
                 v-on:imageUploadSucceed="onUploadDone"
                 v-on:imageUploadProcessing="onUploadProcessing"
               ></FileUpload>
+              <div class="description" v-show="pinModel.form.description.value" v-html="niceLinks(pinModel.form.description.value)"></div>
             </div>
             <div class="column">
               <b-field label="Image URL"
@@ -109,6 +110,7 @@ import bus from '../utils/bus';
 import ModelForm from '../utils/ModelForm';
 import Loading from '../utils/Loading';
 import AutoComplete from '../utils/AutoComplete';
+import niceLinks from '../utils/niceLinks';
 
 function isURLBlank(url) {
   return url !== null && url === '';
@@ -271,6 +273,7 @@ export default {
         },
       );
     },
+    niceLinks,
   },
 };
 </script>

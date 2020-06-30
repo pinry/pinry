@@ -9,7 +9,7 @@
           </div>
           <div class="card-content">
             <div class="content">
-                <p class="description title">{{ pinItem.description }}</p>
+                <p class="description title" v-html="niceLinks(pinItem.description)"></p>
             </div>
             <div class="media">
               <div class="media-left">
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import niceLinks from './utils/niceLinks';
+
 export default {
   name: 'PinPreview',
   props: ['pinItem'],
@@ -70,6 +72,7 @@ export default {
         { name: 'pin', params: { pinId: this.pinItem.id } },
       );
     },
+    niceLinks,
   },
 };
 </script>
