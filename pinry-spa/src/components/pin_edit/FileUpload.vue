@@ -49,19 +49,11 @@ export default {
   },
   watch: {
     dropFile(newFile) {
-      this.$emit('imageUploadProcessing');
-      this.loading = true;
-      API.Pin.uploadImage(newFile).then(
-        (resp) => {
-          this.uploadedImage = resp.data;
-          this.loading = false;
-          this.$emit('imageUploadSucceed', this.uploadedImage.id);
-        },
-        () => {
-          this.loading = false;
-          this.$emit('imageUploadFailed');
-        },
-      );
+      this.uploadFile(newFile);
+    },
+    previewImageURL() {
+      if (!this.previewExists()) return;
+      this.uploadURL(this.previewImageURL);
     },
   },
   computed: {
@@ -79,6 +71,31 @@ export default {
     previewExists() {
       return this.previewImageURL !== null && this.previewImageURL !== '';
     },
+    uploadFile(newFile) {
+      this.$emit('imageUploadProcessing');
+      this.loading = true;
+      API.Pin.uploadImage(newFile).then(
+        (resp) => {
+          this.uploadedImage = resp.data;
+          this.loading = false;
+          this.$emit('imageUploadSucceed', this.uploadedImage.id);
+        },
+        () => {
+          this.loading = false;
+          this.$emit('imageUploadFailed');
+        },
+      );
+    },
+    uploadURL(url) {
+      const filename = new URL(url).pathname.split('/').pop();
+      fetch(url).then(r => r.blob()).then((blob) => {
+        this.uploadFile(new File([blob], filename));
+      });
+    },
+  },
+  mounted() {
+    if (!this.previewExists()) return;
+    this.uploadURL(this.previewImageURL);
   },
 };
 </script>
