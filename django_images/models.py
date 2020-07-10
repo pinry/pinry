@@ -3,13 +3,11 @@ import os.path
 
 from django.db import models
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 
-try:
-    from importlib import import_module
-except ImportError:
-    from django.utils.importlib import import_module
+from importlib import import_module
+
+from django.urls import reverse
 
 from . import utils
 from .settings import IMAGE_SIZES, IMAGE_PATH, IMAGE_AUTO_DELETE
@@ -99,7 +97,7 @@ class ThumbnailManager(models.Manager):
 
 
 class Thumbnail(models.Model):
-    original = models.ForeignKey(Image)
+    original = models.ForeignKey(Image, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_to,
                               height_field='height', width_field='width',
                               max_length=255)
