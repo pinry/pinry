@@ -1,8 +1,7 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from core.models import Image
-from core.tests import create_user
+from core.tests import create_user, reverse
 from users.models import User
 
 
@@ -25,7 +24,7 @@ class CreateImageTest(TestCase):
         self.assertEqual(response.json()['id'], image.pk)
 
     def test_post_error(self):
-        response = self.client.post(reverse('image-list'), {'image': None})
+        response = self.client.post(reverse('image-list'), {'image': ''})
         self.assertEqual(
             response.json(),
             {
