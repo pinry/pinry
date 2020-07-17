@@ -12,6 +12,11 @@ server {
         expires max;
         access_log off;
     }
+    location /media {
+        alias /data/static/media;
+        expires max;
+        access_log off;
+    }
 
     location /api {
         proxy_set_header Host $host;
