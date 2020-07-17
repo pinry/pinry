@@ -18,8 +18,8 @@ urlpatterns = [
     path('api/v2/docs/', include_docs_urls(title='PinryAPI', schema_url='/')),
 
     # old api and views
-    path(r'admin/', include(admin.site.urls, namespace="admin")),
-    path(r'api/v2/profile/', include('users.urls', namespace='users')),
+    path('admin/', admin.site.urls),
+    path('api/v2/profile/', include('users.urls')),
 ]
 
 
