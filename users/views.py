@@ -4,8 +4,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
+from django.urls import reverse
 from django.utils.functional import lazy
 from rest_framework import mixins, routers
 from rest_framework.permissions import BasePermission

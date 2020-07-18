@@ -26,7 +26,7 @@ INSTALLED_APPS = [
 
 ROOT_URLCONF = 'pinry.urls'
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
 
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -106,7 +106,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/static/media/'
+MEDIA_URL = '/media/'
 
 # Set to False to disable people from creating new accounts.
 ALLOW_NEW_REGISTRATIONS = True

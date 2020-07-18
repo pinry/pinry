@@ -1,9 +1,10 @@
+from io import BytesIO
+
 import mock
 import qrcode
 from django.test import TestCase
 from django.core.files.images import ImageFile
 from django.conf import settings
-from django.utils.six import BytesIO
 from django_images.models import Image, Thumbnail
 from django_images.templatetags.images import at_size
 from django_images.utils import scale_and_crop_single

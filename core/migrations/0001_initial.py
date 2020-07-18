@@ -36,12 +36,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pin',
             name='image',
-            field=models.ForeignKey(related_name='pin', to='core.Image'),
+            field=models.ForeignKey(related_name='pin', to='core.Image', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='pin',
             name='submitter',
-            field=models.ForeignKey(to='users.User'),
+            field=models.ForeignKey(to='users.User', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='pin',

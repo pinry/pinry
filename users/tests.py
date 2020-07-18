@@ -1,8 +1,8 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
 
 import mock
+from django.urls import reverse
 
 from .auth.backends import CombinedAuthBackend
 from .models import User

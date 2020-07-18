@@ -6,7 +6,7 @@ module.exports = {
         changeOrigin: true,
         ws: true,
       },
-      '/static/media': {
+      '/media': {
         target: 'http://localhost:8000/',
         changeOrigin: true,
       },

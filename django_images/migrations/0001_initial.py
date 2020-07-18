@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('size', models.CharField(max_length=100)),
                 ('height', models.PositiveIntegerField(default=0, editable=False)),
                 ('width', models.PositiveIntegerField(default=0, editable=False)),
-                ('original', models.ForeignKey(to='django_images.Image')),
+                ('original', models.ForeignKey(to='django_images.Image', on_delete=models.CASCADE)),
             ],
         ),
         migrations.AlterUniqueTogether(

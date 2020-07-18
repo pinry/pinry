@@ -74,7 +74,7 @@ class Board(models.Model):
         unique_together = ("submitter", "name")
         index_together = ("submitter", "name")
 
-    submitter = models.ForeignKey(User)
+    submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=128, blank=False, null=False)
     private = models.BooleanField(default=False, blank=False)
     pins = models.ManyToManyField("Pin", related_name="pins", blank=True)
@@ -83,12 +83,12 @@ class Board(models.Model):
 
 
 class Pin(models.Model):
-    submitter = models.ForeignKey(User)
+    submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     private = models.BooleanField(default=False, blank=False)
     url = models.CharField(null=True, blank=True, max_length=256)
     referer = models.CharField(null=True, blank=True, max_length=256)
     description = models.TextField(blank=True, null=True)
-    image = models.ForeignKey(Image, related_name='pin')
+    image = models.ForeignKey(Image, related_name='pin', on_delete=models.CASCADE)
     published = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager()
 
