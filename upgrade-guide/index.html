@@ -13,7 +13,7 @@
         <meta name="description" content="Docs for the Pinry project.">
       
       
-        <link rel="canonical" href="https://docs.getpinry.com/passwords/">
+        <link rel="canonical" href="https://docs.getpinry.com/upgrade-guide/">
       
       
         <meta name="author" content="Pinry's Contributors">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Passwords - Pinry Docs</title>
+        <title>Upgrade Guide - Pinry Docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#updating-passwords" tabindex="1" class="md-skip">
+      <a href="#upgrade-guide" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Passwords
+                Upgrade Guide
               
             </span>
           
@@ -312,11 +312,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../upgrade-guide/" title="Upgrade Guide" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Upgrade Guide" class="md-nav__link md-nav__link--active">
       Upgrade Guide
     </a>
+    
   </li>
 
     
@@ -336,20 +345,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Passwords" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../passwords/" title="Passwords" class="md-nav__link">
       Passwords
     </a>
-    
   </li>
 
     
@@ -416,20 +416,34 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/passwords.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/upgrade-guide.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="updating-passwords">Updating Passwords<a class="headerlink" href="#updating-passwords" title="Permanent link">&para;</a></h1>
-<p>Currently we don't have a good "forgot my password" method on Pinry since that
-generally requries an email to be sent. The current method for changing
-passwords involves:</p>
+                <h2 id="upgrade-guide">Upgrade Guide<a class="headerlink" href="#upgrade-guide" title="Permanent link">&para;</a></h2>
+<p>This doc is about how you should do to upgrade specified version to next version.</p>
+<p>Generally, you should have no extra action to take if you use our docker version
+if we haven't written notes for it.</p>
+<p>How to get the current version:</p>
+<div class="codehilite"><pre><span></span><span class="err">git tag</span>
+</pre></div>
+
+
+<p>The first line of output is our latest version of code.</p>
+<h1 id="v202-v210">v2.0.2 -&gt; v2.1.0<a class="headerlink" href="#v202-v210" title="Permanent link">&para;</a></h1>
+<p>Main breaking changes:</p>
 <ul>
-<li>Create a new super user <code>pipenv run python manage.py createsuperuser</code></li>
-<li>Login to your admin panel <code>{your_website_url}/admin/</code></li>
-<li>Go to the users section, select the user, change their password.</li>
+<li>Upgrade <code>django 1</code> to django <code>2.2 LTS</code></li>
 </ul>
-<p>Note: If you use that command to create superuser <strong>inside docker</strong>, please add <code>--settings=pinry.settings.docker</code>
-to command like, just like <code>python manage.py createsuperuser --settings=pinry.settings.docker</code></p>
+<p>How to:</p>
+<p>If you use non-docker version, you should change your web-server config to add a new
+alias for <code>media file path</code> (where to store images).</p>
+<p>Please add following config to your nginx config in <code>server</code> block:</p>
+<div class="codehilite"><pre><span></span><span class="err">location /media {</span>
+<span class="err">    alias /path/to/static/media;</span>
+<span class="err">    expires max;</span>
+<span class="err">    access_log off;</span>
+<span class="err">}</span>
+</pre></div>
                 
                   
                 
@@ -450,7 +464,7 @@ to command like, just like <code>python manage.py createsuperuser --settings=pin
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../plugin-system/" title="Plugin System" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -459,19 +473,19 @@ to command like, just like <code>python manage.py createsuperuser --settings=pin
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Docs
+                Plugin System
               </span>
             </div>
           </a>
         
         
-          <a href="../assets/" title="Assets" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../docs/" title="Docs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Assets
+                Docs
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
