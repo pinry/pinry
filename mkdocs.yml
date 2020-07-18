@@ -20,6 +20,7 @@ nav:
   - Install with Docker: 'install-with-docker.md'
   - Development: 'development.md'
   - Plugin System: 'plugin-system.md'
+  - Upgrade Guide: 'upgrade-guide.md'
   - Docs: 'docs.md'
   - Passwords: 'passwords.md'
   - Assets: 'assets.md'
