@@ -1,12 +1,14 @@
 <template>
   <div class="boards-for-user">
     <PHeader></PHeader>
+    <UserProfileCard :in-board="true" :username="filters.boardUsername"></UserProfileCard>
     <Boards :filters="filters"></Boards>
   </div>
 </template>
 
 <script>
 import PHeader from '../components/PHeader.vue';
+import UserProfileCard from '../components/UserProfileCard.vue';
 import Boards from '../components/Boards.vue';
 
 export default {
@@ -18,6 +20,7 @@ export default {
   },
   components: {
     PHeader,
+    UserProfileCard,
     Boards,
   },
   created() {

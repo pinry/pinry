@@ -238,6 +238,23 @@ const User = {
       },
     );
   },
+  fetchUserInfoByName(username) {
+    /* returns null if user not logged in */
+    const url = `${API_PREFIX}profile/public-users/?username=${username}`;
+    return new Promise(
+      (resolve) => {
+        axios.get(url).then(
+          (resp) => {
+            const users = resp.data;
+            if (users.length === 0) {
+              return resolve(null);
+            }
+            return resolve(users[0]);
+          },
+        );
+      },
+    );
+  },
   fetchUserInfo(force = false) {
     /* returns null if user not logged in */
     const self = this;
