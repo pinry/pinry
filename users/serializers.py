@@ -6,6 +6,21 @@ from rest_framework.exceptions import ValidationError
 from users.models import User
 
 
+class PublicUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'gravatar',
+            settings.DRF_URL_FIELD_NAME,
+        )
+        extra_kwargs = {
+            settings.DRF_URL_FIELD_NAME: {
+                "view_name": "public-users:user-detail",
+            },
+        }
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User

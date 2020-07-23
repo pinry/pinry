@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.urls import reverse
 from django.utils.functional import lazy
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, routers
 from rest_framework.permissions import BasePermission
 from rest_framework.renderers import JSONRenderer
@@ -18,6 +19,21 @@ from users.models import User
 
 def reverse_lazy(name=None, *args):
     return lazy(reverse, str)(name, args=args)
+
+
+class PublicUserViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
+    serializer_class = UserSerializer
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ("username", )
+    pagination_class = None
+
+    def get_queryset(self):
+        username = self.request.GET.get("username", "")
+        return User.objects.filter(username=username)
 
 
 class UserViewSet(
@@ -87,3 +103,4 @@ def logout_user(request):
 
 drf_router = routers.DefaultRouter()
 drf_router.register(r'users', UserViewSet, basename="user")
+drf_router.register(r'public-users', PublicUserViewSet, basename="public-user")
