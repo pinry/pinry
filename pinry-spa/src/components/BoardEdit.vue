@@ -22,7 +22,7 @@
                        :type="createModel.form.private.type"
                        :message="createModel.form.private.error">
                 <b-checkbox v-model="createModel.form.private.value">
-                    {{ createModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                    is private
                 </b-checkbox>
               </b-field>
           </div>
@@ -42,7 +42,7 @@
                        :type="editModel.form.private.type"
                        :message="editModel.form.private.error">
                 <b-checkbox v-model="editModel.form.private.value">
-                    {{ editModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                    is private
                 </b-checkbox>
               </b-field>
           </div>
