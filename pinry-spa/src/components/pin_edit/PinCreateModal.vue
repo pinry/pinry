@@ -32,7 +32,7 @@
                        :type="pinModel.form.private.type"
                        :message="pinModel.form.private.error">
                 <b-checkbox v-model="pinModel.form.private.value">
-                    {{ pinModel.form.private.value?"only visible to yourself":"visible to everyone" }}
+                    is private
                 </b-checkbox>
               </b-field>
               <b-field label="Image Referer"
