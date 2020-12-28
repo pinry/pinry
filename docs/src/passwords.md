@@ -1,7 +1,7 @@
 # Updating Passwords
 
 Currently we don't have a good "forgot my password" method on Pinry since that
-generally requries an email to be sent. The current method for changing
+generally requires an email to be sent. The current method for changing
 passwords involves:
 
 - Create a new super user `pipenv run python manage.py createsuperuser`
