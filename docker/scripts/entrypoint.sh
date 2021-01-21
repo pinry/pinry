@@ -10,6 +10,9 @@
 # -----------------------------------------------------------------------------
 PROJECT_ROOT="/pinry"
 
+mkdir -p /data/pinry-spa
+cp -R /pinry/pinry-spa/dist /data/pinry-spa/
+
 cd ${PROJECT_ROOT} || exit 1
 python manage.py collectstatic --noinput --settings=pinry.settings.docker
 python manage.py migrate --noinput --settings=pinry.settings.docker

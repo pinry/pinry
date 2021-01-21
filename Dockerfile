@@ -29,11 +29,7 @@ RUN pip install rcssmin --install-option="--without-c-extensions" \
 
 COPY . .
 
-# /data is where static files and downloaded images are stored
-RUN mkdir -p /data/pinry-spa
-COPY --from=yarn-build pinry-spa/dist /data/pinry-spa/dist
-
-EXPOSE 8000
+COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist
 
 ENTRYPOINT ["/pinry/docker/scripts/entrypoint.sh"]
 CMD        ["/pinry/docker/scripts/_start_gunicorn.sh"]

@@ -15,15 +15,17 @@ services:
       - pinry
 
   proxy:
-    image: nginx:stable-alpine
+    build:
+      context: ./docker
+      dockerfile: nginx/Dockerfile
+    env_file:
+      - .env
     depends_on:
       - db
       - web
     ports:
       - "8080:80"
     volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./docker/nginx/sites-enabled/pinry.conf:/etc/nginx/sites-enabled/pinry.conf
       - pinry_fs:/data
     restart: always
     networks:
