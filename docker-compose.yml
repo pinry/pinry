@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    working_dir: /app
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - pinry_fs:/data
+    restart: always
+    networks:
+      - pinry
+
+  proxy:
+    image: nginx:stable-alpine
+    depends_on:
+      - db
+      - web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites-enabled/pinry.conf:/etc/nginx/sites-enabled/pinry.conf
+      - pinry_fs:/data
+    restart: always
+    networks:
+      - pinry
+
+  db:
+    image: bitnami/postgresql:12.5.0
+    env_file:
+      - .env
+    volumes:
+      - db_fs:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - pinry
+
+volumes:
+  db_fs:
+  pinry_fs:
+
+networks:
+  pinry:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-pinry

@@ -10,24 +10,8 @@
 # -----------------------------------------------------------------------------
 PROJECT_ROOT="/pinry"
 
-bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
-
-# If static files don't exist collect them
-cd ${PROJECT_ROOT}
+cd ${PROJECT_ROOT} || exit 1
 python manage.py collectstatic --noinput --settings=pinry.settings.docker
+python manage.py migrate --noinput --settings=pinry.settings.docker
 
-# If database doesn't exist yet create it
-if [ ! -f /data/production.db ]
-then
-    cd ${PROJECT_ROOT}
-    python manage.py migrate --noinput --settings=pinry.settings.docker
-fi
-
-# Fix all settings after all commands are run
-chown -R www-data:www-data /data
-
-# start all process
-/usr/sbin/nginx
-
-cd ${PROJECT_ROOT}
-./docker/scripts/_start_gunicorn.sh
+exec "$@"

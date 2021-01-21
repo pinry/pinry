@@ -6,26 +6,21 @@ STATIC_ROOT = '/data/static'
 
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Or just write your own secret-key here instead of using a env-variable
-SECRET_KEY = "secret_key_place_holder"
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+# DEBUG = False
+# TEMPLATE_DEBUG = DEBUG
 
 # SECURITY WARNING: use your actual domain name in production!
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/data/production.db',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': '/data/production.db',
+#     }
+# }
 
 # Allow users to register by themselves
 ALLOW_NEW_REGISTRATIONS = True
@@ -43,6 +38,6 @@ IMAGE_SIZES = {
 # Whether people can view pins without login
 PUBLIC = True
 
-ENABLED_PLUGINS = [
-    'pinry_plugins.batteries.plugin_example.Plugin',
-]
+# ENABLED_PLUGINS = [
+#     'pinry_plugins.batteries.plugin_example.Plugin',
+# ]

@@ -27,7 +27,6 @@ INSTALLED_APPS = [
 ROOT_URLCONF = 'pinry.urls'
 
 MIDDLEWARE = [
-
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
