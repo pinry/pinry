@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 
 # Build static yarn file
-FROM node:10.20.1-alpine3.11 as yarn-build
+FROM node:14-buster as yarn-build
 
 WORKDIR pinry-spa
 COPY pinry-spa/package.json pinry-spa/yarn.lock ./
@@ -21,7 +21,7 @@ RUN yarn build
 
 
 # Required for other database options
-FROM python:3.7-slim-stretch as base
+FROM python:3.7-slim-buster as base
 
 RUN apt-get update \
     && apt-get -y install gcc default-libmysqlclient-dev
@@ -29,7 +29,7 @@ RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
 # Final image
-FROM python:3.7-slim-stretch
+FROM python:3.7-slim-buster
 
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
@@ -44,7 +44,9 @@ RUN groupadd -g 2300 tmpgroup \
 
 # Install nginx
 RUN apt-get update \
-    && apt-get -y  install nginx pwgen\
+    && apt-get -y  install nginx pwgen \
+    # Install Pillow dependencies
+    && apt-get -y install libopenjp2-7 libjpeg-turbo-progs libjpeg62-turbo-dev libtiff5-dev libxcb1 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
