@@ -1,6 +1,9 @@
 # I have no idea
 *.iml
 
+# local_settings
+local_settings.py
+
 # Virtualenv/Common
 /bin/
 /build/
