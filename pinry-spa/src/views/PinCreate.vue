@@ -40,10 +40,7 @@ export default {
       );
     },
     onCreated() {
-      this.$buefy.dialog.alert(
-        'Please turn off this page by hand since '
-        + 'Javascript has no permission to do this',
-      );
+      window.close();
     },
     createPin() {
       modals.openPinEdit(
