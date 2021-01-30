@@ -48,7 +48,7 @@
                       @click="closeAndGoTo"
                       class="meta-link"
                       type="is-success">
-                      Goto Pin Link
+                      Permalink
                   </b-button>
                 </div>
               </div>
