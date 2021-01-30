@@ -35,7 +35,7 @@
                     is private
                 </b-checkbox>
               </b-field>
-              <b-field label="Image Referer"
+              <b-field label="Image Source"
                        :type="pinModel.form.referer.type"
                        :message="pinModel.form.referer.error">
                 <b-input

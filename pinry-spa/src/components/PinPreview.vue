@@ -33,7 +33,7 @@
                         v-show="pinItem.referer !== null"
                         class="meta-link"
                         type="is-warning">
-                      Referer
+                      Source
                     </b-button>
                   </a>
                   <a :href="pinItem.original_image_url" target="_blank">

@@ -58,6 +58,7 @@
                             </span>
                           </template>
                         </template>
+                        • <a :href="item.referer" target="_blank">Source</a>
                       </span>
                     </div>
                     <div class="is-clearfix"></div>
