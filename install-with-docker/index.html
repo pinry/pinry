@@ -451,12 +451,12 @@ or you could simply pull the image from DockerHub's registry via</p>
 </code></pre></div>
 
 <p>Then use the command line like:</p>
-<div class="codehilite"><pre><span></span><code># this should be an abs-path not relative path like &quot;.&quot;
-DATA_PATH=/abs/path/to/your/data/directory
+<div class="codehilite"><pre><span></span><code><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span>
+<span class="k">export</span> <span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span>
 
-sudo docker run -d=true -p=80:80 \
-    -v=<span class="cp">${</span><span class="n">DATA_PATH</span><span class="cp">}</span>:/data \
-    getpinry/pinry
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span><span class="o">=</span><span class="bp">true</span> <span class="o">-</span><span class="n">p</span><span class="o">=</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span> \
+    <span class="o">-</span><span class="n">v</span><span class="o">=$</span><span class="p">{</span><span class="n">DATA_PATH</span><span class="p">}:</span><span class="o">/</span><span class="n">data</span> \
+    <span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span>
 </code></pre></div>
 
 <h1 id="build-docker-from-source">Build Docker from Source<a class="headerlink" href="#build-docker-from-source" title="Permanent link">&para;</a></h1>
