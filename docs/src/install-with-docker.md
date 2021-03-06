@@ -59,7 +59,16 @@ Please visit `http://your-ip` to visit your instance and register a new account,
 
 ## Configuring docker-pinry
 ------------------------
-Enable signups for new users by editing `pinry/local_settings.py`
+
+All the configuration files will be created 
+in your data folder you mounted to docker (mounted as `/data`).
+If you use docker's data volume, please find the way to edit files
+via `docker exec` and any way like [here](https://stackoverflow.com/questions/47490307/editing-files-inside-of-a-docker-container).
+
+### Enable signups for new users
+Please edit  `/data/local_settings.py` in docker 
+and remove the container then restart it.
+
 ```
 ALLOW_NEW_REGISTRATIONS = True
 ```
