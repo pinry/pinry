@@ -19,7 +19,7 @@ Then use the command line like:
 
 ```
 # this should be an abs-path not relative path like "."
-DATA_PATH=/abs/path/to/your/data/directory
+export DATA_PATH=/abs/path/to/your/data/directory
 
 sudo docker run -d=true -p=80:80 \
     -v=${DATA_PATH}:/data \
