@@ -1,3 +1,8 @@
+# static
+static
+.idea
+pinry-spa/node_modules
+
 # git
 .git
 .gitignore
