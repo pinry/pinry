@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
 
-from core.models import Image, Board
+from core.models import Image, Board, SystemParameter
 from core.models import Pin
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
@@ -260,3 +260,12 @@ class TagAutoCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('name', )
+
+
+class SystemParameterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SystemParameter
+        fields = ("name", "key", "value")
+
+    value = serializers.JSONField()
