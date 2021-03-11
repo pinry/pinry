@@ -85,8 +85,8 @@ class Board(models.Model):
 class Pin(models.Model):
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     private = models.BooleanField(default=False, blank=False)
-    url = models.CharField(null=True, blank=True, max_length=512)
-    referer = models.CharField(null=True, blank=True, max_length=512)
+    url = models.CharField(null=True, blank=True, max_length=2048)
+    referer = models.CharField(null=True, blank=True, max_length=2048)
     description = models.TextField(blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin', on_delete=models.CASCADE)
     published = models.DateTimeField(auto_now_add=True)
