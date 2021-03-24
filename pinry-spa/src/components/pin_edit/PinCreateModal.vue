@@ -24,7 +24,7 @@
                   type="text"
                   v-model="pinModel.form.url.value"
                   placeholder="where to fetch the image"
-                  maxlength="256"
+                  maxlength="2048"
                 >
                 </b-input>
               </b-field>
@@ -42,7 +42,7 @@
                   type="text"
                   v-model="pinModel.form.referer.value"
                   placeholder="where to find the pin"
-                  maxlength="256"
+                  maxlength="2048"
                 >
                 </b-input>
               </b-field>
