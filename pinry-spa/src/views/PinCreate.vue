@@ -31,6 +31,7 @@ export default {
           if (user === null) {
             self.user.loggedIn = false;
             self.user.meta = {};
+            modals.openLogin(self, () => null);
           } else {
             self.user.meta = user;
             self.user.loggedIn = true;
