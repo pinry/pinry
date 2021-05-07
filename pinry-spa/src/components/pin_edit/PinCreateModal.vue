@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import API from '../api';
 import FileUpload from './FileUpload.vue';
 import FilterSelect from './FilterSelect.vue';
@@ -111,6 +113,7 @@ import ModelForm from '../utils/ModelForm';
 import Loading from '../utils/Loading';
 import AutoComplete from '../utils/AutoComplete';
 import niceLinks from '../utils/niceLinks';
+
 
 function isURLBlank(url) {
   return url !== null && url === '';
@@ -258,17 +261,26 @@ export default {
       }
       promise.then(
         (resp) => {
+          const promises = [];
+          function done() {
+            self.$emit('pinCreated', resp);
+            self.$parent.close();
+            loading.close();
+          }
           bus.bus.$emit(bus.events.refreshPin);
-          self.$emit('pinCreated', resp);
-          self.$parent.close();
-          loading.close();
           if (self.boardIds !== null) {
             // FIXME(winkidney): Should handle error for add-to board
             self.boardIds.forEach(
               (boardId) => {
-                API.Board.addToBoard(boardId, [resp.data.id]);
+                promises.push(API.Board.addToBoard(boardId, [resp.data.id]));
               },
             );
+          }
+          console.log(promises);
+          if (promises.length > 0) {
+            axios.all(promises).then(done);
+          } else {
+            done();
           }
         },
       ).catch((error) => {
