@@ -276,7 +276,6 @@ export default {
               },
             );
           }
-          console.log(promises);
           if (promises.length > 0) {
             axios.all(promises).then(done);
           } else {
