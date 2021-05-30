@@ -38,7 +38,8 @@
         pinryImages.id = 'pinry-images';
         setCSS(pinryImages, {
             position: 'fixed',
-            zIndex: 9001,
+            display: 'block',
+            zIndex: 2147483647,
             background: 'rgba(0, 0, 0, 0.7)',
             paddingTop: '70px',
             top: 0,
@@ -52,6 +53,7 @@
         var pinryBar = document.createElement('div');
         pinryBar.id = 'pinry-bar';
         setCSS(pinryBar, {
+            display: 'block',
             background: 'black',
             padding: '15px',
             position: 'absolute',
