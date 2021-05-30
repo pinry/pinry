@@ -268,7 +268,7 @@ export default {
             loading.close();
           }
           bus.bus.$emit(bus.events.refreshPin);
-          if (self.boardIds !== null) {
+          if (self.boardIds) {
             // FIXME(winkidney): Should handle error for add-to board
             self.boardIds.forEach(
               (boardId) => {
