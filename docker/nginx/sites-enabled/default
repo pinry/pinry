@@ -8,6 +8,9 @@ server {
     root /pinry/pinry-spa/dist/;
 
     client_max_body_size 50M;
+    add_header X-Frame-Options sameorigin always;
+
+    
     location /static {
         alias /data/static;
         expires max;
