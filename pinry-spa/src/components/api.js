@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import storage from './utils/storage';
 
 const API_PREFIX = '/api/v2/';
@@ -119,11 +120,14 @@ function fetchPins(offset, tagFilter, userFilter) {
     limit: 30,
     offset,
   };
-  if (tagFilter) queryArgs.tags__name = tagFilter;
+  if (tagFilter) queryArgs.tags = tagFilter;
   if (userFilter) queryArgs.submitter__username = userFilter;
   return axios.get(
     url,
-    { params: queryArgs },
+    {
+      params: queryArgs,
+      paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' }),
+    },
   );
 }
 

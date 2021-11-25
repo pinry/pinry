@@ -31,6 +31,10 @@ class PinViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         query = Pin.objects.all()
         request = self.request
+        tags = self.request.query_params.getlist('tags', None)
+        if tags is not None:
+            for tag in tags:
+                query = query.filter(tags__name=tag)
         return filter_private_pin(request, query)
 
 

@@ -7,18 +7,18 @@
             <option>Tag</option>
             <option>Board</option>
           </b-select>
-          <b-autocomplete
+          <b-taginput
             v-show="filterType === 'Tag'"
-            class="search-input"
             v-model="name"
-            :data="filteredDataArray"
-            :keep-first="true"
+            :data="filteredTags"
+            autocomplete
             :open-on-focus="true"
-            placeholder="select a filter then type to filter"
             icon="magnify"
-            @select="option => selected = option">
+            placeholder="select a filter then type to filter"
+            @input="option => selected = option"
+            @typing="filterTags">
             <template slot="empty">No results found</template>
-          </b-autocomplete>
+            </b-taginput>
           <template v-if="filterType === 'Board'">
             <b-input
               class="search-input"
@@ -46,21 +46,21 @@ export default {
   data() {
     return {
       filterType: null,
-      selectedOption: [],
+      filteredTags: [],
       options: {
         Tag: [],
       },
-      name: '',
+      name: [],
       boardText: '',
       selected: null,
     };
   },
   methods: {
     selectOption(filterName) {
-      this.name = '';
+      this.name = [];
       this.boardText = '';
       if (filterName === 'Tag') {
-        this.selectedOption = this.options.Tag;
+        this.filteredTags = this.options.Tag;
       }
     },
     searchBoard() {
@@ -72,6 +72,9 @@ export default {
         { filterType: this.filterType, selected: this.boardText },
       );
     },
+    filterTags(text) {
+      this.filteredTags = this.options.Tag.filter(tag => tag.toLowerCase().includes(text.toLowerCase()));
+    },
   },
   watch: {
     filterType(newVal) {
@@ -81,19 +84,6 @@ export default {
       this.$emit(
         'selected',
         { filterType: this.filterType, selected: newVal },
-      );
-    },
-  },
-  computed: {
-    filteredDataArray() {
-      return this.selectedOption.filter(
-        (option) => {
-          const ret = option
-            .toString()
-            .toLowerCase()
-            .indexOf(this.name.toLowerCase()) >= 0;
-          return ret;
-        },
       );
     },
   },
