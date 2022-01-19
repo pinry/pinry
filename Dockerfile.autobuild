@@ -52,7 +52,7 @@ RUN apt-get update \
 
 # Install Pipfile requirements
 COPY Pipfile* ./
-RUN pip install rcssmin --install-option="--without-c-extensions" \
+RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
     && pip install pipenv \
     && pipenv install --three --system --clear
 
