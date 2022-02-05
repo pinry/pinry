@@ -1,6 +1,8 @@
 # ![Pinry](https://raw.github.com/pinry/pinry/master/docs/src/imgs/logo-dark.png)
 
-![docker pulls](https://img.shields.io/docker/pulls/getpinry/pinry)
+![Node.js Build](https://img.shields.io/github/workflow/status/pinry/pinry/Node.js%20CI?label=node.js%20build)
+![Python Build](https://img.shields.io/github/workflow/status/pinry/pinry/Python%20package?label=python%20build)
+![Docker Pulls](https://img.shields.io/docker/pulls/getpinry/pinry)
 
 The open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy
