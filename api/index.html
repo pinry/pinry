@@ -13,14 +13,14 @@
         <meta name="author" content="Pinry's Contributors">
       
       
-        <link rel="canonical" href="https://docs.getpinry.com/extensions/">
+        <link rel="canonical" href="https://docs.getpinry.com/api/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
-        <title>Extensions - Pinry Docs</title>
+        <title>API support - Pinry Docs</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#browser-extensions" class="md-skip">
+        <a href="#api-support" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Extensions
+              API support
             
           </span>
         </div>
@@ -235,20 +235,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../extensions/" class="md-nav__link">
         Extensions
       </a>
-      
     </li>
   
 
@@ -304,11 +295,20 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         API support
       </a>
+      
     </li>
   
 
@@ -446,22 +446,37 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/extensions.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/pinry/pinry/edit/master/docs/src/api.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="browser-extensions">Browser Extensions<a class="headerlink" href="#browser-extensions" title="Permanent link">&para;</a></h1>
-<p>Lapo Luchini has been kind enough to create extensions for both Chrome and
-Firefox. You can find his repo for these extensions at:</p>
-<ul>
-<li><a href="https://github.com/lapo-luchini/browser-pinry">https://github.com/lapo-luchini/browser-pinry</a></li>
-</ul>
-<p>If you'd like to install either extension they are available at:</p>
-<ul>
-<li><a href="https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/">https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/</a></li>
-<li><a href="https://addons.mozilla.org/it/firefox/addon/add-to-pinry/">https://addons.mozilla.org/it/firefox/addon/add-to-pinry/</a></li>
-</ul>
+                <h1 id="api-support">API Support<a class="headerlink" href="#api-support" title="Permanent link">&para;</a></h1>
+<p>Pinry support API accessing via token so that you could write your own client or import any pin format to your instance.</p>
+<h1 id="get-token">Get Token<a class="headerlink" href="#get-token" title="Permanent link">&para;</a></h1>
+<p>Just go to <code>My -&gt; Profile</code> page to get the token.</p>
+<p><img alt="token-accessing" src="../imgs/screenshots/token-access.png" /></p>
+<h1 id="access-api-via-token">Access API via Token<a class="headerlink" href="#access-api-via-token" title="Permanent link">&para;</a></h1>
+<p>Here is an example for curl to access <code>user-profile</code> API:</p>
+<div class="codehilite"><pre><span></span><code>curl -X GET http://192.168.1.101:8080/api/v2/profile/users/ -H &#39;Authorization: Token fa3b0ed2b8a87c81323688c288642288c9570aca&#39;
+</code></pre></div>
+
+
+<p>You will get response like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n"></span>
+<span class="n">    {</span>
+<span class="n">    &quot;username&quot;: &quot;winkidney&quot;,</span>
+<span class="n">    &quot;token&quot;: &quot;fa3b0ed2b8a87c81323688c288642288c9570aca&quot;,</span>
+<span class="n">    &quot;email&quot;: &quot;winkidney@gmail.com&quot;,</span>
+<span class="n">    &quot;gravatar&quot;: &quot;0d7161ac663cdb21108502cd4051149c&quot;,</span>
+<span class="n">    &quot;resource_link&quot;: &quot;http://localhost:8000/api/v2/profile/users/1/&quot;</span>
+<span class="n">    }</span>
+<span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+
+<h1 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p>Just use the interactive API interface by DRF or follow the file <a href="https://github.com/pinry/pinry/blob/master/pinry-spa/src/components/api.js">api.js</a></p>
                 
               
               
@@ -479,7 +494,7 @@ Firefox. You can find his repo for these extensions at:</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../screenshots/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../development/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -488,19 +503,19 @@ Firefox. You can find his repo for these extensions at:</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Screenshots
+              Development
             </div>
           </div>
         </a>
       
       
-        <a href="../theories/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../plugin-system/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Theories
+              Plugin System
             </div>
           </div>
           <div class="md-footer__button md-icon">

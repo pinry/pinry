@@ -15,8 +15,8 @@
       
         <link rel="canonical" href="https://docs.getpinry.com/install-with-docker/">
       
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.4">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.77f3fd56.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
@@ -79,11 +79,9 @@
       
     </div>
     
-      
-
-<header class="md-header" data-md-component="header">
+      <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="https://docs.getpinry.com/" title="Pinry Docs" class="md-header__button md-logo" aria-label="Pinry Docs">
+    <a href=".." title="Pinry Docs" class="md-header__button md-logo" aria-label="Pinry Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -175,11 +173,9 @@
                     
 
 
-
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://docs.getpinry.com/" title="Pinry Docs" class="md-nav__button md-logo" aria-label="Pinry Docs">
+    <a href=".." title="Pinry Docs" class="md-nav__button md-logo" aria-label="Pinry Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -297,6 +293,21 @@
     <li class="md-nav__item">
       <a href="../development/" class="md-nav__link">
         Development
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API support
       </a>
     </li>
   
@@ -450,6 +461,7 @@ or you could simply pull the image from DockerHub's registry via</p>
 <div class="codehilite"><pre><span></span><code>docker pull getpinry/pinry
 </code></pre></div>
 
+
 <p>Then use the command line like:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span>
 <span class="k">export</span> <span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span>
@@ -459,12 +471,14 @@ or you could simply pull the image from DockerHub's registry via</p>
     <span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span>
 </code></pre></div>
 
+
 <h1 id="build-docker-from-source">Build Docker from Source<a class="headerlink" href="#build-docker-from-source" title="Permanent link">&para;</a></h1>
 <p>Running this will get the latest version of pinry itself</p>
 <div class="codehilite"><pre><span></span><code>git clone https://github.com/pinry/pinry
 cd pinry/docker
 ./build_docker.sh
 </code></pre></div>
+
 
 <p>Now you can start your container by command like this</p>
 <div class="codehilite"><pre><span></span><code># <span class="nv">this</span> <span class="nv">is</span> <span class="nv">where</span> <span class="nv">your</span> <span class="nv">database</span>, <span class="nv">local_settings</span> <span class="nv">and</span> <span class="nv">pins</span> <span class="nv">located</span>
@@ -473,12 +487,14 @@ cd pinry/docker
 .<span class="o">/</span><span class="nv">start_docker</span>.<span class="nv">sh</span> `<span class="nv">readlink</span> <span class="o">-</span><span class="nv">f</span> <span class="nv">data</span>`
 </code></pre></div>
 
+
 <p>Also, if you want to use a "named volume" instead, you can do this:</p>
 <div class="codehilite"><pre><span></span><code>docker volume create pinry
 docker run -d=true -p=80:80 \
     -v pinry:/data \
     getpinry/pinry
 </code></pre></div>
+
 
 <p>Please visit <code>http://your-ip</code> to visit your instance and register a new account, enjoy it.</p>
 <h2 id="configuring-docker-pinry">Configuring docker-pinry<a class="headerlink" href="#configuring-docker-pinry" title="Permanent link">&para;</a></h2>
@@ -493,12 +509,14 @@ and remove the container then restart it.</p>
 <div class="codehilite"><pre><span></span><code>ALLOW_NEW_REGISTRATIONS = True
 </code></pre></div>
 
+
 <h2 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h2>
 <p>Running this will build you a docker image with the latest version of pinry</p>
 <div class="codehilite"><pre><span></span><code>git pull --rebase
 cd ./docker/
 ./build_docker.sh
 </code></pre></div>
+
 
 <h1 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">&para;</a></h1>
 <p>Just copy <code>data</code> folder's content to an safe place, enjoy :)</p>
@@ -580,6 +598,7 @@ stronger database solution ( e.g: PostgreSQL or MySQL ) .</p>
         <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
+        
       </div>
       
   <div class="md-footer-social">
@@ -606,7 +625,7 @@ stronger database solution ( e.g: PostgreSQL or MySQL ) .</p>
     <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.9b151c6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
       
     
   </body>

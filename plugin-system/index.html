@@ -15,8 +15,8 @@
       
         <link rel="canonical" href="https://docs.getpinry.com/plugin-system/">
       
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.4">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.77f3fd56.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
@@ -79,11 +79,9 @@
       
     </div>
     
-      
-
-<header class="md-header" data-md-component="header">
+      <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="https://docs.getpinry.com/" title="Pinry Docs" class="md-header__button md-logo" aria-label="Pinry Docs">
+    <a href=".." title="Pinry Docs" class="md-header__button md-logo" aria-label="Pinry Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -175,11 +173,9 @@
                     
 
 
-
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://docs.getpinry.com/" title="Pinry Docs" class="md-nav__button md-logo" aria-label="Pinry Docs">
+    <a href=".." title="Pinry Docs" class="md-nav__button md-logo" aria-label="Pinry Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -288,6 +284,21 @@
     <li class="md-nav__item">
       <a href="../development/" class="md-nav__link">
         Development
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API support
       </a>
     </li>
   
@@ -463,6 +474,7 @@ instance after specified events triggered just like the way django-middleware wo
         <span class="k">pass</span>
 </code></pre></div>
 
+
 <p>You could make some changes on Image object and Thumbnail object 
 before they actually be saved (for example, add water-mark to them).</p>
 <p>You could access example plugin via <code>pinry_plugins/batteries/plugin_example.py</code>.</p>
@@ -471,6 +483,7 @@ before they actually be saved (for example, add water-mark to them).</p>
     &#39;pinry_plugins.batteries.plugin_example.Plugin&#39;,
 ]
 </code></pre></div>
+
 
 <p>Now the plugin will work like a charm!</p>
 <h1 id="list-of-available-plugins">List of Available Plugins<a class="headerlink" href="#list-of-available-plugins" title="Permanent link">&para;</a></h1>
@@ -483,6 +496,7 @@ before they actually be saved (for example, add water-mark to them).</p>
     &#39;pinry_plugins.batteries.hello.Plugin&#39;,
 ]
 </code></pre></div>
+
 
 <p>Then, rebuild your docker image, the plugin will work 
 if no further python dependencies required.</p>
@@ -503,7 +517,7 @@ if no further python dependencies required.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../development/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../api/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -512,7 +526,7 @@ if no further python dependencies required.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Development
+              API support
             </div>
           </div>
         </a>
@@ -546,6 +560,7 @@ if no further python dependencies required.</p>
         <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
+        
       </div>
       
   <div class="md-footer-social">
@@ -572,7 +587,7 @@ if no further python dependencies required.</p>
     <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.9b151c6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
       
     
   </body>
