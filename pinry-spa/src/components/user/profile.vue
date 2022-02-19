@@ -10,7 +10,7 @@
         <div class="content">
           <p>Your Token is:</p>
           <pre>{{ token }}</pre>
-          Please read <a href="#">DRF API Documentation</a> for more detail to know how to use it.
+          Please read <a target="_blank" href="https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication">DRF API Documentation</a> for more detail to know how to use it.
           <br>
         </div>
       </div>
