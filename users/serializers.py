@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from users.models import User
+from users.models import User, create_token_if_necessary
 
 
 class PublicUserSerializer(serializers.HyperlinkedModelSerializer):
@@ -77,4 +77,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
     def get_token(self, obj: User):
-        return obj.create_token_if_necessary().key
+        return create_token_if_necessary(obj).key
