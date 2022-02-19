@@ -26,6 +26,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = (
             'username',
+            'token',
             'email',
             'gravatar',
             'password',
@@ -52,6 +53,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         min_length=6,
         max_length=32,
     )
+    token = serializers.SerializerMethodField(read_only=True)
 
     def create(self, validated_data):
         if validated_data['password'] != validated_data['password_repeat']:
@@ -73,3 +75,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             backend=settings.AUTHENTICATION_BACKENDS[0],
         )
         return user
+
+    def get_token(self, obj: User):
+        return obj.create_token_if_necessary().key
