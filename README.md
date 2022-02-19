@@ -12,7 +12,6 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 
 
 ## Features
-
 - Image fetch and online preview
 - Tagging system for Pins
 - Browser Extensions
@@ -20,6 +19,7 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 - Works well with docker
 - Both public and private boards (add @2020.02.11)
 - Search by tags / Search boards with name (add @2020.02.14)
+- Full API support via DRF (add @2022.02.19)
 
 ## Install with Docker
 See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker/)

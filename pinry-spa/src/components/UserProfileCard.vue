@@ -47,6 +47,16 @@
                     <span>Boards</span>
                   </a>
                 </li>
+                <li :class="trueFalse2Class(inProfile)">
+                  <a @click="go2UserProfile">
+                    <b-icon
+                      type="is-dark"
+                      icon="account"
+                      custom-size="mdi-24px">
+                    </b-icon>
+                    <span>Profile</span>
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -71,6 +81,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    inProfile: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -89,6 +103,11 @@ export default {
     go2UserBoard() {
       this.$router.push(
         { name: 'boards4user', params: { username: this.username } },
+      );
+    },
+    go2UserProfile() {
+      this.$router.push(
+        { name: 'profile4user', params: { username: this.username } },
       );
     },
     go2UserPins() {

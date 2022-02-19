@@ -56,6 +56,11 @@
                   class="navbar-item">
                   Pins
                 </router-link>
+                <router-link
+                  :to="{ name: 'profile4user', params: {username: user.meta.username} }"
+                  class="navbar-item">
+                  Profile
+                </router-link>
               </div>
             </div>
             <div class="navbar-item has-dropdown is-hoverable">

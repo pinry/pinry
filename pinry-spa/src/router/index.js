@@ -6,6 +6,7 @@ import Pins4User from '../views/Pins4User.vue';
 import Pins4Board from '../views/Pins4Board.vue';
 import Pins4Id from '../views/Pins4Id.vue';
 import Boards4User from '../views/Boards4User.vue';
+import Profile4User from '../views/Profile4User.vue';
 import PinCreate from '../views/PinCreate.vue';
 import Search from '../views/Search.vue';
 import PageNotFound from '../views/PageNotFound.vue';
@@ -42,6 +43,11 @@ const routes = [
     path: '/boards/users/:username',
     name: 'boards4user',
     component: Boards4User,
+  },
+  {
+    path: '/profile/:username',
+    name: 'profile4user',
+    component: Profile4User,
   },
   {
     path: '/pin-creation/from-url',
