@@ -2,6 +2,7 @@
 static
 .idea
 pinry-spa/node_modules
+local_settings.py
 
 # git
 .git
