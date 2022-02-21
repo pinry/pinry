@@ -20,6 +20,7 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 - Both public and private boards (add @2020.02.11)
 - Search by tags / Search boards with name (add @2020.02.14)
 - Full API support via DRF (add @2022.02.19)
+- CLI support (Add image or url to Pinry via [command-line tool](https://github.com/pinry/pinry-cli-py)) (add @2022.02.20)
 
 ## Install with Docker
 See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
