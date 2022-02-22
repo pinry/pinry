@@ -1,6 +1,6 @@
 <template>
   <div class="login-modal">
-    <div>
+    <div @keydown="triggerDoLogin">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Login</p>
@@ -58,6 +58,13 @@ export default {
     };
   },
   methods: {
+    triggerDoLogin(e) {
+      if (e.keyCode === 13) {
+        this.doLogin();
+        return false;
+      }
+      return true;
+    },
     doLogin() {
       this.helper.resetAllFields();
       const self = this;
