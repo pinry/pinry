@@ -47,7 +47,7 @@ extra:
   manifest: 'manifest.webmanifest'
   social:
     - icon: fontawesome/brands/github-alt
-      link: 'https://github.com/sundowndev/PhoneInfoga'
+      link: 'https://github.com/pinry/pinry'
 
 markdown_extensions:
   - codehilite
