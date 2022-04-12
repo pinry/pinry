@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/install-with-docker/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
     
     
       
@@ -458,42 +458,42 @@ the end of this page.</p>
 <h1 id="get-image-form-dockerhub">Get Image form DockerHub<a class="headerlink" href="#get-image-form-dockerhub" title="Permanent link">&para;</a></h1>
 <p>The image is here: <a href="https://hub.docker.com/r/getpinry/pinry">getpinry/pinry</a>, 
 or you could simply pull the image from DockerHub's registry via</p>
-<div class="codehilite"><pre><span></span><code>docker pull getpinry/pinry
-</code></pre></div>
+<div class="codehilite"><pre><span></span>docker pull getpinry/pinry
+</pre></div>
 
 
 <p>Then use the command line like:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span>
-<span class="k">export</span> <span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span>
+<div class="codehilite"><pre><span></span><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span><span class="w"></span>
 
-<span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span><span class="o">=</span><span class="bp">true</span> <span class="o">-</span><span class="n">p</span><span class="o">=</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span> \
-    <span class="o">-</span><span class="n">v</span><span class="o">=$</span><span class="p">{</span><span class="n">DATA_PATH</span><span class="p">}:</span><span class="o">/</span><span class="n">data</span> \
-    <span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span>
-</code></pre></div>
+<span class="n">sudo</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="o">=</span><span class="bp">true</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">=</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span><span class="w"> </span>\<span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">v</span><span class="o">=$</span><span class="p">{</span><span class="n">DATA_PATH</span><span class="p">}:</span><span class="o">/</span><span class="n">data</span><span class="w"> </span>\<span class="w"></span>
+<span class="w">    </span><span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span><span class="w"></span>
+</pre></div>
 
 
 <h1 id="build-docker-from-source">Build Docker from Source<a class="headerlink" href="#build-docker-from-source" title="Permanent link">&para;</a></h1>
 <p>Running this will get the latest version of pinry itself</p>
-<div class="codehilite"><pre><span></span><code>git clone https://github.com/pinry/pinry
+<div class="codehilite"><pre><span></span>git clone https://github.com/pinry/pinry
 cd pinry/docker
 ./build_docker.sh
-</code></pre></div>
+</pre></div>
 
 
 <p>Now you can start your container by command like this</p>
-<div class="codehilite"><pre><span></span><code># <span class="nv">this</span> <span class="nv">is</span> <span class="nv">where</span> <span class="nv">your</span> <span class="nv">database</span>, <span class="nv">local_settings</span> <span class="nv">and</span> <span class="nv">pins</span> <span class="nv">located</span>
+<div class="codehilite"><pre><span></span># <span class="nv">this</span> <span class="nv">is</span> <span class="nv">where</span> <span class="nv">your</span> <span class="nv">database</span>, <span class="nv">local_settings</span> <span class="nv">and</span> <span class="nv">pins</span> <span class="nv">located</span>
 <span class="nv">mkdir</span> <span class="nv">data</span>
 # <span class="nv">use</span> <span class="nv">absolute</span> <span class="nv">path</span> <span class="k">for</span> <span class="nv">docker</span> <span class="nv">to</span> <span class="nv">avoid</span> <span class="nv">using</span> <span class="nv">default</span> <span class="nv">data</span><span class="o">-</span><span class="nv">volume</span> <span class="ss">(</span><span class="nv">we</span> <span class="nv">use</span> <span class="nv">directory</span> <span class="nv">instead</span><span class="ss">)</span>
 .<span class="o">/</span><span class="nv">start_docker</span>.<span class="nv">sh</span> `<span class="nv">readlink</span> <span class="o">-</span><span class="nv">f</span> <span class="nv">data</span>`
-</code></pre></div>
+</pre></div>
 
 
 <p>Also, if you want to use a "named volume" instead, you can do this:</p>
-<div class="codehilite"><pre><span></span><code>docker volume create pinry
+<div class="codehilite"><pre><span></span>docker volume create pinry
 docker run -d=true -p=80:80 \
     -v pinry:/data \
     getpinry/pinry
-</code></pre></div>
+</pre></div>
 
 
 <p>Please visit <code>http://your-ip</code> to visit your instance and register a new account, enjoy it.</p>
@@ -506,16 +506,16 @@ via <code>docker exec</code> and any way like <a href="https://stackoverflow.com
 <h3 id="enable-signups-for-new-users">Enable signups for new users<a class="headerlink" href="#enable-signups-for-new-users" title="Permanent link">&para;</a></h3>
 <p>Please edit  <code>/data/local_settings.py</code> in docker 
 and remove the container then restart it.</p>
-<div class="codehilite"><pre><span></span><code>ALLOW_NEW_REGISTRATIONS = True
-</code></pre></div>
+<div class="codehilite"><pre><span></span>ALLOW_NEW_REGISTRATIONS = True
+</pre></div>
 
 
 <h2 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h2>
 <p>Running this will build you a docker image with the latest version of pinry</p>
-<div class="codehilite"><pre><span></span><code>git pull --rebase
+<div class="codehilite"><pre><span></span>git pull --rebase
 cd ./docker/
 ./build_docker.sh
-</code></pre></div>
+</pre></div>
 
 
 <h1 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">&para;</a></h1>
@@ -608,7 +608,7 @@ stronger database solution ( e.g: PostgreSQL or MySQL ) .</p>
         
         
       
-      <a href="https://github.com/sundowndev/PhoneInfoga" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+      <a href="https://github.com/pinry/pinry" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
       </a>
     
