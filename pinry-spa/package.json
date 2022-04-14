@@ -11,6 +11,7 @@
     "axios": "^0.21.2",
     "buefy": "^0.8.20",
     "core-js": "^3.3.2",
+    "qs": "^6.7.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-masonry": "^0.11.8",
