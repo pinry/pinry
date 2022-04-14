@@ -69,5 +69,6 @@ ADD docker/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 
 # 80 is for nginx web, /data contains static files and database /start runs it.
 EXPOSE 80
+ENV DJANGO_SETTINGS_MODULE pinry.settings.docker
 VOLUME ["/data"]
 CMD    ["/pinry/docker/scripts/start.sh"]

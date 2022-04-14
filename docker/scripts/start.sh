@@ -9,7 +9,6 @@
 # Updated: Aug 19th, 2014
 # -----------------------------------------------------------------------------
 PROJECT_ROOT="/pinry"
-export DJANGO_SETTINGS_MODULE=pinry.settings.docker
 
 bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 
