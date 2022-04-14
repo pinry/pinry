@@ -12,4 +12,4 @@ fi
 
 sudo docker run -d=true -p=80:80 \
     -v=${DATA_PATH}:/data \
-    pinry/pinry
+    getpinry/pinry
