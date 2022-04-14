@@ -77,4 +77,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
     def get_token(self, obj: User):
-        return create_token_if_necessary(obj).key
+        if self.context['request'].user == obj:
+            return create_token_if_necessary(obj).key
+        return None
