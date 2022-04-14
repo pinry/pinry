@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/install-with-docker/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -458,42 +458,42 @@ the end of this page.</p>
 <h1 id="get-image-form-dockerhub">Get Image form DockerHub<a class="headerlink" href="#get-image-form-dockerhub" title="Permanent link">&para;</a></h1>
 <p>The image is here: <a href="https://hub.docker.com/r/getpinry/pinry">getpinry/pinry</a>, 
 or you could simply pull the image from DockerHub's registry via</p>
-<div class="codehilite"><pre><span></span>docker pull getpinry/pinry
-</pre></div>
+<div class="codehilite"><pre><span></span><code>docker pull getpinry/pinry
+</code></pre></div>
 
 
 <p>Then use the command line like:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span><span class="w"></span>
-<span class="k">export</span><span class="w"> </span><span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># this should be an abs-path not relative path like &quot;.&quot;</span>
+<span class="k">export</span> <span class="n">DATA_PATH</span><span class="o">=/</span><span class="nb">abs</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">directory</span>
 
-<span class="n">sudo</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="o">=</span><span class="bp">true</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">=</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span><span class="w"> </span>\<span class="w"></span>
-<span class="w">    </span><span class="o">-</span><span class="n">v</span><span class="o">=$</span><span class="p">{</span><span class="n">DATA_PATH</span><span class="p">}:</span><span class="o">/</span><span class="n">data</span><span class="w"> </span>\<span class="w"></span>
-<span class="w">    </span><span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span><span class="w"></span>
-</pre></div>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span><span class="o">=</span><span class="bp">true</span> <span class="o">-</span><span class="n">p</span><span class="o">=</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span> \
+    <span class="o">-</span><span class="n">v</span><span class="o">=$</span><span class="p">{</span><span class="n">DATA_PATH</span><span class="p">}:</span><span class="o">/</span><span class="n">data</span> \
+    <span class="n">getpinry</span><span class="o">/</span><span class="n">pinry</span>
+</code></pre></div>
 
 
 <h1 id="build-docker-from-source">Build Docker from Source<a class="headerlink" href="#build-docker-from-source" title="Permanent link">&para;</a></h1>
 <p>Running this will get the latest version of pinry itself</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/pinry/pinry
+<div class="codehilite"><pre><span></span><code>git clone https://github.com/pinry/pinry
 cd pinry/docker
 ./build_docker.sh
-</pre></div>
+</code></pre></div>
 
 
 <p>Now you can start your container by command like this</p>
-<div class="codehilite"><pre><span></span># <span class="nv">this</span> <span class="nv">is</span> <span class="nv">where</span> <span class="nv">your</span> <span class="nv">database</span>, <span class="nv">local_settings</span> <span class="nv">and</span> <span class="nv">pins</span> <span class="nv">located</span>
+<div class="codehilite"><pre><span></span><code># <span class="nv">this</span> <span class="nv">is</span> <span class="nv">where</span> <span class="nv">your</span> <span class="nv">database</span>, <span class="nv">local_settings</span> <span class="nv">and</span> <span class="nv">pins</span> <span class="nv">located</span>
 <span class="nv">mkdir</span> <span class="nv">data</span>
 # <span class="nv">use</span> <span class="nv">absolute</span> <span class="nv">path</span> <span class="k">for</span> <span class="nv">docker</span> <span class="nv">to</span> <span class="nv">avoid</span> <span class="nv">using</span> <span class="nv">default</span> <span class="nv">data</span><span class="o">-</span><span class="nv">volume</span> <span class="ss">(</span><span class="nv">we</span> <span class="nv">use</span> <span class="nv">directory</span> <span class="nv">instead</span><span class="ss">)</span>
 .<span class="o">/</span><span class="nv">start_docker</span>.<span class="nv">sh</span> `<span class="nv">readlink</span> <span class="o">-</span><span class="nv">f</span> <span class="nv">data</span>`
-</pre></div>
+</code></pre></div>
 
 
 <p>Also, if you want to use a "named volume" instead, you can do this:</p>
-<div class="codehilite"><pre><span></span>docker volume create pinry
+<div class="codehilite"><pre><span></span><code>docker volume create pinry
 docker run -d=true -p=80:80 \
     -v pinry:/data \
     getpinry/pinry
-</pre></div>
+</code></pre></div>
 
 
 <p>Please visit <code>http://your-ip</code> to visit your instance and register a new account, enjoy it.</p>
@@ -506,16 +506,16 @@ via <code>docker exec</code> and any way like <a href="https://stackoverflow.com
 <h3 id="enable-signups-for-new-users">Enable signups for new users<a class="headerlink" href="#enable-signups-for-new-users" title="Permanent link">&para;</a></h3>
 <p>Please edit  <code>/data/local_settings.py</code> in docker 
 and remove the container then restart it.</p>
-<div class="codehilite"><pre><span></span>ALLOW_NEW_REGISTRATIONS = True
-</pre></div>
+<div class="codehilite"><pre><span></span><code>ALLOW_NEW_REGISTRATIONS = True
+</code></pre></div>
 
 
 <h2 id="building-docker-pinry-again-with-latest-version">Building docker-pinry again (with latest version)<a class="headerlink" href="#building-docker-pinry-again-with-latest-version" title="Permanent link">&para;</a></h2>
 <p>Running this will build you a docker image with the latest version of pinry</p>
-<div class="codehilite"><pre><span></span>git pull --rebase
+<div class="codehilite"><pre><span></span><code>git pull --rebase
 cd ./docker/
 ./build_docker.sh
-</pre></div>
+</code></pre></div>
 
 
 <h1 id="backup">Backup<a class="headerlink" href="#backup" title="Permanent link">&para;</a></h1>

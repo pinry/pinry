@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/upgrade-guide/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -455,12 +455,28 @@
 <p>This doc is about how you should do to upgrade specified version to next version.</p>
 <p>Generally, you should have no extra action to take if you use our docker version
 if we haven't written notes for it.</p>
-<p>How to get the current version:</p>
-<div class="codehilite"><pre><span></span>git tag
-</pre></div>
+<p>If you meet some errors which include <code>no such table</code>, please have a try to run migrations in docker:</p>
+<div class="codehilite"><pre><span></span><code># <span class="nv">out</span> <span class="nv">of</span> <span class="nv">docker</span>
+<span class="nv">docker</span> <span class="k">exec</span> <span class="o">-</span><span class="nv">it</span> <span class="o">&lt;</span><span class="nv">your</span><span class="o">-</span><span class="nv">container</span><span class="o">-</span><span class="nv">id</span><span class="o">&gt;</span> <span class="nv">bash</span>
+# <span class="nv">in</span> <span class="nv">docker</span>
+<span class="nv">python</span> <span class="nv">manage</span>.<span class="nv">py</span> <span class="nv">migrate</span> 
+</code></pre></div>
+
+
+<p>How to get the current version with source code:</p>
+<div class="codehilite"><pre><span></span><code>git tag
+</code></pre></div>
 
 
 <p>The first line of output is our latest version of code.</p>
+<h1 id="v216-v217">v2.1.6 -&gt; v2.1.7<a class="headerlink" href="#v216-v217" title="Permanent link">&para;</a></h1>
+<p>v2.1.6 has a security issue which may cause unauthorized token-read.
+If you upgrade your instance from v2.1.6 to v2.1.7, you could go into 
+docker and run following command to reset tokens.</p>
+<div class="codehilite"><pre><span></span><code>python manage.py users_reset_tokens
+</code></pre></div>
+
+
 <h1 id="v202-v210">v2.0.2 -&gt; v2.1.0<a class="headerlink" href="#v202-v210" title="Permanent link">&para;</a></h1>
 <p>Main breaking changes:</p>
 <ul>
@@ -470,12 +486,12 @@ if we haven't written notes for it.</p>
 <p>If you use non-docker version, you should change your web-server config to add a new
 alias for <code>media file path</code> (where to store images).</p>
 <p>Please add following config to your nginx config in <code>server</code> block:</p>
-<div class="codehilite"><pre><span></span>location /media {
+<div class="codehilite"><pre><span></span><code>location /media {
     alias /path/to/static/media;
     expires max;
     access_log off;
 }
-</pre></div>
+</code></pre></div>
                 
               
               

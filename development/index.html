@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/development/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -508,28 +508,28 @@ are not the defaults for these languages:</p>
 <li>Node, yarn</li>
 </ul>
 <p>To install these is pretty simple, you can just run:</p>
-<div class="codehilite"><pre><span></span>cd pinry
+<div class="codehilite"><pre><span></span><code>cd pinry
 pip install pipenv
 npm install -g yarn
-</pre></div>
+</code></pre></div>
 
 
 <p>After that you can install this project with:</p>
-<div class="codehilite"><pre><span></span>pipenv install --dev
+<div class="codehilite"><pre><span></span><code>pipenv install --dev
 cd pinry-spa; yarn install
-</pre></div>
+</code></pre></div>
 
 
 <p>You will need to run two separate items as of right now, the SPA and the
 backend:</p>
-<div class="codehilite"><pre><span></span>pipenv run python manage.py migrate
+<div class="codehilite"><pre><span></span><code>pipenv run python manage.py migrate
 pipenv run python manage.py runserver
-</pre></div>
+</code></pre></div>
 
 
 <p>And from another terminal:</p>
-<div class="codehilite"><pre><span></span>cd pinry-spa; yarn serve
-</pre></div>
+<div class="codehilite"><pre><span></span><code>cd pinry-spa; yarn serve
+</code></pre></div>
 
 
 <h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
@@ -538,8 +538,8 @@ anything. If you are live dangerously and have cutting edge new Pinry
 features first you can use our master branch for your own instance. We
 recommend using our tags/versions though.</p>
 <p>To run Pinry's tests inside the Pinry repo run:</p>
-<div class="codehilite"><pre><span></span>pipenv run python manage.py test
-</pre></div>
+<div class="codehilite"><pre><span></span><code>pipenv run python manage.py test
+</code></pre></div>
 
 
 <h1 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h1>

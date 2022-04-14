@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/plugin-system/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -457,7 +457,7 @@
 The plugin loader will call the <code>Plugin</code> target only once and use the plugin
 instance after specified events triggered just like the way django-middleware works.</p>
 <p>You could create a plugin as python-package with content below:</p>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">core.models</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">core.models</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">django_images.models</span> <span class="kn">import</span> <span class="n">Thumbnail</span>
 
 
@@ -472,17 +472,17 @@ instance after specified events triggered just like the way django-middleware wo
 
     <span class="k">def</span> <span class="nf">process_thumbnail_pre_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">django_settings</span><span class="p">,</span> <span class="n">thumbnail_instance</span><span class="p">:</span> <span class="n">Thumbnail</span><span class="p">):</span>
         <span class="k">pass</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>You could make some changes on Image object and Thumbnail object 
 before they actually be saved (for example, add water-mark to them).</p>
 <p>You could access example plugin via <code>pinry_plugins/batteries/plugin_example.py</code>.</p>
 <p>After all, enable the plugin in local_settings.py:</p>
-<div class="codehilite"><pre><span></span>ENABLED_PLUGINS = [
+<div class="codehilite"><pre><span></span><code>ENABLED_PLUGINS = [
     &#39;pinry_plugins.batteries.plugin_example.Plugin&#39;,
 ]
-</pre></div>
+</code></pre></div>
 
 
 <p>Now the plugin will work like a charm!</p>
@@ -492,10 +492,10 @@ before they actually be saved (for example, add water-mark to them).</p>
 <p>If you have a plugin named <code>hello.py</code> and it have a <code>Plugin</code> class inside.</p>
 <p>You could just copy it to directory <code>pinry_plugins/batteries</code>.</p>
 <p>Now add config to local_settings.py</p>
-<div class="codehilite"><pre><span></span>ENABLED_PLUGINS = [
+<div class="codehilite"><pre><span></span><code>ENABLED_PLUGINS = [
     &#39;pinry_plugins.batteries.hello.Plugin&#39;,
 ]
-</pre></div>
+</code></pre></div>
 
 
 <p>Then, rebuild your docker image, the plugin will work 

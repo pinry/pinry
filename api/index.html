@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.getpinry.com/api/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.0.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -458,12 +458,12 @@
 <p><img alt="token-accessing" src="../imgs/screenshots/token-access.png" /></p>
 <h1 id="access-api-via-token">Access API via Token<a class="headerlink" href="#access-api-via-token" title="Permanent link">&para;</a></h1>
 <p>Here is an example for curl to access <code>user-profile</code> API:</p>
-<div class="codehilite"><pre><span></span>curl -X GET http://192.168.1.101:8080/api/v2/profile/users/ -H &#39;Authorization: Token fa3b0ed2b8a87c81323688c288642288c9570aca&#39;
-</pre></div>
+<div class="codehilite"><pre><span></span><code>curl -X GET http://192.168.1.101:8080/api/v2/profile/users/ -H &#39;Authorization: Token fa3b0ed2b8a87c81323688c288642288c9570aca&#39;
+</code></pre></div>
 
 
 <p>You will get response like this:</p>
-<div class="codehilite"><pre><span></span><span class="o">[</span><span class="n"></span>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n"></span>
 <span class="n">    {</span>
 <span class="n">    &quot;username&quot;: &quot;winkidney&quot;,</span>
 <span class="n">    &quot;token&quot;: &quot;fa3b0ed2b8a87c81323688c288642288c9570aca&quot;,</span>
@@ -472,7 +472,7 @@
 <span class="n">    &quot;resource_link&quot;: &quot;http://localhost:8000/api/v2/profile/users/1/&quot;</span>
 <span class="n">    }</span>
 <span class="o">]</span><span class="w"></span>
-</pre></div>
+</code></pre></div>
 
 
 <h1 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
