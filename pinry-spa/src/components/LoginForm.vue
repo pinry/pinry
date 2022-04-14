@@ -3,7 +3,7 @@
     <div @keydown="triggerDoLogin">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">Login</p>
+          <p class="modal-card-title">{{ $t("loginTitle") }}</p>
         </header>
         <section class="modal-card-body">
           <b-field label="Username"
