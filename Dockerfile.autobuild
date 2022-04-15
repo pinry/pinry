@@ -21,7 +21,7 @@ RUN yarn build
 
 
 # Required for other database options
-FROM python:3.7-slim-buster as base
+FROM python:3.9.12-slim-buster as base
 
 RUN apt-get update \
     && apt-get -y install gcc default-libmysqlclient-dev
@@ -29,7 +29,7 @@ RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
 # Final image
-FROM python:3.7-slim-buster
+FROM python:3.9.12-slim-buster
 
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
