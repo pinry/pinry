@@ -13,7 +13,7 @@
               name="username"
               type="text"
               v-model="form.username.value"
-              placeholder="Your Username"
+              v-bind:placeholder="$t('usernamePlaceholder')"
               maxlength="30"
               required>
             </b-input>
@@ -26,7 +26,7 @@
               type="password"
               v-model="form.password.value"
               password-reveal
-              placeholder="Your password"
+              v-bind:placeholder="$t('passwordLoginPlaceholder')"
               required>
             </b-input>
           </b-field>

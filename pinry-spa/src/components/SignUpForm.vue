@@ -12,7 +12,7 @@
             <b-input
               type="string"
               v-model="form.username.value"
-              placeholder="Your Username"
+              v-bind:placeholder="$t('usernamePlaceholder')"
               maxlength="30"
               required>
             </b-input>
@@ -25,7 +25,7 @@
               type="email"
               v-model="form.email.value"
               password-reveal
-              placeholder="Your email"
+              v-bind:placeholder="$t('emailPlaceholder')"
               required>
             </b-input>
           </b-field>
@@ -36,7 +36,7 @@
               type="password"
               v-model="form.password.value"
               password-reveal
-              placeholder="Your password"
+              v-bind:placeholder="$t('passwordSignUpPlaceholder')"
               required>
             </b-input>
           </b-field>
@@ -47,7 +47,7 @@
               type="password"
               v-model="form.password_repeat.value"
               password-reveal
-              placeholder="Your password again"
+              v-bind:placeholder="$t('repeatPasswordInputPlaceholder')"
               required>
             </b-input>
           </b-field>

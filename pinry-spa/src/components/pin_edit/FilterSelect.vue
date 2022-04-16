@@ -6,7 +6,7 @@
       <b-input
         type="text"
         v-model="form.name.value"
-        placeholder="Type to filter or Create one"
+        v-bind:placeholder="$t('filterSelectSelectBoardPlaceholder')"
         maxlength="128"
       >
       </b-input>

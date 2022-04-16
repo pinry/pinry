@@ -50,5 +50,19 @@
     "filterSelectCreateNewBoardButton": "Create New Board",
     "pinCreateModalEmptySlot": "There are no items",
     "pinCreateModalCreatePinButton": "Create Pin",
-    "pinCreateModalSaveChangesButton": "Save Changes"
+    "pinCreateModalSaveChangesButton": "Save Changes",
+    "passwordSignUpPlaceholder": "Your password",
+    "passwordLoginPlaceholder": "Your password",
+    "boardNamePlaceholder": "board name",
+    "usernamePlaceholder": "Your Username",
+    "emailPlaceholder": "Your email",
+    "repeatPasswordInputPlaceholder": "Your password again",
+    "chooseFilterPlaceholder": "Choose Filter",
+    "selectFilterPlaceholder": "select a filter then type to filter",
+    "searchBoardPlaceholder": "type to search board",
+    "filterSelectSelectBoardPlaceholder": "Type to filter or Create one",
+    "pinCreateModalImageURLPlaceholder": "where to fetch the image",
+    "pinCreateModalImageSourcePlaceholder": "where to find the pin",
+    "pinCreateModalImageTagsPlaceholder": "Add a tag",
+    "pinCreateModalImageDescriptionPlaceholder": "idea from this pin"
 }

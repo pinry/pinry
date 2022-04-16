@@ -23,7 +23,7 @@
                 <b-input
                   type="text"
                   v-model="pinModel.form.url.value"
-                  placeholder="where to fetch the image"
+                  v-bind:placeholder="$t('pinCreateModalImageURLPlaceholder')"
                   maxlength="2048"
                 >
                 </b-input>
@@ -41,7 +41,7 @@
                 <b-input
                   type="text"
                   v-model="pinModel.form.referer.value"
-                  placeholder="where to find the pin"
+                  v-bind:placeholder="$t('pinCreateModalImageSourcePlaceholder')"
                   maxlength="2048"
                 >
                 </b-input>
@@ -54,7 +54,7 @@
                     ellipsis
                     icon="label"
                     :allow-new="true"
-                    placeholder="Add a tag"
+                    v-bind:placeholder="$t('pinCreateModalImageTagsPlaceholder')"
                     @typing="getFilteredTags">
                   <template slot-scope="props">
                     <strong>{{ props.option }}</strong>
@@ -70,7 +70,7 @@
                 <b-input
                   type="textarea"
                   v-model="pinModel.form.description.value"
-                  placeholder="idea from this pin"
+                  v-bind:placeholder="$t('pinCreateModalImageDescriptionPlaceholder')"
                   maxlength="1024"
                 >
                 </b-input>

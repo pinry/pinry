@@ -13,7 +13,7 @@
                 <b-input
                   type="text"
                   v-model="createModel.form.name.value"
-                  placeholder="board name"
+                  v-bind:placeholder="$t('boardNamePlaceholder')"
                   maxlength="128"
                   >
                 </b-input>
@@ -33,7 +33,7 @@
                 <b-input
                   type="text"
                   v-model="editModel.form.name.value"
-                  placeholder="board name"
+                  v-bind:placeholder="$t('boardNamePlaceholder')"
                   maxlength="128"
                   >
                 </b-input>
