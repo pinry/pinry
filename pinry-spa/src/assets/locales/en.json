@@ -50,11 +50,5 @@
     "filterSelectCreateNewBoardButton": "Create New Board",
     "pinCreateModalEmptySlot": "There are no items",
     "pinCreateModalCreatePinButton": "Create Pin",
-    "pinCreateModalSaveChangesButton": "Save Changes",
-    "": "",
-    "": "",
-    "": "",
-    "": "",
-    "": "",
-    "": ""
+    "pinCreateModalSaveChangesButton": "Save Changes"
 }
