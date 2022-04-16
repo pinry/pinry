@@ -15,7 +15,7 @@
       <button
         @click="createNewBoard"
         class="button is-primary">
-        Create New Board
+        {{ $t("filterSelectCreateNewBoardButton") }}
       </button>
     </b-field>
     <b-field>

@@ -42,7 +42,7 @@
                       <img class="avatar" :src="item.avatar" alt="">
                     </div>
                     <div class="pin-info">
-                      <span class="dim">Pinned by&nbsp;
+                      <span class="dim">{{ $t("pinnedByInfo") }}&nbsp;
                         <span>
                           <router-link
                             :to="{ name: 'user', params: {user: item.author} }">
@@ -58,7 +58,7 @@
                             </span>
                           </template>
                         </template>
-                        • <a :href="item.referer" target="_blank">Source</a>
+                        • <a :href="item.referer" target="_blank">{{ $t("sourceLink") }}</a>
                       </span>
                     </div>
                     <div class="is-clearfix"></div>

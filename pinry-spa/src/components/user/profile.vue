@@ -3,14 +3,14 @@
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">
-          Token
+          {{ $t("tokenUserProfileCardTitle") }}
         </p>
       </header>
       <div class="card-content">
         <div class="content">
-          <p>Your Token is:</p>
+          <p>{{ $t("tokenUserProfileCardContent") }}</p>
           <pre>{{ token }}</pre>
-          Please read <a target="_blank" href="https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication">DRF API Documentation</a> for more detail to know how to use it.
+          {{ $t("pleaseReadTokenUserProfileCardContent") }}<a target="_blank" href="https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication">{{ $t("drfApiDocumentationLink") }}</a>{{ $t("forMoreDetailsParagraph") }}
           <br>
         </div>
       </div>

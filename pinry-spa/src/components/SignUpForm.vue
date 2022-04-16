@@ -3,7 +3,7 @@
     <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">Sign Up</p>
+          <p class="modal-card-title">{{ $t("signUpTitle") }}</p>
         </header>
         <section class="modal-card-body">
           <b-field label="Username"
@@ -53,10 +53,10 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             @click="doRegister"
-            class="button is-primary">Register</button>
+            class="button is-primary">{{ $t("registerButton") }}</button>
         </footer>
       </div>
     </div>

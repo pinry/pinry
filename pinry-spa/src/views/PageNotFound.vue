@@ -3,8 +3,8 @@
     <PHeader></PHeader>
     <div id="main">
       <div class="fof">
-        <p>Oops! Page Not Found</p>
-        <h1>Error 404</h1>
+        <p>{{ $t("pageNotFound") }}</p>
+        <h1>{{ $t("error404") }}</h1>
       </div>
     </div>
   </div>

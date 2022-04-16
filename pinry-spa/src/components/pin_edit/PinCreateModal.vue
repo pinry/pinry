@@ -32,7 +32,7 @@
                        :type="pinModel.form.private.type"
                        :message="pinModel.form.private.error">
                 <b-checkbox v-model="pinModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
               <b-field label="Image Source"
@@ -60,7 +60,7 @@
                     <strong>{{ props.option }}</strong>
                   </template>
                   <template slot="empty">
-                    There are no items
+                    {{ $t("pinCreateModalEmptySlot") }}
                   </template>
                 </b-taginput>
               </b-field>
@@ -85,16 +85,16 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createPin"
-            class="button is-primary">Create Pin
+            class="button is-primary">{{ $t("pinCreateModalCreatePinButton") }}
           </button>
           <button
             v-if="isEdit"
             @click="savePin"
-            class="button is-primary">Save Changes
+            class="button is-primary">{{ $t("pinCreateModalSaveChangesButton") }}
           </button>
         </footer>
       </div>

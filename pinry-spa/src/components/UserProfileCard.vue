@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="content">
-              Yet another Pinry user.
+              {{ $t("userProfileCardContent") }}
               <br>
             </div>
 
@@ -34,7 +34,7 @@
                       icon="image"
                       custom-size="mdi-24px">
                     </b-icon>
-                    <span>Pins</span>
+                    <span>{{ $t("pinsUserProfileCardLink") }}</span>
                   </a>
                 </li>
                 <li :class="trueFalse2Class(inBoard)">
@@ -44,7 +44,7 @@
                       icon="folder-multiple-image"
                       custom-size="mdi-24px">
                     </b-icon>
-                    <span>Boards</span>
+                    <span>{{ $t("boardsUserProfileCardLink") }}</span>
                   </a>
                 </li>
                 <li :class="trueFalse2Class(inProfile)">
@@ -54,7 +54,7 @@
                       icon="account"
                       custom-size="mdi-24px">
                     </b-icon>
-                    <span>Profile</span>
+                    <span>{{ $t("profileUserProfileCardLink") }}</span>
                   </a>
                 </li>
               </ul>

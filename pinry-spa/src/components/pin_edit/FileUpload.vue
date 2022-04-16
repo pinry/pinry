@@ -19,7 +19,7 @@
                   size="is-medium">
                 </b-icon>
               </p>
-              <p>Drop your files here or click to upload</p>
+              <p>{{ $t("FileUploadDescription") }}</p>
             </div>
           </section>
         </b-upload>

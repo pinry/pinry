@@ -32,10 +32,10 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             @click="doLogin"
-            class="button is-primary">Login</button>
+            class="button is-primary">{{ $t("loginButton") }}</button>
         </footer>
       </div>
     </div>

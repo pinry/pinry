@@ -1,6 +1,6 @@
 <template>
   <div v-show="show">
-    <div id="the-end">&mdash; End &mdash;</div>
+    <div id="the-end">&mdash; {{ $t("end") }} &mdash;</div>
   </div>
 </template>
 

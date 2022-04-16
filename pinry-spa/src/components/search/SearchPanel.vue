@@ -4,8 +4,8 @@
       <div class="card-content">
         <b-field>
           <b-select placeholder="Choose Filter" v-model="filterType">
-            <option>Tag</option>
-            <option>Board</option>
+            <option>{{ $t("SearchPanelTagOption") }}</option>
+            <option>{{ $t("SearchPanelBoardOption") }}</option>
           </b-select>
           <b-autocomplete
             v-show="filterType === 'Tag'"
@@ -17,7 +17,7 @@
             placeholder="select a filter then type to filter"
             icon="magnify"
             @select="option => selected = option">
-            <template slot="empty">No results found</template>
+            <template slot="empty">{{ $t("noResultsFound") }}</template>
           </b-autocomplete>
           <template v-if="filterType === 'Board'">
             <b-input
@@ -29,7 +29,7 @@
             >
             </b-input>
             <p class="control">
-              <b-button @click="searchBoard" class="button is-primary">Search</b-button>
+              <b-button @click="searchBoard" class="button is-primary">{{ $t("searchButton") }}</b-button>
             </p>
           </template>
         </b-field>

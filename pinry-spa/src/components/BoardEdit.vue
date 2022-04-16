@@ -22,7 +22,7 @@
                        :type="createModel.form.private.type"
                        :message="createModel.form.private.error">
                 <b-checkbox v-model="createModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
           </div>
@@ -42,22 +42,22 @@
                        :type="editModel.form.private.type"
                        :message="editModel.form.private.error">
                 <b-checkbox v-model="editModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createBoard"
-            class="button is-primary">Create Board
+            class="button is-primary">{{ $t("createBoardButton") }}
           </button>
           <button
             v-if="isEdit"
             @click="saveBoardChanges"
-            class="button is-primary">Save Changes
+            class="button is-primary">{{ $t("saveChangesButton") }}
           </button>
         </footer>
       </div>
