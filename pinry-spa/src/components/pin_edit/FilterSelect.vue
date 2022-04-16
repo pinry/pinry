@@ -1,6 +1,6 @@
 <template>
   <div class="filter-select">
-    <b-field label="Select Board"
+    <b-field v-bind:label="$t('selectBoardLabel')"
              :type="form.name.type"
              :message="form.name.error">
       <b-input

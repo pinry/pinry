@@ -64,5 +64,16 @@
     "pinCreateModalImageURLPlaceholder": "where to fetch the image",
     "pinCreateModalImageSourcePlaceholder": "where to find the pin",
     "pinCreateModalImageTagsPlaceholder": "Add a tag",
-    "pinCreateModalImageDescriptionPlaceholder": "idea from this pin"
+    "pinCreateModalImageDescriptionPlaceholder": "idea from this pin",
+    "emailLabel": "Email",
+    "usernameLabel": "Username",
+    "passwordLabel": "Password",
+    "repeatPasswordLabel": "Password repeat",
+    "nameLabel": "name",
+    "privacyOptionLabel": "Privacy Option",
+    "imageUrlLabel": "Image URL",
+    "imageSourceLabel": "Image Source",
+    "tagsLabel": "Tags",
+    "descriptionLabel": "Descripton",
+    "selectBoardLabel": "Select Board"
 }

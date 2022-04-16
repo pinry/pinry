@@ -16,7 +16,7 @@
               <div class="description" v-show="pinModel.form.description.value" v-html="niceLinks(pinModel.form.description.value)"></div>
             </div>
             <div class="column">
-              <b-field label="Image URL"
+              <b-field v-bind:label="$t('imageUrlLabel')"
                        v-show="!disableUrlField && !isEdit"
                        :type="pinModel.form.url.type"
                        :message="pinModel.form.url.error">
@@ -28,14 +28,14 @@
                 >
                 </b-input>
               </b-field>
-              <b-field label="Privacy Option"
+              <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="pinModel.form.private.type"
                        :message="pinModel.form.private.error">
                 <b-checkbox v-model="pinModel.form.private.value">
                     {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
-              <b-field label="Image Source"
+              <b-field v-bind:label="$t('imageSourceLabel')"
                        :type="pinModel.form.referer.type"
                        :message="pinModel.form.referer.error">
                 <b-input
@@ -46,7 +46,7 @@
                 >
                 </b-input>
               </b-field>
-              <b-field label="Tags">
+              <b-field v-bind:label="$t('tagsLabel')">
                 <b-taginput
                     v-model="pinModel.form.tags.value"
                     :data="editorMeta.filteredTagOptions"
@@ -64,7 +64,7 @@
                   </template>
                 </b-taginput>
               </b-field>
-              <b-field label="Descripton"
+              <b-field v-bind:label="$t('descriptionLabel')"
                        :type="pinModel.form.description.type"
                        :message="pinModel.form.description.error">
                 <b-input

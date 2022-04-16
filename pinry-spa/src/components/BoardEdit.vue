@@ -7,7 +7,7 @@
         </header>
         <section class="modal-card-body">
           <div v-if="!isEdit">
-            <b-field label="Name"
+            <b-field v-bind:label="$t('nameLabel')"
                        :type="createModel.form.name.type"
                        :message="createModel.form.name.error">
                 <b-input
@@ -18,7 +18,7 @@
                   >
                 </b-input>
             </b-field>
-            <b-field label="Privacy Option"
+            <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="createModel.form.private.type"
                        :message="createModel.form.private.error">
                 <b-checkbox v-model="createModel.form.private.value">
@@ -27,7 +27,7 @@
               </b-field>
           </div>
           <div v-if="isEdit">
-            <b-field label="Name"
+            <b-field v-bind:label="$t('nameLabel')"
                        :type="editModel.form.name.type"
                        :message="editModel.form.name.error">
                 <b-input
@@ -38,7 +38,7 @@
                   >
                 </b-input>
             </b-field>
-            <b-field label="Privacy Option"
+            <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="editModel.form.private.type"
                        :message="editModel.form.private.error">
                 <b-checkbox v-model="editModel.form.private.value">
