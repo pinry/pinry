@@ -110,7 +110,7 @@
               </div>
             </div>
             <div class="locale-changer">
-              <select v-model="$i18n.locale">
+              <select v-model="$i18n.locale" @change="setLocale($event)">
                  <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
               </select>
             </div>
@@ -145,6 +145,9 @@ export default {
     },
   },
   methods: {
+    setLocale(event) {
+      localStorage.setItem('localeCode', event.target.value);
+    },
     toggleMenu() {
       this.active = !this.active;
     },
