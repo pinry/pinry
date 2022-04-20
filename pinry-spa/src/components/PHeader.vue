@@ -18,24 +18,24 @@
         <div id="PinryNav" class="navbar-menu" :class="{ 'is-active': active}">
           <div class="navbar-start">
             <a class="navbar-item" :href="bookmarklet">
-              Bookmarklet
+              {{ $t("bookmarkletLink") }}
             </a>
             <div
               v-if="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
-                Create
+                {{ $t("createLink") }}
               </a>
               <div class="navbar-dropdown">
                 <a
                   @click="createPin"
                   class="navbar-item">
-                  Pin
+                  {{ $t("pinLink") }}
                 </a>
                 <a
                   @click="createBoard"
                   class="navbar-item">
-                  Board
+                  {{ $t("boardLink") }}
                 </a>
               </div>
             </div>
@@ -43,36 +43,36 @@
               v-if="user.loggedIn"
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
-                My
+                {{ $t("myLink") }}
               </a>
               <div class="navbar-dropdown">
                 <router-link
                   :to="{ name: 'boards4user', params: {username: user.meta.username} }"
                   class="navbar-item">
-                  Boards
+                  {{ $t("boardsLink") }}
                 </router-link>
                 <router-link
                   :to="{ name: 'user', params: {user: user.meta.username} }"
                   class="navbar-item">
-                  Pins
+                  {{ $t("pinsLink") }}
                 </router-link>
                 <router-link
                   :to="{ name: 'profile4user', params: {username: user.meta.username} }"
                   class="navbar-item">
-                  Profile
+                  {{ $t("profileLink") }}
                 </router-link>
               </div>
             </div>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
-                Browser Extensions
+                {{ $t("browserExtensionsLink") }}
               </a>
               <div class="navbar-dropdown">
                 <a class="navbar-item" href="https://chrome.google.com/webstore/detail/jmhdcnmfkglikfjafdmdikoonedgijpa/">
-                  Chrome
+                  {{ $t("chromeLink") }}
                 </a>
                 <a class="navbar-item" href="https://addons.mozilla.org/en-US/firefox/addon/add-to-pinry/">
-                  Firefox
+                  {{ $t("firefoxLink") }}
                 </a>
               </div>
             </div>
@@ -93,21 +93,26 @@
                   @click="signUp"
                   v-show="!user.loggedIn"
                   class="button is-primary">
-                  <strong>Sign up</strong>
+                  <strong>{{ $t("signUpLink") }}</strong>
                 </a>
                 <a
                   v-show="!user.loggedIn"
                   v-on:click="logIn"
                   class="button is-light">
-                  Log in
+                  {{ $t("logInLink") }}
                 </a>
                 <a
                   v-show="user.loggedIn"
                   v-on:click="logOut"
                   class="button is-light">
-                  Log out
+                  {{ $t("logOutLink") }}
                 </a>
               </div>
+            </div>
+            <div class="locale-changer">
+              <select v-model="$i18n.locale" @change="setLocale($event)">
+                 <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -129,6 +134,7 @@ export default {
         loggedIn: false,
         meta: {},
       },
+      langs: ['en'],
     };
   },
   computed: {
@@ -139,6 +145,9 @@ export default {
     },
   },
   methods: {
+    setLocale(event) {
+      localStorage.setItem('localeCode', event.target.value);
+    },
     toggleMenu() {
       this.active = !this.active;
     },

@@ -38,7 +38,7 @@
                     <p class="sub-title board-info">{{ item.name }}</p>
                     <p class="description">
                       <small>
-                        Pins in board: <span class="num-pins">{{ item.total_pins }}</span>
+                        {{ $t("pinsInBoard") }}<span class="num-pins">{{ item.total_pins }}</span>
                       </small>
                     </p>
                   </div>

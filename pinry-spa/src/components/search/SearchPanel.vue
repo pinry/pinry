@@ -3,9 +3,9 @@
     <div class="filter-selector">
       <div class="card-content">
         <b-field>
-          <b-select placeholder="Choose Filter" v-model="filterType">
-            <option>Tag</option>
-            <option>Board</option>
+          <b-select v-bind:placeholder="$t('chooseFilterPlaceholder')" v-model="filterType">
+            <option>{{ $t("SearchPanelTagOption") }}</option>
+            <option>{{ $t("SearchPanelBoardOption") }}</option>
           </b-select>
           <b-autocomplete
             v-show="filterType === 'Tag'"
@@ -14,22 +14,22 @@
             :data="filteredDataArray"
             :keep-first="true"
             :open-on-focus="true"
-            placeholder="select a filter then type to filter"
+            v-bind:placeholder="$t('selectFilterPlaceholder')"
             icon="magnify"
             @select="option => selected = option">
-            <template slot="empty">No results found</template>
+            <template slot="empty">{{ $t("noResultsFound") }}</template>
           </b-autocomplete>
           <template v-if="filterType === 'Board'">
             <b-input
               class="search-input"
               type="search"
               v-model="boardText"
-              placeholder="type to search board"
+              v-bind:placeholder="$t('searchBoardPlaceholder')"
               icon="magnify"
             >
             </b-input>
             <p class="control">
-              <b-button @click="searchBoard" class="button is-primary">Search</b-button>
+              <b-button @click="searchBoard" class="button is-primary">{{ $t("searchButton") }}</b-button>
             </p>
           </template>
         </b-field>

@@ -16,37 +16,37 @@
               <div class="description" v-show="pinModel.form.description.value" v-html="niceLinks(pinModel.form.description.value)"></div>
             </div>
             <div class="column">
-              <b-field label="Image URL"
+              <b-field v-bind:label="$t('imageUrlLabel')"
                        v-show="!disableUrlField && !isEdit"
                        :type="pinModel.form.url.type"
                        :message="pinModel.form.url.error">
                 <b-input
                   type="text"
                   v-model="pinModel.form.url.value"
-                  placeholder="where to fetch the image"
+                  v-bind:placeholder="$t('pinCreateModalImageURLPlaceholder')"
                   maxlength="2048"
                 >
                 </b-input>
               </b-field>
-              <b-field label="Privacy Option"
+              <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="pinModel.form.private.type"
                        :message="pinModel.form.private.error">
                 <b-checkbox v-model="pinModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
-              <b-field label="Image Source"
+              <b-field v-bind:label="$t('imageSourceLabel')"
                        :type="pinModel.form.referer.type"
                        :message="pinModel.form.referer.error">
                 <b-input
                   type="text"
                   v-model="pinModel.form.referer.value"
-                  placeholder="where to find the pin"
+                  v-bind:placeholder="$t('pinCreateModalImageSourcePlaceholder')"
                   maxlength="2048"
                 >
                 </b-input>
               </b-field>
-              <b-field label="Tags">
+              <b-field v-bind:label="$t('tagsLabel')">
                 <b-taginput
                     v-model="pinModel.form.tags.value"
                     :data="editorMeta.filteredTagOptions"
@@ -54,23 +54,23 @@
                     ellipsis
                     icon="label"
                     :allow-new="true"
-                    placeholder="Add a tag"
+                    v-bind:placeholder="$t('pinCreateModalImageTagsPlaceholder')"
                     @typing="getFilteredTags">
                   <template slot-scope="props">
                     <strong>{{ props.option }}</strong>
                   </template>
                   <template slot="empty">
-                    There are no items
+                    {{ $t("pinCreateModalEmptySlot") }}
                   </template>
                 </b-taginput>
               </b-field>
-              <b-field label="Descripton"
+              <b-field v-bind:label="$t('descriptionLabel')"
                        :type="pinModel.form.description.type"
                        :message="pinModel.form.description.error">
                 <b-input
                   type="textarea"
                   v-model="pinModel.form.description.value"
-                  placeholder="idea from this pin"
+                  v-bind:placeholder="$t('pinCreateModalImageDescriptionPlaceholder')"
                   maxlength="1024"
                 >
                 </b-input>
@@ -85,16 +85,16 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createPin"
-            class="button is-primary">Create Pin
+            class="button is-primary">{{ $t("pinCreateModalCreatePinButton") }}
           </button>
           <button
             v-if="isEdit"
             @click="savePin"
-            class="button is-primary">Save Changes
+            class="button is-primary">{{ $t("pinCreateModalSaveChangesButton") }}
           </button>
         </footer>
       </div>

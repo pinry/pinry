@@ -13,6 +13,7 @@
     "core-js": "^3.3.2",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
+    "vue-i18n": "8",
     "vue-masonry": "^0.11.8",
     "vue-router": "^3.1.3"
   },

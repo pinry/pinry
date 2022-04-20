@@ -19,7 +19,7 @@
               </div>
               <div class="media-content">
                 <div class="is-pulled-left">
-                  <p class="title is-4 pin-meta-info"><span class="dim">Pinned by </span><span class="author">{{ pinItem.author }}</span></p>
+                  <p class="title is-4 pin-meta-info"><span class="dim">{{ $t("pinnedByTitle") }}</span><span class="author">{{ pinItem.author }}</span></p>
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
                     <template v-for="tag in pinItem.tags">
@@ -33,7 +33,7 @@
                         v-show="pinItem.referer !== null"
                         class="meta-link"
                         type="is-warning">
-                      Source
+                      {{ $t("sourceButton") }}
                     </b-button>
                   </a>
                   <a :href="pinItem.original_image_url" target="_blank">
@@ -41,14 +41,14 @@
                         v-show="pinItem.original_image_url !== null"
                         class="meta-link"
                         type="is-link">
-                        Original Image
+                        {{ $t("originalImageButton") }}
                     </b-button>
                   </a>
                   <b-button
                       @click="closeAndGoTo"
                       class="meta-link"
                       type="is-success">
-                      Permalink
+                      {{ $t("permalinkButton") }}
                   </b-button>
                 </div>
               </div>

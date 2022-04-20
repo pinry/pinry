@@ -3,7 +3,7 @@
     <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add Pin to Board</p>
+          <p class="modal-card-title">{{ $t("Add2BoardModalCardTitle") }}</p>
         </header>
         <section class="modal-card-body">
           <div class="columns">
@@ -21,10 +21,10 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             @click="doAdd2Board"
-            class="button is-primary">Add Pin to Board
+            class="button is-primary">{{ $t("Add2BoardModalCardButton") }}
           </button>
         </footer>
       </div>

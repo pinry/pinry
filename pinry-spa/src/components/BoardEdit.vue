@@ -7,57 +7,57 @@
         </header>
         <section class="modal-card-body">
           <div v-if="!isEdit">
-            <b-field label="Name"
+            <b-field v-bind:label="$t('nameLabel')"
                        :type="createModel.form.name.type"
                        :message="createModel.form.name.error">
                 <b-input
                   type="text"
                   v-model="createModel.form.name.value"
-                  placeholder="board name"
+                  v-bind:placeholder="$t('boardNamePlaceholder')"
                   maxlength="128"
                   >
                 </b-input>
             </b-field>
-            <b-field label="Privacy Option"
+            <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="createModel.form.private.type"
                        :message="createModel.form.private.error">
                 <b-checkbox v-model="createModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
           </div>
           <div v-if="isEdit">
-            <b-field label="Name"
+            <b-field v-bind:label="$t('nameLabel')"
                        :type="editModel.form.name.type"
                        :message="editModel.form.name.error">
                 <b-input
                   type="text"
                   v-model="editModel.form.name.value"
-                  placeholder="board name"
+                  v-bind:placeholder="$t('boardNamePlaceholder')"
                   maxlength="128"
                   >
                 </b-input>
             </b-field>
-            <b-field label="Privacy Option"
+            <b-field v-bind:label="$t('privacyOptionLabel')"
                        :type="editModel.form.private.type"
                        :message="editModel.form.private.error">
                 <b-checkbox v-model="editModel.form.private.value">
-                    is private
+                    {{ $t("isPrivateCheckbox") }}
                 </b-checkbox>
               </b-field>
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">Close</button>
+          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createBoard"
-            class="button is-primary">Create Board
+            class="button is-primary">{{ $t("createBoardButton") }}
           </button>
           <button
             v-if="isEdit"
             @click="saveBoardChanges"
-            class="button is-primary">Save Changes
+            class="button is-primary">{{ $t("saveChangesButton") }}
           </button>
         </footer>
       </div>
