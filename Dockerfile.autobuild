@@ -22,14 +22,17 @@ RUN yarn build
 
 # Required for other database options
 FROM python:3.9.12-slim-buster as base
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
+    && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils; fi \
     && apt-get -y install gcc default-libmysqlclient-dev
 RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
 # Final image
 FROM python:3.9.12-slim-buster
+ARG DEBIAN_FRONTEND=noninteractive
 
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
@@ -48,7 +51,7 @@ RUN apt-get update \
     # Install Pillow dependencies
     && apt-get -y install libopenjp2-7 libjpeg-turbo-progs libjpeg62-turbo-dev libtiff5-dev libxcb1 \
     # Needed to compile psycopg2 on arm (fallback for psycopg2-binary)
-    && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install libpq-dev gcc; fi \
+    && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils libpq-dev gcc; fi \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
