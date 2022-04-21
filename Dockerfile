@@ -5,7 +5,7 @@ COPY . /app
 
 # config nodejs
 RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n
-RUN bash n 10
+RUN bash n 14
 RUN npm -g install yarn
 
 WORKDIR /app
