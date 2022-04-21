@@ -23,8 +23,9 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 - CLI support (Add image or url to Pinry via [command-line tool](https://github.com/pinry/pinry-cli-py)) (add @2022.02.20)
 
 ## Install with Docker
+Now we have pre-built docker image on multiple architectures like **ARMv7/ARMv8/AMD64**.
+
 See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
-Now we have pre-built docker image on multiple architectures like ARMv7/ARMv8/AMD64.
 
 ## Requirements
 
