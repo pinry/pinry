@@ -24,6 +24,7 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 
 ## Install with Docker
 See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
+Now we have pre-built docker image on multiple architectures like ARMv7/ARMv8/AMD64.
 
 ## Requirements
 
