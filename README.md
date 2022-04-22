@@ -21,6 +21,7 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 - Search by tags / Search boards with name (add @2020.02.14)
 - Full API support via DRF (add @2022.02.19)
 - CLI support (Add image or url to Pinry via [command-line tool](https://github.com/pinry/pinry-cli-py)) (add @2022.02.20)
+- i18n support (if you want to help to translate, please contact us in issues) (add @2020.04.23)
 
 ## Install with Docker
 Now we have pre-built docker image on multiple architectures like **ARMv7/ARMv8/AMD64**.
