@@ -3,7 +3,7 @@
     <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ editorMeta.title }}</p>
+          <p class="modal-card-title">{{ $t(editorMeta.title) }}</p>
         </header>
         <section class="modal-card-body">
           <div class="columns">
@@ -158,7 +158,7 @@ export default {
       boardOptions: [],
       tagOptions: [],
       editorMeta: {
-        title: 'New Pin',
+        title: 'NewPinTitle',
         filteredTagOptions: [],
       },
     };
@@ -167,7 +167,7 @@ export default {
     this.fetchBoardList();
     this.fetchTagList();
     if (this.isEdit) {
-      this.editorMeta.title = 'Edit Pin';
+      this.editorMeta.title = 'EditPinTitle';
       this.pinModel.form.url.value = this.existedPin.url;
       this.pinModel.form.referer.value = this.existedPin.referer;
       this.pinModel.form.description.value = this.existedPin.description;

@@ -7,9 +7,11 @@ import router from './router';
 import setUpAxiosCsrfConfig from './components/utils/csrf';
 import './registerServiceWorker';
 import en from './assets/locales/en.json';
+import zh from './assets/locales/zh.json';
 
 const messages = {
   en,
+  zh,
 };
 
 Vue.config.productionTip = false;

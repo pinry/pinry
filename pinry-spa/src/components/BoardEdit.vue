@@ -3,7 +3,7 @@
     <div>
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ UIMeta.title }}</p>
+          <p class="modal-card-title">{{ $t(UIMeta.title) }}</p>
         </header>
         <section class="modal-card-body">
           <div v-if="!isEdit">
@@ -79,7 +79,7 @@ export default {
     const editModel = ModelForm.fromFields(fields);
     return {
       UIMeta: {
-        title: 'Board Create',
+        title: 'BoardCreateTitle',
       },
       createModel,
       editModel,
@@ -99,7 +99,7 @@ export default {
   },
   created() {
     if (this.isEdit) {
-      this.UIMeta.title = 'Board Edit';
+      this.UIMeta.title = 'BoardEditTitle';
       this.editModel.assignToForm(this.board);
     } else {
       this.createModel.form.private.value = false;

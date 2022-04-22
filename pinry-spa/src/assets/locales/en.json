@@ -1,4 +1,8 @@
 {
+    "NewPinTitle": "New Pin",
+    "EditPinTitle": "Edit Pin",
+    "BoardCreateTitle": "Create Board",
+    "BoardEditTitle": "Edit Board",
     "loginTitle": "Login",
     "loginButton": "Login",
     "closeButton": "Close",
