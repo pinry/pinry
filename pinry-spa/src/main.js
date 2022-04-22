@@ -2,17 +2,12 @@ import Buefy from 'buefy';
 import Vue from 'vue';
 import { VueMasonryPlugin } from 'vue-masonry';
 import VueI18n from 'vue-i18n';
+import localeUtils from './components/utils/i18n';
 import App from './App.vue';
 import router from './router';
 import setUpAxiosCsrfConfig from './components/utils/csrf';
 import './registerServiceWorker';
-import en from './assets/locales/en.json';
-import zh from './assets/locales/zh.json';
 
-const messages = {
-  en,
-  zh,
-};
 
 Vue.config.productionTip = false;
 Vue.use(Buefy);
@@ -23,7 +18,7 @@ setUpAxiosCsrfConfig();
 const i18n = new VueI18n({
   locale: localStorage.getItem('localeCode') || navigator.language.split('-')[0],
   fallbackLocale: 'en',
-  messages,
+  messages: localeUtils.messages,
 });
 
 new Vue({

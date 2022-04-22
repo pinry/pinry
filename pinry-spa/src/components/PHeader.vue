@@ -102,7 +102,7 @@
                   :key="`locale-${locale}`"
                   @click="setLocale(locale)"
                   class="navbar-item">
-                  {{ locale }}
+                  {{ langs[locale] }}
                 </a>
               </div>
             </div>
@@ -136,6 +136,7 @@
 </template>
 
 <script>
+import localeUtils from '@/components/utils/i18n';
 import api from './api';
 import modals from './modals';
 
@@ -148,7 +149,7 @@ export default {
         loggedIn: false,
         meta: {},
       },
-      langs: ['en'],
+      langs: localeUtils.langCode2Name,
     };
   },
   computed: {
