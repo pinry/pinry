@@ -4,8 +4,8 @@
       <div class="card-content">
         <b-field>
           <b-select v-bind:placeholder="$t('chooseFilterPlaceholder')" v-model="filterType">
-            <option>{{ $t("SearchPanelTagOption") }}</option>
-            <option>{{ $t("SearchPanelBoardOption") }}</option>
+            <option value="Tag">{{ $t("SearchPanelTagOption") }}</option>
+            <option value="Board">{{ $t("SearchPanelBoardOption") }}</option>
           </b-select>
           <b-autocomplete
             v-show="filterType === 'Tag'"
