@@ -87,6 +87,21 @@
                 custom-size="mdi-24px">
               </b-icon>
             </router-link>
+            <div
+              class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Language
+              </a>
+              <div class="navbar-dropdown">
+                <a
+                  v-for="locale in $i18n.availableLocales"
+                  :key="`locale-${locale}`"
+                  @click="setLocale(locale)"
+                  class="navbar-item">
+                  {{ locale }}
+                </a>
+              </div>
+            </div>
             <div class="navbar-item">
               <div class="buttons">
                 <a
@@ -108,11 +123,6 @@
                   {{ $t("logOutLink") }}
                 </a>
               </div>
-            </div>
-            <div class="locale-changer">
-              <select v-model="$i18n.locale" @change="setLocale($event)">
-                 <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
-              </select>
             </div>
           </div>
         </div>
@@ -145,8 +155,9 @@ export default {
     },
   },
   methods: {
-    setLocale(event) {
-      localStorage.setItem('localeCode', event.target.value);
+    setLocale(locale) {
+      this.$i18n.locale = locale;
+      localStorage.setItem('localeCode', locale);
     },
     toggleMenu() {
       this.active = !this.active;
