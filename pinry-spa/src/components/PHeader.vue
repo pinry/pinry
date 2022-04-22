@@ -90,7 +90,11 @@
             <div
               class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
-                Language
+                <b-icon
+                  type="is-dark"
+                  icon="translate"
+                  custom-size="mdi-24px">
+                </b-icon>
               </a>
               <div class="navbar-dropdown">
                 <a
