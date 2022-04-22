@@ -62,7 +62,7 @@
   "emailPlaceholder": "邮件地址",
   "repeatPasswordInputPlaceholder": "再次键入密码",
   "chooseFilterPlaceholder": "选择过滤器",
-  "selectFilterPlaceholder": "选择一个过滤器并过滤",
+  "selectFilterPlaceholder": "键入标签关键字搜索",
   "searchBoardPlaceholder": "键入关键字搜索画板",
   "filterSelectSelectBoardPlaceholder": "关键字查找或新建画板",
   "pinCreateModalImageURLPlaceholder": "图片 URL 地址",
