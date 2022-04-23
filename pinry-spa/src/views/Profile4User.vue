@@ -2,7 +2,7 @@
   <div class="profile-for-user">
     <PHeader></PHeader>
     <UserProfileCard :in-profile="true" :username="filters.userFilter"></UserProfileCard>
-    <Profile :token="profile.token"></Profile>
+    <Profile v-if="profile.token" :token="profile.token"></Profile>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
   },
   created() {
     this.initializeBoard();
-    this.initializeUser();
+    this.initializeUser(this.filters.userFilter);
   },
   beforeRouteUpdate(to, from, next) {
     this.filters = { userFilter: to.params.username };
@@ -37,11 +37,18 @@ export default {
     initializeBoard() {
       this.filters = { userFilter: this.$route.params.username };
     },
-    initializeUser() {
+    initializeUser(username) {
       const self = this;
-      api.User.fetchUserInfo(false).then(
+      console.log(username);
+      api.User.fetchUserInfoByName(username).then(
         (user) => {
-          self.profile = user;
+          if (user === null) {
+            self.$router.push(
+              { name: 'PageNotFound' },
+            );
+          } else {
+            self.profile = user;
+          }
         },
       );
     },
