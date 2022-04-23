@@ -99,7 +99,13 @@ export default {
           self.$parent.close();
         },
         (resp) => {
-          self.helper.markFieldsAsDanger(resp.data);
+          if (resp.status === 401) {
+            this.$buefy.toast.open(
+              { type: 'is-danger', message: 'sign up of this site closed by owner' },
+            );
+          } else {
+            self.helper.markFieldsAsDanger(resp.data);
+          }
         },
       );
     },
