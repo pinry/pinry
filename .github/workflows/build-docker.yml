@@ -20,5 +20,4 @@ jobs:
       - name: login to docker hub
         run: echo "${{ secrets.PINRY_DOCKER_PASSWORD }}" | docker login -u "${{ secrets.PINRY_DOCKER_USERNAME }}" --password-stdin
       - name: build the image
-      run: |
-        bash docker/build_docker_multiple_platform.sh
+        run: bash docker/build_docker_multiple_platform.sh
