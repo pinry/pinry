@@ -4,7 +4,7 @@
  *          why it has built in helpers and such when the rest of the
  *          scripts make use of helpers.js.
  * Authors: Pinry Contributors
- * Updated: Aug 26th, 2018
+ * Updated: Apr 23th, 2022
  * Require: None
  */
 
@@ -68,10 +68,30 @@
         pinryBar.textContent = 'Pinry Bookmarklet';
         pinryBar.onclick = closePinry;
         pinryImages.appendChild(pinryBar);
+        var pinrySort = document.createElement('div');
+        setCSS(pinrySort, {
+            display: 'block',
+            position: 'absolute',
+            top: '15px',
+            right: '1em',
+            cursor: 'pointer'
+        });
+        pinrySort.textContent = '\u21D5 Size';
+        pinryBar.appendChild(pinrySort);
         document.body.appendChild(pinryImages);
         document.onkeyup = function (e) {
             if (e.keyCode == 27) // ESC key
                 closePinry();
+        };
+        pinrySort.onclick = function (e) {
+            e.stopPropagation();
+            Array.prototype.slice.call(pinryImages.children
+            ).sort(function (a, b) {
+                return b.getAttribute('pinryArea') - a.getAttribute('pinryArea');
+            }).forEach(function (div) {
+                // re-add to parent in sorted order
+                pinryImages.appendChild(div);
+            });
         };
     }
 
@@ -114,9 +134,12 @@
         images[img.src] = true;
         var w = img.naturalWidth,
             h = img.naturalHeight;
-        if (w > 200 && h > 200)
-            imageView(img.src).textContent = w + '\u00D7' + h;
-    }
+            if (w > 200 && h > 200) {
+                var i = imageView(img.src);
+                i.textContent = w + '\u00D7' + h;
+                i.setAttribute('pinryArea', w * h);
+            }
+        }
     function addAllImagesToPageView() {
         // add all explicit IMGs
         var images = document.getElementsByTagName('img');
