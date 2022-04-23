@@ -1,4 +1,4 @@
-name: build our image
+name: build multiple platform image
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
       - name: install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
