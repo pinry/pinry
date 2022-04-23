@@ -39,7 +39,6 @@ export default {
     },
     initializeUser(username) {
       const self = this;
-      console.log(username);
       api.User.fetchUserInfoByName(username).then(
         (user) => {
           if (user === null) {
