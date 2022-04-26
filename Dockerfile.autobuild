@@ -11,11 +11,11 @@
 # -----------------------------------------------------------------------------
 
 # Build static yarn file
-FROM node:14-buster as yarn-build
+FROM node:16-buster as yarn-build
 
 WORKDIR pinry-spa
 COPY pinry-spa/package.json pinry-spa/yarn.lock ./
-RUN yarn install
+RUN  yarn install
 COPY pinry-spa .
 RUN yarn build
 
