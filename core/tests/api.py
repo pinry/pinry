@@ -112,19 +112,6 @@ class PinPrivacyTests(APITestCase):
         resp = self.client.get(reverse("pin-list"))
         self.assertEqual(len(resp.json()['results']), 0, resp.content)
 
-    def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_pin_in_board(self):
-        resp = self.client.get(self.board_url)
-        self.assertEqual(len(resp.json()['pins_detail']), 0, resp.content)
-        self.client.login(username=self.non_owner.username, password='password')
-
-        resp = self.client.get(self.board_url)
-        self.assertEqual(len(resp.json()['pins_detail']), 0, resp.content)
-
-    def test_should_owner_user_has_permission_to_list_private_pin_in_board(self):
-        self.client.login(username=self.owner.username, password='password')
-        resp = self.client.get(self.board_url)
-        self.assertEqual(len(resp.json()['pins_detail']), 1, resp.content)
-
     def test_should_owner_user_has_permission_to_list_private_pin(self):
         self.client.login(username=self.owner.username, password='password')
         resp = self.client.get(reverse("pin-list"))

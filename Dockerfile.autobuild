@@ -56,10 +56,9 @@ RUN apt-get update \
     && apt-get autoclean
 
 # Install Pipfile requirements
-COPY Pipfile* ./
+COPY requirements.txt ./
 RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
-    && pip install pipenv \
-    && pipenv install --three --system --clear
+    && pip install -r requirements.txt
 
 # Copy from previous stages
 COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist

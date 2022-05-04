@@ -1,7 +1,12 @@
+# local data
+docker/data/
+.github/
+
 # static
 static
 .idea
 pinry-spa/node_modules
+pinry-spa/dist
 local_settings.py
 
 # git

@@ -23,7 +23,7 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
 class PinViewSet(viewsets.ModelViewSet):
     serializer_class = api.PinSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ("submitter__username", 'tags__name', )
+    filter_fields = ("submitter__username", 'tags__name', "pins__id")
     ordering_fields = ('-id', )
     ordering = ('-id', )
     permission_classes = [IsOwnerOrReadOnly("submitter"), OwnerOnlyIfPrivate("submitter")]

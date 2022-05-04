@@ -111,7 +111,7 @@ const Pin = {
 };
 
 
-function fetchPins(offset, tagFilter, userFilter) {
+function fetchPins(offset, tagFilter, userFilter, boardFilter) {
   const url = `${API_PREFIX}pins/`;
   const queryArgs = {
     format: 'json',
@@ -121,6 +121,7 @@ function fetchPins(offset, tagFilter, userFilter) {
   };
   if (tagFilter) queryArgs.tags__name = tagFilter;
   if (userFilter) queryArgs.submitter__username = userFilter;
+  if (boardFilter) queryArgs.pins__id = boardFilter;
   return axios.get(
     url,
     { params: queryArgs },
@@ -144,20 +145,6 @@ function fetchPin(pinId) {
         (error) => {
           reject(error);
         },
-      );
-    },
-  );
-}
-
-function fetchPinsForBoard(boardId) {
-  const url = `${API_PREFIX}boards/${boardId}/`;
-  return new Promise(
-    (resolve, reject) => {
-      axios.get(url).then(
-        (resp) => {
-          resolve({ data: { results: resp.data.pins_detail, next: null, board: resp.data } });
-        },
-        error => reject(error),
       );
     },
   );
@@ -298,7 +285,6 @@ export default {
   Board,
   fetchPin,
   fetchPins,
-  fetchPinsForBoard,
   fetchBoardForUser,
   User,
 };

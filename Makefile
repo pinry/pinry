@@ -3,31 +3,46 @@ dev-docker-serve:
 dev-docker-build-frontend:
 	docker-compose up build_frontend
 backup-images:
-	pipenv run python manage.py dumpdata django_images > db-backup.django_images.json
+	poetry run python manage.py dumpdata django_images > db-backup.django_images.json
 backup-all:
-	pipenv run python manage.py dumpdata > db-backup.all.json
+	poetry run python manage.py dumpdata > db-backup.all.json
 migrate:
-	pipenv run python manage.py migrate
+	poetry run python manage.py migrate
+migrate-no-input:
+	poetry run python manage.py migrate --noinput
 makemigrations:
-	pipenv run python manage.py makemigrations
+	poetry run python manage.py makemigrations
 recover-all:
-	pipenv run python manage.py loaddata db-backup.all.json
+	poetry run python manage.py loaddata db-backup.all.json
+collect-static-no-input:
+	poetry run python manage.py collectstatic --noinput
 bootstrap:
 	make install
-	pipenv run python manage.py collectstatic
+	make collect-static-no-input
+serve-gunicorn:
+	poetry run gunicorn pinry.wsgi -b 0.0.0.0:8000 -w 4 --capture-output --timeout 30 --user www-data --group www-data
 serve:
-	pipenv run python manage.py runserver 0.0.0.0:8000
+	poetry run python manage.py runserver 0.0.0.0:8000
+export-requirements-dev:
+	poetry export --dev -f requirements.txt -o requirements-dev.txt
+export-requirements:
+	poetry export -f requirements.txt -o requirements.txt
+	make export-requirements-dev
 install:
-	pipenv install
+	poetry install
 test:
-	pipenv run python manage.py test
+	poetry run python manage.py test
+test-in-ci:
+	python manage.py test
 shell:
-	pipenv run python manage.py shell
+	poetry run python manage.py shell
 flake8:
-	pipenv run flake8
+	poetry run flake8
+flake8-in-ci:
+	flake8
 docs-serve:
-	pipenv run mkdocs serve
+	poetry run mkdocs serve
 docs-build:
-	pipenv run mkdocs build
+	poetry run mkdocs build
 docs-publish:
-	pipenv run mkdocs gh-deploy
+	poetry run mkdocs gh-deploy

@@ -9,6 +9,6 @@ RUN bash n 14
 RUN npm -g install yarn
 
 WORKDIR /app
-RUN pip install pipenv
-RUN pipenv install --three --system --dev
+RUN pip install poetry
+RUN poetry install
 RUN rm -fr /app/*

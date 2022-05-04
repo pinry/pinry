@@ -67,17 +67,16 @@ import bus from './utils/bus';
 function createBoardItem(board) {
   const defaultPreviewImage = placeholder;
   const boardItem = {};
-  const pins4Board = board.pins_detail;
   let previewImage = {
     image: { thumbnail: { image: null, width: 240, height: 240 } },
   };
-  if (pins4Board.length > 0) {
-    [previewImage] = pins4Board;
+  if (board.cover !== null) {
+    previewImage = board.cover;
   }
   boardItem.id = board.id;
   boardItem.name = board.name;
   boardItem.private = board.private;
-  boardItem.total_pins = pins4Board.length;
+  boardItem.total_pins = board.total_pins;
   if (previewImage.image.thumbnail.image !== null) {
     boardItem.preview_image_url = pinHandler.escapeUrl(
       previewImage.image.thumbnail.image,
