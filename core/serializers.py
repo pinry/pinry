@@ -170,8 +170,8 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
             "id",
             "name",
             "private",
-            "pins",
-            "pins_detail",
+            "total_pins",
+            "cover",
             "published",
             "submitter",
             "pins_to_add",
@@ -183,15 +183,11 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         }
 
     submitter = UserSerializer(read_only=True)
-    pins_detail = serializers.SerializerMethodField(
+    total_pins = serializers.SerializerMethodField(
         read_only=True,
     )
-    pins = serializers.HyperlinkedRelatedField(
-        write_only=True,
-        queryset=Pin.objects.all(),
-        view_name="pin-detail",
-        many=True,
-        required=False,
+    cover = serializers.SerializerMethodField(
+        read_only=True,
     )
     pins_to_add = PinIdListField(
         max_length=10,
@@ -208,11 +204,17 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         help_text="only patch method works for this field"
     )
 
-    def get_pins_detail(self, instance):
+    def get_total_pins(self, instance):
         query = instance.pins.all()
         request = self.context['request']
         query = filter_private_pin(request, query)
-        return [PinSerializer(pin, context=self.context).data for pin in query]
+        return query.count()
+
+    def get_cover(self, instance: Board) -> dict or None:
+        pin = instance.pins.first()
+        if pin is None:
+            return None
+        return PinSerializer(pin, context=self.context).data
 
     @staticmethod
     def _get_list(pins_id):
