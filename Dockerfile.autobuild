@@ -55,11 +55,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
-# Install Pipfile requirements
-COPY Pipfile* ./
+# Install Poetry requirements
+COPY pyproject.toml ./
+COPY poetry.lock ./
 RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
-    && pip install pipenv \
-    && pipenv install --three --system --clear
+    && pip install poetry \
+    && poetry install
 
 # Copy from previous stages
 COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist

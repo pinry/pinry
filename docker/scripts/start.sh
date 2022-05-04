@@ -14,13 +14,13 @@ bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 
 # If static files don't exist collect them
 cd ${PROJECT_ROOT}
-python manage.py collectstatic --noinput
+make collect-static-no-input
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd ${PROJECT_ROOT}
-    python manage.py migrate --noinput
+    make migrate-no-input
 fi
 
 # Fix all settings after all commands are run
