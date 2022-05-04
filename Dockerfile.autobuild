@@ -11,11 +11,11 @@
 # -----------------------------------------------------------------------------
 
 # Build static yarn file
-FROM node:16-buster as yarn-build
+FROM node:14-buster as yarn-build
 
 WORKDIR pinry-spa
 COPY pinry-spa/package.json pinry-spa/yarn.lock ./
-RUN  yarn install
+RUN yarn install
 COPY pinry-spa .
 RUN yarn build
 
@@ -23,33 +23,20 @@ RUN yarn build
 # Required for other database options
 FROM python:3.9.12-slim-buster as base
 ARG DEBIAN_FRONTEND=noninteractive
-ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
-WORKDIR pinry
 RUN apt-get update \
     && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils; fi \
     && apt-get -y install gcc default-libmysqlclient-dev
-# Install Poetry requirements
-COPY pyproject.toml ./
-COPY poetry.lock ./
-COPY docker/pip.conf /etc/
-RUN apt-get update && apt-get install libffi-dev cargo -y
-RUN pip install --upgrade pip \
-    && pip install poetry \
-    && poetry run pip install mysqlclient cx-Oracle \
-    && poetry run pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
-    && poetry install
+RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
 # Final image
 FROM python:3.9.12-slim-buster
 ARG DEBIAN_FRONTEND=noninteractive
-ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
 
-COPY docker/pip.conf /etc/
 RUN groupadd -g 2300 tmpgroup \
  && usermod -g tmpgroup www-data \
  && groupdel www-data \
@@ -59,8 +46,6 @@ RUN groupadd -g 2300 tmpgroup \
  && groupdel tmpgroup
 
 RUN apt-get update \
-    # install libffi to build poetry
-    && apt-get install libffi-dev cargo make -y \
     # Install nginx
     && apt-get -y  install nginx pwgen \
     # Install Pillow dependencies
@@ -70,11 +55,15 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
-RUN pip install --upgrade pip && pip install --no-cache-dir poetry
+# Install Pipfile requirements
+COPY requirements.txt ./
+RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
+    && pip install -r requirements.txt
 
 # Copy from previous stages
 COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist
-COPY --from=base /root/.cache/pypoetry /root/.cache/pypoetry
+COPY --from=base /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
 
 COPY . .
 
