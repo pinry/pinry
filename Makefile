@@ -29,10 +29,14 @@ install:
 	poetry install
 test:
 	poetry run python manage.py test
+test-in-ci:
+	python manage.py test
 shell:
 	poetry run python manage.py shell
 flake8:
 	poetry run flake8
+flake8-in-ci:
+	flake8
 docs-serve:
 	poetry run mkdocs serve
 docs-build:
