@@ -23,8 +23,11 @@ serve-gunicorn:
 	poetry run gunicorn pinry.wsgi -b 0.0.0.0:8000 -w 4 --capture-output --timeout 30 --user www-data --group www-data
 serve:
 	poetry run python manage.py runserver 0.0.0.0:8000
+export-requirements-dev:
+	poetry export --dev -f requirements.txt -o requirements-dev.txt
 export-requirements:
-	poetry export --dev -f requirements.txt -o requirements.txt
+	poetry export -f requirements.txt -o requirements.txt
+	make export-requirements-dev
 install:
 	poetry install
 test:
