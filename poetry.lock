@@ -266,24 +266,6 @@ url = "https://pypi.doubanio.com/simple"
 reference = "douban"
 
 [[package]]
-name = "django-restql"
-version = "0.15.2"
-description = "Turn your API made with Django REST Framework(DRF) into a GraphQL like API."
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-django = ">=1.11"
-djangorestframework = ">=3.5"
-pypeg2 = ">=2.15.2"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.doubanio.com/simple"
-reference = "douban"
-
-[[package]]
 name = "django-taggit"
 version = "1.3.0"
 description = "django-taggit is a reusable Django application for simple tagging."
@@ -697,19 +679,6 @@ url = "https://pypi.doubanio.com/simple"
 reference = "douban"
 
 [[package]]
-name = "pypeg2"
-version = "2.15.2"
-description = "An intrinsic PEG Parser-Interpreter for Python"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.doubanio.com/simple"
-reference = "douban"
-
-[[package]]
 name = "pytz"
 version = "2022.1"
 description = "World timezone definitions, modern and historical"
@@ -948,7 +917,7 @@ reference = "douban"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7"
-content-hash = "4743a937d2f117b186b4aab7d1e34e96c3784b7b2d7a589a9dc7105d0307d764"
+content-hash = "2a27c7f77173f919d5fd4b277afd84e336960a0e8d5cf35c2feb681fe681bb09"
 
 [metadata.files]
 appdirs = [
@@ -1013,10 +982,6 @@ django-extensions = [
 django-filter = [
     {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
     {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
-]
-django-restql = [
-    {file = "django-restql-0.15.2.tar.gz", hash = "sha256:74315ab11955f7ea1b008ea39dd19cf4f78ab6011f270bb46a0053f81839e26d"},
-    {file = "django_restql-0.15.2-py3-none-any.whl", hash = "sha256:9a2d2202c5f59f5de892e131a8c75dc047007e6c6a7efb48c90012df5986bf62"},
 ]
 django-taggit = [
     {file = "django-taggit-1.3.0.tar.gz", hash = "sha256:4a833bf71f4c2deddd9745924eee53be1c075d7f0020a06f12e29fa3d752732d"},
@@ -1246,9 +1211,6 @@ pygments = [
 pymdown-extensions = [
     {file = "pymdown-extensions-6.2.1.tar.gz", hash = "sha256:3bbe6048275f8a0d13a0fe44e0ea201e67268aa7bb40c2544eef16abbf168f7b"},
     {file = "pymdown_extensions-6.2.1-py2.py3-none-any.whl", hash = "sha256:dce5e17b93be0572322b7d06c9a13c13a9d98694d6468277911d50ca87d26f29"},
-]
-pypeg2 = [
-    {file = "pyPEG2-2.15.2.tar.gz", hash = "sha256:2b2d4f80d8e1a9370b2a91f4a25f4abf7f69b85c8da84cd23ec36451958a1f6d"},
 ]
 pytz = [
     {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},

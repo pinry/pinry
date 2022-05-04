@@ -15,6 +15,7 @@ IMAGE_VERSION_TAG=`git tag -l --sort=-creatordate | head -n 1 | sed "s/v//g"`
 #  -f "${script_dir}/../Dockerfile.autobuild"
 
 sudo docker buildx build \
+  --no-cache \
   --output=type=docker \
   --platform linux/amd64 \
   -t getpinry/pinry:${IMAGE_LATEST_TAG} \
