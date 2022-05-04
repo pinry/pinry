@@ -24,7 +24,7 @@ serve-gunicorn:
 serve:
 	poetry run python manage.py runserver 0.0.0.0:8000
 export-requirements:
-	poetry export -f requirements.txt -o requirements.txt
+	poetry export --dev -f requirements.txt -o requirements.txt
 install:
 	poetry install
 test:
