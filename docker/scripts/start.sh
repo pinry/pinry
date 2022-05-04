@@ -14,13 +14,13 @@ bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 
 # If static files don't exist collect them
 cd ${PROJECT_ROOT}
-make collect-static-no-input
+python manage.py collectstatic --noinput
 
 # If database doesn't exist yet create it
 if [ ! -f /data/production.db ]
 then
     cd ${PROJECT_ROOT}
-    make migrate-no-input
+    python manage.py migrate --noinput
 fi
 
 # Fix all settings after all commands are run
@@ -30,4 +30,4 @@ chown -R www-data:www-data /data
 /usr/sbin/nginx
 
 cd ${PROJECT_ROOT}
-make serve-gunicorn
+./docker/scripts/_start_gunicorn.sh
