@@ -59,23 +59,29 @@ changing settings file in `pinry/settings`.
     - Docker
     - Docker Compose
 
-- Set any custom configuration options you need and run::
+- Set any custom configuration options you need and run
 
-  cp docker-compose.example.yml docker-compose.yml  
-  \# edit docker-compose.yml and change the secret-key,  
-  \# don't forget to backup this config file.  
-  \# You should build frontend first  
-  docker-compose up build_frontend  
-  \# then start the backend server  
-  docker-compose up -d web
 
-- If you want to run Pinry with current user in docker::
+    cp docker-compose.example.yml docker-compose.yml  
+    # edit docker-compose.yml and change the secret-key,  
+    # don't forget to backup this config file.  
+    # You should build frontend first  
+    docker-compose up build_frontend  
+    # then start the backend server  
+    docker-compose up -d web
+
+
+- If you want to run Pinry with current user in docker
+
 
     ./start_docker_with_current_user.sh [-d]
 
-- Bootstrap the database(optional)::
+
+- Bootstrap the database(optional)
+
 
     docker-compose exec web python3 manage.py migrate --settings=pinry.settings.docker
+
 
 
 **Note** : No static file server configured, your should configure nginx or other server to serve

@@ -6,9 +6,9 @@ services:
     build: .
     working_dir: /app
     command: >
-      bash -c "python manage.py migrate
-      && python3 manage.py collectstatic --noinput
-      && gunicorn pinry.wsgi:application -b 0.0.0.0:8000 --timeout 30"
+      bash -c "poetry run python manage.py migrate
+      && poetry run python3 manage.py collectstatic --noinput
+      && poetry run gunicorn pinry.wsgi:application -b 0.0.0.0:8000 --timeout 30"
     ports:
       - "127.0.0.1:2048:8000"
     environment:
