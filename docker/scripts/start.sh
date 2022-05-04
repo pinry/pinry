@@ -30,4 +30,4 @@ chown -R www-data:www-data /data
 /usr/sbin/nginx
 
 cd ${PROJECT_ROOT}
-./docker/scripts/_start_gunicorn.sh
+make serve-gunicorn

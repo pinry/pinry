@@ -32,6 +32,7 @@ RUN apt-get update \
 # Install Poetry requirements
 COPY pyproject.toml ./
 COPY poetry.lock ./
+COPY docker/pip.conf /etc/
 RUN apt-get update && apt-get install libffi-dev cargo -y
 RUN pip install --upgrade pip \
     && pip install poetry \
@@ -48,6 +49,7 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
 
+COPY docker/pip.conf /etc/
 RUN groupadd -g 2300 tmpgroup \
  && usermod -g tmpgroup www-data \
  && groupdel www-data \
@@ -58,7 +60,7 @@ RUN groupadd -g 2300 tmpgroup \
 
 RUN apt-get update \
     # install libffi to build poetry
-    && apt-get install libffi-dev cargo -y \
+    && apt-get install libffi-dev cargo make -y \
     # Install nginx
     && apt-get -y  install nginx pwgen \
     # Install Pillow dependencies
