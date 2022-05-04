@@ -23,6 +23,7 @@ RUN yarn build
 # Required for other database options
 FROM python:3.9.12-slim-buster as base
 ARG DEBIAN_FRONTEND=noninteractive
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 WORKDIR pinry
 RUN apt-get update \
@@ -31,7 +32,9 @@ RUN apt-get update \
 # Install Poetry requirements
 COPY pyproject.toml ./
 COPY poetry.lock ./
-RUN pip install poetry \
+RUN apt-get update && apt-get install libffi-dev cargo -y
+RUN pip install --upgrade pip \
+    && pip install poetry \
     && poetry run pip install mysqlclient cx-Oracle \
     && poetry run pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
     && poetry install
@@ -40,6 +43,7 @@ RUN pip install poetry \
 # Final image
 FROM python:3.9.12-slim-buster
 ARG DEBIAN_FRONTEND=noninteractive
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 WORKDIR pinry
 RUN mkdir /data && chown -R www-data:www-data /data
@@ -53,6 +57,8 @@ RUN groupadd -g 2300 tmpgroup \
  && groupdel tmpgroup
 
 RUN apt-get update \
+    # install libffi to build poetry
+    && apt-get install libffi-dev cargo -y \
     # Install nginx
     && apt-get -y  install nginx pwgen \
     # Install Pillow dependencies
@@ -62,7 +68,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
-RUN pip install --no-cache-dir poetry
+RUN pip install --upgrade pip && pip install --no-cache-dir poetry
 
 # Copy from previous stages
 COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist
