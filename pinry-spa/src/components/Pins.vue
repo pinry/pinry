@@ -260,7 +260,13 @@ export default {
       } else if (this.pinFilters.userFilter) {
         promise = API.fetchPins(this.status.offset, null, this.pinFilters.userFilter, null);
       } else if (this.pinFilters.boardFilter) {
-        promise = API.fetchPins(this.status.offset, null, null, this.pinFilters.boardFilter);
+        const prevPromise = API.Board.get(this.pinFilters.boardFilter);
+        promise = prevPromise.then(
+          (resp) => {
+            this.editorMeta.currentBoard = resp.data;
+            return API.fetchPins(this.status.offset, null, null, this.pinFilters.boardFilter);
+          },
+        );
       } else if (this.pinFilters.idFilter) {
         promise = API.fetchPin(this.pinFilters.idFilter);
       } else {

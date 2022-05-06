@@ -62,6 +62,7 @@ export default {
       return this.pin.author === this.currentUsername;
     },
     inOwnedBoard() {
+      console.log(this.currentBoard, this.currentUsername);
       return (
         Object.values(this.currentBoard).length !== 0
         && this.currentBoard.submitter.username === this.currentUsername
