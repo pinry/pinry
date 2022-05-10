@@ -23,9 +23,7 @@
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
                     <template v-for="tag in pinItem.tags">
-                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">
-                      <router-link class="pin-preview-tag" :to="{ name: 'tag', params: {tag: tag} }">{{ tag }}</router-link>
-                      </b-tag>
+                      <b-button v-bind:key="tag" @click="closeAndGoTo" class="pin-preview-image" type="is-link is-small" :to="{ name: 'tag', params: {tag: tag} }">{{ tag }}</b-button>
                     </template>
                   </p>
                 </div>
