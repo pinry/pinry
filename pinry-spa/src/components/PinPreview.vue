@@ -120,6 +120,9 @@ export default {
 }
 /* preview size should always less then screen */
 .card-image img {
-  width: 100%;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
 }
 </style>
