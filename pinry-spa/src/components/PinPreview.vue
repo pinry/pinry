@@ -23,7 +23,9 @@
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
                     <template v-for="tag in pinItem.tags">
-                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
+                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">
+                      <router-link class="pin-preview-tag" :to="{ name: 'tag', params: {tag: tag} }">{{ tag }}</router-link>
+                      </b-tag>
                     </template>
                   </p>
                 </div>
@@ -117,6 +119,7 @@ export default {
 .pin-preview-tag {
   margin-right: 0.2rem;
   margin-bottom: 2px;
+  color: white;
 }
 /* preview size should always less then screen */
 .card-image img {
