@@ -141,6 +141,8 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         tags = validated_data.pop('tag_list', None)
         if tags:
             instance.tags.set(*tags)
+        else:
+            instance.tags.set()
         # change for image-id or image is not allowed
         validated_data.pop('image_by_id', None)
         return super(PinSerializer, self).update(instance, validated_data)
