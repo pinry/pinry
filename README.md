@@ -22,7 +22,10 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 - Full API support via DRF (add @2022.02.19)
 - CLI support (Add image or url to Pinry via [command-line tool](https://github.com/pinry/pinry-cli-py)) (add @2022.02.20)
 - i18n support (if you want to help to translate, please contact us in issues) (add @2020.04.23)
-
+  - [x] English
+  - [x] 简体中文
+  - [x] French Support by [Lilian](https://github.com/LilianBoulard)
+  
 ## Preview
 ![image](https://user-images.githubusercontent.com/4109722/166976413-38b575f2-a246-4852-ba05-11bca5f9b052.png)
 
