@@ -348,6 +348,7 @@ $avatar-height: 30px;
 }
 .pin-footer {
   position: relative;
+  overflow-wrap: break-word;
   top: $pin-footer-position-fix;
   background-color: white;
   border-radius: 0 0 3px 3px ;
