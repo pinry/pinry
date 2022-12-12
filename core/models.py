@@ -99,6 +99,12 @@ class Pin(models.Model):
         return '%s - %s' % (self.submitter, self.published)
 
 
+class SystemParameter(models.Model):
+    name = models.CharField(max_length=32, blank=False)
+    key = models.CharField(max_length=64, blank=False, unique=True, db_index=True)
+    value = models.TextField(max_length=4096, blank=True)
+
+
 @receiver(models.signals.post_delete, sender=Pin)
 def delete_pin_images(sender, instance, **kwargs):
     try:
