@@ -44,6 +44,9 @@ theme:
 
 # Customization
 extra:
+  analytics:
+    provider: google
+    property: G-5LWLDK598X
   manifest: 'manifest.webmanifest'
   social:
     - icon: fontawesome/brands/github-alt
