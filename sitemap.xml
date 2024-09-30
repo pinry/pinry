@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://docs.getpinry.com/</loc>
+     <loc>https://pinry.github.io/pinry/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/screenshots/</loc>
+     <loc>https://pinry.github.io/pinry/screenshots/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/extensions/</loc>
+     <loc>https://pinry.github.io/pinry/extensions/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/theories/</loc>
+     <loc>https://pinry.github.io/pinry/theories/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/install-with-docker/</loc>
+     <loc>https://pinry.github.io/pinry/install-with-docker/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/development/</loc>
+     <loc>https://pinry.github.io/pinry/development/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/api/</loc>
+     <loc>https://pinry.github.io/pinry/api/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/plugin-system/</loc>
+     <loc>https://pinry.github.io/pinry/plugin-system/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/upgrade-guide/</loc>
+     <loc>https://pinry.github.io/pinry/upgrade-guide/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/docs/</loc>
+     <loc>https://pinry.github.io/pinry/docs/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/passwords/</loc>
+     <loc>https://pinry.github.io/pinry/passwords/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/assets/</loc>
+     <loc>https://pinry.github.io/pinry/assets/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/contributing/</loc>
+     <loc>https://pinry.github.io/pinry/contributing/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.getpinry.com/license/</loc>
+     <loc>https://pinry.github.io/pinry/license/</loc>
      <lastmod>2024-09-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
