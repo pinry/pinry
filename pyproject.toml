@@ -28,7 +28,11 @@ qrcode = "*"
 django-extensions = "*"
 mkdocs = "*"
 mkdocs-material = "*"
+jinja2 = "==3.0.3"
 black = "==19.10b0"
+
+[tool.poetry.group.dev.dependencies]
+jinja2 = "3.0.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
