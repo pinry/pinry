@@ -33,16 +33,16 @@ For more information ( screenshots and document ) visit [https://pinry.github.io
 ## Install with Docker
 Now we have pre-built docker image on multiple architectures like **ARMv7/ARMv8/AMD64**.
 
-See our full documentation at [https://pinry.github.io/pinry/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
+See our full documentation at [https://pinry.github.io/pinry/install-with-docker/](https://pinry.github.io/pinry/install-with-docker/)
 
 ## Requirements
 
-See our full documentation at [https://pinry.github.io/pinry/development/](https://docs.getpinry.com/development/)
+See our full documentation at [https://pinry.github.io/pinry/development/](https://pinry.github.io/pinry/development/)
 
 
 ## Development
 
-See our full documentation at [https://pinry.github.io/pinry/development/](https://docs.getpinry.com/development/)
+See our full documentation at [https://pinry.github.io/pinry/development/](https://pinry.github.io/pinry/development/)
 
 ## Contributors
 
