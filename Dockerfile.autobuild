@@ -10,14 +10,14 @@
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
-# Build static yarn file
-FROM node:14-buster as yarn-build
+# Build static pnpm file
+FROM node:18-bookworm as pnpm-build
 
 WORKDIR pinry-spa
-COPY pinry-spa/package.json pinry-spa/yarn.lock ./
-RUN yarn install
+COPY pinry-spa/package.json pinry-spa/pnpm-lock.yaml ./
+RUN pnpm install
 COPY pinry-spa .
-RUN yarn build
+RUN pnpm build
 
 
 # Required for other database options
@@ -61,7 +61,7 @@ RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
     && pip install -r requirements.txt
 
 # Copy from previous stages
-COPY --from=yarn-build pinry-spa/dist /pinry/pinry-spa/dist
+COPY --from=pnpm-build pinry-spa/dist /pinry/pinry-spa/dist
 COPY --from=base /root/.local /root/.local
 ENV PATH=/root/.local/bin:$PATH
 

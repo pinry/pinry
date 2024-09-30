@@ -2,35 +2,35 @@
 
 Pinry currently has two major requirements:
 
-- Python 3.6+
-- Node 10+
+- Python@3.6+
+- NodeJS@18
 
 For minor requirements you need two have installed two package managers that
 are not the defaults for these languages:
 
-- Python, pipenv
-- Node, yarn
+- Python, poetry
+- NodeJS, pnpm
 
 To install these is pretty simple, you can just run:
 
     cd pinry
-    pip install pipenv
-    npm install -g yarn
+    pip install poetry
+    npm install -g pnpm
 
 After that you can install this project with:
 
-    pipenv install --dev
-    cd pinry-spa; yarn install
+    poetry install
+    cd pinry-spa; pnpm install
 
 You will need to run two separate items as of right now, the SPA and the
 backend:
 
-    pipenv run python manage.py migrate
-    pipenv run python manage.py runserver
+    poetry run python manage.py migrate
+    poetry run python manage.py runserver
 
 And from another terminal:
 
-    cd pinry-spa; yarn serve
+    cd pinry-spa; pnpm serve
 
 
 ## Testing
@@ -42,7 +42,7 @@ recommend using our tags/versions though.
 
 To run Pinry's tests inside the Pinry repo run:
 
-    pipenv run python manage.py test
+    poetry run python manage.py test
 
 # Docker
 
