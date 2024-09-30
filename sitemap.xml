@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://pinry.github.io/pinry/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/screenshots/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/api/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/extensions/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/assets/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/theories/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/contributing/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/install-with-docker/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/development/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/development/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/docs/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/api/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/extensions/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/plugin-system/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/install-with-docker/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/upgrade-guide/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/license/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/docs/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/passwords/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/passwords/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/plugin-system/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/assets/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/screenshots/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/contributing/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/theories/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://pinry.github.io/pinry/license/</loc>
-     <lastmod>2024-09-30</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://pinry.github.io/pinry/upgrade-guide/</loc>
+         <lastmod>2024-09-30</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>
