@@ -1,7 +1,7 @@
 # ![Pinry](https://raw.github.com/pinry/pinry/master/docs/src/imgs/logo-dark.png)
 
-![Node.js Build](https://img.shields.io/github/workflow/status/pinry/pinry/Node.js%20CI?label=node.js%20build)
-![Python Build](https://img.shields.io/github/workflow/status/pinry/pinry/Python%20package?label=python%20build)
+![NodeJS Build](https://github.com/pinry/pinry/actions/workflows/node.js.yml/badge.svg)
+![Python Build](https://github.com/pinry/pinry/actions/workflows/pythonpackage.yml/badge.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/getpinry/pinry)
 
 The open-source core of Pinry, a tiling image board system for people
