@@ -8,7 +8,7 @@ The open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy
 to skim through format.
 
-For more information ( screenshots and document ) visit [getpinry.com](https://getpinry.com).
+For more information ( screenshots and document ) visit [https://pinry.github.io/pinry/](https://getpinry.com).
 
 
 ## Features
@@ -33,16 +33,16 @@ For more information ( screenshots and document ) visit [getpinry.com](https://g
 ## Install with Docker
 Now we have pre-built docker image on multiple architectures like **ARMv7/ARMv8/AMD64**.
 
-See our full documentation at [https://docs.getpinry.com/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
+See our full documentation at [https://pinry.github.io/pinry/install-with-docker/](https://docs.getpinry.com/install-with-docker/)
 
 ## Requirements
 
-See our full documentation at [https://docs.getpinry.com/development/](https://docs.getpinry.com/development/)
+See our full documentation at [https://pinry.github.io/pinry/development/](https://docs.getpinry.com/development/)
 
 
 ## Development
 
-See our full documentation at [https://docs.getpinry.com/development/](https://docs.getpinry.com/development/)
+See our full documentation at [https://pinry.github.io/pinry/development/](https://docs.getpinry.com/development/)
 
 ## Contributors
 
