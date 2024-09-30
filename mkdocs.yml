@@ -2,7 +2,7 @@
 site_name: 'Pinry Docs'
 site_description: 'Docs for the Pinry project.'
 site_author: "Pinry's Contributors"
-site_url: 'https://docs.getpinry.com/'
+site_url: 'https://pinry.github.io/pinry/'
 
 # Repository
 repo_name: 'pinry/pinry'
