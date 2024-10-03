@@ -15,6 +15,7 @@ FROM node:18-bookworm as pnpm-build
 
 WORKDIR pinry-spa
 COPY pinry-spa/package.json pinry-spa/pnpm-lock.yaml ./
+RUN npm install -g pnpm
 RUN pnpm install
 COPY pinry-spa .
 RUN pnpm build
@@ -26,7 +27,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils; fi \
-    && apt-get -y install gcc default-libmysqlclient-dev
+    && apt-get -y install pkg-config gcc default-libmysqlclient-dev
 RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
