@@ -2,6 +2,7 @@
 
 ![NodeJS Build](https://github.com/pinry/pinry/actions/workflows/node.js.yml/badge.svg)
 ![Python Build](https://github.com/pinry/pinry/actions/workflows/pythonpackage.yml/badge.svg)
+![Docker Image Version](https://img.shields.io/docker/v/getpinry/pinry?arch=amd64&style=flat&label=docker-amd64)
 ![Docker Pulls](https://img.shields.io/docker/pulls/getpinry/pinry)
 
 The open-source core of Pinry, a tiling image board system for people
