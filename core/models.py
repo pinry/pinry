@@ -1,3 +1,4 @@
+import PIL.Image
 import requests
 
 from io import BytesIO
@@ -20,6 +21,19 @@ class ImageManager(models.Manager):
                       'Chrome/48.0.2564.82 Safari/537.36',
     }
 
+    @staticmethod
+    def _is_valid_image(fp):
+        fp.seek(0)
+        try:
+            PIL.Image.open(fp)
+        except PIL.UnidentifiedImageError:
+            fp.seek(0)
+            return False
+        else:
+            fp.seek(0)
+            return True
+
+
     # FIXME: Move this into an asynchronous task
     def create_for_url(self, url, referer=None):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
@@ -29,6 +43,8 @@ class ImageManager(models.Manager):
             headers["Referer"] = referer
         response = requests.get(url, headers=headers)
         buf.write(response.content)
+        if not self._is_valid_image(buf):
+            return None
         obj = InMemoryUploadedFile(buf, 'image', file_name,
                                    None, buf.tell(), None)
         # create the image and its thumbnails in one transaction, removing

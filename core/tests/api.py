@@ -23,6 +23,11 @@ def mock_requests_get(url, **kwargs):
     return response
 
 
+def mock_requests_get_with_non_image_content(url, **kwargs):
+    response = mock.Mock(content=b"abcd")
+    return response
+
+
 class ImageTests(APITestCase):
     def test_post_create_unsupported(self):
         url = reverse("image-list")
@@ -119,7 +124,7 @@ class PinPrivacyTests(APITestCase):
         self.non_owner = create_user("non_owner")
 
         with mock.patch('requests.get', mock_requests_get):
-            image = Image.objects.create_for_url('http://a.com/b.png')
+            image = create_image()
         self.private_pin = Pin.objects.create(
             submitter=self.owner,
             image=image,
@@ -174,6 +179,20 @@ class PinTests(APITestCase):
 
     def tearDown(self):
         _teardown_models()
+
+    @mock.patch('requests.get', mock_requests_get_with_non_image_content)
+    def test_should_not_create_pin_if_url_content_invalid(self):
+        url = 'http://testserver.com/mocked/logo-01.png'
+        create_url = reverse("pin-list")
+        referer = 'http://testserver.com/'
+        post_data = {
+            'url': url,
+            'private': False,
+            'referer': referer,
+            'description': 'That\'s an Apple!'
+        }
+        response = self.client.post(create_url, data=post_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     @mock.patch('requests.get', mock_requests_get)
     def test_should_create_pin(self):

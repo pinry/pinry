@@ -130,6 +130,8 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
                 url,
                 validated_data.get('referer', url),
             )
+            if not image:
+                raise ValidationError({"url": "invalid image content"})
         else:
             image = validated_data.pop("image_by_id")
         tags = validated_data.pop('tag_list', [])
