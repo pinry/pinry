@@ -53,6 +53,13 @@ class BoardPrivacyTests(APITestCase):
     def tearDown(self):
         _teardown_models()
 
+    def _create_pin_with_non_owner(self, private):
+        image = create_image()
+        pin = create_pin(self.non_owner, image=image, tags=[])
+        pin.private = private
+        pin.save()
+        return pin
+
     def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_board(self):
         resp = self.client.get(self.boards_url)
         self.assertEqual(len(resp.json()), 0, resp.json())
@@ -78,6 +85,30 @@ class BoardPrivacyTests(APITestCase):
         self.client.login(username=self.owner.username, password='password')
         resp = self.client.get(self.board_url)
         self.assertEqual(resp.status_code, 200)
+
+    def test_should_owner_has_no_permission_to_add_private_pin_of_other_user_to_board(self):
+        self.client.login(username=self.owner.username, password='password')
+
+        private_pin_of_other_user = self._create_pin_with_non_owner(True)
+
+        resp = self.client.patch(self.board_url, data={"pins_to_add": [private_pin_of_other_user.id, ]})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['total_pins'], 0, resp.json())
+
+    def test_should_owner_has_permission_to_add_non_private_pin_of_other_user_to_board(self):
+        self.client.login(username=self.owner.username, password='password')
+
+        private_pin_of_other_user = self._create_pin_with_non_owner(False)
+
+        resp = self.client.patch(self.board_url, data={"pins_to_add": [private_pin_of_other_user.id, ]})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['total_pins'], 1, resp.json())
 
 
 class PinPrivacyTests(APITestCase):
