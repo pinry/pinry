@@ -33,7 +33,6 @@ class ImageManager(models.Manager):
             fp.seek(0)
             return True
 
-
     # FIXME: Move this into an asynchronous task
     def create_for_url(self, url, referer=None):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
