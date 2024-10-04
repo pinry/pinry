@@ -8,6 +8,7 @@ from core.models import Image, Board
 from core.models import Pin
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
+from users.models import User
 
 
 def filter_private_pin(request, query):
@@ -129,6 +130,8 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
                 url,
                 validated_data.get('referer', url),
             )
+            if not image:
+                raise ValidationError({"url": "invalid image content"})
         else:
             image = validated_data.pop("image_by_id")
         tags = validated_data.pop('tag_list', [])
@@ -219,8 +222,14 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         return PinSerializer(pin, context=self.context).data
 
     @staticmethod
-    def _get_list(pins_id):
-        return tuple(Pin.objects.filter(id__in=pins_id))
+    def _get_list(pins_id, submitter: User):
+        pins = Pin.objects.filter(id__in=pins_id)
+        valid_pins = []
+        for pin in pins:
+            if pin.private and pin.submitter != submitter:
+                continue
+            valid_pins.append(pin)
+        return valid_pins
 
     def update(self, instance: Board, validated_data):
         pins_to_add = validated_data.pop("pins_to_add", [])
@@ -237,11 +246,11 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         changed = False
         if pins_to_add:
             changed = True
-            for pin in self._get_list(pins_to_add):
+            for pin in self._get_list(pins_to_add, instance.submitter):
                 instance.pins.add(pin)
         if pins_to_remove:
             changed = True
-            for pin in self._get_list(pins_to_remove):
+            for pin in self._get_list(pins_to_remove, instance.submitter):
                 instance.pins.remove(pin)
         if changed:
             instance.save()

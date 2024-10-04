@@ -23,6 +23,11 @@ def mock_requests_get(url, **kwargs):
     return response
 
 
+def mock_requests_get_with_non_image_content(url, **kwargs):
+    response = mock.Mock(content=b"abcd")
+    return response
+
+
 class ImageTests(APITestCase):
     def test_post_create_unsupported(self):
         url = reverse("image-list")
@@ -53,6 +58,13 @@ class BoardPrivacyTests(APITestCase):
     def tearDown(self):
         _teardown_models()
 
+    def _create_pin_with_non_owner(self, private):
+        image = create_image()
+        pin = create_pin(self.non_owner, image=image, tags=[])
+        pin.private = private
+        pin.save()
+        return pin
+
     def test_should_non_owner_and_anonymous_user_has_no_permission_to_list_private_board(self):
         resp = self.client.get(self.boards_url)
         self.assertEqual(len(resp.json()), 0, resp.json())
@@ -79,6 +91,30 @@ class BoardPrivacyTests(APITestCase):
         resp = self.client.get(self.board_url)
         self.assertEqual(resp.status_code, 200)
 
+    def test_should_owner_has_no_permission_to_add_private_pin_of_other_user_to_board(self):
+        self.client.login(username=self.owner.username, password='password')
+
+        private_pin_of_other_user = self._create_pin_with_non_owner(True)
+
+        resp = self.client.patch(self.board_url, data={"pins_to_add": [private_pin_of_other_user.id, ]})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['total_pins'], 0, resp.json())
+
+    def test_should_owner_has_permission_to_add_non_private_pin_of_other_user_to_board(self):
+        self.client.login(username=self.owner.username, password='password')
+
+        private_pin_of_other_user = self._create_pin_with_non_owner(False)
+
+        resp = self.client.patch(self.board_url, data={"pins_to_add": [private_pin_of_other_user.id, ]})
+        self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.get(self.board_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()['total_pins'], 1, resp.json())
+
 
 class PinPrivacyTests(APITestCase):
 
@@ -88,7 +124,7 @@ class PinPrivacyTests(APITestCase):
         self.non_owner = create_user("non_owner")
 
         with mock.patch('requests.get', mock_requests_get):
-            image = Image.objects.create_for_url('http://a.com/b.png')
+            image = create_image()
         self.private_pin = Pin.objects.create(
             submitter=self.owner,
             image=image,
@@ -143,6 +179,20 @@ class PinTests(APITestCase):
 
     def tearDown(self):
         _teardown_models()
+
+    @mock.patch('requests.get', mock_requests_get_with_non_image_content)
+    def test_should_not_create_pin_if_url_content_invalid(self):
+        url = 'http://testserver.com/mocked/logo-01.png'
+        create_url = reverse("pin-list")
+        referer = 'http://testserver.com/'
+        post_data = {
+            'url': url,
+            'private': False,
+            'referer': referer,
+            'description': 'That\'s an Apple!'
+        }
+        response = self.client.post(create_url, data=post_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     @mock.patch('requests.get', mock_requests_get)
     def test_should_create_pin(self):
