@@ -31,7 +31,7 @@
                   <img :src="item.url"
                      @load="onPinImageLoaded(item.id)"
                      @click="openPreview(item)"
-                     alt="item.description"
+                     :alt="item.description"
                      :style="item.style"
                      class="pin-preview-image">
                 </div>
