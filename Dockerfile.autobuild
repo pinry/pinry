@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # docker-pinry
 #
-# Builds a basic docker image that can run Pinry (http://getpinry.com) and serve
+# Builds a basic docker image that can run Pinry and serve
 # all of it's assets, there are more optimal ways to do this but this is the
 # most friendly and has everything contained in a single instance.
 #
