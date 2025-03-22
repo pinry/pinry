@@ -7,8 +7,8 @@ from rest_framework.viewsets import GenericViewSet
 from taggit.models import Tag
 
 from core import serializers as api
-from core.models import Image, Pin, Board
-from core.permissions import IsOwnerOrReadOnly, OwnerOnlyIfPrivate
+from core.models import Image, Pin, Board, SystemParameter
+from core.permissions import IsOwnerOrReadOnly, OwnerOnlyIfPrivate, SuperUserOnly
 from core.serializers import filter_private_pin, filter_private_board
 
 
@@ -77,9 +77,17 @@ class TagAutoCompleteViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         )
 
 
+class SystemParameterViewSet(viewsets.ModelViewSet):
+    queryset = SystemParameter.objects.all()
+    serializer_class = api.SystemParameterSerializer
+    pagination_class = None
+    permission_classes = [SuperUserOnly, ]
+
+
 drf_router = routers.DefaultRouter()
 drf_router.register(r'pins', PinViewSet, basename="pin")
 drf_router.register(r'images', ImageViewSet)
 drf_router.register(r'boards', BoardViewSet, basename="board")
 drf_router.register(r'tags-auto-complete', TagAutoCompleteViewSet)
 drf_router.register(r'boards-auto-complete', BoardAutoCompleteViewSet, basename="board")
+drf_router.register(r'system-parameters', SystemParameterViewSet, basename="system-parameter")
