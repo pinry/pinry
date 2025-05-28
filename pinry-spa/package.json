@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.1",
+    "@eslint/js": "^9.27.0",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-pwa": "^5.0.8",
@@ -28,8 +29,10 @@
     "@vue/eslint-config-airbnb": "^8.0.0",
     "eslint": "^9.27.0",
     "eslint-plugin-vue": "^10.1.0",
+    "globals": "^16.2.0",
     "sass": "^1.89.0",
     "sass-loader": "^16.0.5",
+    "typescript-eslint": "^8.33.0",
     "vue-template-compiler": "^2.7.16"
   }
 }
