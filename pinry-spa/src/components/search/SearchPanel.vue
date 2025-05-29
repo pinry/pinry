@@ -17,7 +17,7 @@
             v-bind:placeholder="$t('selectFilterPlaceholder')"
             icon="magnify"
             @select="option => selected = option">
-            <template slot="empty">{{ $t("noResultsFound") }}</template>
+            <template v-slot:empty>{{ $t("noResultsFound") }}</template>
           </b-autocomplete>
           <template v-if="filterType === 'Board'">
             <b-input

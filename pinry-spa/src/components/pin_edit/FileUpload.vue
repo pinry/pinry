@@ -84,13 +84,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../utils/pin';
-@import '../utils/loader';
+@use '../utils/pin';
+@use '../utils/loader';
 
 .preview > img {
-  width: $pin-preview-width;
+  width: pin.$pin-preview-width;
   height: auto;
-  @include loader('../../assets/loader.gif');
+  @include loader.loader('../../assets/loader.gif');
 }
 
 </style>
