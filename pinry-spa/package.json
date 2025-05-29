@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
-    "lint": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-pattern .gitignore --fix src"
   },
   "dependencies": {
     "axios": "^1.9.0",
     "buefy": "^0.9.29",
     "bulma": "1.0.4",
-    "core-js": "^3.42.0",
     "register-service-worker": "^1.7.2",
-    "vue": "^3.5.15",
+    "vue": "^3.5.16",
     "vue-i18n": "^11.1.5",
     "vue-masonry": "^0.16.0",
     "vue-router": "^4.5.1"
@@ -21,18 +21,13 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.1",
     "@eslint/js": "^9.27.0",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-plugin-pwa": "^5.0.8",
-    "@vue/cli-plugin-router": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/eslint-config-airbnb": "^8.0.0",
     "eslint": "^9.27.0",
     "eslint-plugin-vue": "^10.1.0",
     "globals": "^16.2.0",
     "sass": "^1.89.0",
-    "sass-loader": "^16.0.5",
     "typescript-eslint": "^8.33.0",
-    "vue-template-compiler": "^2.7.16"
+    "vite": "^6.3.5"
   }
 }
