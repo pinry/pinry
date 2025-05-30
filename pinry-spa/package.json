@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-pattern .gitignore --fix src"
+    "lint": "eslint --ext .js,.vue --ignore-pattern .gitignore --fix"
   },
   "dependencies": {
     "axios": "^1.9.0",
