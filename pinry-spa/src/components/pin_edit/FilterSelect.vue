@@ -26,9 +26,7 @@
         native-size="8"
         v-model="selectedOptions">
         <template v-for="option in availableOptions">
-          <option
-            v-bind:key="option.value"
-            :value="option.value">{{ option.name }}</option>
+          <option :value="option.value">{{ option.name }}</option>
         </template>
       </b-select>
     </b-field>
@@ -103,7 +101,7 @@ export default {
     },
   },
   watch: {
-    // eslint-disable-next-line func-names
+
     'form.name.value': function (newVal) {
       const options = getAvailableOptions(this, newVal);
       this.availableOptions = this.createdOptions.concat(options);

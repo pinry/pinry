@@ -1,28 +1,29 @@
-import Buefy from 'buefy';
-import Vue from 'vue';
-import { VueMasonryPlugin } from 'vue-masonry';
-import VueI18n from 'vue-i18n';
-import localeUtils from './components/utils/i18n';
+import { createApp } from 'vue';
 import App from './App.vue';
+import { createI18n } from 'vue-i18n';
+import localeUtils from './components/utils/i18n';
 import router from './router';
-import setUpAxiosCsrfConfig from './components/utils/csrf';
-import './registerServiceWorker';
 
-
-Vue.config.productionTip = false;
-Vue.use(Buefy);
-Vue.use(VueMasonryPlugin);
-Vue.use(VueI18n);
-setUpAxiosCsrfConfig();
-
-const i18n = new VueI18n({
+const i18n = createI18n({
   locale: localStorage.getItem('localeCode') || navigator.language.split('-')[0],
+  allowComposition: true,
   fallbackLocale: 'en',
   messages: localeUtils.messages,
 });
 
-new Vue({
-  router,
-  i18n,
-  render: h => h(App),
-}).$mount('#app');
+const pinry = createApp(App);
+pinry.use(router);
+pinry.use(i18n);
+
+pinry.mount('#app');
+
+import Buefy from 'buefy';
+import { VueMasonryPlugin } from 'vue-masonry';
+import setUpAxiosCsrfConfig from './components/utils/csrf';
+import './registerServiceWorker';
+
+Vue.use(Buefy);
+Vue.use(VueMasonryPlugin);
+setUpAxiosCsrfConfig();
+
+

@@ -1,16 +1,20 @@
 # pinry-spa
 
 ## Project setup
-This project requires `NodeJS@18`.
+
+Install [pnpm](https://pnpm.io/), either through your system's package manager or `npm`. After that install the app's packages
 
 ```
-npm install -g "pnpm==9.11.0"
 pnpm install
 ```
 
+We use [vite](https://vite.dev/guide/) to make development easier, it has many
+[awesome hammers](https://github.com/vitejs/awesome-vite?tab=readme-ov-file#vue-3) in its toolbox,
+and [ESLint](https://eslint.org/) to maintain clean a codebase.
+
 ### Compiles and hot-reloads for development
 ```
-pnpm serve
+pnpm dev
 ```
 
 ### Compiles and minifies for production
@@ -20,8 +24,5 @@ pnpm build
 
 ### Lints and fixes files
 ```
-pnpm lint
+pnpm eslint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
