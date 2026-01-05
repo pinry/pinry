@@ -46,6 +46,10 @@ export default {
       type: String,
       default: null,
     },
+    localUpload: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     dropFile(newFile) {
@@ -54,6 +58,9 @@ export default {
     previewImageURL() {
       if (!this.previewExists()) return;
       this.uploadURL(this.previewImageURL);
+    },
+    localUpload() {
+      if (this.localUpload) this.uploadURL(this.previewImageURL);
     },
   },
   computed: {
@@ -95,7 +102,7 @@ export default {
   },
   mounted() {
     if (!this.previewExists()) return;
-    this.uploadURL(this.previewImageURL);
+    if (this.localUpload) this.uploadURL(this.previewImageURL);
   },
 };
 </script>

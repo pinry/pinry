@@ -1,17 +1,19 @@
+// http://localhost:8080/
+// https://pin.lapo.it/
 module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000/',
+        target: 'https://pin.lapo.it/',
         changeOrigin: true,
         ws: true,
       },
       '/media': {
-        target: 'http://localhost:8000/',
+        target: 'https://pin.lapo.it/',
         changeOrigin: true,
       },
       '/static/js/': {
-        target: 'http://localhost:8000/',
+        target: 'https://pin.lapo.it/',
         changeOrigin: true,
       },
     },

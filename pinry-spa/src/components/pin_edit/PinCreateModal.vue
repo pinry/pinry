@@ -10,6 +10,7 @@
             <div class="column">
               <FileUpload
                 :previewImageURL="pinModel.form.url.value"
+                :localUpload="localUpload"
                 v-on:imageUploadSucceed="onUploadDone"
                 v-on:imageUploadProcessing="onUploadProcessing"
               ></FileUpload>
@@ -151,6 +152,7 @@ export default {
     return {
       disableUrlField: false,
       pinModel,
+      localUpload: false,
       formUpload: {
         imageId: null,
       },
@@ -285,6 +287,7 @@ export default {
       ).catch((error) => {
         console.log('Cannot create pin:', error);
         loading.close();
+        this.localUpload = true;
       });
     },
     niceLinks,
