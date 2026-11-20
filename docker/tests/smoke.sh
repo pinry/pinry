@@ -64,6 +64,8 @@ expect 200 "$BASE/api/v2/docs/"
 expect 200 "$BASE/static/drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js"
 expect 200 "$BASE/admin/login/"
 expect 400 -H "Host: evil.example" "$BASE/api/v2/pins/"
+docker logs "$NAME" 2>&1 | grep -q "Invalid HTTP_HOST header: 'evil.example'" \
+    || fail "a rejected Host header is not in the container log"
 
 echo "== Upload a pin"
 TOKEN="$(docker exec "$NAME" python manage.py shell -c "

@@ -30,6 +30,38 @@ if env_flag('HTTPS'):
 # once HTTPS works, since browsers remember it.
 SECURE_HSTS_SECONDS = env_int('HSTS_SECONDS', 0)
 
+# Django only prints errors to the console when DEBUG is on, so by default
+# a rejected Host header (400 Bad Request) left no trace in
+# `docker compose logs`. Send warnings and errors to stderr, which gunicorn
+# passes on to the container log.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'one_line': {
+            '()': 'pinry.log.OneLineFormatter',
+            'format': '%(levelname)s %(name)s: %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+        'security': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'one_line',
+        },
+    },
+    'loggers': {
+        'django': {'handlers': ['console'], 'level': 'WARNING'},
+        # e.g. "Invalid HTTP_HOST header: 'localhost'. You may need to add
+        # 'localhost' to ALLOWED_HOSTS."
+        'django.security': {
+            'handlers': ['security'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
+
 REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
     'rest_framework.renderers.JSONRenderer',
 ]

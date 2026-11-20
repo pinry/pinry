@@ -28,7 +28,7 @@ Edit `.env` and set the two required values:
 
 ```
 SECRET_KEY=<paste the output of the command below>
-ALLOWED_HOSTS=pinry.local,192.168.1.10
+ALLOWED_HOSTS=localhost,pinry.local,192.168.1.10
 ```
 
 Generate the key with:
@@ -39,7 +39,9 @@ python3 -c "import secrets; print(secrets.token_urlsafe(50))"
 
 `ALLOWED_HOSTS` lists every host name and address you will type into the
 browser to reach Pinry, comma separated. Requests for any other host get
-`400 Bad Request`.
+`400 Bad Request`. Keep `localhost` if you open Pinry in a browser on the
+machine that runs it. After changing `.env`, run `docker compose up -d` to
+recreate the container; a plain restart keeps the old values.
 
 Then build and start it, and create your admin account:
 
@@ -280,8 +282,12 @@ database rows are removed.
 + **The container exits right away.** Run `docker compose logs pinry`. The
   usual cause is a missing `SECRET_KEY` or `ALLOWED_HOSTS`, and the log says
   which.
-+ **`400 Bad Request` in the browser.** The host name or address in the
-  address bar is not in `ALLOWED_HOSTS`.
++ **`400 Bad Request` in the browser, or logging in does nothing.** The host
+  name or address in the address bar is not in `ALLOWED_HOSTS`. Run
+  `docker compose logs pinry | grep HTTP_HOST` to see the rejected host,
+  and `docker compose exec pinry printenv ALLOWED_HOSTS` to see what the
+  running container has. Add the host to `.env`, then
+  `docker compose up -d`.
 + **Logging in fails with a CSRF error behind a proxy.** Check that the proxy
   passes `Host` and `X-Forwarded-Proto`, that `HTTPS=true` is set, and, if
   the proxy changes the host name, add the public origin to
