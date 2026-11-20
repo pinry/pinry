@@ -18,6 +18,7 @@ nav:
   - Extensions: 'extensions.md'
   - Theories: 'theories.md'
   - Install with Docker: 'install-with-docker.md'
+  - Import from Pinterest: 'import-pinterest.md'
   - Development: 'development.md'
   - API support: 'api.md'
   - Plugin System: 'plugin-system.md'

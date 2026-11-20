@@ -152,6 +152,15 @@ class Board(models.Model):
 
 
 class Pin(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["submitter", "source_id"],
+                condition=models.Q(source_id__isnull=False),
+                name="core_pin_unique_source_id",
+            ),
+        ]
+
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     private = models.BooleanField(default=False, blank=False)
     url = models.CharField(null=True, blank=True, max_length=2048)
@@ -159,6 +168,9 @@ class Pin(models.Model):
     description = models.TextField(blank=True, null=True)
     image = models.ForeignKey(Image, related_name='pin', on_delete=models.CASCADE)
     published = models.DateTimeField(auto_now_add=True)
+    # Where an imported pin came from, such as "pinterest:<pin id>", so a
+    # second import of the same data skips it.
+    source_id = models.CharField(null=True, blank=True, max_length=64)
     tags = TaggableManager()
 
     def tag_list(self):
