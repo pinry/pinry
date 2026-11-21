@@ -1,28 +1,38 @@
-import Buefy from 'buefy';
-import Vue from 'vue';
-import { VueMasonryPlugin } from 'vue-masonry';
-import VueI18n from 'vue-i18n';
-import localeUtils from './components/utils/i18n';
+import { createApp } from 'vue';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  Field,
+  Icon,
+  Input,
+  Loading,
+  Modal,
+  Select,
+  Skeleton,
+  Tag,
+  Taginput,
+  Toast,
+  Upload,
+} from 'buefy';
+import 'buefy/dist/css/buefy.css';
+import '@mdi/font/css/materialdesignicons.css';
+import './components/utils/theme.scss';
 import App from './App.vue';
 import router from './router';
+import i18n from './components/utils/i18n';
 import setUpAxiosCsrfConfig from './components/utils/csrf';
-import './registerServiceWorker';
+import { initTheme } from './components/utils/theme';
 
-
-Vue.config.productionTip = false;
-Vue.use(Buefy);
-Vue.use(VueMasonryPlugin);
-Vue.use(VueI18n);
 setUpAxiosCsrfConfig();
+initTheme();
 
-const i18n = new VueI18n({
-  locale: localStorage.getItem('localeCode') || navigator.language.split('-')[0],
-  fallbackLocale: 'en',
-  messages: localeUtils.messages,
-});
-
-new Vue({
-  router,
-  i18n,
-  render: h => h(App),
-}).$mount('#app');
+const app = createApp(App);
+app.use(router);
+app.use(i18n);
+// Only the Buefy components the app uses, so the rest is left out of the bundle.
+[
+  Button, Checkbox, Dialog, Field, Icon, Input, Loading,
+  Modal, Select, Skeleton, Tag, Taginput, Toast, Upload,
+].forEach(plugin => app.use(plugin));
+app.mount('#app');

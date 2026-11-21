@@ -48,7 +48,7 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
+          <button class="button" type="button" @click="$emit('close')">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createBoard"
@@ -74,6 +74,7 @@ const fields = ['name', 'private'];
 
 export default {
   name: 'BoardEditModal',
+  emits: ['boardSaved', 'boardCreated', 'close'],
   data() {
     const createModel = ModelForm.fromFields(fields);
     const editModel = ModelForm.fromFields(fields);
@@ -115,7 +116,7 @@ export default {
       promise.then(
         (resp) => {
           self.$emit('boardSaved', resp);
-          self.$parent.close();
+          self.$emit('close');
         },
         (error) => {
           self.editModel.markFieldsAsDanger(error.response.data);
@@ -130,9 +131,9 @@ export default {
       );
       promise.then(
         (resp) => {
-          bus.bus.$emit(bus.events.refreshBoards);
+          bus.bus.emit(bus.events.refreshBoards);
           self.$emit('boardCreated', resp);
-          self.$parent.close();
+          self.$emit('close');
         },
         (resp) => {
           self.createModel.markFieldsAsDanger(resp.data);

@@ -7,18 +7,23 @@
             <option value="Tag">{{ $t("SearchPanelTagOption") }}</option>
             <option value="Board">{{ $t("SearchPanelBoardOption") }}</option>
           </b-select>
-          <b-autocomplete
+          <b-taginput
             v-show="filterType === 'Tag'"
             class="search-input"
-            v-model="name"
-            :data="filteredDataArray"
+            v-model="tags"
+            :data="filteredTags"
+            autocomplete
             :keep-first="true"
             :open-on-focus="true"
             v-bind:placeholder="$t('selectFilterPlaceholder')"
             icon="magnify"
-            @select="option => selected = option">
-            <template slot="empty">{{ $t("noResultsFound") }}</template>
-          </b-autocomplete>
+            @typing="text => tagText = text">
+            <template #empty>{{ $t("noResultsFound") }}</template>
+          </b-taginput>
+          <b-select v-show="filterType === 'Tag'" v-model="tagsMode">
+            <option value="all">{{ $t("SearchPanelTagsModeAllOption") }}</option>
+            <option value="any">{{ $t("SearchPanelTagsModeAnyOption") }}</option>
+          </b-select>
           <template v-if="filterType === 'Board'">
             <b-input
               class="search-input"
@@ -43,25 +48,24 @@ import api from '../api';
 
 export default {
   name: 'FilterSelector',
+  emits: ['selected'],
   data() {
     return {
       filterType: null,
-      selectedOption: [],
       options: {
         Tag: [],
       },
-      name: '',
+      tags: [],
+      tagText: '',
+      tagsMode: 'all',
       boardText: '',
-      selected: null,
     };
   },
   methods: {
-    selectOption(filterName) {
-      this.name = '';
+    selectOption() {
+      this.tags = [];
+      this.tagText = '';
       this.boardText = '';
-      if (filterName === 'Tag') {
-        this.selectedOption = this.options.Tag;
-      }
     },
     searchBoard() {
       if (this.boardText === '') {
@@ -72,28 +76,36 @@ export default {
         { filterType: this.filterType, selected: this.boardText },
       );
     },
-  },
-  watch: {
-    filterType(newVal) {
-      this.selectOption(newVal);
-    },
-    selected(newVal) {
+    searchTags() {
+      if (this.filterType !== 'Tag') {
+        return;
+      }
       this.$emit(
         'selected',
-        { filterType: this.filterType, selected: newVal },
+        { filterType: this.filterType, selected: this.tags, tagsMode: this.tagsMode },
       );
     },
   },
+  watch: {
+    filterType() {
+      this.selectOption();
+    },
+    tags() {
+      // b-taginput clears its input after adding a tag without emitting "typing"
+      this.tagText = '';
+      this.searchTags();
+    },
+    tagsMode() {
+      if (this.tags.length > 0) {
+        this.searchTags();
+      }
+    },
+  },
   computed: {
-    filteredDataArray() {
-      return this.selectedOption.filter(
-        (option) => {
-          const ret = option
-            .toString()
-            .toLowerCase()
-            .indexOf(this.name.toLowerCase()) >= 0;
-          return ret;
-        },
+    filteredTags() {
+      const text = this.tagText.toLowerCase();
+      return this.options.Tag.filter(
+        tag => !this.tags.includes(tag) && tag.toLowerCase().indexOf(text) >= 0,
       );
     },
   },
@@ -120,7 +132,7 @@ export default {
     padding-right: 2rem;
   }
   .filter-selector {
-    background-color: white;
+    background-color: var(--pinry-card-background);
     border-radius: 3px;
     .search-input {
       width: 100%;

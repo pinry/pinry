@@ -1,23 +1,18 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
+  name: 'App',
 };
 </script>
 
 <style lang="scss">
-  // Import Bulma's core
-  @import "~bulma/sass/utilities/_all";
-  // Import Bulma and Buefy styles
-  @import "~bulma";
-  @import "~buefy/src/scss/buefy";
   html {
-    background-color: #F5F5EB;
+    background-color: var(--pinry-page-background);
   }
   .body {
     font-family: 'Open Sans', sans-serif;

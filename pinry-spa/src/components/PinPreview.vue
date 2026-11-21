@@ -22,13 +22,11 @@
                   <p class="title is-4 pin-meta-info"><span class="dim">{{ $t("pinnedByTitle") }}</span><span class="author">{{ pinItem.author }}</span></p>
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
-                    <template v-for="tag in pinItem.tags">
-                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
-                    </template>
+                    <b-tag v-for="tag in pinItem.tags" :key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
                   </p>
                 </div>
                 <div class="is-pulled-right">
-                  <a :href="pinItem.referer" target="_blank">
+                  <a :href="pinItem.referer" target="_blank" rel="noopener noreferrer">
                     <b-button
                         v-show="pinItem.referer !== null"
                         class="meta-link"
@@ -36,7 +34,7 @@
                       {{ $t("sourceButton") }}
                     </b-button>
                   </a>
-                  <a :href="pinItem.original_image_url" target="_blank">
+                  <a :href="pinItem.original_image_url" target="_blank" rel="noopener noreferrer">
                     <b-button
                         v-show="pinItem.original_image_url !== null"
                         class="meta-link"
@@ -64,10 +62,11 @@ import niceLinks from './utils/niceLinks';
 
 export default {
   name: 'PinPreview',
+  emits: ['close'],
   props: ['pinItem'],
   methods: {
     closeAndGoTo() {
-      this.$parent.close();
+      this.$emit('close');
       this.$router.push(
         { name: 'pin', params: { pinId: this.pinItem.id } },
       );
@@ -78,8 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './utils/fonts.scss';
-
+@use './utils/fonts' as *;
 .meta-link {
   margin-left: 0.3rem;
 }

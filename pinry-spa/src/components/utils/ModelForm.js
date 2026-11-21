@@ -1,4 +1,7 @@
+import { reactive } from 'vue';
 
+// The form is reactive up front, so the helpers below, which close over it,
+// trigger re-renders when they mark or reset fields.
 function createFormModel(fields) {
   const form = {};
   fields.forEach(
@@ -10,7 +13,7 @@ function createFormModel(fields) {
       };
     },
   );
-  return form;
+  return reactive(form);
 }
 
 
@@ -28,6 +31,8 @@ function FormHelper(form, fields = []) {
     Object.entries(errorRespObject).forEach(
       (errorTuple) => {
         const [key, error] = errorTuple;
+        // Errors such as "detail" don't belong to a field.
+        if (!(key in self)) return;
         let msg;
         if (Array.isArray(error)) {
           [msg] = error;

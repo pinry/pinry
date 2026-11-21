@@ -1,27 +1,29 @@
 # pinry-spa
 
+The Pinry web app: Vue 3, Vite, Buefy 3 (Bulma 1), vue-router and vue-i18n.
+
 ## Project setup
-This project requires `NodeJS@18`.
+This project requires Node.js 26 and pnpm 12 (pinned in `package.json`).
 
 ```
-npm install -g "pnpm==9.11.0"
+npm install -g pnpm@12
 pnpm install
 ```
 
-### Compiles and hot-reloads for development
+### Dev server with hot reload
+Proxies `/api`, `/admin`, `/media` and `/static` to Django on `127.0.0.1:8000`.
 ```
 pnpm serve
 ```
 
-### Compiles and minifies for production
+### Production build into `dist/`
 ```
 pnpm build
 ```
 
-### Lints and fixes files
+### Lint
 ```
 pnpm lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See the [Vite configuration reference](https://vite.dev/config/).

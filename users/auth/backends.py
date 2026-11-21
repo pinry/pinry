@@ -1,37 +1,35 @@
-import re
+from django.contrib.auth.backends import ModelBackend
+from django.core.exceptions import PermissionDenied
 
+from users.auth.throttling import LoginRateThrottle
 from users.models import User
 
 
-email_re = re.compile(
-    r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
-    # quoted-string, see also http://tools.ietf.org/html/rfc2822#section-3.2.5
-    r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"'
-    r')@((?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)$)'
-    # domain
-    r'|\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\]$',
-    re.IGNORECASE
-)   # literal form, ipv4 address (SMTP 4.1.3)
+class CombinedAuthBackend(ModelBackend):
+    """
+    Lets users log in with their email address as well as their username.
 
+    Emails are not unique, so the password is checked against every active
+    account with that email, and the login succeeds only when exactly one
+    of them matches. Anything else returns None, so the next backend
+    (ModelBackend) can still try the value as a username.
 
-class CombinedAuthBackend(object):
-    def authenticate(self, username=None, password=None):
-        is_email = email_re.match(username)
-        if is_email:
-            qs = User.objects.filter(email=username)
-        else:
-            qs = User.objects.filter(username=username)
+    This backend is listed first, so it also enforces the login throttle
+    for every password check (the SPA login, the admin and api-auth
+    logins, Basic auth): PermissionDenied makes Django skip the remaining
+    backends.
+    """
 
-        try:
-            user = qs.get()
-        except User.DoesNotExist:
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        if request is not None and not LoginRateThrottle().allow_request(request):
+            raise PermissionDenied
+        if not isinstance(username, str) or "@" not in username or password is None:
             return None
-        if user.check_password(password):
-            return user
+        matches = [
+            user
+            for user in User.objects.filter(email__iexact=username)
+            if self.user_can_authenticate(user) and user.check_password(password)
+        ]
+        if len(matches) == 1:
+            return matches[0]
         return None
-
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None

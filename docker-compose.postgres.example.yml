@@ -1,0 +1,44 @@
+# Pinry with PostgreSQL, e.g. on a cloud server behind a TLS proxy.
+#
+#   cp .env.example .env              # set SECRET_KEY, ALLOWED_HOSTS,
+#                                     # POSTGRES_PASSWORD, and HTTPS=true
+#                                     # behind TLS
+#   cp docker-compose.postgres.example.yml docker-compose.yml
+#   docker compose up -d --build
+#   docker compose exec pinry python manage.py createsuperuser
+#
+# Pinry listens on 127.0.0.1:8080 so only the proxy on this host reaches
+# it; change the port mapping to serve it directly.
+services:
+  pinry:
+    image: pinry:local
+    build:
+      context: .
+      dockerfile: Dockerfile.autobuild
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://pinry:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/pinry
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: pinry
+      POSTGRES_USER: pinry
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      # Outside ./data, which Pinry chowns to its own user on start.
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pinry -d pinry"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped

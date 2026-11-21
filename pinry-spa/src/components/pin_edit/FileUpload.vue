@@ -34,6 +34,7 @@ import utils from '../utils/PinHandler';
 
 export default {
   name: 'FileUpload',
+  emits: ['imageUploadProcessing', 'imageUploadSucceed', 'imageUploadFailed'],
   data() {
     return {
       dropFile: null,
@@ -84,9 +85,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../utils/pin';
-@import '../utils/loader';
-
+@use '../utils/pin' as *;
+@use '../utils/loader' as *;
 .preview > img {
   width: $pin-preview-width;
   height: auto;

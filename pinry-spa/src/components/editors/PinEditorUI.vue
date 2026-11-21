@@ -39,6 +39,7 @@ import modals from '../modals';
 
 export default {
   name: 'Editor',
+  emits: ['pin-remove-from-board-succeed', 'pin-delete-succeed'],
   props: {
     currentBoard: {
       type: Object,
@@ -62,7 +63,6 @@ export default {
       return this.pin.author === this.currentUsername;
     },
     inOwnedBoard() {
-      console.log(this.currentBoard, this.currentUsername);
       return (
         Object.values(this.currentBoard).length !== 0
         && this.currentBoard.submitter.username === this.currentUsername
@@ -125,5 +125,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './editor';
+@use './editor' as *;
 </style>

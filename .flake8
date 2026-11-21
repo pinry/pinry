@@ -1,9 +1,10 @@
 [flake8]
-ignore = E203,E266,E501,W503
+ignore = E203,E266,E501,W503,B950
 max-line-length = 80
 max-complexity = 18
 select = B,C,E,F,W,T4,B9
 exclude =
+    .venv,
     migrations,
     pinry/settings/,
     core/tests/,

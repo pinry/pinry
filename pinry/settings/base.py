@@ -1,9 +1,35 @@
 import os
 
+import dj_database_url
 from django.contrib.messages import constants as messages
+
+from .env import env_flag, env_int, env_json, env_list, env_str
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# All site settings come from environment variables; see .env.example.
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env_str('SECRET_KEY', '')
+
+# Host names (and LAN addresses) Pinry answers to, e.g.
+# "pins.example.com,192.168.1.10".
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS')
+
+# Origins with a scheme, e.g. "https://pins.example.com". Only needed when
+# a proxy changes the host or scheme the browser sees.
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS')
+
+# e.g. "postgres://user:password@db:5432/pinry"; SQLite by default.
+DATABASES = {
+    'default': dj_database_url.parse(env_str(
+        'DATABASE_URL',
+        'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
+    )),
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Application definition
 
@@ -17,8 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'taggit',
-    'compressor',
     'django_images',
     'core',
     'users',
@@ -28,9 +55,8 @@ INSTALLED_APPS = [
 ROOT_URLCONF = 'pinry.urls'
 
 MIDDLEWARE = [
-
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -60,7 +86,6 @@ TEMPLATES = [
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 ]
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pinry/static')]
@@ -72,7 +97,7 @@ MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 WSGI_APPLICATION = 'pinry.wsgi.application'
 
 # Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -90,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -98,22 +123,20 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
 # Set to False to disable people from creating new accounts.
-ALLOW_NEW_REGISTRATIONS = True
+ALLOW_NEW_REGISTRATIONS = env_flag('ALLOW_NEW_REGISTRATIONS', True)
 
 # Set to False to force users to login before seeing any pins.
-PUBLIC = True
+PUBLIC = env_flag('PUBLIC', True)
 
 AUTHENTICATION_BACKENDS = [
     'users.auth.backends.CombinedAuthBackend',
@@ -135,26 +158,44 @@ API_LIMIT_PER_PAGE = 50
 
 IMAGE_PATH = 'core.utils.upload_path'
 
-IMAGE_SIZES = {
+# Thumbnail sizes, as JSON in the IMAGE_SIZES environment variable.
+IMAGE_SIZES = env_json('IMAGE_SIZES', {
     'thumbnail': {'size': [240, 0]},
     'standard': {'size': [600, 0]},
     'square': {'crop': True, 'size': [125, 125]},
-}
+})
 
 # IS_TEST is a variable to mark if the test is running
 IS_TEST = False
 
-# User custom settings
-IMAGE_AUTO_DELETE = True
+# Delete image files once their last pin is removed.
+IMAGE_AUTO_DELETE = env_flag('IMAGE_AUTO_DELETE', True)
+
+# Set to True to let users pin images from loopback, private (LAN),
+# link-local and other non-public addresses. Only do this if you trust
+# every account holder, since it lets them reach internal services.
+ALLOW_PRIVATE_URL_FETCH = env_flag('ALLOW_PRIVATE_URL_FETCH', False)
+
+# Largest image, in bytes, that Pinry will download when pinning by URL.
+MAX_FETCH_BYTES = env_int('MAX_FETCH_BYTES', 50 * 1024 * 1024)
+
+# Set to True to accept HTTP Basic auth (username and password on every
+# request) on the API. Off by default; API clients should use a token.
+ALLOW_BASIC_AUTH = env_flag('ALLOW_BASIC_AUTH', False)
+
+# Plugin classes to load, comma separated; see docs/src/plugin-system.md.
+ENABLED_PLUGINS = env_list('ENABLED_PLUGINS')
 
 # Rest Framework
 
 DRF_URL_FIELD_NAME = "resource_link"
 
+_login_rate = env_str('LOGIN_THROTTLE_RATE', '20/hour')
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ],
@@ -165,8 +206,22 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': API_LIMIT_PER_PAGE,
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'users.auth.throttling.OptionalBasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    # Failed password checks per client address, for the login view and
+    # Basic auth. LOGIN_THROTTLE_RATE=off disables it.
+    'DEFAULT_THROTTLE_RATES': {
+        'login': _login_rate if _login_rate.lower() != 'off' else None,
+    },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Pinry API',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Serve Swagger UI from /static, not a CDN, so the docs work offline.
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
 }

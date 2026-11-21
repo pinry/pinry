@@ -14,7 +14,7 @@ import Boards from '../components/Boards.vue';
 import SearchPanel from '../components/search/SearchPanel.vue';
 
 export default {
-  name: 'Search',
+  name: 'SearchView',
   data() {
     return {
       pinFilters: null,
@@ -33,7 +33,11 @@ export default {
       this.pinFilters = null;
       this.boardFilters = null;
       if (args.filterType === 'Tag') {
-        this.pinFilters = { tagFilter: args.selected };
+        // No tags selected means no tag filter: show all pins.
+        this.pinFilters = {
+          tagFilter: args.selected.length > 0 ? args.selected : null,
+          tagsMode: args.tagsMode,
+        };
       } else if (args.filterType === 'Board') {
         this.boardFilters = { boardNameContains: args.selected };
       }

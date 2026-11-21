@@ -9,6 +9,7 @@
                   <b-skeleton width="48px" height="48px" :active="avatarLoading"></b-skeleton>
                   <img
                     @load="onAvatarLoaded"
+                    @error="onAvatarLoaded"
                     v-show="!avatarLoading"
                     :src="user.avatar"
                     alt="avatar"
@@ -30,7 +31,6 @@
                 <li :class="trueFalse2Class(inPins)">
                   <a @click="go2UserPins">
                     <b-icon
-                      type="is-dark"
                       icon="image"
                       custom-size="mdi-24px">
                     </b-icon>
@@ -40,7 +40,6 @@
                 <li :class="trueFalse2Class(inBoard)">
                   <a @click="go2UserBoard">
                     <b-icon
-                      type="is-dark"
                       icon="folder-multiple-image"
                       custom-size="mdi-24px">
                     </b-icon>
@@ -50,7 +49,6 @@
                 <li :class="trueFalse2Class(inProfile)">
                   <a @click="go2UserProfile">
                     <b-icon
-                      type="is-dark"
                       icon="account"
                       custom-size="mdi-24px">
                     </b-icon>
@@ -70,9 +68,12 @@
 import api from './api';
 
 export default {
-  name: 'UserProfileCard.vue',
+  name: 'UserProfileCard',
   props: {
-    username: String,
+    username: {
+      type: String,
+      default: null,
+    },
     inBoard: {
       type: Boolean,
       default: false,
@@ -129,9 +130,11 @@ export default {
       api.User.fetchUserInfoByName(username).then(
         (user) => {
           if (user === null) {
-            self.$router.push(
-              { name: 'PageNotFound' },
-            );
+            // Keep the URL; the catch-all route needs the path as its param.
+            self.$router.replace({
+              name: 'PageNotFound',
+              params: { pathMatch: self.$route.path.substring(1).split('/') },
+            });
           } else {
             self.user.avatar = `//gravatar.com/avatar/${user.gravatar}`;
             self.user.username = user.username;
@@ -145,12 +148,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../components/utils/grid-layout' as *;
 #user-home-container {
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .1);
+  box-shadow: var(--pinry-panel-shadow);
 }
-@import '../components/utils/grid-layout';
 @include screen-grid-layout("#user-home-container");
 </style>

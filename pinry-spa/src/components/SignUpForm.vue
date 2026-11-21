@@ -53,7 +53,7 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
+          <button class="button" type="button" @click="$emit('close')">{{ $t("closeButton") }}</button>
           <button
             @click="doRegister"
             class="button is-primary">{{ $t("registerButton") }}</button>
@@ -76,6 +76,7 @@ const fields = [
 
 export default {
   name: 'SignUpForm',
+  emits: ['signupSucceed', 'close'],
   data() {
     const model = ModelForm.fromFields(fields);
     return {
@@ -95,8 +96,8 @@ export default {
       );
       promise.then(
         (user) => {
-          self.$emit('signup.succeed', user);
-          self.$parent.close();
+          self.$emit('signupSucceed', user);
+          self.$emit('close');
         },
         (resp) => {
           if (resp.status === 401) {

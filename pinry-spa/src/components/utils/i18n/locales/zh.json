@@ -48,6 +48,8 @@
   "noResultsFound": "没有找到任何结果",
   "SearchPanelBoardOption": "画板",
   "SearchPanelTagOption": "标签",
+  "SearchPanelTagsModeAllOption": "包含全部标签",
+  "SearchPanelTagsModeAnyOption": "包含任一标签",
   "Add2BoardModalCardTitle": "添加到画板",
   "Add2BoardModalCardButton": "添加到画板",
   "FileUploadDescription": "拖拽图片或者点击上传",
@@ -79,5 +81,9 @@
   "imageSourceLabel": "图片来源",
   "tagsLabel": "标签",
   "descriptionLabel": "描述",
-  "selectBoardLabel": "选择画板"
+  "selectBoardLabel": "选择画板",
+  "themeMenuTitle": "主题",
+  "themeLightOption": "浅色",
+  "themeDarkOption": "深色",
+  "themeSystemOption": "跟随系统"
 }

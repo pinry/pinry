@@ -1,0 +1,44 @@
+// Pinry's own colours, layered on Bulma's light and dark schemes. Components
+// use these variables instead of hard-coded colours. <html> always carries
+// data-theme (set by public/theme-init.js and utils/theme.js).
+:root,
+[data-theme=light] {
+  --pinry-page-background: #F5F5EB;
+  --pinry-card-background: #fff;
+  // Behind images in both themes, so transparent images drawn for a light
+  // background (dark logos, line art) stay readable.
+  --pinry-image-background: #fff;
+  --pinry-card-shadow: 0 1px 0 #bbb;
+  --pinry-panel-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .1);
+  --pinry-divider: #DDDDDD;
+  --pinry-title-text: rgb(51, 51, 51);
+  --pinry-secondary-text: #999;
+  --pinry-muted-text: #888;
+}
+
+[data-theme=dark] {
+  --pinry-page-background: var(--bulma-scheme-main);
+  --pinry-card-background: var(--bulma-background);
+  --pinry-card-shadow: 0 0 0 1px var(--bulma-border-weak);
+  --pinry-panel-shadow: 0 0 0 1px var(--bulma-border-weak);
+  --pinry-divider: var(--bulma-border-weak);
+  --pinry-title-text: var(--bulma-text-strong);
+  --pinry-secondary-text: var(--bulma-text-weak);
+  --pinry-muted-text: var(--bulma-text-weak);
+  // Bulma's cards default to the page colour, which would hide them here.
+  --bulma-card-background-color: var(--pinry-card-background);
+}
+
+// The navbar logo has a version for each theme.
+.pinry-logo-on-dark {
+  display: none;
+}
+
+[data-theme=dark] {
+  .pinry-logo-on-light {
+    display: none;
+  }
+  .pinry-logo-on-dark {
+    display: inline;
+  }
+}

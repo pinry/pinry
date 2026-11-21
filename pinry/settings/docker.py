@@ -1,40 +1,80 @@
-import logging
+from django.core.exceptions import ImproperlyConfigured
 
 from .base import *
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-if 'SECRET_KEY' not in os.environ:
-    logging.warning(
-        "No SECRET_KEY given in environ, please have a check."
-        "If you have a local_settings file, please ignore this warning."
-    )
-SECRET_KEY = os.environ.get('SECRET_KEY', "PLEASE_REPLACE_ME")
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# SECURITY WARNING: use your actual domain name in production!
-ALLOWED_HOSTS = ['*']
+# Everything lives in the /data volume.
+STATIC_ROOT = '/data/static'
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
-    }
+    'default': dj_database_url.parse(
+        env_str('DATABASE_URL', 'sqlite:////data/production.db'),
+    ),
 }
 
 USE_X_FORWARDED_HOST = True
+
+# Set HTTPS=true when Pinry is served over HTTPS by a reverse proxy that sets
+# X-Forwarded-Proto. Cookies are then only sent over HTTPS.
+if env_flag('HTTPS'):
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# HSTS makes browsers refuse plain HTTP for this many seconds. Only set it
+# once HTTPS works, since browsers remember it.
+SECURE_HSTS_SECONDS = env_int('HSTS_SECONDS', 0)
+
+# Django only prints errors to the console when DEBUG is on, so by default
+# a rejected Host header (400 Bad Request) left no trace in
+# `docker compose logs`. Send warnings and errors to stderr, which gunicorn
+# passes on to the container log.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'one_line': {
+            '()': 'pinry.log.OneLineFormatter',
+            'format': '%(levelname)s %(name)s: %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+        'security': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'one_line',
+        },
+    },
+    'loggers': {
+        'django': {'handlers': ['console'], 'level': 'WARNING'},
+        # e.g. "Invalid HTTP_HOST header: 'localhost'. You may need to add
+        # 'localhost' to ALLOWED_HOSTS."
+        'django.security': {
+            'handlers': ['security'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
 
 REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
     'rest_framework.renderers.JSONRenderer',
 ]
 
-# should not ignore import error in production, local_settings is required
-from .local_settings import *
+if not SECRET_KEY:
+    raise ImproperlyConfigured(
+        "SECRET_KEY is not set. Set it in the environment, for example "
+        "with the output of docker/scripts/gen_key.sh."
+    )
+
+if not ALLOWED_HOSTS:
+    raise ImproperlyConfigured(
+        "ALLOWED_HOSTS is not set. Set it in the environment to the host "
+        "names and addresses Pinry is reached at, comma separated, e.g. "
+        "\"pins.example.com,192.168.1.10\"."
+    )

@@ -1,49 +1,39 @@
-Upgrade Guide
----------------------
+Pinry 3.0
+=========
 
-This doc is about how you should do to upgrade specified version to next version.
+Pinry 3.0 is a rebuild on a current base. There is **no upgrade path from
+2.x**: the database migrations start over, so a 2.x database can't be
+migrated, and `local_settings.py` is no longer read. Start a fresh install
+with [Install with Docker](install-with-docker.md).
 
-Generally, you should have no extra action to take if you use our docker version
-if we haven't written notes for it.
+# What changed
 
-If you meet some errors which include `no such table`, please have a try to run migrations in docker:
-```
-# out of docker
-docker exec -it <your-container-id> bash
-# in docker
-python manage.py migrate 
-```
++ **Backend:** Django 5.2 LTS on Python 3.12 or newer (the Docker image uses
+  Python 3.13). Dependencies are managed with uv and locked in `uv.lock`.
++ **Frontend:** Vue 3 with Vite, Buefy 3 and Bulma 1, built with Node 26 and
+  pnpm.
++ **Docker:** the image is based on Debian 13 (trixie) and builds for
+  `linux/amd64` and `linux/arm64`. 32-bit ARM is no longer supported. The
+  image isn't published to a registry; build it from the repository. It has
+  a health check, and gunicorn is only reachable through nginx.
++ **Configuration:** every setting is an environment variable, normally kept
+  in `.env` (see `.env.example`). Pinry refuses to start in Docker without
+  `SECRET_KEY` and `ALLOWED_HOSTS`.
++ **Databases:** SQLite (the default) and PostgreSQL 14 or newer, chosen with
+  `DATABASE_URL`. MySQL and Oracle are no longer supported.
++ **API:** an OpenAPI 3 schema at `/api/v2/schema/` and Swagger UI at
+  `/api/v2/docs/`, both served without any outside CDN. HTTP Basic auth is
+  off unless `ALLOW_BASIC_AUTH=true`; use an API token instead. Pins, boards
+  and public profiles no longer include anyone's `email`. See
+  [API support](api.md).
++ **Security:** user-supplied text and links are escaped and limited to
+  http(s); pinning by URL can't reach private addresses unless
+  `ALLOW_PRIVATE_URL_FETCH=true`; failed logins are rate limited; private
+  boards and pins stay hidden everywhere in the API.
 
-How to get the current version with source code:
-```
-git tag
-```
-The first line of output is our latest version of code.
+# Moving pins from a 2.x install
 
-
-# v2.1.6 -> v2.1.7
-v2.1.6 has a security issue which may cause unauthorized token-read.
-If you upgrade your instance from v2.1.6 to v2.1.7, you could go into 
-docker and run following command to reset tokens.
-```
-python manage.py users_reset_tokens
-```
-
-# v2.0.2 -> v2.1.0
-Main breaking changes:
-
-+  Upgrade `django 1` to django `2.2 LTS`
-
-How to:
-
-If you use non-docker version, you should change your web-server config to add a new
-alias for `media file path` (where to store images).
-
-Please add following config to your nginx config in `server` block:
-```
-location /media {
-    alias /path/to/static/media;
-    expires max;
-    access_log off;
-}
-```
+There is no automatic import. If you need to keep pins from a 2.x install,
+the API is the most practical route: read pins from the old instance with
+its API and create them on the new one with an API token (`POST
+/api/v2/pins/` with a `url`, or upload the file to `/api/v2/images/` first).

@@ -1,79 +1,70 @@
 # -----------------------------------------------------------------------------
 # docker-pinry
 #
-# Builds a basic docker image that can run Pinry and serve
-# all of it's assets, there are more optimal ways to do this but this is the
-# most friendly and has everything contained in a single instance.
+# Builds the release image: nginx, gunicorn and the built SPA in a single
+# container. Configure it with environment variables (see .env.example) and
+# keep /data on a volume.
 #
-# Authors: Isaac Bythewood, Jason Kaltsikis
-# Updated: May 2nd, 2020
-# Require: Docker (http://www.docker.io/)
+# Platforms: linux/amd64 and linux/arm64.
 # -----------------------------------------------------------------------------
 
-# Build static pnpm file
-FROM node:18-bookworm as pnpm-build
+# Build the SPA. Its output is plain files, so build it on the build host's
+# platform even when the image is for another one.
+FROM --platform=$BUILDPLATFORM node:26-trixie-slim AS spa-build
 
-WORKDIR pinry-spa
-COPY pinry-spa/package.json pinry-spa/pnpm-lock.yaml ./
-RUN npm install -g pnpm
-RUN pnpm install
+WORKDIR /pinry-spa
+COPY pinry-spa/package.json pinry-spa/pnpm-lock.yaml pinry-spa/pnpm-workspace.yaml ./
+RUN npm install -g pnpm@12
+RUN pnpm install --frozen-lockfile
 COPY pinry-spa .
 RUN pnpm build
 
 
-# Required for other database options
-FROM python:3.9.12-slim-buster as base
-ARG DEBIAN_FRONTEND=noninteractive
+# Install the Python dependencies from uv.lock into /opt/venv.
+FROM python:3.13-slim-trixie AS python-build
 
-RUN apt-get update \
-    && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils; fi \
-    && apt-get -y install pkg-config gcc default-libmysqlclient-dev
-RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PROJECT_ENVIRONMENT=/opt/venv
+
+RUN pip install --no-cache-dir uv
+WORKDIR /pinry
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev --no-install-project
 
 
 # Final image
-FROM python:3.9.12-slim-buster
+FROM python:3.13-slim-trixie
 ARG DEBIAN_FRONTEND=noninteractive
 
-WORKDIR pinry
-RUN mkdir /data && chown -R www-data:www-data /data
+# Run as uid/gid 1000, which usually owns the host's data directory.
+RUN groupmod -g 1000 www-data \
+ && usermod -u 1000 -g 1000 www-data \
+ && mkdir /data \
+ && chown www-data:www-data /data
 
-RUN groupadd -g 2300 tmpgroup \
- && usermod -g tmpgroup www-data \
- && groupdel www-data \
- && groupadd -g 1000 www-data \
- && usermod -g www-data www-data \
- && usermod -u 1000 www-data \
- && groupdel tmpgroup
-
+# Pillow and psycopg wheels bundle their own libraries; only nginx is needed.
 RUN apt-get update \
-    # Install nginx
-    && apt-get -y  install nginx pwgen \
-    # Install Pillow dependencies
-    && apt-get -y install libopenjp2-7 libjpeg-turbo-progs libjpeg62-turbo-dev libtiff5-dev libxcb1 \
-    # Needed to compile psycopg2 on arm (fallback for psycopg2-binary)
-    && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils libpq-dev gcc; fi \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get autoclean
+ && apt-get -y install --no-install-recommends nginx \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -f /etc/nginx/sites-enabled/default
 
-# Install Pipfile requirements
-COPY requirements.txt ./
-RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
-    && pip install -r requirements.txt
+COPY --from=python-build /opt/venv /opt/venv
+ENV PATH=/opt/venv/bin:$PATH \
+    PYTHONUNBUFFERED=1 \
+    DJANGO_SETTINGS_MODULE=pinry.settings.docker
 
-# Copy from previous stages
-COPY --from=pnpm-build pinry-spa/dist /pinry/pinry-spa/dist
-COPY --from=base /root/.local /root/.local
-ENV PATH=/root/.local/bin:$PATH
-
+WORKDIR /pinry
 COPY . .
+COPY --from=spa-build /pinry-spa/dist /pinry/pinry-spa/dist
 
-# Load in all of our config files.
-ADD docker/nginx/nginx.conf /etc/nginx/nginx.conf
-ADD docker/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 
-# 80 is for nginx web, /data contains static files and database /start runs it.
+# 80 is for nginx; /data holds the database, static files and media.
 EXPOSE 80
-ENV DJANGO_SETTINGS_MODULE pinry.settings.docker
 VOLUME ["/data"]
-CMD    ["/pinry/docker/scripts/start.sh"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD ["python", "/pinry/docker/scripts/healthcheck.py"]
+CMD ["/pinry/docker/scripts/start.sh"]

@@ -13,13 +13,13 @@ function onScroll2Bottom(callback) {
   }
 }
 
+// Returns a function that removes the listener again.
 function bindScroll2Bottom(callback) {
-  window.addEventListener(
-    'scroll',
-    () => {
-      onScroll2Bottom(callback);
-    },
-  );
+  const listener = () => {
+    onScroll2Bottom(callback);
+  };
+  window.addEventListener('scroll', listener, { passive: true });
+  return () => window.removeEventListener('scroll', listener);
 }
 
 export default {

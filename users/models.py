@@ -17,7 +17,7 @@ def create_token_if_necessary(user: BaseUser):
 class User(BaseUser):
 
     @property
-    def gravatar(self):
+    def gravatar(self) -> str:
         return hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
     class Meta:

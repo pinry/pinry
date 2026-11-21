@@ -1,7 +1,7 @@
 # Docs
 
 Pinry's docs are built with `mkdocs`. If you have dev dependencies
-installed, `pipenv install --dev`, then you can use the following commands:
+installed (`uv sync`, which includes the dev group), then you can use the following commands:
 
 - `make docs-serve` for testing
 - `make docs-build` to build the files

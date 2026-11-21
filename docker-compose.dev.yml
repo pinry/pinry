@@ -1,0 +1,36 @@
+# Development: Django runserver plus the Vite dev server, with the source
+# mounted so edits reload. Open http://127.0.0.1:5173/.
+#
+#   docker compose -f docker-compose.dev.yml up --build
+#
+# Settings come from the development defaults; put overrides in .env.
+services:
+  web:
+    build: .
+    command: >
+      bash -c "uv sync --locked
+      && uv run python manage.py migrate
+      && uv run python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "127.0.0.1:5173:5173"
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - .:/app
+      - venv:/venv
+
+  spa:
+    build: .
+    # Share web's network, so Vite's proxy reaches Django at 127.0.0.1:8000.
+    network_mode: service:web
+    working_dir: /app/pinry-spa
+    command: bash -c "pnpm install --frozen-lockfile && pnpm dev --host 0.0.0.0"
+    volumes:
+      - .:/app
+      - node_modules:/app/pinry-spa/node_modules
+
+volumes:
+  venv:
+  node_modules:

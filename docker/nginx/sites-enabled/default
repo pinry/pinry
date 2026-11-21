@@ -9,6 +9,8 @@ server {
 
     client_max_body_size 50M;
     add_header X-Frame-Options sameorigin always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy same-origin always;
 
     
     location /static {
@@ -20,10 +22,17 @@ server {
         alias /data/static/media;
         expires max;
         access_log off;
+        # add_header here replaces the server-level ones, so repeat them.
+        add_header X-Frame-Options sameorigin always;
+        add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy same-origin always;
+        add_header Content-Security-Policy "default-src 'none'; sandbox" always;
     }
 
     location /api {
         proxy_set_header Host $host;
+        # Overwrite any client-sent value; Django uses it (USE_X_FORWARDED_HOST).
+        proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_pass http://localhost:8000;
@@ -32,6 +41,8 @@ server {
 
     location /admin {
         proxy_set_header Host $host;
+        # Overwrite any client-sent value; Django uses it (USE_X_FORWARDED_HOST).
+        proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_pass http://localhost:8000;

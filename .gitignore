@@ -52,3 +52,14 @@ docker-compose.yml
 
 # docker image data
 docker/data/*
+
+# Environment settings
+.env
+
+# Data volumes of the compose examples
+/data/
+/postgres-data/
+
+# Data volumes of the compose examples
+/data/
+/postgres-data/

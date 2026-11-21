@@ -2,11 +2,11 @@
 site_name: 'Pinry Docs'
 site_description: 'Docs for the Pinry project.'
 site_author: "Pinry's Contributors"
-site_url: 'https://pinry.github.io/pinry/'
+site_url: 'https://octanewt.github.io/pinry/'
 
 # Repository
-repo_name: 'pinry/pinry'
-repo_url: 'https://github.com/pinry/pinry'
+repo_name: 'octanewt/pinry'
+repo_url: 'https://github.com/octanewt/pinry'
 
 # Copyright
 copyright: "Copyright &copy; 2019 Pinry's Contributors"
@@ -18,10 +18,11 @@ nav:
   - Extensions: 'extensions.md'
   - Theories: 'theories.md'
   - Install with Docker: 'install-with-docker.md'
+  - Import from Pinterest: 'import-pinterest.md'
   - Development: 'development.md'
   - API support: 'api.md'
   - Plugin System: 'plugin-system.md'
-  - Upgrade Guide: 'upgrade-guide.md'
+  - Pinry 3.0: 'upgrade-guide.md'
   - Docs: 'docs.md'
   - Passwords: 'passwords.md'
   - Assets: 'assets.md'

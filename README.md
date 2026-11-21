@@ -1,15 +1,14 @@
-# ![Pinry](https://raw.github.com/pinry/pinry/master/docs/src/imgs/logo-dark.png)
+# ![Pinry](docs/src/imgs/logo-dark.png)
 
-![NodeJS Build](https://github.com/pinry/pinry/actions/workflows/node.js.yml/badge.svg)
-![Python Build](https://github.com/pinry/pinry/actions/workflows/pythonpackage.yml/badge.svg)
-![Docker Image Version](https://img.shields.io/docker/v/getpinry/pinry?arch=amd64&style=flat&label=docker-amd64)
-![Docker Pulls](https://img.shields.io/docker/pulls/getpinry/pinry)
+![NodeJS Build](https://github.com/octanewt/pinry/actions/workflows/node.js.yml/badge.svg)
+![Python Build](https://github.com/octanewt/pinry/actions/workflows/pythonpackage.yml/badge.svg)
+![Docker Build](https://github.com/octanewt/pinry/actions/workflows/docker.yml/badge.svg)
 
 The open-source core of Pinry, a tiling image board system for people
 who want to save, tag, and share images, videos and webpages in an easy
 to skim through format.
 
-For more information ( screenshots and document ) visit [https://pinry.github.io/pinry/](https://pinry.github.io/pinry/).
+This is a fork of [pinry/pinry](https://github.com/pinry/pinry). Version 3.0 rebuilds it on Django 5.2 LTS, Python 3.12+, Vue 3 and Vite; see [Pinry 3.0](docs/src/upgrade-guide.md) for what changed. There is no upgrade path from 2.x.
 
 
 ## Features
@@ -32,18 +31,21 @@ For more information ( screenshots and document ) visit [https://pinry.github.io
 
 
 ## Install with Docker
-Now we have pre-built docker image on multiple architectures like **ARMv7/ARMv8/AMD64**.
+Build the image from this repository and run it with Docker Compose, on
+**amd64** or **arm64**:
 
-See our full documentation at [https://pinry.github.io/pinry/install-with-docker/](https://pinry.github.io/pinry/install-with-docker/)
+    cp .env.example .env    # set SECRET_KEY and ALLOWED_HOSTS
+    cp docker-compose.example.yml docker-compose.yml
+    docker compose up -d --build
 
-## Requirements
-
-See our full documentation at [https://pinry.github.io/pinry/development/](https://pinry.github.io/pinry/development/)
-
+See [Install with Docker](docs/src/install-with-docker.md) for HTTPS,
+PostgreSQL and every setting.
 
 ## Development
 
-See our full documentation at [https://pinry.github.io/pinry/development/](https://pinry.github.io/pinry/development/)
+Pinry needs Python 3.12+ with [uv](https://docs.astral.sh/uv/) and Node 26
+with pnpm. See [Developing Pinry](docs/src/development.md), and
+[API support](docs/src/api.md) for the REST API.
 
 ## Contributors
 

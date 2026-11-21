@@ -21,7 +21,7 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
+          <button class="button" type="button" @click="$emit('close')">{{ $t("closeButton") }}</button>
           <button
             @click="doAdd2Board"
             class="button is-primary">{{ $t("Add2BoardModalCardButton") }}
@@ -41,6 +41,7 @@ import FilterSelect from './FilterSelect.vue';
 export default {
   name: 'Add2Board',
   props: ['pin', 'username'],
+  emits: ['close'],
   components: {
     FileUpload,
     FilterSelect,
@@ -68,7 +69,7 @@ export default {
         Promise.all(promises).then(
           () => {
             this.$buefy.toast.open('Succeed to add pin to boards');
-            this.$parent.close();
+            this.$emit('close');
           },
           () => {
             this.$buefy.toast.open(
@@ -97,7 +98,7 @@ export default {
           this.boardOptions = boardOptions;
         },
         () => {
-          console.log('Error occurs while fetch board full list');
+          console.error('Error occurs while fetch board full list');
         },
       );
     },

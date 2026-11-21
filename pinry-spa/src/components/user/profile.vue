@@ -29,13 +29,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use '../utils/grid-layout' as *;
 .profile-container {
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .1);
+  box-shadow: var(--pinry-panel-shadow);
 }
-
-@import '../utils/grid-layout';
 @include screen-grid-layout(".profile-container");
 </style>

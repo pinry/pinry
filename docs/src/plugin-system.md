@@ -33,12 +33,11 @@ before they actually be saved (for example, add water-mark to them).
 
 You could access example plugin via `pinry_plugins/batteries/plugin_example.py`.
 
-After all, enable the plugin in local_settings.py:
+After all, enable the plugin with the `ENABLED_PLUGINS` environment variable
+(comma separated class paths):
 
 ```
-ENABLED_PLUGINS = [
-    'pinry_plugins.batteries.plugin_example.Plugin',
-]
+ENABLED_PLUGINS=pinry_plugins.batteries.plugin_example.Plugin
 ```
 
 Now the plugin will work like a charm!
@@ -53,12 +52,10 @@ If you have a plugin named `hello.py` and it have a `Plugin` class inside.
 
 You could just copy it to directory `pinry_plugins/batteries`.
 
-Now add config to local_settings.py
+Now set the environment variable:
 
 ```
-ENABLED_PLUGINS = [
-    'pinry_plugins.batteries.hello.Plugin',
-]
+ENABLED_PLUGINS=pinry_plugins.batteries.hello.Plugin
 ```
 
 Then, rebuild your docker image, the plugin will work 

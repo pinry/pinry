@@ -30,13 +30,15 @@ def create_tag(name):
     )
 
 
-def create_image():
-    image = Image.objects.create(image=ImageFile(open(TEST_IMAGE_PATH, 'rb')))
+def create_image(uploaded_by=None):
+    image = Image.objects.create(
+        image=ImageFile(open(TEST_IMAGE_PATH, 'rb')), uploaded_by=uploaded_by,
+    )
     Thumbnail.objects.get_or_create_at_sizes(image, settings.IMAGE_SIZES.keys())
     return image
 
 
 def create_pin(user, image, tags):
     pin = Pin.objects.create(submitter=user, image=image)
-    pin.tags.set(*tags)
+    pin.tags.set(tags)
     return pin

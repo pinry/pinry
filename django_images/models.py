@@ -1,7 +1,9 @@
 import hashlib
 import os.path
 
-from django.db import models
+from django.conf import settings
+from django.db import models, transaction
+from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.dispatch import receiver
 
@@ -49,6 +51,27 @@ class Image(models.Model):
                               max_length=255)
     height = models.PositiveIntegerField(default=0, editable=False)
     width = models.PositiveIntegerField(default=0, editable=False)
+    # Who uploaded the file, so an image no pin uses yet can only be
+    # claimed by its uploader (issue #6). Set by core on upload and fetch.
+    uploaded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, editable=False,
+        on_delete=models.SET_NULL, related_name='+',
+    )
+    # SHA-256 of the file as received, for finding duplicate uploads
+    # (issue #8). Set once, when the image is first saved.
+    sha256 = models.CharField(
+        max_length=64, blank=True, default='', editable=False, db_index=True,
+    )
+    # When the image was stored, so prune_images can leave alone uploads
+    # that may still be attached to a new pin (issue #7).
+    created = models.DateTimeField(
+        default=timezone.now, editable=False, db_index=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.sha256 and self.image:
+            self.sha256 = utils.file_sha256(self.image)
+        super().save(*args, **kwargs)
 
     def get_by_size(self, size):
         return self.thumbnail_set.get(size=size)
@@ -84,7 +107,7 @@ class ThumbnailManager(models.Manager):
                     image.image,
                     [IMAGE_SIZES[size] for size in sizes_to_create])
             ]
-            for size, buf in zip(sizes_to_create, bufs):
+            for size, buf in zip(sizes_to_create, bufs, strict=True):
                 # and save to storage
                 original_dir, original_file = os.path.split(image.image.name)
                 thumb_file = InMemoryUploadedFile(buf, "image", original_file,
@@ -121,7 +144,15 @@ def original_changed(sender, instance, created, **kwargs):
 
 
 @receiver(models.signals.post_delete)
-def delete_image_files(sender, instance, **kwargs):
+def delete_image_files(sender, instance, using, **kwargs):
     if isinstance(instance, (Image, Thumbnail)) and IMAGE_AUTO_DELETE:
-        if instance.image.storage.exists(instance.image.name):
-            instance.image.delete(save=False)
+        storage, name = instance.image.storage, instance.image.name
+        if not name:
+            return
+
+        # Only once the delete is committed, so a delete that rolls back
+        # doesn't leave a row whose file is gone.
+        def delete_file():
+            if storage.exists(name):
+                storage.delete(name)
+        transaction.on_commit(delete_file, using=using)

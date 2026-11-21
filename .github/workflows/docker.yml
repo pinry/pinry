@@ -1,0 +1,32 @@
+name: Docker image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  amd64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the release image
+        run: docker build -f Dockerfile.autobuild -t pinry:ci .
+      - name: Smoke test
+        run: ./docker/tests/smoke.sh pinry:ci
+      - name: Build the development image
+        run: docker build -f Dockerfile -t pinry:dev .
+
+  arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Third-party actions aren't allowed here, so set up QEMU and a
+      # buildx builder with plain docker commands.
+      - name: Set up arm64 emulation
+        run: |
+          docker run --privileged --rm tonistiigi/binfmt --install arm64
+          docker buildx create --name multiarch --use
+      - name: Build the release image for arm64
+        run: docker buildx build --platform linux/arm64 -f Dockerfile.autobuild .

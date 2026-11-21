@@ -1,45 +1,34 @@
-[tool.poetry]
+[project]
 name = "pinry"
-version = "2.1.9"
+version = "3.0.0"
 description = "Pinry, a tiling image board system for people who want to save, tag, and share images, videos and webpages in an easy to skim through format. It's open-source and self-hosted."
-authors = ["winkidney <winkidney@gmail.com>"]
-license = "BSD 2-Clause"
+authors = [{name = "winkidney", email = "winkidney@gmail.com"}]
+license = "BSD-2-Clause"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.2,<5.3",
+    "djangorestframework>=3.16",
+    "django-filter>=25.1",
+    "django-taggit>=6.1",
+    "drf-spectacular[sidecar]>=0.28",
+    "dj-database-url>=2.3",
+    "psycopg[binary]>=3.2",
+    "pillow>=11.3",
+    "requests>=2.32.4",
+    "urllib3>=2.5",
+    "gunicorn>=23",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.7"
-requests = "^2.27.1"
-django = ">2.2.17,<3"
-pillow = ">=8.1.1"
-markdown = "*"
-django-filter = "==2.4.0"
-coreapi = "^2.3.3"
-psycopg2-binary = "2.9.9"
-django-taggit = "1.3.0"
-django-braces = "^1.15.0"
-django-compressor = "^4.0"
-mock = "^4.0.3"
-gunicorn = "^20.1.0"
-djangorestframework = "^3.13.1"
+[dependency-groups]
+dev = [
+    "flake8>=7",
+    "flake8-bugbear>=24",
+    "qrcode>=8",
+    "django-extensions>=3.2",
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+]
 
-
-[tool.poetry.dev-dependencies]
-flake8 = "*"
-qrcode = "*"
-django-extensions = "*"
-mkdocs = "*"
-mkdocs-material = "*"
-jinja2 = "==3.0.3"
-black = "==19.10b0"
-
-[tool.poetry.group.dev.dependencies]
-jinja2 = "3.0.3"
-mkdocs-material = "8.4.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[[tool.poetry.source]]
-name = "tuna"
-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
-priority = "primary"
+[tool.uv]
+# Pinry is an application, not a library: don't build or install it.
+package = false

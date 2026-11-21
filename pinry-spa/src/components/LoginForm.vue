@@ -32,7 +32,7 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
+          <button class="button" type="button" @click="$emit('close')">{{ $t("closeButton") }}</button>
           <button
             @click="doLogin"
             class="button is-primary">{{ $t("loginButton") }}</button>
@@ -50,6 +50,7 @@ const fields = ['username', 'password'];
 
 export default {
   name: 'LoginForm',
+  emits: ['loginSucceed', 'close'],
   data() {
     const model = ModelForm.fromFields(fields);
     return {
@@ -74,8 +75,8 @@ export default {
       );
       promise.then(
         (user) => {
-          self.$emit('login.succeed', user);
-          self.$parent.close();
+          self.$emit('loginSucceed', user);
+          self.$emit('close');
           window.location.reload();
         },
         (resp) => {

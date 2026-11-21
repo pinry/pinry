@@ -15,16 +15,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 18.x, ]
+        node-version: [ 26.x, ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -g pnpm
-      - run: pnpm install
+      # Third-party actions aren't allowed here, so install pnpm from npm.
+      # Keep the major version in step with packageManager in package.json.
+      - run: npm install -g pnpm@12
+      - run: pnpm install --frozen-lockfile
+        working-directory: ./pinry-spa
+      - run: pnpm lint
         working-directory: ./pinry-spa
       - run: pnpm build
         working-directory: ./pinry-spa

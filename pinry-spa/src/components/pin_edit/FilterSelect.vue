@@ -25,11 +25,10 @@
         expanded
         native-size="8"
         v-model="selectedOptions">
-        <template v-for="option in availableOptions">
-          <option
-            v-bind:key="option.value"
-            :value="option.value">{{ option.name }}</option>
-        </template>
+        <option
+          v-for="option in availableOptions"
+          :key="option.value"
+          :value="option.value">{{ option.name }}</option>
       </b-select>
     </b-field>
   </div>
@@ -61,6 +60,7 @@ function getAvailableOptions(vm, filter) {
 
 export default {
   name: 'FilterSelect',
+  emits: ['boardCreated', 'selected'],
   props: {
     allOptions: {
       type: Array,
@@ -103,8 +103,7 @@ export default {
     },
   },
   watch: {
-    // eslint-disable-next-line func-names
-    'form.name.value': function (newVal) {
+    'form.name.value'(newVal) {
       const options = getAvailableOptions(this, newVal);
       this.availableOptions = this.createdOptions.concat(options);
     },

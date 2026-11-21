@@ -26,6 +26,7 @@ import modals from '../modals';
 
 export default {
   name: 'BoardEditor',
+  emits: ['board-save-succeed', 'board-delete-succeed'],
   props: {
     board: {
       default() {
@@ -68,5 +69,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './editor';
+@use './editor' as *;
 </style>

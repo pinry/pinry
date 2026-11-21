@@ -27,7 +27,7 @@ export default {
 }
 body{
     font-family: 'Lato', sans-serif;
-    color: #888;
+    color: var(--pinry-muted-text);
     margin: 0;
 }
 #main{
@@ -47,7 +47,7 @@ body{
   animation: type .5s alternate infinite;
 }
 @keyframes type{
-  from{box-shadow: inset -3px 0px 0px #888;}
+  from{box-shadow: inset -3px 0px 0px var(--pinry-muted-text);}
   to{box-shadow: inset -3px 0px 0px transparent;}
 }
 </style>

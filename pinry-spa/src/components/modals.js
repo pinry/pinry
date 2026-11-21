@@ -8,7 +8,6 @@ import Add2Board from './pin_edit/Add2Board.vue';
 function openPinEdit(vm, props = null, onCreated = null) {
   vm.$buefy.modal.open(
     {
-      parent: vm,
       component: PinCreateModal,
       props,
       hasModalCard: true,
@@ -26,7 +25,6 @@ function openPinEdit(vm, props = null, onCreated = null) {
 function openAdd2Board(vm, pin, username) {
   vm.$buefy.modal.open(
     {
-      parent: vm,
       component: Add2Board,
       props: { pin, username },
       hasModalCard: true,
@@ -37,7 +35,6 @@ function openAdd2Board(vm, pin, username) {
 function openBoardCreate(vm) {
   vm.$buefy.modal.open(
     {
-      parent: vm,
       component: BoardEdit,
       hasModalCard: true,
     },
@@ -47,7 +44,6 @@ function openBoardCreate(vm) {
 function openBoardEdit(vm, board, onSaved) {
   vm.$buefy.modal.open(
     {
-      parent: vm,
       component: BoardEdit,
       props: {
         board,
@@ -63,22 +59,20 @@ function openBoardEdit(vm, board, onSaved) {
 
 function openLogin(vm, onSucceed) {
   vm.$buefy.modal.open({
-    parent: vm,
     component: LoginForm,
     hasModalCard: true,
     events: {
-      'login.succeed': onSucceed,
+      loginSucceed: onSucceed,
     },
   });
 }
 
 function openSignUp(vm, onSignUpSucceed) {
   vm.$buefy.modal.open({
-    parent: vm,
     component: SignUpForm,
     hasModalCard: true,
     events: {
-      'signup.succeed': onSignUpSucceed,
+      signupSucceed: onSignUpSucceed,
     },
   });
 }

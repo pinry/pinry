@@ -29,18 +29,9 @@ class OwnerOnlyIfPrivate(permissions.BasePermission):
         return self
 
     def has_object_permission(self, request, view, obj):
-        if getattr(obj, "private"):
+        if obj.private:
             return request.user == getattr(obj, self.__owner_field_name)
         return True
-
-
-class OwnerOnly(permissions.IsAuthenticatedOrReadOnly):
-
-    def has_permission(self, request, view):
-        return request.user.is_authenticated()
-
-    def has_object_permission(self, request, view, obj):
-        return obj.owner == request.user
 
 
 class SuperUserOnly(permissions.BasePermission):

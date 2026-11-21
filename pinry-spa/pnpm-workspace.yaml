@@ -1,0 +1,4 @@
+# Build scripts pnpm may run. @parcel/watcher is only used by sass --watch,
+# which Vite doesn't need.
+allowBuilds:
+  '@parcel/watcher': false

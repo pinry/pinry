@@ -56,10 +56,10 @@
                     :allow-new="true"
                     v-bind:placeholder="$t('pinCreateModalImageTagsPlaceholder')"
                     @typing="getFilteredTags">
-                  <template slot-scope="props">
+                  <template #default="props">
                     <strong>{{ props.option }}</strong>
                   </template>
-                  <template slot="empty">
+                  <template #empty>
                     {{ $t("pinCreateModalEmptySlot") }}
                   </template>
                 </b-taginput>
@@ -85,7 +85,7 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$parent.close()">{{ $t("closeButton") }}</button>
+          <button class="button" type="button" @click="$emit('close')">{{ $t("closeButton") }}</button>
           <button
             v-if="!isEdit"
             @click="createPin"
@@ -103,8 +103,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import API from '../api';
 import FileUpload from './FileUpload.vue';
 import FilterSelect from './FilterSelect.vue';
@@ -123,6 +121,7 @@ const fields = ['url', 'referer', 'description', 'tags', 'private'];
 
 export default {
   name: 'PinCreateModal',
+  emits: ['pinCreated', 'pinUpdated', 'close'],
   props: {
     fromUrl: {
       type: Object,
@@ -154,7 +153,7 @@ export default {
       formUpload: {
         imageId: null,
       },
-      boardId: null,
+      boardIds: [],
       boardOptions: [],
       tagOptions: [],
       editorMeta: {
@@ -215,7 +214,7 @@ export default {
           this.boardOptions = boardOptions;
         },
         () => {
-          console.log('Error occurs while fetch board full list');
+          console.error('Error occurs while fetch board full list');
         },
       );
     },
@@ -236,9 +235,9 @@ export default {
       const promise = API.Pin.updateById(this.existedPin.id, data);
       promise.then(
         (resp) => {
-          bus.bus.$emit(bus.events.refreshPin);
+          bus.bus.emit(bus.events.refreshPin);
           self.$emit('pinUpdated', resp);
-          self.$parent.close();
+          self.$emit('close');
         },
       );
     },
@@ -264,11 +263,11 @@ export default {
           const promises = [];
           function done() {
             self.$emit('pinCreated', resp);
-            self.$parent.close();
+            self.$emit('close');
             loading.close();
           }
-          bus.bus.$emit(bus.events.refreshPin);
-          if (self.boardIds) {
+          bus.bus.emit(bus.events.refreshPin);
+          if (self.boardIds.length > 0) {
             // FIXME(winkidney): Should handle error for add-to board
             self.boardIds.forEach(
               (boardId) => {
@@ -277,13 +276,13 @@ export default {
             );
           }
           if (promises.length > 0) {
-            axios.all(promises).then(done);
+            Promise.all(promises).then(done);
           } else {
             done();
           }
         },
       ).catch((error) => {
-        console.log('Cannot create pin:', error);
+        console.error('Cannot create pin:', error);
         loading.close();
       });
     },

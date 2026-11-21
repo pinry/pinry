@@ -1,7 +1,8 @@
 from io import BytesIO
 
-import mock
+from unittest import mock
 import qrcode
+from django.db import transaction
 from django.test import TestCase
 from django.core.files.images import ImageFile
 from django.conf import settings
@@ -105,9 +106,25 @@ class PostDeleteSignalDeleteImageFileTest(TestCase):
         storage = self.image.image.storage
         image_name = self.image.image.name
         thumb_name = self.thumb.image.name
-        self.image.delete()
+        with self.captureOnCommitCallbacks(execute=True):
+            self.image.delete()
         self.assertFalse(storage.exists(image_name))
         self.assertFalse(storage.exists(thumb_name))
+
+    @mock.patch('django_images.models.IMAGE_AUTO_DELETE', True)
+    def test_post_delete_signal_keeps_files_when_delete_rolls_back(self):
+        storage = self.image.image.storage
+        image_name = self.image.image.name
+        thumb_name = self.thumb.image.name
+        pk = self.image.pk
+        with self.captureOnCommitCallbacks(execute=True):
+            with self.assertRaises(RuntimeError):
+                with transaction.atomic():
+                    self.image.delete()
+                    raise RuntimeError
+        self.assertTrue(Image.objects.filter(pk=pk).exists())
+        self.assertTrue(storage.exists(image_name))
+        self.assertTrue(storage.exists(thumb_name))
 
     @mock.patch('django_images.models.IMAGE_AUTO_DELETE', False)
     def test_post_delete_signal_delete_image_files_disabled(self):

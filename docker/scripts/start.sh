@@ -1,33 +1,27 @@
 #!/bin/bash
 # -----------------------------------------------------------------------------
-# docker-pinry /start script
+# docker-pinry start script
 #
-# Will setup database and static files if they don't exist already, if they do
-# just continues to run docker-pinry.
-#
-# Authors: Isaac Bythewood
-# Updated: Aug 19th, 2014
+# Collects static files, applies migrations, then runs nginx and gunicorn.
+# Stops at the first error, e.g. a missing SECRET_KEY or ALLOWED_HOSTS.
 # -----------------------------------------------------------------------------
-PROJECT_ROOT="/pinry"
+set -e
 
-bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
+cd /pinry
 
-# If static files don't exist collect them
-cd ${PROJECT_ROOT}
 python manage.py collectstatic --noinput
+python manage.py migrate --noinput
 
-# If database doesn't exist yet create it
-if [ ! -f /data/production.db ]
-then
-    cd ${PROJECT_ROOT}
-    python manage.py migrate --noinput
+# The data volume may come from the host with other owners. A full chown -R
+# walks every file, which takes minutes on large volumes and on slow bind
+# mounts (Docker Desktop on Windows/macOS), so it runs only when /data or an
+# entry directly inside it is not owned by www-data. Fix deeper files by hand:
+#   docker compose exec pinry chown -R www-data:www-data /data
+if [ -n "$(find /data -maxdepth 1 \( ! -user www-data -o ! -group www-data \) -print -quit)" ]; then
+    echo "Fixing ownership of /data (this can take a while)..."
+    chown -R www-data:www-data /data
 fi
 
-# Fix all settings after all commands are run
-chown -R www-data:www-data /data
-
-# start all process
 /usr/sbin/nginx
 
-cd ${PROJECT_ROOT}
-./docker/scripts/_start_gunicorn.sh
+exec ./docker/scripts/_start_gunicorn.sh

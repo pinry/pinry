@@ -1,7 +1,17 @@
+import hashlib
 from contextlib import contextmanager
 from io import BytesIO
 import PIL
 from PIL import Image
+
+
+def file_sha256(file):
+    """Return the SHA-256 hex digest of a Django File's contents."""
+    hasher = hashlib.sha256()
+    for chunk in file.chunks():
+        hasher.update(chunk)
+    file.seek(0)
+    return hasher.hexdigest()
 
 
 @contextmanager
@@ -74,7 +84,7 @@ def scale_and_crop_single(image, size, crop=False, upscale=False, quality=None):
 
     if scale < 1.0 or (scale > 1.0 and upscale):
         im = im.resize((int(source_x * scale), int(source_y * scale)),
-                       resample=Image.ANTIALIAS)
+                       resample=Image.LANCZOS)
 
     if crop:
         # Use integer values now.
