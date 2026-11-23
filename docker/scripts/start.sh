@@ -16,12 +16,10 @@ bash ${PROJECT_ROOT}/docker/scripts/bootstrap.sh
 cd ${PROJECT_ROOT}
 python manage.py collectstatic --noinput
 
-# If database doesn't exist yet create it
-if [ ! -f /data/production.db ]
-then
-    cd ${PROJECT_ROOT}
-    python manage.py migrate --noinput
-fi
+# Create the database or apply new migrations after an upgrade; this is a
+# no-op when the schema is already up to date.
+cd ${PROJECT_ROOT}
+python manage.py migrate --noinput
 
 # Fix all settings after all commands are run
 chown -R www-data:www-data /data
