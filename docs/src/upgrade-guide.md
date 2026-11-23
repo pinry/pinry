@@ -21,6 +21,18 @@ git tag
 The first line of output is our latest version of code.
 
 
+# v2.1.13 -> v2.1.14
+v2.1.13 and earlier have security issues: a user could create a pin from
+another user's image by its ID, which made it possible to publish the image of
+someone else's private pin, or to delete someone else's pin by deleting their
+own pin that shared the image.
+
+v2.1.14 adds a database migration. The docker image now applies migrations on
+every start. If you run Pinry without docker, run it after upgrading:
+```
+python manage.py migrate
+```
+
 # v2.1.6 -> v2.1.7
 v2.1.6 has a security issue which may cause unauthorized token-read.
 If you upgrade your instance from v2.1.6 to v2.1.7, you could go into 
