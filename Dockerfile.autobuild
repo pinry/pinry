@@ -32,6 +32,10 @@ RUN sed -i -e "s|deb.debian.org|archive.debian.org|g" \
 RUN apt-get update \
     && if [ $(dpkg --print-architecture) = "arm64" -o $(dpkg --print-architecture) = "armhf" ]; then apt-get -y install apt-utils; fi \
     && apt-get -y install pkg-config gcc default-libmysqlclient-dev
+# Some platforms (e.g. armv7) build packages such as cx-Oracle from source;
+# their setup.py needs pkg_resources, which setuptools 81+ no longer ships.
+RUN echo "setuptools<81" > /tmp/pip-constraints.txt
+ENV PIP_CONSTRAINT=/tmp/pip-constraints.txt
 RUN pip --no-cache-dir install --user mysqlclient cx-Oracle
 
 
@@ -63,7 +67,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 
-# Install Pipfile requirements
+# Install Pipfile requirements; see the base stage for the constraint
+RUN echo "setuptools<81" > /tmp/pip-constraints.txt
+ENV PIP_CONSTRAINT=/tmp/pip-constraints.txt
 COPY requirements.txt ./
 RUN pip install "rcssmin==1.0.6" --install-option="--without-c-extensions" \
     && pip install -r requirements.txt
