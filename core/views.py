@@ -19,6 +19,9 @@ class ImageViewSet(mixins.CreateModelMixin, GenericViewSet):
     def create(self, request, *args, **kwargs):
         return super(ImageViewSet, self).create(request, *args, **kwargs)
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class PinViewSet(viewsets.ModelViewSet):
     serializer_class = api.PinSerializer

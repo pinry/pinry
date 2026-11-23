@@ -1,6 +1,7 @@
 import hashlib
 import os.path
 
+from django.conf import settings
 from django.db import models
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.dispatch import receiver
@@ -49,6 +50,11 @@ class Image(models.Model):
                               max_length=255)
     height = models.PositiveIntegerField(default=0, editable=False)
     width = models.PositiveIntegerField(default=0, editable=False)
+    # Who stored the image; only this user may attach it to a pin.
+    # Null for images stored before ownership was recorded.
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
+                              editable=False, related_name='+',
+                              on_delete=models.SET_NULL)
 
     def get_by_size(self, size):
         return self.thumbnail_set.get(size=size)

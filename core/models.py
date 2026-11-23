@@ -5,7 +5,7 @@ from io import BytesIO
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db import models
+from django.db import models, transaction
 from django.dispatch import receiver
 
 from django_images.models import Image as BaseImage, Thumbnail
@@ -34,7 +34,7 @@ class ImageManager(models.Manager):
             return True
 
     # FIXME: Move this into an asynchronous task
-    def create_for_url(self, url, referer=None):
+    def create_for_url(self, url, referer=None, owner=None):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
         buf = BytesIO()
         headers = dict(self._default_ua)
@@ -49,7 +49,7 @@ class ImageManager(models.Manager):
         # create the image and its thumbnails in one transaction, removing
         # a chance of getting Database into a inconsistent state when we
         # try to create thumbnails one by one later
-        image = self.create(image=obj)
+        image = self.create(image=obj, owner=owner)
         Thumbnail.objects.get_or_create_at_sizes(image, settings.IMAGE_SIZES.keys())
         return image
 
@@ -114,9 +114,29 @@ class Pin(models.Model):
         return '%s - %s' % (self.submitter, self.published)
 
 
+def user_may_pin_image(user, image):
+    """Whether ``user`` may attach the existing ``image`` to a new pin."""
+    if image.owner_id is not None:
+        return image.owner_id == user.pk
+    # Image stored before ownership was recorded: accept it only when it
+    # already has pins and all of them are the user's, so nobody can take
+    # over another user's (possibly private) image by its sequential ID.
+    pins = Pin.objects.filter(image_id=image.pk)
+    return pins.exists() and not pins.exclude(submitter=user).exists()
+
+
 @receiver(models.signals.post_delete, sender=Pin)
 def delete_pin_images(sender, instance, **kwargs):
-    try:
-        instance.image.delete()
-    except Image.DoesNotExist:
-        pass
+    # Several pins may share one image, and Pin.image cascades: deleting
+    # the image while another pin uses it would delete that pin too.
+    # Lock the image row (pin creation takes the same lock) so a pin
+    # added concurrently is either seen here or refused there.
+    with transaction.atomic():
+        image = Image.objects.select_for_update().filter(
+            pk=instance.image_id,
+        ).first()
+        if image is None:
+            return
+        if Pin.objects.filter(image_id=image.pk).exists():
+            return
+        image.delete()

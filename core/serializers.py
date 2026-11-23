@@ -1,11 +1,12 @@
 from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
 
 from core.models import Image, Board
-from core.models import Pin
+from core.models import Pin, user_may_pin_image
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
 from users.models import User
@@ -115,8 +116,8 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
     )
 
     def create(self, validated_data):
-        if 'url' not in validated_data and\
-                'image_by_id' not in validated_data:
+        image_by_id = validated_data.pop("image_by_id", None)
+        if not validated_data.get('url') and image_by_id is None:
             raise ValidationError(
                 detail={
                     "url-or-image": "Either url or image_by_id is required."
@@ -124,16 +125,38 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
             )
 
         submitter = self.context['request'].user
-        if 'url' in validated_data and validated_data['url']:
+        if validated_data.get('url'):
             url = validated_data['url']
             image = Image.objects.create_for_url(
                 url,
                 validated_data.get('referer', url),
+                owner=submitter,
             )
             if not image:
                 raise ValidationError({"url": "invalid image content"})
-        else:
-            image = validated_data.pop("image_by_id")
+            return self._create_pin(submitter, image, validated_data)
+        # Hold the image row lock until the pin exists, so a concurrent
+        # delete of the image's last pin cannot remove it under us
+        # (see core.models.delete_pin_images).
+        with transaction.atomic():
+            image = Image.objects.select_for_update().filter(
+                pk=image_by_id.pk,
+            ).first()
+            if image is None or not user_may_pin_image(submitter, image):
+                # Same message as for a missing ID: do not reveal whether
+                # another user's image exists.
+                field = self.fields['image_by_id']
+                raise ValidationError({
+                    "image_by_id": [
+                        field.error_messages['does_not_exist'].format(
+                            pk_value=image_by_id.pk,
+                        ),
+                    ],
+                })
+            return self._create_pin(submitter, image, validated_data)
+
+    @staticmethod
+    def _create_pin(submitter, image, validated_data):
         tags = validated_data.pop('tag_list', [])
         pin = Pin.objects.create(submitter=submitter, image=image, **validated_data)
         if tags:
