@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.db import transaction
 from django.db.models import Q
@@ -5,11 +7,15 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from taggit.models import Tag
 
+from core.fetch import ImageFetchError
 from core.models import Image, Board
 from core.models import Pin, user_may_pin_image
 from django_images.models import Thumbnail
 from users.serializers import UserSerializer
 from users.models import User
+
+
+logger = logging.getLogger(__name__)
 
 
 def filter_private_pin(request, query):
@@ -127,11 +133,23 @@ class PinSerializer(serializers.HyperlinkedModelSerializer):
         submitter = self.context['request'].user
         if validated_data.get('url'):
             url = validated_data['url']
-            image = Image.objects.create_for_url(
-                url,
-                validated_data.get('referer', url),
-                owner=submitter,
-            )
+            try:
+                image = Image.objects.create_for_url(
+                    url,
+                    validated_data.get('referer', url),
+                    owner=submitter,
+                )
+            except ImageFetchError as e:
+                logger.warning(
+                    "Cannot fetch image for a pin from %r: %s. If it is on "
+                    "your own network, add that network to "
+                    "IMAGE_FETCH_ALLOWED_NETWORKS.", url, e,
+                )
+                # One message for blocked and failed fetches, so the
+                # response does not tell what is on the server's network.
+                raise ValidationError(
+                    {"url": "Cannot fetch image from this URL."}
+                )
             if not image:
                 raise ValidationError({"url": "invalid image content"})
             return self._create_pin(submitter, image, validated_data)

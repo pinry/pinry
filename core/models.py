@@ -1,5 +1,4 @@
 import PIL.Image
-import requests
 
 from io import BytesIO
 
@@ -8,6 +7,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models, transaction
 from django.dispatch import receiver
 
+from core.fetch import fetch_image
 from django_images.models import Image as BaseImage, Thumbnail
 from taggit.managers import TaggableManager
 
@@ -15,12 +15,6 @@ from users.models import User
 
 
 class ImageManager(models.Manager):
-    _default_ua = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/48.0.2564.82 Safari/537.36',
-    }
-
     @staticmethod
     def _is_valid_image(fp):
         fp.seek(0)
@@ -37,11 +31,8 @@ class ImageManager(models.Manager):
     def create_for_url(self, url, referer=None, owner=None):
         file_name = url.split("/")[-1].split('#')[0].split('?')[0]
         buf = BytesIO()
-        headers = dict(self._default_ua)
-        if referer is not None:
-            headers["Referer"] = referer
-        response = requests.get(url, headers=headers)
-        buf.write(response.content)
+        # Raises core.fetch.ImageFetchError if the URL is not allowed
+        buf.write(fetch_image(url, referer))
         if not self._is_valid_image(buf):
             return None
         obj = InMemoryUploadedFile(buf, 'image', file_name,

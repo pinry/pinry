@@ -147,6 +147,17 @@ IS_TEST = False
 # User custom settings
 IMAGE_AUTO_DELETE = True
 
+# Creating a pin from a URL makes the server download that URL. Only public
+# addresses are fetched, so users cannot reach the server's own network
+# (localhost, LAN, cloud metadata). List networks to allow here, e.g.
+# ["192.168.1.0/24"] for images on a LAN NAS.
+IMAGE_FETCH_ALLOWED_NETWORKS = []
+# Seconds for the whole download, redirects included; keep it below the
+# gunicorn worker timeout (30s) so slow hosts get an error, not a 502.
+IMAGE_FETCH_TIMEOUT = 20
+# Largest image to download, in bytes; matches nginx client_max_body_size.
+IMAGE_FETCH_MAX_BYTES = 50 * 1024 * 1024
+
 # Rest Framework
 
 DRF_URL_FIELD_NAME = "resource_link"

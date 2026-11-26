@@ -33,6 +33,10 @@ ALLOW_NEW_REGISTRATIONS = True
 # Delete image files once you remove your pin
 IMAGE_AUTO_DELETE = True
 
+# Networks the server may download pin images from, besides the public
+# internet. Private, loopback and link-local addresses are refused by default.
+# IMAGE_FETCH_ALLOWED_NETWORKS = ["192.168.1.0/24"]
+
 # thumbnail size control
 IMAGE_SIZES = {
     'thumbnail': {'size': [240, 0]},
