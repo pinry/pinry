@@ -23,7 +23,6 @@ function setUpAxiosCsrfConfig() {
   axios.interceptors.request.use(
     (config) => {
       if (!csrfSafeMethod(config.method.toUpperCase())) {
-        // eslint-disable-next-line no-param-reassign
         config.headers['X-CSRFToken'] = getCSRFToken();
       }
       return config;

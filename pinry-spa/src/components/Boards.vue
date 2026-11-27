@@ -8,9 +8,8 @@
           column-width=".grid-sizer"
           gutter=".gutter-sizer"
         >
-          <template v-for="item in blocks">
-            <div v-bind:key="item.id"
-                 v-masonry-tile
+          <template v-for="item in blocks" :key="item.id">
+            <div v-masonry-tile
                  :class="item.class"
                  class="grid">
               <div class="grid-sizer"></div>
@@ -247,10 +246,15 @@ export default {
 
 <style lang="scss" scoped>
 /* grid */
-@import 'utils/pin';
+@use 'utils/pin';
+@use '../components/utils/grid-layout';
+@use './utils/fonts';
+@use './utils/loader.scss';
+
+@include grid-layout.screen-grid-layout("#boards-container");
 
 .grid-sizer,
-.grid-item { width: $pin-preview-width; }
+.grid-item { width: pin.$pin-preview-width; }
 .grid-item {
   margin-bottom: 15px;
 }
@@ -262,15 +266,13 @@ export default {
 $pin-footer-position-fix: -6px;
 $avatar-width: 30px;
 $avatar-height: 30px;
-@import './utils/fonts';
-@import './utils/loader.scss';
 
 .board-card{
   .card-image > img {
-    min-width: $pin-preview-width;
+    min-width: pin.$pin-preview-width;
     background-color: white;
     border-radius: 3px 3px 0 0;
-    @include loader('../assets/loader.gif');
+    @include loader.loader('../assets/loader.gif');
   }
 }
 .board-footer {
@@ -281,7 +283,7 @@ $avatar-height: 30px;
   box-shadow: 0 1px 0 #bbb;
   font-weight: bold;
   .description {
-    @include secondary-font;
+    @include fonts.secondary-font;
     padding-left: 10px;
     padding-bottom: 5px;
     overflow: hidden;
@@ -289,15 +291,12 @@ $avatar-height: 30px;
   }
   .board-info {
     padding: 10px;
-    color: $main-title-font-color;
+    color: fonts.$main-title-font-color;
   }
   .num-pins {
     font-size: 0.8rem;
-    color: $main-title-font-color;
+    color: fonts.$main-title-font-color;
   }
 }
-
-@import 'utils/grid-layout';
-@include screen-grid-layout("#boards-container")
 
 </style>

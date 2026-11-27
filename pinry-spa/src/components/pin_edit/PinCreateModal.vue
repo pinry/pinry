@@ -56,10 +56,10 @@
                     :allow-new="true"
                     v-bind:placeholder="$t('pinCreateModalImageTagsPlaceholder')"
                     @typing="getFilteredTags">
-                  <template slot-scope="props">
+                  <template v-slot="props">
                     <strong>{{ props.option }}</strong>
                   </template>
-                  <template slot="empty">
+                  <template v-slot:empty>
                     {{ $t("pinCreateModalEmptySlot") }}
                   </template>
                 </b-taginput>

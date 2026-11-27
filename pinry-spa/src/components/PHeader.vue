@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import localeUtils from '@/components/utils/i18n';
+import { useI18n } from 'vue-i18n'
 import api from './api';
 import modals from './modals';
 

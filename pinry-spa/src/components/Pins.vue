@@ -9,9 +9,8 @@
           column-width=".grid-sizer"
           gutter=".gutter-sizer"
         >
-          <template v-for="item in blocks">
-            <div v-bind:key="item.id"
-                 v-masonry-tile
+          <template v-for="item in blocks" :key="item.id">
+            <div v-masonry-tile
                  :class="item.class"
                  class="grid pin-masonry">
               <div class="grid-sizer"></div>
@@ -51,8 +50,8 @@
                         </span>
                         <template v-if="item.tags.length > 0">
                           &nbsp;in&nbsp;
-                          <template v-for="tag in item.tags">
-                            <span v-bind:key="tag" class="pin-tag">
+                          <template v-for="tag in item.tags" :key="tag">
+                            <span class="pin-tag">
                               <router-link :to="{ name: 'tag', params: {tag: tag} }"
                                            params="{tag: tag}">{{ tag }}</router-link>
                             </span>
@@ -300,10 +299,15 @@ export default {
 
 <style lang="scss" scoped>
 /* grid */
-@import 'utils/pin';
+@use 'utils/pin';
+@use './utils/fonts';
+@use './utils/loader.scss';
+@use 'utils/grid-layout';
+
+@include grid-layout.screen-grid-layout("#pins-container");
 
 .grid-sizer,
-.grid-item { width: $pin-preview-width; }
+.grid-item { width: pin.$pin-preview-width; }
 .grid-item {
   margin-bottom: 15px;
 }
@@ -324,18 +328,16 @@ export default {
 $pin-footer-position-fix: -6px;
 $avatar-width: 30px;
 $avatar-height: 30px;
-@import './utils/fonts';
-@import './utils/loader.scss';
 
 .pin-card{
   .pin-preview-image {
     cursor: zoom-in;
   }
   > img {
-    min-width: $pin-preview-width;
+    min-width: pin.$pin-preview-width;
     background-color: white;
     border-radius: 3px 3px 0 0;
-    @include loader('../assets/loader.gif');
+    @include loader.loader('../assets/loader.gif');
   }
   .avatar {
     height: $avatar-height;
@@ -354,14 +356,14 @@ $avatar-height: 30px;
   border-radius: 0 0 3px 3px ;
   box-shadow: 0 1px 0 #bbb;
   .description {
-    @include description-font;
+    @include fonts.description-font;
     padding: 8px;
     border-bottom: 1px solid #DDDDDD;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   .details {
-    @include secondary-font;
+    @include fonts.secondary-font;
     padding: 10px;
     > .pin-info {
       line-height: 16px;
@@ -373,8 +375,5 @@ $avatar-height: 30px;
     }
   }
 }
-
-@import 'utils/grid-layout';
-@include screen-grid-layout("#pins-container")
 
 </style>

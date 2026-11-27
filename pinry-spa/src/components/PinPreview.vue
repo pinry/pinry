@@ -22,8 +22,8 @@
                   <p class="title is-4 pin-meta-info"><span class="dim">{{ $t("pinnedByTitle") }}</span><span class="author">{{ pinItem.author }}</span></p>
                   <p class="subtitle is-6" v-show="pinItem.tags.length > 0">
                     <span class="subtitle dim">in&nbsp;</span>
-                    <template v-for="tag in pinItem.tags">
-                      <b-tag v-bind:key="tag" type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
+                    <template v-for="tag in pinItem.tags" :key="tag">
+                      <b-tag type="is-info" class="pin-preview-tag">{{ tag }}</b-tag>
                     </template>
                   </p>
                 </div>
@@ -78,13 +78,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './utils/fonts.scss';
+@use './utils/fonts.scss';
 
 .meta-link {
   margin-left: 0.3rem;
 }
 .dim {
-  @include secondary-font-color-in-dark;
+  @include fonts.secondary-font-color-in-dark;
 }
 .pin-meta-info {
   line-height: 16px;
@@ -96,7 +96,7 @@ export default {
   }
   .card-content {
     .author {
-      @include title-font-color-in-dark;
+      @include fonts.title-font-color-in-dark;
     }
     padding: 0;
     .content {
@@ -108,8 +108,8 @@ export default {
     }
   }
   .description {
-    @include title-font;
-    @include title-font-color-in-dark;
+    @include fonts.title-font;
+    @include fonts.title-font-color-in-dark;
     font-size: 16px;
     padding: 8px;
   }
